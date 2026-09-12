@@ -2,17 +2,17 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseConfig } from "@/lib/supabase/config";
 
 /**
- * Omni Law Gazette — the weekly legislation digest — is a separate site
- * that shares this Supabase project. The guide only reads its `issues`
- * table (for the landing page) and links across; publishing, reading and
- * discussion happen on the gazette site.
+ * Omni Law Gazette — the weekly legislation digest — is a separate app
+ * mounted under /gazette (proxied by next.config) and sharing this
+ * Supabase project. The guide only reads its `issues` table for the
+ * landing page and links across; publishing, reading and discussion happen
+ * in the gazette app.
  */
 
 export const GAZETTE_BUCKET = "gazette";
 
-export const GAZETTE_URL = (
-  process.env.NEXT_PUBLIC_GAZETTE_URL ?? "https://omnilawgazette.vercel.app"
-).replace(/\/$/, "");
+/** Where the gazette is mounted; same domain by default (see next.config rewrites). */
+export const GAZETTE_URL = (process.env.NEXT_PUBLIC_GAZETTE_URL ?? "/gazette").replace(/\/$/, "");
 
 /** Reading-room URL of an issue on the gazette site. */
 export function issueUrl(issueNumber: number): string {

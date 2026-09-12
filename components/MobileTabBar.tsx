@@ -28,7 +28,7 @@ const TABS = [
   {
     href: GAZETTE_URL,
     label: "Qəzet",
-    isActive: () => false,
+    isActive: (p: string) => p.startsWith("/gazette"),
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 4h13v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z" />

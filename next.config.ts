@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
-const GAZETTE_URL = (
-  process.env.NEXT_PUBLIC_GAZETTE_URL ?? "https://omnilawgazette.vercel.app"
+// Origin of the gazette deployment (its app runs with basePath /gazette).
+const GAZETTE_ORIGIN = (
+  process.env.GAZETTE_ORIGIN ?? "https://omnilawgazette.vercel.app"
 ).replace(/\/$/, "");
 
 const nextConfig: NextConfig = {
@@ -15,13 +16,12 @@ const nextConfig: NextConfig = {
     "/courses/[course]/[lesson]": ["./content/**/*"],
     "/account": ["./content/**/*"],
   },
-  // The gazette is its own site; anything that pointed at the short-lived
-  // in-guide section forwards there.
-  async redirects() {
+  // Omni Law Gazette is a separate Next.js app mounted under /gazette
+  // (multi-zone): every request below that path is proxied to it.
+  async rewrites() {
     return [
-      { source: "/gazette", destination: GAZETTE_URL, permanent: false },
-      { source: "/gazette/admin", destination: `${GAZETTE_URL}/admin`, permanent: false },
-      { source: "/gazette/:number(\\d+)", destination: `${GAZETTE_URL}/issues/:number`, permanent: false },
+      { source: "/gazette", destination: `${GAZETTE_ORIGIN}/gazette` },
+      { source: "/gazette/:path*", destination: `${GAZETTE_ORIGIN}/gazette/:path*` },
     ];
   },
   // Gazette covers are served from the public Supabase storage bucket.

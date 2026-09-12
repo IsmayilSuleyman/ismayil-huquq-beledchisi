@@ -5,11 +5,13 @@ account, read courses built from lessons, and their progress is saved on the
 account. Same glass-and-gradient design language as the İRF portal, in a
 cream and dark-wood palette.
 
-**Omni Law Gazette** — the weekly legislation digest — is a separate site
-(`IsmayilSuleyman/omnilawgazette`) with its own design. The two sites share
-one Supabase project and link to each other: the guide's header pill, phone
-tab and landing page point at the gazette, and the gazette's header pill points
-back. The landing page shows the gazette's latest issue from the shared table.
+**Omni Law Gazette** — the weekly legislation digest — is a separate app
+(`IsmayilSuleyman/omnilawgazette`, its own design and deployment) mounted
+under `/gazette` of this site: that app runs with `basePath: "/gazette"` and
+`next.config.ts` here proxies every `/gazette` request to it (Next.js
+multi-zones). Both share one Supabase project. The guide's header pill, phone
+tab and landing page link to `/gazette`; the gazette's header pill links back
+to `/`. The landing page shows the gazette's latest issue from the shared table.
 
 - **Stack:** Next.js 15 (App Router) + TypeScript + Tailwind + Supabase Auth
   (Google) + MDX content in the repo
@@ -70,8 +72,9 @@ Open <http://localhost:3000>. The landing page is public; `/courses` and
 `/account` require sign-in. Without the two env vars the site still builds and
 runs, but shows a "setup pending" notice instead of the Google button.
 
-`NEXT_PUBLIC_GAZETTE_URL` (set in `.env.production`) is where the gazette
-links go; override it if the gazette moves.
+`GAZETTE_ORIGIN` (in `.env.production`) is the gazette deployment the
+`/gazette` proxy targets; `NEXT_PUBLIC_GAZETTE_URL` is the mounted path used
+by links. Locally, `/gazette` proxies to the live gazette.
 
 `.npmrc` sets `legacy-peer-deps=true`: the Tailwind 3 / Vitest 4 dependency
 graph trips npm's strict peer resolver otherwise. Vercel reads the same file.
@@ -82,14 +85,15 @@ Checks: `npm test` (loader tests), `npm run lint`, `npm run build`.
 
 ## 3. Deploy to Vercel
 
-Import the repo on <https://vercel.com/new> as its own project (the gazette
-keeps the `omnilawgazette` project). `.env.production` carries the public
-Supabase values and the gazette URL, so no dashboard variables are needed;
-dashboard variables override the file if you add them. Then add the
-production hostname to the Supabase **Redirect URLs**
-(`https://<host>/auth/callback`) and to the Google client's **Authorized
-JavaScript origins**, and set `NEXT_PUBLIC_GUIDE_URL` on the gazette project
-if the hostname differs from `ismayilhuquqbeledchisi.vercel.app`.
+Import the repo on <https://vercel.com/new> as its own project and give it
+the public hostname (`ismayilhuquqbeledchisi.vercel.app`). The gazette keeps
+the `omnilawgazette` project; its production hostname must serve directly
+(no redirect rule), because this site proxies `/gazette` to it.
+`.env.production` carries the public Supabase values and the gazette origin,
+so no dashboard variables are needed; dashboard variables override the file
+if you add them. Then add the production hostname to the Supabase
+**Redirect URLs** (`https://<host>/auth/callback`) and to the Google client's
+**Authorized JavaScript origins**.
 
 ## 4. Adding a course
 
