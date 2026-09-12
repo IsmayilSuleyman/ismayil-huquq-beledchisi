@@ -11,6 +11,14 @@ const nextConfig: NextConfig = {
     "/courses/[course]/[lesson]": ["./content/**/*"],
     "/account": ["./content/**/*"],
   },
+  // Links from the standalone gazette keep working inside the guide.
+  async redirects() {
+    return [
+      { source: "/issues/:number", destination: "/gazette/:number", permanent: true },
+      { source: "/issues", destination: "/gazette", permanent: true },
+      { source: "/admin", destination: "/gazette/admin", permanent: true },
+    ];
+  },
   // Gazette covers are served from the public Supabase storage bucket.
   images: {
     remotePatterns: [
