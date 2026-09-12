@@ -4,25 +4,20 @@ import Link from "next/link";
 import { m } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { Mark, Wordmark } from "@/components/Wordmark";
-import { GazetteWordmark, OmniMark } from "@/components/gazette/OmniLogo";
+import { GAZETTE_URL } from "@/lib/gazette";
+import { Wordmark } from "@/components/Wordmark";
+import { OmniMark } from "@/components/gazette/OmniLogo";
 
-const GUIDE_NAV = [
+const NAV = [
   { href: "/courses", label: "Kurslar" },
   { href: "/account", label: "Hesab" },
 ];
 
-const GAZETTE_NAV = [
-  { href: "/gazette", label: "Kitabxana" },
-  { href: "/account", label: "Hesab" },
-];
-
 /**
- * Sticky site header shared by the guide and the gazette section. The
- * wordmark shows whichever platform you are on, and the pill next to it
- * switches to the other one — the same pattern as the İRF ↔ İsmayılBank
- * switch on the fund portal. Without a `name` (anonymous visitor on the
- * gazette) the account cluster collapses to a sign-in link.
+ * Sticky site header for the signed-in area. The pill next to the wordmark
+ * switches to the gazette site — the same pattern as the İRF ↔ İsmayılBank
+ * switch on the fund portal. Without a `name` the account cluster collapses
+ * to a sign-in link.
  */
 export function AppHeader({
   name,
@@ -34,8 +29,6 @@ export function AppHeader({
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createSupabaseBrowserClient();
-  const onGazette = pathname.startsWith("/gazette");
-  const nav = onGazette ? GAZETTE_NAV : GUIDE_NAV;
 
   const onLogout = async () => {
     if (supabase) {
@@ -54,31 +47,25 @@ export function AppHeader({
     >
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 py-4">
         <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-          {onGazette ? (
-            <Link href="/gazette" aria-label="Qəzetin kitabxanasına keçin" className="shrink-0">
-              <GazetteWordmark size="sm" />
-            </Link>
-          ) : (
-            <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
-              <Wordmark size="sm" />
-            </Link>
-          )}
+          <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
+            <Wordmark size="sm" />
+          </Link>
 
-          {/* Platform switch pill */}
-          <Link
-            href={onGazette ? "/courses" : "/gazette"}
-            aria-label={onGazette ? "İsmayıl Hüquq Bələdçisinə keç" : "Omni Law Gazette-ə keç"}
+          {/* Sister-site switch pill */}
+          <a
+            href={GAZETTE_URL}
+            aria-label="Omni Law Gazette-ə keç"
             className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/10 bg-white/80 px-3 py-2 transition hover:-translate-y-px hover:border-brand-brass/50 hover:shadow-sm dark:border-white/15 dark:bg-white/10"
           >
-            {onGazette ? <Mark size={22} /> : <OmniMark size={22} />}
+            <OmniMark size={22} />
             <span className="hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/55 dark:text-white/60 sm:inline">
-              {onGazette ? "Bələdçiyə keç" : "Qəzetə keç"}
+              Qəzetə keç
             </span>
-          </Link>
+          </a>
         </div>
 
         <nav className="hidden items-center gap-6 md:flex" aria-label="Bölmələr">
-          {nav.map((item) => {
+          {NAV.map((item) => {
             const active = pathname.startsWith(item.href);
             return (
               <Link

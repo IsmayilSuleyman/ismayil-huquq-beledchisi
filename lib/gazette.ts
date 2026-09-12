@@ -2,14 +2,22 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { getSupabaseConfig } from "@/lib/supabase/config";
 
 /**
- * Omni Law Gazette — the weekly legislation digest, now a section of the
- * guide. Issues are PDFs in the public `gazette` storage bucket; metadata
- * lives in the `issues` table, discussion in `comments`, and the editor
- * allow-list in `admin_emails`. Every write is guarded in the database by
- * `is_admin()`, which checks the signed-in email against that list.
+ * Omni Law Gazette — the weekly legislation digest — is a separate site
+ * that shares this Supabase project. The guide only reads its `issues`
+ * table (for the landing page) and links across; publishing, reading and
+ * discussion happen on the gazette site.
  */
 
 export const GAZETTE_BUCKET = "gazette";
+
+export const GAZETTE_URL = (
+  process.env.NEXT_PUBLIC_GAZETTE_URL ?? "https://omnilawgazette.vercel.app"
+).replace(/\/$/, "");
+
+/** Reading-room URL of an issue on the gazette site. */
+export function issueUrl(issueNumber: number): string {
+  return `${GAZETTE_URL}/issues/${issueNumber}`;
+}
 
 export type Issue = {
   id: string;

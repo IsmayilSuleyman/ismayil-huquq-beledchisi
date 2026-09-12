@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { GAZETTE_URL } from "@/lib/gazette";
 
 // Bottom tab bar shown on phones (hidden ≥sm) for the signed-in area.
 // Rendered once in the root layout; hides itself on public pages
 // (landing/login) where the page's own buttons cover navigation.
 
 export function isAppRoute(pathname: string): boolean {
-  return ["/courses", "/gazette", "/account"].some((p) => pathname.startsWith(p));
+  return ["/courses", "/account"].some((p) => pathname.startsWith(p));
 }
 
 const TABS = [
@@ -25,9 +26,9 @@ const TABS = [
     ),
   },
   {
-    href: "/gazette",
+    href: GAZETTE_URL,
     label: "Qəzet",
-    isActive: (p: string) => p.startsWith("/gazette"),
+    isActive: () => false,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 4h13v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z" />

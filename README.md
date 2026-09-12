@@ -5,13 +5,14 @@ account, read courses built from lessons, and their progress is saved on the
 account. Same glass-and-gradient design language as the İRF portal, in a
 cream and dark-wood palette.
 
-**Omni Law Gazette** — the weekly legislation digest — lives here too, as the
-`/gazette` section: a library of PDF issues, a reading room, open discussion
-under each issue, and an editor desk. The header carries a switch pill between
-the guide and the gazette, like the İRF ↔ İsmayılBank switch on the portal.
+**Omni Law Gazette** — the weekly legislation digest — is a separate site
+(`IsmayilSuleyman/omnilawgazette`) with its own design. The two sites share
+one Supabase project and link to each other: the guide's header pill, phone
+tab and landing page point at the gazette, and the gazette's header pill points
+back. The landing page shows the gazette's latest issue from the shared table.
 
 - **Stack:** Next.js 15 (App Router) + TypeScript + Tailwind + Supabase Auth
-  (Google) + MDX content in the repo + react-pdf for the gazette reader
+  (Google) + MDX content in the repo
 - **Hosting:** Vercel
 - **Language:** Azerbaijani UI and content
 
@@ -19,14 +20,14 @@ the guide and the gazette, like the İRF ↔ İsmayılBank switch on the portal.
 
 ## 1. Supabase setup
 
-The site shares one Supabase project with the gazette (originally the
+The site shares one Supabase project with the gazette (the
 `omni-law-gazette` project). It holds:
 
 - `lesson_progress` — the guide's per-user lesson completion (migration in
   `supabase/migrations/20260912120000_lesson_progress.sql`, already applied);
 - `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
-  — the gazette's data, guarded by the `is_admin()` policy that checks the
-  signed-in email against `admin_emails`.
+  — the gazette's data, managed from the gazette site. The guide only reads
+  `issues` for the landing page.
 
 Steps for a fresh project would be: create it, run the migration in
 **SQL Editor**, then configure Google sign-in below.
@@ -56,15 +57,6 @@ Steps for a fresh project would be: create it, run the migration in
 Sign-up is open by design: anyone with a Google account can sign in. Payments
 and plan gating come later.
 
-### Gazette editors
-
-Editors are the emails in `admin_emails`. An editor signs in with Google using
-that same email, then opens `/gazette/admin` to publish, edit and moderate.
-Existing editors add new ones from the **Redaktorlar** tab. The old gazette's
-email-and-password sign-in is not used here.
-
----
-
 ## 2. Local development
 
 ```bash
@@ -74,13 +66,12 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Open <http://localhost:3000>. The landing page and the gazette (`/gazette`)
-are public; `/courses`, `/account` and `/gazette/admin` require sign-in.
-Without the two env vars the site still builds and runs, but shows a "setup
-pending" notice instead of the Google button and an empty gazette.
+Open <http://localhost:3000>. The landing page is public; `/courses` and
+`/account` require sign-in. Without the two env vars the site still builds and
+runs, but shows a "setup pending" notice instead of the Google button.
 
-`npm install` also copies the pdf.js worker into `public/` (see
-`scripts/copy-pdf-worker.mjs`); the file is git-ignored.
+`NEXT_PUBLIC_GAZETTE_URL` (set in `.env.production`) is where the gazette
+links go; override it if the gazette moves.
 
 `.npmrc` sets `legacy-peer-deps=true`: the Tailwind 3 / Vitest 4 dependency
 graph trips npm's strict peer resolver otherwise. Vercel reads the same file.
@@ -91,28 +82,14 @@ Checks: `npm test` (loader tests), `npm run lint`, `npm run build`.
 
 ## 3. Deploy to Vercel
 
-The site is served by the existing **omnilawgazette** Vercel project at
-<https://ismayilhuquqbeledchisi.vercel.app> (the `omnilawgazette.vercel.app`
-alias redirects there). Until that project's Git connection is repointed to
-this repo, it deploys from the `omnilawgazette` GitHub repo, whose `main`
-mirrors this one through merge commits:
-
-```bash
-# from a clone of omnilawgazette with this repo added as remote "guide"
-git fetch guide main && git merge guide/main && git push origin main
-```
-
-To make this repo the direct source instead: **Project → Settings → Git**,
-disconnect `omnilawgazette`, connect `ismayil-huquq-beledchisi` with `main`
-as the production branch. Nothing else changes: `.env.production` carries the
-public Supabase values, the old key name `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-is accepted too, and `GAZETTE_HOSTS` (also in `.env.production`) lists the
-former gazette hostnames whose root should open `/gazette`.
-
-After any new hostname is added, put it in the Supabase **Redirect URLs**
-(`https://<host>/auth/callback`) and the Google client's **Authorized
-JavaScript origins**. Gazette pages are public and indexable; only
-`/gazette/admin` is `noindex`.
+Import the repo on <https://vercel.com/new> as its own project (the gazette
+keeps the `omnilawgazette` project). `.env.production` carries the public
+Supabase values and the gazette URL, so no dashboard variables are needed;
+dashboard variables override the file if you add them. Then add the
+production hostname to the Supabase **Redirect URLs**
+(`https://<host>/auth/callback`) and to the Google client's **Authorized
+JavaScript origins**, and set `NEXT_PUBLIC_GUIDE_URL` on the gazette project
+if the hostname differs from `ismayilhuquqbeledchisi.vercel.app`.
 
 ## 4. Adding a course
 
@@ -168,9 +145,6 @@ Rules:
 
 ```
 app/
-  gazette/page.tsx                Gazette library (masthead, latest issue, archive)
-  gazette/[number]/page.tsx       Reading room: PDF viewer, prev/next, comments
-  gazette/admin/page.tsx          Editor desk (publish, manage, editors)
   layout.tsx                      Root layout, fonts (Inter + Source Serif), theme script
   page.tsx                        Public landing page
   login/page.tsx                  Google sign-in card
@@ -180,21 +154,17 @@ app/
   courses/[course]/[lesson]/      Lesson page (MDX) + completion action
   account/page.tsx                Profile and per-course progress
 lib/
-  gazette.ts                      Gazette types, public reads, storage URLs
-  gazette-editor.ts               Server-only editor allow-list check
-  gazette-format.ts               Azerbaijani date / size / relative-time helpers
-  pdf-analyze.ts                  Page count + cover render for the publish flow
+  gazette.ts                      Gazette issue reads (landing page) + site URL
+  gazette-format.ts               Azerbaijani date helpers
   content.ts                      File-based course/lesson loader
   progress.ts                     Completed-lessons reads and per-course maths
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
   supabase/                       Server, browser clients and env config
 components/
-  AppHeader (with the guide ↔ gazette switch pill), MobileTabBar, ThemeToggle,
+  AppHeader (with the switch pill to the gazette), MobileTabBar, ThemeToggle,
   PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
-  ProgressBar, Skeleton, StatTile
-  gazette/                        OmniLogo, IssueCard, LibraryExplorer, PdfViewer,
-                                  Comments, DownloadButton, RegisterRead, admin/*
+  ProgressBar, Skeleton, StatTile, gazette/OmniLogo
 content/courses/                  Courses and lessons (MDX)
 supabase/migrations/              lesson_progress table + policies
 tests/                            Vitest: content loader
@@ -204,7 +174,7 @@ middleware.ts                     Auth gate for /courses and /account
 ## Roadmap
 
 1. ✅ Design system, Google sign-in, file-based courses, lesson progress
-   ✅ Omni Law Gazette folded in as the `/gazette` section
+   ✅ Linked with Omni Law Gazette (separate site, shared database)
 2. Private beta with a few readers; more courses
 3. Tests and quizzes per lesson (MDX components + attempts table)
 4. AI tutor grounded in the open lesson

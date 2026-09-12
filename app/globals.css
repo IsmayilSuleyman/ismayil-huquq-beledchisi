@@ -241,9 +241,8 @@ body {
 }
 
 /* ============================================================
-   Gazette section controls — ported from Omni Law Gazette and re-skinned
-   in the cream / dark-wood tokens. Kept as classes because the reader and
-   editor desk use them dozens of times.
+   Shared controls (buttons, fields, chips, skeletons). Kept as classes
+   because the landing page and forms use them dozens of times.
    ============================================================ */
 @layer components {
   .btn {
@@ -332,39 +331,4 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .rise { animation: none; }
-}
-
-/* ---------- pdf.js page chrome ---------- */
-.react-pdf__Page {
-  background: transparent !important;
-  display: flex;
-  justify-content: center;
-}
-.react-pdf__Page__canvas {
-  border-radius: 6px;
-  box-shadow: 0 14px 48px -16px rgba(62, 42, 31, 0.45), 0 0 0 1px rgba(62, 42, 31, 0.08);
-}
-.dark .react-pdf__Page__canvas {
-  box-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.07);
-}
-.react-pdf__Page__textContent mark {
-  background: rgba(201, 167, 95, 0.85);
-  color: transparent;
-  border-radius: 2px;
-  padding: 0 1px;
-}
-.pdf-thumb .react-pdf__Thumbnail__page__canvas,
-.pdf-thumb canvas {
-  border-radius: 4px;
-  width: 100% !important;
-  height: auto !important;
-}
-
-/* Fullscreen reader gets a solid backdrop */
-.pdf-shell:fullscreen {
-  background: #f6efe3;
-  padding: 0.75rem;
-}
-.dark .pdf-shell:fullscreen {
-  background: #14100d;
 }

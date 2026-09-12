@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+const GAZETTE_URL = (
+  process.env.NEXT_PUBLIC_GAZETTE_URL ?? "https://omnilawgazette.vercel.app"
+).replace(/\/$/, "");
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   // Course content is read from disk at request time; make sure the MDX
@@ -11,12 +15,13 @@ const nextConfig: NextConfig = {
     "/courses/[course]/[lesson]": ["./content/**/*"],
     "/account": ["./content/**/*"],
   },
-  // Links from the standalone gazette keep working inside the guide.
+  // The gazette is its own site; anything that pointed at the short-lived
+  // in-guide section forwards there.
   async redirects() {
     return [
-      { source: "/issues/:number", destination: "/gazette/:number", permanent: true },
-      { source: "/issues", destination: "/gazette", permanent: true },
-      { source: "/admin", destination: "/gazette/admin", permanent: true },
+      { source: "/gazette", destination: GAZETTE_URL, permanent: false },
+      { source: "/gazette/admin", destination: `${GAZETTE_URL}/admin`, permanent: false },
+      { source: "/gazette/:number(\\d+)", destination: `${GAZETTE_URL}/issues/:number`, permanent: false },
     ];
   },
   // Gazette covers are served from the public Supabase storage bucket.
@@ -28,12 +33,6 @@ const nextConfig: NextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
     ],
-  },
-  // pdf.js probes for the optional `canvas` package; it is browser-only
-  // here, so tell webpack not to try resolving it.
-  webpack: (config) => {
-    config.resolve.alias = { ...config.resolve.alias, canvas: false };
-    return config;
   },
 };
 
