@@ -1,12 +1,12 @@
 // İsmayıl Hüquq Bələdçisi logo: the four-pointed cross mark in gold and
-// bronze (public/images/ihb-mark.png) beside the name set in heavy
-// geometric capitals, matching the supplied logo artwork.
+// bronze (public/images/ihb-mark.svg, traced from the artwork) beside the name in
+// Nunito Extra Bold capitals, matching the supplied logo artwork.
 
 export function Mark({ size = 28, className = "" }: { size?: number; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/images/ihb-mark.png"
+      src="/images/ihb-mark.svg"
       alt=""
       aria-hidden
       width={size}
