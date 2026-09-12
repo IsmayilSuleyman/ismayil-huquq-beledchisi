@@ -5,7 +5,6 @@ import { listCourses, countLessons } from "@/lib/content";
 import { GAZETTE_URL, issueUrl, listIssues } from "@/lib/gazette";
 import { formatDate } from "@/lib/gazette-format";
 import { Wordmark } from "@/components/Wordmark";
-import { OmniMark } from "@/components/gazette/OmniLogo";
 import { MotionSection } from "@/components/MotionSection";
 import { ProgressBar } from "@/components/ProgressBar";
 
@@ -200,12 +199,9 @@ export default async function HomePage({
               )}
             </Link>
             <div className="flex min-w-0 flex-col justify-center p-6 sm:p-8">
-              <div className="flex flex-wrap items-center gap-3">
-                <OmniMark size={22} />
-                <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
-                  Omni Law Gazette · Sonuncu buraxılış
-                </span>
-              </div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
+                Omni Law Gazette · Sonuncu buraxılış
+              </p>
               <h2 className="mt-3 text-xl font-bold leading-snug tracking-[-0.02em] text-ink dark:text-brand-cream sm:text-2xl">
                 {latest.title}
               </h2>
