@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat, Source_Serif_4 } from "next/font/google";
+import { Inter, Nunito, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { PageBackground } from "@/components/PageBackground";
 import { MotionProvider } from "@/components/MotionProvider";
@@ -18,8 +18,8 @@ const inter = Inter({
   display: "swap",
 });
 
-// Brand face for the wordmark only: heavy geometric capitals, as in the logo.
-const brand = Montserrat({
+// Brand face for the wordmark only: Nunito Extra Bold, as in the logo.
+const brand = Nunito({
   subsets: ["latin", "latin-ext"],
   weight: ["800"],
   variable: "--font-brand",
