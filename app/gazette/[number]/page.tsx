@@ -20,12 +20,11 @@ type Params = Promise<{ number: string }>;
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
   const { number } = await params;
   const issue = await getIssue(number);
-  if (!issue) return { title: "Buraxılış tapılmadı", robots: { index: false, follow: false } };
+  if (!issue) return { title: "Buraxılış tapılmadı" };
   return {
     title: `№ ${issue.issue_number} — ${issue.title} · Omni Law Gazette`,
     description: issue.summary ?? undefined,
-    robots: { index: false, follow: false },
-  };
+    };
 }
 
 export default async function IssuePage({ params }: { params: Params }) {

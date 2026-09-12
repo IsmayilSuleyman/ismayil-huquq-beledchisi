@@ -91,13 +91,26 @@ Checks: `npm test` (loader tests), `npm run lint`, `npm run build`.
 
 ## 3. Deploy to Vercel
 
-1. Import the repo on <https://vercel.com/new>.
-2. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` under
-   **Project → Settings → Environment Variables**.
-3. Deploy, then add the Vercel URL (or your domain) to the Supabase
-   **Redirect URLs** and the Google client's **Authorized JavaScript origins**.
+Reuse the existing **omnilawgazette** Vercel project rather than creating a
+new one, so its hostnames and settings carry over:
 
----
+1. **Project → Settings → Git**: disconnect `IsmayilSuleyman/omnilawgazette`
+   and connect `IsmayilSuleyman/ismayil-huquq-beledchisi` (production branch
+   `main`).
+2. **Settings → Environment Variables**: the site reads
+   `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and also
+   accepts the old name `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for the key, so
+   whatever the gazette project already has keeps working.
+3. Optional: set `GAZETTE_HOSTS` to the hostnames that used to serve the
+   standalone gazette (comma-separated, e.g.
+   `omnilawgazette-ismayilsuleymans-projects.vercel.app`). Requests to `/` on
+   those hosts redirect to `/gazette`; every other host lands on the guide.
+4. Redeploy, then add the production hostname to the Supabase
+   **Redirect URLs** (`https://<host>/auth/callback`) and to the Google
+   client's **Authorized JavaScript origins**.
+
+The gazette pages are public and indexable; only `/gazette/admin` is
+`noindex`.
 
 ## 4. Adding a course
 

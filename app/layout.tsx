@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Source_Serif_4 } from "next/font/google";
+import { Inter, Montserrat, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { PageBackground } from "@/components/PageBackground";
 import { MotionProvider } from "@/components/MotionProvider";
@@ -15,6 +15,14 @@ const themeInitScript = `(function(){var t=null;try{t=localStorage.getItem("them
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+// Brand face for the wordmark only: heavy geometric capitals, as in the logo.
+const brand = Montserrat({
+  subsets: ["latin", "latin-ext"],
+  weight: ["800"],
+  variable: "--font-brand",
   display: "swap",
 });
 
@@ -50,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      className={`${inter.variable} ${serif.variable}`}
+      className={`${inter.variable} ${serif.variable} ${brand.variable}`}
       suppressHydrationWarning
     >
       <head>

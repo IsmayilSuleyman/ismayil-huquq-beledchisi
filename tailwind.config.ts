@@ -48,6 +48,7 @@ const config: Config = {
           "system-ui",
           "sans-serif",
         ],
+        brand: ["var(--font-brand)", "Montserrat", "var(--font-inter)", "sans-serif"],
         serif: [
           "var(--font-serif)",
           "Georgia",

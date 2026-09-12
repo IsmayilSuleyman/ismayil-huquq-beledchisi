@@ -14,7 +14,6 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Omni Law Gazette",
   description: "Qanunvericilikdəki dəyişikliklərin həftəlik icmalı — bütün buraxılışların kitabxanası.",
-  robots: { index: false, follow: false },
 };
 
 export default async function GazettePage() {
