@@ -1,0 +1,87 @@
+{
+  "title": "Hüquq qabiliyyəti və fəaliyyət qabiliyyəti",
+  "description": "Mülki Məcəllənin 25 və 28-ci maddələri, yaş həddləri, emansipasiya, məhdudlaşdırma, hüquqi şəxslər.",
+  "order": 3,
+  "source": {
+    "label": "Dərs: Mülki hüquq qabiliyyəti və fəaliyyət qabiliyyəti",
+    "href": "/courses/huququn-esaslari/huquq-qabiliyyeti"
+  },
+  "newPerDay": 15,
+  "cards": [
+    {
+      "id": "c1",
+      "front": "Mülki hüquq qabiliyyəti nədir?",
+      "back": "Mülki hüquqlara malik olmaq və mülki vəzifələr daşımaq qabiliyyəti."
+    },
+    {
+      "id": "c2",
+      "front": "Fiziki şəxsin hüquq qabiliyyəti nə vaxt yaranır və nə vaxt xitam olunur?",
+      "back": "Doğulduğu andan yaranır, ölümü ilə xitam olunur (Mülki Məcəllə, 25-ci maddə)."
+    },
+    {
+      "id": "c3",
+      "front": "Hüquq qabiliyyəti şəxsin yaşından və ya sağlamlığından asılıdırmı?",
+      "back": "Xeyr; bütün fiziki şəxslərin hüquq qabiliyyəti bərabərdir."
+    },
+    {
+      "id": "c4",
+      "front": "Hüquq qabiliyyətini məhdudlaşdıran əqdin hüquqi nəticəsi nədir?",
+      "back": "Belə əqd etibarsızdır; heç kəs öz hüquq qabiliyyətindən imtina edə bilməz."
+    },
+    {
+      "id": "c5",
+      "front": "Mülki fəaliyyət qabiliyyəti nədir?",
+      "back": "Şəxsin öz hərəkətləri ilə mülki hüquqlar əldə etmək və həyata keçirmək, özü üçün vəzifələr yaratmaq və icra etmək qabiliyyəti."
+    },
+    {
+      "id": "c6",
+      "front": "Fəaliyyət qabiliyyəti tam həcmdə nə vaxt yaranır?",
+      "back": "Yetkinlik yaşına, on səkkiz yaşa çatdıqda (28-ci maddə)."
+    },
+    {
+      "id": "c7",
+      "front": "On səkkiz yaşınadək tam fəaliyyət qabiliyyətinin iki istisnası hansılardır?",
+      "back": "Qanunla yol verilən nikaha daxil olma; emansipasiya (on altı yaşdan, əmək müqaviləsi ilə işləyən və ya sahibkarlıqla məşğul olan)."
+    },
+    {
+      "id": "c8",
+      "front": "Emansipasiya nədir?",
+      "back": "On altı yaşına çatmış yetkinlik yaşına çatmayanın tam fəaliyyət qabiliyyətli elan edilməsi."
+    },
+    {
+      "id": "c9",
+      "front": "Yeddi yaşınadək uşaqların adından əqdləri kim bağlayır?",
+      "back": "Valideynlər, övladlığa götürənlər və ya qəyyumlar; azyaşlıların fəaliyyət qabiliyyəti yoxdur."
+    },
+    {
+      "id": "c10",
+      "front": "Yeddi yaşından on səkkiz yaşınadək şəxslər hansı əqdləri müstəqil bağlaya bilər?",
+      "back": "Xırda məişət əqdlərini; digər əqdlər üçün qanuni nümayəndələrin razılığı tələb olunur."
+    },
+    {
+      "id": "c11",
+      "front": "On dörd yaşından etibarən hansı əlavə hüquq yaranır?",
+      "back": "Öz qazancına, təqaüdünə və digər gəlirlərinə müstəqil sərəncam vermək."
+    },
+    {
+      "id": "c12",
+      "front": "Fəaliyyət qabiliyyəti hansı orqanın qərarı ilə məhdudlaşdırıla bilər?",
+      "back": "Yalnız məhkəmənin qərarı ilə, qanunla müəyyən edilmiş hallarda və qaydada."
+    },
+    {
+      "id": "c13",
+      "front": "Psixi pozuntu səbəbindən öz hərəkətlərinin mənasını başa düşməyən şəxs üzərində nə təyin olunur?",
+      "back": "Qəyyumluq; şəxs məhkəmə tərəfindən fəaliyyət qabiliyyəti olmayan hesab edilir."
+    },
+    {
+      "id": "c14",
+      "front": "Spirtli içki və ya narkotik sui-istifadəsi ilə ailəsini ağır maddi vəziyyətə salan şəxs üzərində nə təyin olunur?",
+      "back": "Himayəçilik; fəaliyyət qabiliyyəti məhkəmə tərəfindən məhdudlaşdırılır."
+    },
+    {
+      "id": "c15",
+      "front": "Hüquqi şəxsin hüquq və fəaliyyət qabiliyyəti nə vaxt yaranır?",
+      "back": "Eyni vaxtda: dövlət qeydiyyatına alındığı andan; ləğv başa çatdıqda xitam olunur."
+    }
+  ]
+}

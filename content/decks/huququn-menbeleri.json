@@ -1,0 +1,82 @@
+{
+  "title": "Hüququn mənbələri və aktların iyerarxiyası",
+  "description": "Formal mənbələr, Konstitusiyanın 147–151-ci maddələri, qüvvəyə minmə və geriyə qüvvə.",
+  "order": 2,
+  "source": {
+    "label": "Dərs: Hüququn mənbələri",
+    "href": "/courses/huququn-esaslari/huququn-menbeleri"
+  },
+  "newPerDay": 15,
+  "cards": [
+    {
+      "id": "c1",
+      "front": "Hüququn mənbəyi (formal mənada) nədir?",
+      "back": "Hüquq normalarının ifadə olunduğu və ümumməcburi xarakter qazandığı rəsmi forma."
+    },
+    {
+      "id": "c2",
+      "front": "Hüququn beş formal mənbəyini sadalayın.",
+      "back": "Normativ hüquqi akt, hüquqi adət, məhkəmə presedenti, normativ müqavilə, hüquq doktrinası."
+    },
+    {
+      "id": "c3",
+      "front": "Azərbaycan Respublikası hansı hüquq ailəsinə aiddir və bu nəyi bildirir?",
+      "back": "Roman-german (kontinental) hüquq ailəsinə; əsas mənbə normativ hüquqi aktdır, məhkəmə presedenti rəsmi mənbə deyil."
+    },
+    {
+      "id": "c4",
+      "front": "Konstitusiyanın 148-ci maddəsinə görə qanunvericilik sisteminə hansı aktlar daxildir?",
+      "back": "Konstitusiya; referendumla qəbul edilmiş aktlar; qanunlar; Prezidentin fərmanları; Nazirlər Kabinetinin qərarları; mərkəzi icra hakimiyyəti orqanlarının normativ aktları."
+    },
+    {
+      "id": "c5",
+      "front": "Beynəlxalq müqavilələr qanunvericilik sistemində hansı yeri tutur?",
+      "back": "Azərbaycan Respublikasının tərəfdar çıxdığı beynəlxalq müqavilələr qanunvericilik sisteminin ayrılmaz tərkib hissəsidir."
+    },
+    {
+      "id": "c6",
+      "front": "Konstitusiyanın 147-ci maddəsi Konstitusiyaya hansı iki xüsusiyyəti verir?",
+      "back": "Ən yüksək hüquqi qüvvə və birbaşa hüquqi qüvvə."
+    },
+    {
+      "id": "c7",
+      "front": "\"Birbaşa hüquqi qüvvə\" nə deməkdir?",
+      "back": "Konstitusiya normalarına istinad etmək üçün əlavə qanunun qəbulu tələb olunmur."
+    },
+    {
+      "id": "c8",
+      "front": "Prezidentin fərmanları hansı aktlara zidd ola bilməz?",
+      "back": "Konstitusiyaya və qanunlara (149-cu maddə)."
+    },
+    {
+      "id": "c9",
+      "front": "Nazirlər Kabinetinin qərarları hansı aktlara zidd ola bilməz?",
+      "back": "Konstitusiyaya, qanunlara və Prezidentin fərmanlarına (149-cu maddə)."
+    },
+    {
+      "id": "c10",
+      "front": "Qanunla dövlətlərarası müqavilə arasında ziddiyyət olduqda hansı tətbiq edilir?",
+      "back": "Beynəlxalq müqavilə (151-ci maddə); istisna: Konstitusiya və referendumla qəbul edilən aktlar."
+    },
+    {
+      "id": "c11",
+      "front": "Normativ hüquqi akt bir qayda olaraq nə vaxt qüvvəyə minir?",
+      "back": "Rəsmi dərc edildiyi gündən; aktın özündə başqa müddət göstərilə bilər."
+    },
+    {
+      "id": "c12",
+      "front": "Hansı aktların qüvvəsi geriyə şamil edilir?",
+      "back": "Şəxslərin hüquqi vəziyyətini yaxşılaşdıran, hüquqi məsuliyyəti aradan qaldıran və ya yüngülləşdirən aktların (149-cu maddə)."
+    },
+    {
+      "id": "c13",
+      "front": "Aktların hazırlanması, qəbulu və qüvvəyə minməsi hansı aktla tənzimlənir?",
+      "back": "\"Normativ hüquqi aktlar haqqında\" Azərbaycan Respublikasının Konstitusiya Qanunu ilə."
+    },
+    {
+      "id": "c14",
+      "front": "Rəsmi mətnlər üçün hansı bazaya müraciət edilir?",
+      "back": "Hüquqi Aktların Vahid İnternet Elektron Bazasına (e-qanun.az)."
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Hüquq anlayışı və hüququn əlamətləri",
+  "description": "Hüququn tərifi, dörd əlaməti, obyektiv və subyektiv hüquq, normanın ünsürləri, hüquq sahələri.",
+  "order": 1,
+  "source": {
+    "label": "Dərs: Hüquq anlayışı və hüququn əlamətləri",
+    "href": "/courses/huququn-esaslari/huquq-anlayisi"
+  },
+  "newPerDay": 15,
+  "cards": [
+    {
+      "id": "c1",
+      "front": "Hüquq nədir?",
+      "back": "Dövlət tərəfindən müəyyən edilən və ya sanksiyalaşdırılan, ümumməcburi, formal müəyyən olunmuş və dövlətin məcburetmə qüvvəsi ilə təmin edilən davranış qaydalarının (hüquq normalarının) sistemi."
+    },
+    {
+      "id": "c2",
+      "front": "Hüququn dörd əsas əlaməti hansılardır?",
+      "back": "Normativlik, ümumməcburilik, formal müəyyənlik, dövlət təminatı.",
+      "hint": "N-Ü-F-D"
+    },
+    {
+      "id": "c3",
+      "front": "Normativlik əlaməti nəyi bildirir?",
+      "back": "Hüquq ayrı-ayrı göstərişlərdən deyil, qeyri-müəyyən sayda hallara və şəxslərə şamil edilən ümumi qaydalardan ibarətdir."
+    },
+    {
+      "id": "c4",
+      "front": "Hüququ əxlaq normalarından fərqləndirən əlamət hansıdır?",
+      "back": "Dövlət təminatı: hüquq normasının pozulması dövlətin məcburetmə tədbirlərinə səbəb olur; əxlaq normasının pozulması ictimai qınaqla qarşılanır."
+    },
+    {
+      "id": "c5",
+      "front": "Obyektiv hüquq nədir?",
+      "back": "Konkret şəxsdən asılı olmayaraq mövcud olan hüquq normalarının məcmusu (məsələn, Azərbaycan Respublikasının mülki hüququ)."
+    },
+    {
+      "id": "c6",
+      "front": "Subyektiv hüquq nədir?",
+      "back": "Obyektiv hüquqla konkret şəxsə verilən mümkün davranış ölçüsü (məsələn, mülkiyyətçinin öz əmlakına sahiblik etmək hüququ)."
+    },
+    {
+      "id": "c7",
+      "front": "Subyektiv hüquqa nə qarşı durur?",
+      "back": "Başqa şəxsin hüquqi vəzifəsi: alıcının malı tələb etmək hüququna satıcının malı təhvil vermək vəzifəsi uyğun gəlir."
+    },
+    {
+      "id": "c8",
+      "front": "Hüquq normasının üç ünsürü hansılardır?",
+      "back": "Hipoteza (hansı şərtlərlə?), dispozisiya (necə davranmalı?), sanksiya (əməl edilmədikdə nə olur?)."
+    },
+    {
+      "id": "c9",
+      "front": "Hipoteza hansı suala cavab verir?",
+      "back": "Norma hansı şərtlər daxilində tətbiq edilir?"
+    },
+    {
+      "id": "c10",
+      "front": "Sanksiya hansı suala cavab verir?",
+      "back": "Dispozisiyaya əməl edilmədikdə hansı nəticələr yaranır?"
+    },
+    {
+      "id": "c11",
+      "front": "Ümumi (publik) hüquq sahələrinə misal göstərin.",
+      "back": "Konstitusiya, inzibati, cinayət hüququ: dövlətin iştirak etdiyi hakimiyyət-tabeçilik münasibətləri."
+    },
+    {
+      "id": "c12",
+      "front": "Xüsusi hüquq sahələrinə misal göstərin.",
+      "back": "Mülki, ailə, əmək hüququ: bərabərhüquqlu subyektlər arasındakı münasibətlər."
+    },
+    {
+      "id": "c13",
+      "front": "Hüquq institutu nədir?",
+      "back": "Hüquq sahəsinin tərkibində eynicinsli münasibətləri tənzimləyən normalar qrupu (məsələn, mülki hüquqda mülkiyyət, öhdəlik, vərəsəlik institutları)."
+    },
+    {
+      "id": "c14",
+      "front": "Hüquqi fakt nədir?",
+      "back": "Hüquq münasibətlərinin yaranmasına, dəyişməsinə və ya xitamına səbəb olan hal: hadisə və ya hərəkət."
+    },
+    {
+      "id": "c15",
+      "front": "Hüquq subyekti kim ola bilər?",
+      "back": "Fiziki şəxs, hüquqi şəxs, dövlət."
+    }
+  ]
+}

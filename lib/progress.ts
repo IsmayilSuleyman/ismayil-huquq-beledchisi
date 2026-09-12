@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Course } from "@/lib/content";
+import type { CardState } from "@/lib/srs";
 
 /** Key used in the completed-lessons set: "course-slug/lesson-slug". */
 export function progressKey(courseSlug: string, lessonSlug: string): string {
@@ -112,4 +113,80 @@ export function countPassed(bests: Map<string, QuizBest>): number {
   let n = 0;
   for (const b of bests.values()) if (b.passed) n += 1;
   return n;
+}
+
+export type CardStateRow = CardState & { deckSlug: string; cardId: string; lastRating: number | null; reviewedAt: string };
+
+export function cardKey(deckSlug: string, cardId: string): string {
+  return `${deckSlug}/${cardId}`;
+}
+
+/** Every card the signed-in person has reviewed, keyed "deck/card". */
+export async function getCardStates(userId: string): Promise<Map<string, CardStateRow>> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return new Map();
+
+  const { data, error } = await supabase
+    .from("card_reviews")
+    .select("deck_slug, card_id, ease, interval_days, repetitions, lapses, reviews, last_rating, due_at, reviewed_at")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("card_reviews read failed:", error);
+    return new Map();
+  }
+
+  const map = new Map<string, CardStateRow>();
+  for (const r of data ?? []) {
+    map.set(cardKey(r.deck_slug, r.card_id), {
+      deckSlug: r.deck_slug,
+      cardId: r.card_id,
+      ease: Number(r.ease),
+      intervalDays: r.interval_days,
+      repetitions: r.repetitions,
+      lapses: r.lapses,
+      reviews: r.reviews,
+      lastRating: r.last_rating,
+      dueAt: r.due_at,
+      reviewedAt: r.reviewed_at,
+    });
+  }
+  return map;
+}
+
+export type DeckStats = {
+  total: number;
+  /** Cards never reviewed. */
+  fresh: number;
+  /** Reviewed cards whose due date has passed. */
+  due: number;
+  /** Cards with at least one successful review in a row. */
+  learned: number;
+  /** Cards reviewed today (local calendar day of the server). */
+  reviewedToday: number;
+};
+
+export function deckStats(
+  deckSlug: string,
+  cardIds: string[],
+  states: Map<string, CardStateRow>,
+  now: Date = new Date(),
+): DeckStats {
+  const dayStart = new Date(now);
+  dayStart.setHours(0, 0, 0, 0);
+  let fresh = 0;
+  let due = 0;
+  let learned = 0;
+  let reviewedToday = 0;
+  for (const id of cardIds) {
+    const s = states.get(cardKey(deckSlug, id));
+    if (!s) {
+      fresh += 1;
+      continue;
+    }
+    if (new Date(s.dueAt).getTime() <= now.getTime()) due += 1;
+    if (s.repetitions > 0) learned += 1;
+    if (new Date(s.reviewedAt).getTime() >= dayStart.getTime()) reviewedToday += 1;
+  }
+  return { total: cardIds.length, fresh, due, learned, reviewedToday };
 }

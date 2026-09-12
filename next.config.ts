@@ -11,6 +11,7 @@ const nextConfig: NextConfig = {
     "/courses/[course]/[lesson]": ["./content/**/*"],
     "/account": ["./content/**/*"],
     "/learn": ["./content/**/*"],
+    "/learn/[deck]": ["./content/**/*"],
     "/resources": ["./content/**/*"],
     "/resources/[slug]": ["./content/**/*"],
   },

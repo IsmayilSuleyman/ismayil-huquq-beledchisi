@@ -29,6 +29,8 @@ The site shares one Supabase project with the gazette (the
 
 - `lesson_progress` — the guide's per-user lesson completion (migration in
   `supabase/migrations/20260912120000_lesson_progress.sql`, already applied);
+- `card_reviews` — spaced-repetition state per flashcard
+  (`supabase/migrations/20260912220000_card_reviews.sql`, already applied);
 - `quiz_attempts` — every test submission with score, pass flag and the
   chosen answers (`supabase/migrations/20260912200000_quiz_attempts.sql`,
   already applied);
@@ -106,6 +108,31 @@ working. Then add the production hostname to the Supabase **Redirect URLs**
 JavaScript origins**.
 
 ## 4. Adding a course
+
+### Flashcard decks ("Öyrən")
+
+One JSON file per deck under `content/decks/`:
+
+```json
+{
+  "title": "Hüquq anlayışı və hüququn əlamətləri",
+  "description": "One line for the deck card.",
+  "order": 1,
+  "source": { "label": "Dərs: Hüquq anlayışı", "href": "/courses/huququn-esaslari/huquq-anlayisi" },
+  "newPerDay": 15,
+  "cards": [
+    { "id": "c1", "front": "Sual", "back": "Cavab", "hint": "optional" }
+  ]
+}
+```
+
+Scheduling is SM-2 as in Anki (`lib/srs.ts`): four ratings, Yenidən /
+Çətin / Yaxşı / Asan; good answers go 1 day, 6 days, then interval × ease;
+"Yenidən" resets the card and brings it back within the session. A session
+queues due cards (oldest first) then new cards up to `newPerDay`. The server
+action recomputes the schedule from the stored state, so the browser cannot
+forge it. Card ids are stable keys into `card_reviews`: renaming one orphans
+its schedule.
 
 ### Study material on a law or legal act ("Mənbələr")
 
@@ -228,7 +255,7 @@ app/
   (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion
                                   and grading actions
   (guide)/account/page.tsx        Profile and per-course progress
-  (guide)/learn/page.tsx          "Öyrən": where to continue, open tests
+  (guide)/learn/                  "Öyrən": flashcard decks with spaced repetition; [deck]/ a session
   (guide)/resources/              "Mənbələr": laws and acts with study materials; [slug]/ one act
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
   (gazette)/gazette/              Library, issues/[number] viewer, admin
@@ -239,6 +266,8 @@ lib/
   content.ts                      File-based course/lesson loader
   quiz.ts                         Test loader, validation and grading
   sources.ts                      Study-material loader for laws and acts
+  decks.ts                        Flashcard deck loader
+  srs.ts                          SM-2 scheduler (pure functions)
   progress.ts                     Completed lessons, best test scores, per-course maths
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
@@ -247,13 +276,14 @@ components/
   AppHeader (edge-to-edge, switch pill to the gazette), SectionMenu
   (Öyrən / Kurslar / Mənbələr dropdown), MobileTabBar, ThemeToggle,
   PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
-  ProgressBar, Skeleton, StatTile, LessonQuiz, gazette/OmniLogo
+  ProgressBar, Skeleton, StatTile, LessonQuiz, FlashcardSession, gazette/OmniLogo
 components/gazette/               Gazette UI: SiteHeader (pill back to /), IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
+content/decks/                    Flashcard decks (JSON)
 scripts/                          pdf.js worker copy, gazette scraper and drafts
-supabase/migrations/              lesson_progress and quiz_attempts tables + policies
+supabase/migrations/              lesson_progress, quiz_attempts, card_reviews + policies
 tests/                            Vitest: content loader, tests, lesson compile, dates
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
@@ -263,7 +293,8 @@ middleware.ts                     Auth gate for /courses, /account, /learn, /res
 1. ✅ Design system, Google sign-in, file-based courses, lesson progress
    ✅ Omni Law Gazette folded in at `/gazette`, original design, shared database
    ✅ Tests per lesson with saved attempts and best scores
-   ✅ "Mənbələr": study materials on laws and legal acts; "Öyrən" desk
+   ✅ "Mənbələr": study materials on laws and legal acts
+   ✅ "Öyrən": flashcards with Anki-style spaced repetition
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

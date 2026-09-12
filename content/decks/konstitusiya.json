@@ -1,0 +1,82 @@
+{
+  "title": "Konstitusiyanın quruluşu və əsas prinsipləri",
+  "description": "Bölmələr və fəsillər, xalq hakimiyyəti, hakimiyyət bölgüsü, dəyişikliklər və əlavələr.",
+  "order": 4,
+  "source": {
+    "label": "Mənbə: Azərbaycan Respublikasının Konstitusiyası",
+    "href": "/resources/konstitusiya"
+  },
+  "newPerDay": 15,
+  "cards": [
+    {
+      "id": "c1",
+      "front": "Konstitusiya nə vaxt və necə qəbul edilib?",
+      "back": "1995-ci il noyabrın 12-də ümumxalq səsverməsi (referendum) ilə; noyabrın 27-də qüvvəyə minib."
+    },
+    {
+      "id": "c2",
+      "front": "Konstitusiyaya hansı illərdə referendumla dəyişikliklər edilib?",
+      "back": "2002, 2009 və 2016-cı illərdə."
+    },
+    {
+      "id": "c3",
+      "front": "Konstitusiya neçə bölmə, fəsil və maddədən ibarətdir?",
+      "back": "Beş bölmə, on iki fəsil, 158 maddə."
+    },
+    {
+      "id": "c4",
+      "front": "I bölmə nəyə həsr olunub?",
+      "back": "Ümumi müddəalara: xalq hakimiyyəti və dövlətin əsasları."
+    },
+    {
+      "id": "c5",
+      "front": "II bölmə nəyə həsr olunub?",
+      "back": "Əsas hüquqlar, azadlıqlar və vəzifələrə (III və IV fəsillər)."
+    },
+    {
+      "id": "c6",
+      "front": "III bölmədə hansı hakimiyyət qolları verilir?",
+      "back": "Qanunvericilik (Milli Məclis), icra (Prezident, Nazirlər Kabineti), məhkəmə hakimiyyəti; ayrıca Naxçıvan Muxtar Respublikası."
+    },
+    {
+      "id": "c7",
+      "front": "V bölmə (\"Hüquq və qanun\") hansı məsələləri tənzimləyir?",
+      "back": "Qanunvericilik sistemi, Konstitusiyaya dəyişikliklər və Konstitusiyaya əlavələr."
+    },
+    {
+      "id": "c8",
+      "front": "Dövlət hakimiyyətinin yeganə mənbəyi kimdir?",
+      "back": "Azərbaycan xalqı; hakimiyyət bilavasitə (referendum, seçkilər) və nümayəndələr vasitəsilə həyata keçirilir."
+    },
+    {
+      "id": "c9",
+      "front": "Konstitusiyanın 7-ci maddəsi hansı prinsipi təsbit edir?",
+      "back": "Hakimiyyət bölgüsü: qanunvericilik, icra və məhkəmə hakimiyyəti qarşılıqlı fəaliyyət göstərir və öz səlahiyyətləri çərçivəsində müstəqildir."
+    },
+    {
+      "id": "c10",
+      "front": "Konstitusiyanın 12-ci maddəsinə görə dövlətin ali məqsədi nədir?",
+      "back": "İnsan və vətəndaş hüquqlarının və azadlıqlarının təmin edilməsi."
+    },
+    {
+      "id": "c11",
+      "front": "71-ci maddə nəyi müəyyən edir?",
+      "back": "Əsas hüquq və azadlıqların təminatını və onların məhdudlaşdırılma şərtlərini."
+    },
+    {
+      "id": "c12",
+      "front": "Hansı orqan aktların Konstitusiyaya uyğunluğunu yoxlayır?",
+      "back": "Konstitusiya Məhkəməsi (130-cu maddə); fərdi şikayət imkanı var."
+    },
+    {
+      "id": "c13",
+      "front": "Konstitusiyanın mətninə dəyişiklik hansı qaydada edilir?",
+      "back": "Yalnız referendumla (152–153-cü maddələr)."
+    },
+    {
+      "id": "c14",
+      "front": "Konstitusiyaya əlavələr hansı formada qəbul edilir?",
+      "back": "Konstitusiya qanunları ilə (156-cı maddə)."
+    }
+  ]
+}

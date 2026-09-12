@@ -102,5 +102,5 @@ export async function middleware(request: NextRequest) {
 // icons and prefetches out of the matcher avoids the refresh-token stampede
 // that used to log everyone out after each deploy.
 export const config = {
-  matcher: ["/courses/:path*", "/account/:path*", "/learn", "/resources/:path*", "/login", "/"],
+  matcher: ["/courses/:path*", "/account/:path*", "/learn/:path*", "/resources/:path*", "/login", "/"],
 };

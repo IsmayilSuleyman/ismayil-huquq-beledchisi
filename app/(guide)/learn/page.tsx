@@ -1,14 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { requireUser } from "@/lib/auth-guard";
-import { listCourses, countLessons, countQuizzes } from "@/lib/content";
-import {
-  countPassed,
-  courseProgress,
-  getCompletedLessons,
-  getQuizBests,
-  progressKey,
-} from "@/lib/progress";
+import { countCards, listDecks } from "@/lib/decks";
+import { deckStats, getCardStates } from "@/lib/progress";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader } from "@/components/AppHeader";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -18,35 +12,29 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Öyrən" };
 
 /**
- * The learner's own desk: where to continue, how far each course has come,
- * and which tests are still open. Courses are listed with their next lesson;
- * a finished course shows its last lesson for review.
+ * Flashcards with spaced repetition. Each deck shows what is due today,
+ * what is still new and how much has been learned; a session opens the
+ * deck's queue.
  */
 export default async function LearnPage() {
   const user = await requireUser("/learn");
   const profile = profileFromUser(user);
-  const [courses, completed, bests] = await Promise.all([
-    listCourses(),
-    getCompletedLessons(user.id),
-    getQuizBests(user.id),
-  ]);
-
-  const totalLessons = countLessons(courses);
-  const totalQuizzes = countQuizzes(courses);
-  const passed = countPassed(bests);
-
-  // The course to continue: the first one with an open lesson, else the first.
-  const plans = courses.map((course) => {
-    const progress = courseProgress(course, completed);
-    const next = progress.nextLessonSlug
-      ? course.lessons.find((l) => l.slug === progress.nextLessonSlug) ?? null
-      : null;
-    const openTests = course.lessons.filter(
-      (l) => l.hasQuiz && !bests.get(progressKey(course.slug, l.slug))?.passed,
-    );
-    return { course, progress, next, openTests };
-  });
-  const focus = plans.find((p) => p.next) ?? plans[0] ?? null;
+  const [decks, states] = await Promise.all([listDecks(), getCardStates(user.id)]);
+  const now = new Date();
+  const rows = decks.map((deck) => ({
+    deck,
+    stats: deckStats(deck.slug, deck.cards.map((c) => c.id), states, now),
+  }));
+  const totals = rows.reduce(
+    (t, r) => ({
+      due: t.due + r.stats.due,
+      fresh: t.fresh + Math.min(r.stats.fresh, r.deck.newPerDay),
+      learned: t.learned + r.stats.learned,
+      reviewedToday: t.reviewedToday + r.stats.reviewedToday,
+    }),
+    { due: 0, fresh: 0, learned: 0, reviewedToday: 0 },
+  );
+  const totalCards = countCards(decks);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 pb-16">
@@ -60,121 +48,88 @@ export default async function LearnPage() {
           Öyrən
         </h1>
         <p className="mt-3 max-w-xl text-sm leading-6 text-ink/55 dark:text-white/55">
-          Qaldığınız yerdən davam edin. İrəliləyişiniz və test nəticələriniz
-          hesabınızda saxlanılır.
+          Kartlar aralıqlı təkrar üsulu ilə göstərilir: yaxşı bildiyiniz kart
+          gec, çətin gələn kart tez qayıdır. Hər gün bir neçə dəqiqə kifayətdir.
         </p>
       </header>
 
-      {focus ? (
-        <section className="glass-tinted grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.4fr_1fr] lg:items-center">
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
-              {focus.next ? "Növbəti dərs" : "Kurs tamamlanıb"}
-            </p>
-            <p className="mt-2 text-sm text-ink/55 dark:text-white/55">{focus.course.title}</p>
-            <h2 className="mt-1 text-2xl font-semibold leading-snug tracking-[-0.02em] text-ink dark:text-brand-cream">
-              {focus.next ? focus.next.title : "Bütün dərslər keçilib"}
-            </h2>
-            {focus.next?.summary ? (
-              <p className="mt-3 text-sm leading-6 text-ink/60 dark:text-white/60">
-                {focus.next.summary}
-              </p>
-            ) : null}
-            <Link
-              href={
-                focus.next
-                  ? `/courses/${focus.course.slug}/${focus.next.slug}`
-                  : `/courses/${focus.course.slug}`
-              }
-              className="mt-6 inline-block rounded-xl bg-brand-wood px-6 py-3.5 text-sm font-medium uppercase tracking-[0.16em] text-brand-cream shadow-glass-wood transition hover:-translate-y-0.5 hover:bg-brand-wood-deep"
-            >
-              {focus.next
-                ? focus.progress.completed === 0
-                  ? "Kursa başlayın"
-                  : "Davam edin"
-                : "Kursa yenidən baxın"}
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <StatTile
-              label="Dərslər"
-              value={completed.size}
-              sub={`${totalLessons} dərsdən keçilib`}
-              tone={completed.size > 0 ? "positive" : "neutral"}
-            />
-            <StatTile
-              label="Testlər"
-              value={passed}
-              sub={totalQuizzes > 0 ? `${totalQuizzes} testdən keçilib` : undefined}
-              tone={passed > 0 ? "positive" : "neutral"}
-            />
-          </div>
-        </section>
-      ) : (
-        <div className="glass p-8 text-sm text-ink/55 dark:text-white/55">
-          Hələ heç bir kurs əlavə edilməyib.
-        </div>
-      )}
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatTile
+          label="Bu gün təkrar"
+          value={totals.due}
+          tone={totals.due > 0 ? "negative" : "neutral"}
+          sub={totals.due > 0 ? "vaxtı çatmış kart" : "hamısı vaxtındadır"}
+        />
+        <StatTile label="Yeni kartlar" value={totals.fresh} sub="bu gün üçün hazır" />
+        <StatTile
+          label="Öyrənilib"
+          value={totals.learned}
+          tone={totals.learned > 0 ? "positive" : "neutral"}
+          sub={`${totalCards} kartdan`}
+        />
+        <StatTile label="Bu gün baxılıb" value={totals.reviewedToday} sub="kart" />
+      </section>
 
-      {plans.length > 0 ? (
-        <section className="mt-12">
-          <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
-            Kurslarınız
-          </h2>
+      <section className="mt-12">
+        <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
+          Dəstlər
+        </h2>
+        {rows.length === 0 ? (
+          <div className="glass p-8 text-sm text-ink/55 dark:text-white/55">
+            Hələ heç bir dəst əlavə edilməyib.
+          </div>
+        ) : (
           <ul className="grid gap-5 md:grid-cols-2">
-            {plans.map(({ course, progress, next, openTests }) => (
-              <li key={course.slug} className="glass flex flex-col p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <Link
-                    href={`/courses/${course.slug}`}
-                    className="text-lg font-semibold leading-snug text-ink transition hover:text-brand-wood dark:text-brand-cream dark:hover:text-brand-brass-soft"
-                  >
-                    {course.title}
-                  </Link>
-                  <span className="num shrink-0 text-[11px] uppercase tracking-[0.16em] text-ink/45 dark:text-white/45">
-                    {progress.completed}/{progress.total}
-                  </span>
-                </div>
-                <ProgressBar percent={progress.percent} className="mt-4" />
-                <dl className="mt-5 grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <dt className="text-[10px] uppercase tracking-[0.18em] text-ink/45 dark:text-white/45">
-                      Növbəti
-                    </dt>
-                    <dd className="mt-1 leading-6 text-ink/80 dark:text-white/80">
-                      {next ? next.title : "Tamamlanıb"}
-                    </dd>
+            {rows.map(({ deck, stats }) => {
+              const sessionSize = stats.due + Math.min(stats.fresh, deck.newPerDay);
+              const label =
+                stats.due > 0
+                  ? `Təkrar edin · ${sessionSize}`
+                  : stats.fresh > 0
+                    ? `Yeni kartlar · ${sessionSize}`
+                    : "Baxın";
+              return (
+                <li key={deck.slug} className="glass flex flex-col p-6">
+                  <h3 className="text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
+                    {deck.title}
+                  </h3>
+                  {deck.description ? (
+                    <p className="mt-2 text-sm leading-6 text-ink/55 dark:text-white/55">{deck.description}</p>
+                  ) : null}
+                  <div className="num mt-4 flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.16em]">
+                    <span className={`rounded-full border px-2 py-0.5 ${stats.due > 0 ? "border-brand-red/40 text-brand-red dark:border-red-400/50 dark:text-red-300" : "border-brand-wood-ring text-ink/45 dark:border-white/15 dark:text-white/45"}`}>
+                      {stats.due} təkrar
+                    </span>
+                    <span className="rounded-full border border-brand-brass/40 px-2 py-0.5 text-brand-brass">
+                      {stats.fresh} yeni
+                    </span>
+                    <span className="rounded-full border border-brand-wood-ring px-2 py-0.5 text-ink/45 dark:border-white/15 dark:text-white/45">
+                      {stats.learned}/{stats.total} öyrənilib
+                    </span>
                   </div>
-                  <div>
-                    <dt className="text-[10px] uppercase tracking-[0.18em] text-ink/45 dark:text-white/45">
-                      Açıq testlər
-                    </dt>
-                    <dd className="num mt-1 leading-6 text-ink/80 dark:text-white/80">
-                      {openTests.length === 0
-                        ? "Hamısı keçilib"
-                        : `${openTests.length} test`}
-                    </dd>
+                  <ProgressBar percent={stats.total ? Math.round((stats.learned / stats.total) * 100) : 0} className="mt-4" />
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                    <Link
+                      href={`/learn/${deck.slug}`}
+                      className="rounded-xl bg-brand-wood px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-cream shadow-glass-wood transition hover:-translate-y-0.5 hover:bg-brand-wood-deep"
+                    >
+                      {label}
+                    </Link>
+                    {deck.source ? (
+                      <Link
+                        href={deck.source.href}
+                        className="text-[10px] uppercase tracking-[0.16em] text-ink/45 transition hover:text-brand-wood dark:text-white/45 dark:hover:text-brand-brass-soft"
+                      >
+                        {deck.source.label} →
+                      </Link>
+                    ) : null}
                   </div>
-                </dl>
-                {openTests.length > 0 ? (
-                  <ul className="mt-4 space-y-1.5">
-                    {openTests.map((l) => (
-                      <li key={l.slug}>
-                        <Link
-                          href={`/courses/${course.slug}/${l.slug}#quiz-heading`}
-                          className="text-xs text-brand-wood underline-offset-4 hover:underline dark:text-brand-brass-soft"
-                        >
-                          {l.title}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                ) : null}
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
-        </section>
-      ) : null}
+        )}
+      </section>
     </main>
   );
 }

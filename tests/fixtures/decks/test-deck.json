@@ -1,0 +1,12 @@
+{
+  "title": "Sınaq dəsti",
+  "description": "Test üçün.",
+  "order": 1,
+  "source": { "label": "Dərs", "href": "/courses/x/y" },
+  "newPerDay": 2,
+  "cards": [
+    { "id": "a", "front": "Sual A", "back": "Cavab A", "hint": "ipucu" },
+    { "id": "b", "front": "Sual B", "back": "Cavab B" },
+    { "id": "c", "front": "Sual C", "back": "Cavab C" }
+  ]
+}
