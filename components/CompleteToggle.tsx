@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { setLessonCompleted } from "@/app/courses/[course]/[lesson]/actions";
+import { setLessonCompleted } from "@/app/(guide)/courses/[course]/[lesson]/actions";
 
 export function CompleteToggle({
   courseSlug,

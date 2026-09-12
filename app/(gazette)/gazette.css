@@ -1,0 +1,241 @@
+/* Omni Law Gazette — original stylesheet, namespaced under .olg-root / olg-*
+   so it coexists with the guide's styles. Colors and fonts that were Tailwind
+   theme tokens in the standalone app live in tailwind.config.ts (omni, azure,
+   silver, omni-ink, background, foreground; font-serif = Fraunces, font-jost). */
+
+.olg-root {
+  --background: #05080f;
+  --foreground: #edf1f8;
+  --color-azure: #7aa2ff;
+  --color-azure-soft: #b9cbff;
+  --color-silver: #99a1ae;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  color-scheme: dark;
+}
+
+/* ---------- Atmosphere: aurora glows + faint dot grid ---------- */
+.olg-aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(42rem 30rem at 12% -8%, rgba(46, 98, 201, 0.34), transparent 60%),
+    radial-gradient(50rem 34rem at 95% 5%, rgba(29, 66, 135, 0.42), transparent 65%),
+    radial-gradient(40rem 32rem at 70% 105%, rgba(64, 90, 255, 0.16), transparent 60%),
+    radial-gradient(30rem 24rem at -5% 75%, rgba(122, 162, 255, 0.10), transparent 60%);
+  filter: saturate(120%);
+}
+.olg-aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(80rem 60rem at 50% 0%, black, transparent 75%);
+}
+
+/* ---------- Glass surfaces ---------- */
+.olg-glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.028));
+  border: 1px solid rgba(255, 255, 255, 0.105);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+.olg-glass-deep {
+  background: linear-gradient(165deg, rgba(13, 22, 41, 0.72), rgba(8, 13, 26, 0.62));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+}
+.olg-glass-hover {
+  transition: transform 0.35s cubic-bezier(0.21, 0.8, 0.32, 1), border-color 0.35s, box-shadow 0.35s,
+    background 0.35s;
+}
+.olg-glass-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(122, 162, 255, 0.38);
+  box-shadow:
+    0 18px 50px -18px rgba(18, 40, 90, 0.75),
+    0 0 0 1px rgba(122, 162, 255, 0.12) inset;
+}
+
+.olg-hairline {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ---------- Controls ---------- */
+.olg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.8rem;
+  font-weight: 550;
+  font-size: 0.875rem;
+  line-height: 1;
+  padding: 0.72rem 1.15rem;
+  transition: all 0.22s ease;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+.olg-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.olg-btn-primary {
+  background: linear-gradient(180deg, #2e62c9, #1d4287);
+  color: #fff;
+  border: 1px solid rgba(122, 162, 255, 0.45);
+  box-shadow: 0 8px 24px -10px rgba(46, 98, 201, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.olg-btn-primary:hover:not(:disabled) {
+  filter: brightness(1.12);
+  box-shadow: 0 10px 30px -10px rgba(46, 98, 201, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.olg-btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  color: var(--foreground);
+}
+.olg-btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(122, 162, 255, 0.4);
+}
+.olg-btn-danger {
+  background: rgba(248, 81, 73, 0.12);
+  border: 1px solid rgba(248, 81, 73, 0.4);
+  color: #ff8d86;
+}
+.olg-btn-danger:hover:not(:disabled) {
+  background: rgba(248, 81, 73, 0.2);
+}
+
+.olg-field {
+  width: 100%;
+  border-radius: 0.8rem;
+  background: rgba(5, 9, 18, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.7rem 0.95rem;
+  font-size: 0.92rem;
+  color: var(--foreground);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.olg-field::placeholder {
+  color: rgba(153, 161, 174, 0.55);
+}
+.olg-field:focus {
+  outline: none;
+  border-color: rgba(122, 162, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(46, 98, 201, 0.22);
+}
+
+.olg-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-azure-soft);
+}
+
+.olg-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-silver);
+}
+
+/* ---------- Scrollbars ---------- */
+.olg-root * {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(122, 162, 255, 0.28) transparent;
+}
+.olg-root *::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+.olg-root *::-webkit-scrollbar-thumb {
+  background: rgba(122, 162, 255, 0.25);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.olg-root *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.olg-root ::selection {
+  background: rgba(46, 98, 201, 0.55);
+  color: #fff;
+}
+
+/* ---------- pdf.js page chrome ---------- */
+.react-pdf__Page {
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+}
+.react-pdf__Page__canvas {
+  border-radius: 6px;
+  box-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+.react-pdf__Page__textContent mark {
+  background: rgba(255, 214, 107, 0.85);
+  color: transparent;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.olg-pdf-thumb .react-pdf__Thumbnail__page__canvas,
+.olg-pdf-thumb canvas {
+  border-radius: 4px;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Fullscreen reader gets a solid backdrop */
+.olg-pdf-shell:fullscreen {
+  background: #05080f;
+  padding: 0.75rem;
+}
+
+@keyframes olg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.olg-rise {
+  animation: olg-rise 0.6s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+}
+@keyframes olg-shimmer {
+  0% {
+    background-position: -450px 0;
+  }
+  100% {
+    background-position: 450px 0;
+  }
+}
+.olg-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.09) 37%,
+    rgba(255, 255, 255, 0.04) 63%
+  );
+  background-size: 450px 100%;
+  animation: olg-shimmer 1.5s infinite linear;
+}

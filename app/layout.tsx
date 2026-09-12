@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Nunito } from "next/font/google";
+import { Fraunces, Inter, Jost, Nunito } from "next/font/google";
 import "./globals.css";
-import { PageBackground } from "@/components/PageBackground";
 import { MotionProvider } from "@/components/MotionProvider";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { MobileTabBar } from "@/components/MobileTabBar";
 
 // Runs before paint: applies the persisted theme (or the system preference)
 // as a `dark` class on <html> so there is no light-flash on load.
@@ -24,6 +21,20 @@ const brand = Nunito({
   subsets: ["latin", "latin-ext"],
   weight: ["800"],
   variable: "--font-brand",
+  display: "swap",
+});
+
+// Faces of the Omni Law Gazette section (/gazette), which keeps its own
+// design: Fraunces for its mastheads, Jost for its small caps.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+const jost = Jost({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500"],
+  variable: "--font-jost",
   display: "swap",
 });
 
@@ -52,19 +63,14 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      className={`${inter.variable} ${brand.variable}`}
+      className={`${inter.variable} ${brand.variable} ${fraunces.variable} ${jost.variable}`}
       suppressHydrationWarning
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="relative isolate font-sans">
-        <MotionProvider>
-          <PageBackground />
-          <div className="relative z-10 min-h-screen">{children}</div>
-          <MobileTabBar />
-          <ThemeToggle />
-        </MotionProvider>
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

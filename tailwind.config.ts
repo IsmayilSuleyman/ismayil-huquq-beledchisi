@@ -32,6 +32,14 @@ const config: Config = {
         },
         // Primary text color for headings and emphasized copy.
         ink: "#1c1410",
+        // Omni Law Gazette section (/gazette) — its own palette, kept as in
+        // the standalone app (renamed where names would clash with the guide).
+        omni: { DEFAULT: "#1d4287", bright: "#2e62c9" },
+        azure: { DEFAULT: "#7aa2ff", soft: "#b9cbff" },
+        silver: "#99a1ae",
+        "omni-ink": "#0a101d",
+        background: "#05080f",
+        foreground: "#edf1f8",
       },
       borderRadius: {
         card: "1.25rem", // standard tiles & inner panels
@@ -51,6 +59,9 @@ const config: Config = {
           "sans-serif",
         ],
         brand: ["var(--font-brand)", "Nunito", "var(--font-inter)", "sans-serif"],
+        // Gazette faces
+        serif: ["var(--font-fraunces)", "Georgia", "Times New Roman", "serif"],
+        jost: ["var(--font-jost)", "Century Gothic", "Futura", "sans-serif"],
         mono: ["SF Mono", "ui-monospace", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       boxShadow: {
