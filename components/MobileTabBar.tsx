@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 // (landing/login) where the page's own buttons cover navigation.
 
 export function isAppRoute(pathname: string): boolean {
-  return ["/courses", "/account"].some((p) => pathname.startsWith(p));
+  return ["/courses", "/gazette", "/account"].some((p) => pathname.startsWith(p));
 }
 
 const TABS = [
@@ -21,6 +21,18 @@ const TABS = [
         <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" />
         <path d="M4 20.5V5.5" />
         <path d="M8 7h8M8 11h8" />
+      </svg>
+    ),
+  },
+  {
+    href: "/gazette",
+    label: "Qəzet",
+    isActive: (p: string) => p.startsWith("/gazette"),
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 4h13v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2z" />
+        <path d="M17 8h3v10a2 2 0 0 1-2 2" />
+        <path d="M7 8h6M7 12h6M7 16h4" />
       </svg>
     ),
   },

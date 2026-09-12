@@ -240,3 +240,132 @@ body {
     animation: none;
   }
 }
+
+/* ============================================================
+   Gazette section controls — ported from Omni Law Gazette and re-skinned
+   in the cream / dark-wood tokens. Kept as classes because the reader and
+   editor desk use them dozens of times.
+   ============================================================ */
+@layer components {
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-xl px-5 py-3 text-sm font-medium uppercase tracking-[0.14em] transition;
+  }
+  .btn:disabled {
+    @apply cursor-not-allowed opacity-50;
+  }
+  .btn-primary {
+    @apply bg-brand-wood text-brand-cream shadow-glass-wood;
+  }
+  .btn-primary:hover:not(:disabled) {
+    @apply -translate-y-0.5 bg-brand-wood-deep;
+  }
+  .btn-ghost {
+    @apply border border-brand-wood/20 bg-white/70 text-ink/70 dark:border-white/15 dark:bg-white/10 dark:text-white/75;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    @apply -translate-y-0.5 border-brand-wood text-brand-wood dark:text-brand-brass-soft;
+  }
+  .btn-danger {
+    @apply border border-brand-red/30 bg-brand-red/5 text-brand-red dark:border-red-400/40 dark:bg-red-400/10 dark:text-red-300;
+  }
+  .btn-danger:hover:not(:disabled) {
+    @apply bg-brand-red/10 dark:bg-red-400/20;
+  }
+
+  /* Square icon button used in the PDF toolbar and on cards. */
+  .tool-btn {
+    @apply inline-flex h-[2.125rem] w-[2.125rem] items-center justify-center rounded-lg border border-ink/10 bg-white/60 text-ink/70 transition-colors hover:bg-white/90 hover:text-ink dark:border-white/10 dark:bg-white/5 dark:text-white/75 dark:hover:bg-white/10 dark:hover:text-white;
+  }
+  .tool-btn:disabled {
+    @apply cursor-not-allowed opacity-35;
+  }
+  .tool-btn-active {
+    @apply border-brand-wood bg-brand-wood text-brand-cream hover:bg-brand-wood-deep hover:text-brand-cream dark:border-brand-brass dark:bg-brand-brass dark:text-ink dark:hover:bg-brand-brass-soft dark:hover:text-ink;
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-brand-wood-ring bg-white/70 px-4 py-3 text-sm text-ink transition placeholder:text-ink/35 focus:border-brand-wood focus:outline-none focus:ring-2 focus:ring-brand-brass/25 dark:border-white/15 dark:bg-white/5 dark:text-white/90 dark:placeholder:text-white/35 dark:focus:border-brand-brass;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/45 dark:text-white/45;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-brand-wood-ring bg-white/60 px-3 py-1 text-[11px] tracking-wide text-brand-wood dark:border-white/15 dark:bg-white/5 dark:text-brand-brass-soft;
+  }
+  .chip-solid {
+    @apply border-brand-wood bg-brand-wood font-medium text-brand-cream dark:border-brand-brass dark:bg-brand-brass dark:text-ink;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(92, 61, 46, 0.06) 25%,
+      rgba(92, 61, 46, 0.12) 37%,
+      rgba(92, 61, 46, 0.06) 63%
+    );
+    background-size: 450px 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+  .dark .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.09) 37%,
+      rgba(255, 255, 255, 0.04) 63%
+    );
+    background-size: 450px 100%;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -450px 0; }
+  100% { background-position: 450px 0; }
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.rise {
+  animation: rise 0.6s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
+}
+
+/* ---------- pdf.js page chrome ---------- */
+.react-pdf__Page {
+  background: transparent !important;
+  display: flex;
+  justify-content: center;
+}
+.react-pdf__Page__canvas {
+  border-radius: 6px;
+  box-shadow: 0 14px 48px -16px rgba(62, 42, 31, 0.45), 0 0 0 1px rgba(62, 42, 31, 0.08);
+}
+.dark .react-pdf__Page__canvas {
+  box-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.07);
+}
+.react-pdf__Page__textContent mark {
+  background: rgba(201, 167, 95, 0.85);
+  color: transparent;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+.pdf-thumb .react-pdf__Thumbnail__page__canvas,
+.pdf-thumb canvas {
+  border-radius: 4px;
+  width: 100% !important;
+  height: auto !important;
+}
+
+/* Fullscreen reader gets a solid backdrop */
+.pdf-shell:fullscreen {
+  background: #f6efe3;
+  padding: 0.75rem;
+}
+.dark .pdf-shell:fullscreen {
+  background: #14100d;
+}

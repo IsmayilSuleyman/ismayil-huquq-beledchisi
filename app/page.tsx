@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSupabaseServerUser } from "@/lib/supabase/server";
 import { listCourses, countLessons } from "@/lib/content";
+import { listIssues } from "@/lib/gazette";
 import { Wordmark } from "@/components/Wordmark";
 import { MotionSection } from "@/components/MotionSection";
 
@@ -11,16 +12,25 @@ const FEATURES = [
     title: "Ardıcıl dərslər",
     text: "Hər kurs mövzular üzrə ardıcıl qurulmuş dərslərdən ibarətdir. Mətnlər hüquqi terminologiyaya sadiq qalır.",
     soon: false,
+    href: "/courses",
+  },
+  {
+    title: "Omni Law Gazette",
+    text: "Qanunvericilikdəki dəyişikliklərin həftəlik icmalı. Buraxılışlar oxu otağında açılır və yüklənə bilir.",
+    soon: false,
+    href: "/gazette",
   },
   {
     title: "Testlər",
     text: "Hər mövzunun sonunda biliklərinizi yoxlayan suallar və izahlı cavablar.",
     soon: true,
+    href: null,
   },
   {
     title: "Süni intellekt köməkçisi",
     text: "Dərsin mətni əsasında suallarınıza cavab verən və misallarla izah edən köməkçi.",
     soon: true,
+    href: null,
   },
 ];
 
@@ -29,10 +39,11 @@ export default async function HomePage({
 }: {
   searchParams: Promise<{ setup?: string }>;
 }) {
-  const [{ setup }, { user, reason }, courses] = await Promise.all([
+  const [{ setup }, { user, reason }, courses, issues] = await Promise.all([
     searchParams,
     getSupabaseServerUser(),
     listCourses(),
+    listIssues(),
   ]);
   const needsSetup = setup === "supabase" || reason === "missing_config";
   const lessonCount = countLessons(courses);
@@ -86,31 +97,45 @@ export default async function HomePage({
             )}
             <span className="text-xs uppercase tracking-[0.18em] text-ink/45 dark:text-white/45">
               {courses.length} kurs · {lessonCount} dərs
+              {issues.length > 0 ? ` · ${issues.length} qəzet buraxılışı` : ""}
             </span>
           </div>
         </div>
 
         <MotionSection
           delay={0.15}
-          className="relative mt-14 grid w-full max-w-4xl gap-4 sm:grid-cols-3"
+          className="relative mt-14 grid w-full max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4"
         >
-          {FEATURES.map((f) => (
-            <div key={f.title} className="glass p-6 text-left">
-              <div className="flex items-center justify-between gap-2">
-                <h2 className="font-serif text-lg font-semibold text-ink dark:text-brand-cream">
-                  {f.title}
-                </h2>
+          {FEATURES.map((f) => {
+            const body = (
+              <>
                 {f.soon ? (
-                  <span className="rounded-full border border-brand-brass/40 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-brand-brass">
+                  <span className="mb-3 inline-block rounded-full border border-brand-brass/40 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-brand-brass">
                     Tezliklə
                   </span>
                 ) : null}
+                <h2 className="font-serif text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
+                  {f.title}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-ink/55 dark:text-white/55">
+                  {f.text}
+                </p>
+              </>
+            );
+            return f.href ? (
+              <Link
+                key={f.title}
+                href={f.href}
+                className="glass p-6 text-left transition hover:-translate-y-0.5 hover:shadow-glass-wood"
+              >
+                {body}
+              </Link>
+            ) : (
+              <div key={f.title} className="glass p-6 text-left">
+                {body}
               </div>
-              <p className="mt-3 text-sm leading-6 text-ink/55 dark:text-white/55">
-                {f.text}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </MotionSection>
       </section>
     </main>

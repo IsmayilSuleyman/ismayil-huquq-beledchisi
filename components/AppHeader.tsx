@@ -4,23 +4,38 @@ import Link from "next/link";
 import { m } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import { Wordmark } from "@/components/Wordmark";
+import { Mark, Wordmark } from "@/components/Wordmark";
+import { GazetteWordmark, OmniMark } from "@/components/gazette/OmniLogo";
 
-const NAV = [
+const GUIDE_NAV = [
   { href: "/courses", label: "Kurslar" },
   { href: "/account", label: "Hesab" },
 ];
 
+const GAZETTE_NAV = [
+  { href: "/gazette", label: "Kitabxana" },
+  { href: "/account", label: "Hesab" },
+];
+
+/**
+ * Sticky site header shared by the guide and the gazette section. The
+ * wordmark shows whichever platform you are on, and the pill next to it
+ * switches to the other one — the same pattern as the İRF ↔ İsmayılBank
+ * switch on the fund portal. Without a `name` (anonymous visitor on the
+ * gazette) the account cluster collapses to a sign-in link.
+ */
 export function AppHeader({
   name,
   avatarUrl,
 }: {
-  name: string;
-  avatarUrl: string | null;
+  name?: string;
+  avatarUrl?: string | null;
 }) {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createSupabaseBrowserClient();
+  const onGazette = pathname.startsWith("/gazette");
+  const nav = onGazette ? GAZETTE_NAV : GUIDE_NAV;
 
   const onLogout = async () => {
     if (supabase) {
@@ -38,12 +53,32 @@ export function AppHeader({
       className="sticky top-0 z-40 -mx-6 mb-12 border-b border-brand-wood/15 bg-white/55 px-6 backdrop-blur-md dark:bg-white/5"
     >
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 py-4">
-        <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
-          <Wordmark size="sm" />
-        </Link>
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          {onGazette ? (
+            <Link href="/gazette" aria-label="Qəzetin kitabxanasına keçin" className="shrink-0">
+              <GazetteWordmark size="sm" />
+            </Link>
+          ) : (
+            <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
+              <Wordmark size="sm" />
+            </Link>
+          )}
 
-        <nav className="hidden items-center gap-6 sm:flex" aria-label="Bölmələr">
-          {NAV.map((item) => {
+          {/* Platform switch pill */}
+          <Link
+            href={onGazette ? "/courses" : "/gazette"}
+            aria-label={onGazette ? "İsmayıl Hüquq Bələdçisinə keç" : "Omni Law Gazette-ə keç"}
+            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/10 bg-white/80 px-3 py-2 transition hover:-translate-y-px hover:border-brand-brass/50 hover:shadow-sm dark:border-white/15 dark:bg-white/10"
+          >
+            {onGazette ? <Mark size={22} /> : <OmniMark size={22} />}
+            <span className="hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/55 dark:text-white/60 sm:inline">
+              {onGazette ? "Bələdçiyə keç" : "Qəzetə keç"}
+            </span>
+          </Link>
+        </div>
+
+        <nav className="hidden items-center gap-6 md:flex" aria-label="Bölmələr">
+          {nav.map((item) => {
             const active = pathname.startsWith(item.href);
             return (
               <Link
@@ -63,34 +98,39 @@ export function AppHeader({
         </nav>
 
         <div className="flex shrink-0 items-center gap-3 sm:gap-5">
-          <Link
-            href="/account"
-            className="flex items-center gap-2"
-            aria-label="Hesab səhifəsi"
-          >
-            {avatarUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={avatarUrl}
-                alt=""
-                referrerPolicy="no-referrer"
-                className="h-8 w-8 rounded-full border border-ink/10 object-cover dark:border-white/15"
-              />
-            ) : (
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-wood-mist text-xs font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
-                {name.slice(0, 1).toUpperCase()}
-              </span>
-            )}
-            <span className="hidden text-xs text-ink/55 dark:text-white/55 md:inline">
-              {name}
-            </span>
-          </Link>
-          <button
-            onClick={onLogout}
-            className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:text-brand-wood dark:text-white/60 dark:hover:text-brand-brass-soft"
-          >
-            Çıxış
-          </button>
+          {!name ? (
+            <Link
+              href={`/login?next=${encodeURIComponent(pathname)}`}
+              className="rounded-lg bg-brand-wood px-3.5 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-brand-cream transition hover:-translate-y-px hover:bg-brand-wood-deep"
+            >
+              Daxil olun
+            </Link>
+          ) : (
+            <>
+              <Link href="/account" className="flex items-center gap-2" aria-label="Hesab səhifəsi">
+                {avatarUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={avatarUrl}
+                    alt=""
+                    referrerPolicy="no-referrer"
+                    className="h-8 w-8 rounded-full border border-ink/10 object-cover dark:border-white/15"
+                  />
+                ) : (
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-wood-mist text-xs font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
+                    {name.slice(0, 1).toUpperCase()}
+                  </span>
+                )}
+                <span className="hidden text-xs text-ink/55 dark:text-white/55 lg:inline">{name}</span>
+              </Link>
+              <button
+                onClick={onLogout}
+                className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:text-brand-wood dark:text-white/60 dark:hover:text-brand-brass-soft"
+              >
+                Çıxış
+              </button>
+            </>
+          )}
         </div>
       </div>
     </m.header>

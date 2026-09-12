@@ -5,8 +5,13 @@ account, read courses built from lessons, and their progress is saved on the
 account. Same glass-and-gradient design language as the İRF portal, in a
 cream and dark-wood palette.
 
+**Omni Law Gazette** — the weekly legislation digest — lives here too, as the
+`/gazette` section: a library of PDF issues, a reading room, open discussion
+under each issue, and an editor desk. The header carries a switch pill between
+the guide and the gazette, like the İRF ↔ İsmayılBank switch on the portal.
+
 - **Stack:** Next.js 15 (App Router) + TypeScript + Tailwind + Supabase Auth
-  (Google) + MDX content in the repo
+  (Google) + MDX content in the repo + react-pdf for the gazette reader
 - **Hosting:** Vercel
 - **Language:** Azerbaijani UI and content
 
@@ -14,10 +19,17 @@ cream and dark-wood palette.
 
 ## 1. Supabase setup
 
-1. Create a project at <https://supabase.com/>.
-2. Run `supabase/migrations/20260912120000_lesson_progress.sql` in
-   **SQL Editor**. It creates the `lesson_progress` table with row-level
-   security so each person can only read and write their own rows.
+The site shares one Supabase project with the gazette (originally the
+`omni-law-gazette` project). It holds:
+
+- `lesson_progress` — the guide's per-user lesson completion (migration in
+  `supabase/migrations/20260912120000_lesson_progress.sql`, already applied);
+- `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
+  — the gazette's data, guarded by the `is_admin()` policy that checks the
+  signed-in email against `admin_emails`.
+
+Steps for a fresh project would be: create it, run the migration in
+**SQL Editor**, then configure Google sign-in below.
 3. **Authentication → Providers → Google**: enable it. You need a Google
    OAuth client (next section) for the Client ID and Client Secret.
 4. **Authentication → URL Configuration**:
@@ -44,6 +56,13 @@ cream and dark-wood palette.
 Sign-up is open by design: anyone with a Google account can sign in. Payments
 and plan gating come later.
 
+### Gazette editors
+
+Editors are the emails in `admin_emails`. An editor signs in with Google using
+that same email, then opens `/gazette/admin` to publish, edit and moderate.
+Existing editors add new ones from the **Redaktorlar** tab. The old gazette's
+email-and-password sign-in is not used here.
+
 ---
 
 ## 2. Local development
@@ -55,9 +74,13 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Open <http://localhost:3000>. The landing page is public; `/courses` and
-`/account` require sign-in. Without the two env vars the site still builds and
-runs, but shows a "setup pending" notice instead of the Google button.
+Open <http://localhost:3000>. The landing page and the gazette (`/gazette`)
+are public; `/courses`, `/account` and `/gazette/admin` require sign-in.
+Without the two env vars the site still builds and runs, but shows a "setup
+pending" notice instead of the Google button and an empty gazette.
+
+`npm install` also copies the pdf.js worker into `public/` (see
+`scripts/copy-pdf-worker.mjs`); the file is git-ignored.
 
 `.npmrc` sets `legacy-peer-deps=true`: the Tailwind 3 / Vitest 4 dependency
 graph trips npm's strict peer resolver otherwise. Vercel reads the same file.
@@ -130,6 +153,9 @@ Rules:
 
 ```
 app/
+  gazette/page.tsx                Gazette library (masthead, latest issue, archive)
+  gazette/[number]/page.tsx       Reading room: PDF viewer, prev/next, comments
+  gazette/admin/page.tsx          Editor desk (publish, manage, editors)
   layout.tsx                      Root layout, fonts (Inter + Source Serif), theme script
   page.tsx                        Public landing page
   login/page.tsx                  Google sign-in card
@@ -139,14 +165,21 @@ app/
   courses/[course]/[lesson]/      Lesson page (MDX) + completion action
   account/page.tsx                Profile and per-course progress
 lib/
+  gazette.ts                      Gazette types, public reads, storage URLs
+  gazette-editor.ts               Server-only editor allow-list check
+  gazette-format.ts               Azerbaijani date / size / relative-time helpers
+  pdf-analyze.ts                  Page count + cover render for the publish flow
   content.ts                      File-based course/lesson loader
   progress.ts                     Completed-lessons reads and per-course maths
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
   supabase/                       Server, browser clients and env config
 components/
-  AppHeader, MobileTabBar, ThemeToggle, PageBackground, Wordmark,
-  LessonBody (MDX render), CompleteToggle, ProgressBar, Skeleton, StatTile
+  AppHeader (with the guide ↔ gazette switch pill), MobileTabBar, ThemeToggle,
+  PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
+  ProgressBar, Skeleton, StatTile
+  gazette/                        OmniLogo, IssueCard, LibraryExplorer, PdfViewer,
+                                  Comments, DownloadButton, RegisterRead, admin/*
 content/courses/                  Courses and lessons (MDX)
 supabase/migrations/              lesson_progress table + policies
 tests/                            Vitest: content loader
@@ -156,6 +189,7 @@ middleware.ts                     Auth gate for /courses and /account
 ## Roadmap
 
 1. ✅ Design system, Google sign-in, file-based courses, lesson progress
+   ✅ Omni Law Gazette folded in as the `/gazette` section
 2. Private beta with a few readers; more courses
 3. Tests and quizzes per lesson (MDX components + attempts table)
 4. AI tutor grounded in the open lesson

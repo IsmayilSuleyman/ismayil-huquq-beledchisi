@@ -7,3 +7,6 @@ node_modules
 *.tsbuildinfo
 next-env.d.ts
 .DS_Store
+
+# pdf.js worker is copied into public/ by scripts/copy-pdf-worker.mjs on install
+public/pdf.worker.min.mjs
