@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #fbf8f2;
+  --fg: #1c1410;
+  --muted: #7b6a5c;
+  --hairline: rgba(62, 42, 31, 0.1);
+  --brand-wood: #5c3d2e;
+  --brand-brass: #a9843f;
+  --brand-red: #b3261e;
+  --accent: #5c3d2e;
+  --accent-light: #7b5a47;
+  --glass-bg: rgba(255, 252, 247, 0.62);
+  --glass-bg-strong: rgba(255, 252, 247, 0.78);
+  --glass-tint: rgba(92, 61, 46, 0.06);
+  --glass-border: rgba(92, 61, 46, 0.16);
+  --glass-blur: 14px;
+  --glass-shadow: 0 8px 32px rgba(92, 61, 46, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.7);
+  color-scheme: light;
+}
+
+/* Dark theme — `dark` class is applied to <html> before paint by the
+   inline script in app/layout.tsx (localStorage choice, else system).
+   Dark mode is "dark wood": near-black browns with brass highlights. */
+.dark {
+  --bg: #14100d;
+  --fg: #efe7da;
+  --muted: #a5978a;
+  --hairline: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-bg-strong: rgba(255, 255, 255, 0.08);
+  --glass-tint: rgba(201, 167, 95, 0.08);
+  --glass-border: rgba(201, 167, 95, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  color-scheme: dark;
+}
+
+/* Text-emphasis scale (use these steps only):
+   text-ink/20 decorative · /30 watermark · /45 muted labels (WCAG floor) ·
+   /55 secondary copy · /70 body emphasis · /85 strong.
+   Hairline borders: border-ink/10 (alpha modifiers must be multiples of 5).
+   Glass surfaces: .glass (62%) · .glass-strong (78%).
+   Color tokens live in tailwind.config.ts (brand-*, status-*, ink). */
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  height: 100%;
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  /* font-family comes from the Tailwind font-sans class on <body>
+     (Inter via next/font, with the Apple/Segoe stack as fallback). */
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fbf8f2 0%, #f6efe3 50%, #ece1cf 100%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+.dark body {
+  background: linear-gradient(135deg, #120e0b 0%, #17110d 50%, #1d150f 100%);
+  background-attachment: fixed;
+}
+
+@layer components {
+  /* Glass surfaces read their colors from the theme vars above so the same
+     class works in light and dark without per-usage dark: variants. */
+  .glass {
+    @apply rounded-2xl border backdrop-blur-md;
+    background: var(--glass-bg);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    @apply rounded-2xl border backdrop-blur-md;
+    background: var(--glass-bg-strong);
+    border-color: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-tinted {
+    @apply rounded-2xl border backdrop-blur-md;
+    background: var(--glass-tint);
+    border-color: var(--glass-border);
+  }
+
+  /* Numeric figures: lining tabular digits so counts align. */
+  .num {
+    @apply font-sans tabular-nums tracking-tight;
+  }
+
+  /* Horizontal chip rows scroll without showing a scrollbar. */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hairline {
+    @apply border-t;
+    border-color: var(--glass-border);
+  }
+}
+
+/* Lesson body: legal text reads best in a serif with generous leading.
+   Headings pick up the serif face; the typography plugin supplies the rest
+   (colors are set in tailwind.config.ts so light/dark both work). */
+.prose :is(h1, h2, h3, h4) {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+.prose {
+  line-height: 1.8;
+}
+.prose blockquote {
+  font-style: normal;
+}
+.prose blockquote p:first-of-type::before,
+.prose blockquote p:last-of-type::after {
+  content: none;
+}
+
+::selection {
+  background: rgba(169, 132, 63, 0.28);
+  color: #1c1410;
+}
+
+.dark ::selection {
+  background: rgba(201, 167, 95, 0.35);
+  color: #fbf8f2;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(92, 61, 46, 0.18);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(92, 61, 46, 0.32);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(201, 167, 95, 0.25);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(201, 167, 95, 0.4);
+}
+
+/* ============================================================
+   iOS WebKit crash mitigation (carried over from the IRF portal).
+   iPhones give a tab a hard GPU/memory budget and kill the web process
+   when the compositor blows through it — and glass styling is exactly the
+   risky kind: document-sized `background-attachment: fixed` gradients
+   (iOS rasterizes the WHOLE document as a texture), heavily blurred
+   decorative blobs, stacked backdrop-filters, and infinitely-animating
+   blurred orbs.
+
+   `@supports (-webkit-touch-callout: none)` matches iOS/iPadOS WebKit
+   only — every rule below is invisible everywhere else. These are
+   source-order overrides: they sit after the @tailwind utilities output,
+   so equal specificity resolves to us.
+   ============================================================ */
+@supports (-webkit-touch-callout: none) {
+  /* Fixed-attachment gradients become scroll — no document-sized texture. */
+  body,
+  .dark body,
+  .bg-page-gradient {
+    background-attachment: scroll;
+  }
+
+  /* Giant decorative glow blobs are pure GPU cost on a phone screen. */
+  .blur-3xl {
+    display: none;
+  }
+
+  /* Glass keeps a hint of frost at a fraction of the render cost. */
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl {
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+
+  /* The drifting-orb layer: blurred circles animating forever on a fixed
+     layer — the compositor never idles. The page gradient carries the look. */
+  .page-orbs {
+    display: none;
+  }
+}
+
+/* ============================================================
+   PageBackground orb drift — CSS keyframes so the orbs animate on the
+   compositor with no JS running.
+   ============================================================ */
+@keyframes orb-drift-1 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(60px, 40px); }
+  66%  { transform: translate(-20px, 20px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes orb-drift-2 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-50px, -30px); }
+  66%  { transform: translate(30px, 40px); }
+  100% { transform: translate(0, 0); }
+}
+@keyframes orb-drift-3 {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(40px, -50px); }
+  66%  { transform: translate(-30px, 10px); }
+  100% { transform: translate(0, 0); }
+}
+.orb-drift-1 { animation: orb-drift-1 22s ease-in-out infinite; }
+.orb-drift-2 { animation: orb-drift-2 28s ease-in-out infinite; }
+.orb-drift-3 { animation: orb-drift-3 25s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .orb-drift-1,
+  .orb-drift-2,
+  .orb-drift-3 {
+    animation: none;
+  }
+}
