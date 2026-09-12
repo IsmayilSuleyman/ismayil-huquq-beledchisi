@@ -24,6 +24,7 @@ export function Mark({ size = 28, className = "" }: { size?: number; className?:
 }
 
 const SIZES = {
+  xs: { text: 24, mark: 24, gap: 7 },
   sm: { text: 30, mark: 30, gap: 9 },
   md: { text: 46, mark: 44, gap: 13 },
   lg: { text: 72, mark: 70, gap: 20 },

@@ -9,10 +9,21 @@ import { GAZETTE_URL } from "@/lib/gazette";
 // (landing/login) where the page's own buttons cover navigation.
 
 export function isAppRoute(pathname: string): boolean {
-  return ["/courses", "/account"].some((p) => pathname.startsWith(p));
+  return ["/learn", "/courses", "/resources", "/account"].some((p) => pathname.startsWith(p));
 }
 
 const TABS = [
+  {
+    href: "/learn",
+    label: "Öyrən",
+    isActive: (p: string) => p.startsWith("/learn"),
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M15.5 8.5l-2 5-5 2 2-5z" />
+      </svg>
+    ),
+  },
   {
     href: "/courses",
     label: "Kurslar",

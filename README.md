@@ -107,6 +107,35 @@ JavaScript origins**.
 
 ## 4. Adding a course
 
+### Study material on a law or legal act ("Mənbələr")
+
+One MDX file per act under `content/sources/`, listed at `/resources` and
+read at `/resources/<slug>`:
+
+```md
+---
+title: Azərbaycan Respublikasının Mülki Məcəlləsi
+kind: Məcəllə                 # groups the list: Konstitusiya, Məcəllə, Qanun ...
+number: 779-IQ
+adopted: 28 dekabr 1999
+inForce: 1 sentyabr 2000
+summary: One or two sentences for the card.
+official: https://e-qanun.az/framework/46944   # link to the authoritative text
+order: 2
+---
+
+## Quruluşu
+...
+```
+
+The four starter materials (Konstitusiya, Mülki Məcəllə, Əmək Məcəlləsi,
+"Normativ hüquqi aktlar haqqında" Konstitusiya Qanunu) were drafted as
+illustrations of the intended register. Verify dates, numbers, article
+references and the `official` links against e-qanun.az before relying on
+them; each page carries that reminder for readers.
+
+### Course
+
 Content lives in the repo, so writing a lesson is a commit:
 
 ```
@@ -199,6 +228,8 @@ app/
   (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion
                                   and grading actions
   (guide)/account/page.tsx        Profile and per-course progress
+  (guide)/learn/page.tsx          "Öyrən": where to continue, open tests
+  (guide)/resources/              "Mənbələr": laws and acts with study materials; [slug]/ one act
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
   (gazette)/gazette/              Library, issues/[number] viewer, admin
 lib/
@@ -207,21 +238,24 @@ lib/
   gazette/                        Gazette's own Supabase clients, types, formatting, PDF analysis
   content.ts                      File-based course/lesson loader
   quiz.ts                         Test loader, validation and grading
+  sources.ts                      Study-material loader for laws and acts
   progress.ts                     Completed lessons, best test scores, per-course maths
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
   supabase/                       Server, browser clients and env config
 components/
-  AppHeader (with the switch pill to the gazette), MobileTabBar, ThemeToggle,
+  AppHeader (edge-to-edge, switch pill to the gazette), SectionMenu
+  (Öyrən / Kurslar / Mənbələr dropdown), MobileTabBar, ThemeToggle,
   PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
   ProgressBar, Skeleton, StatTile, LessonQuiz, gazette/OmniLogo
 components/gazette/               Gazette UI: SiteHeader (pill back to /), IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
+content/sources/                  Study materials on laws and legal acts (MDX)
 scripts/                          pdf.js worker copy, gazette scraper and drafts
 supabase/migrations/              lesson_progress and quiz_attempts tables + policies
 tests/                            Vitest: content loader, tests, lesson compile, dates
-middleware.ts                     Auth gate for /courses and /account
+middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
 
 ## Roadmap
@@ -229,6 +263,7 @@ middleware.ts                     Auth gate for /courses and /account
 1. ✅ Design system, Google sign-in, file-based courses, lesson progress
    ✅ Omni Law Gazette folded in at `/gazette`, original design, shared database
    ✅ Tests per lesson with saved attempts and best scores
+   ✅ "Mənbələr": study materials on laws and legal acts; "Öyrən" desk
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

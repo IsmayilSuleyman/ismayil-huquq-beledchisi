@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
     "/courses/[course]": ["./content/**/*"],
     "/courses/[course]/[lesson]": ["./content/**/*"],
     "/account": ["./content/**/*"],
+    "/learn": ["./content/**/*"],
+    "/resources": ["./content/**/*"],
+    "/resources/[slug]": ["./content/**/*"],
   },
   // Gazette covers are served from the public Supabase storage bucket.
   images: {

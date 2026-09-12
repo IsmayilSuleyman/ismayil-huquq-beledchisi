@@ -8,7 +8,7 @@ export default function GuideLayout({ children }: { children: React.ReactNode })
   return (
     <>
       <PageBackground />
-      <div className="relative z-10 min-h-screen">{children}</div>
+      <div className="relative z-10 min-h-screen overflow-x-clip">{children}</div>
       <MobileTabBar />
       <ThemeToggle />
     </>

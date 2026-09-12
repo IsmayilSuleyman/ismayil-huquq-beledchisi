@@ -4,7 +4,7 @@ import { requireUser } from "@/lib/auth-guard";
 import { listCourses, countLessons, countQuizzes } from "@/lib/content";
 import { countPassed, courseProgress, getCompletedLessons, getQuizBests } from "@/lib/progress";
 import { profileFromUser } from "@/lib/user";
-import { AppHeader } from "@/components/AppHeader";
+import { AppHeader, LogoutButton } from "@/components/AppHeader";
 import { ProgressBar } from "@/components/ProgressBar";
 import { StatTile } from "@/components/StatTile";
 
@@ -113,10 +113,13 @@ export default async function AccountPage() {
         )}
       </section>
 
-      <p className="mt-10 text-xs leading-5 text-ink/45 dark:text-white/45">
-        Hesabınız Google vasitəsilə yaradılıb. Çıxış üçün yuxarıdakı
-        &ldquo;Çıxış&rdquo; düyməsindən istifadə edin.
-      </p>
+      <section className="mt-12 flex flex-col items-start gap-3">
+        <LogoutButton />
+        <p className="text-xs leading-5 text-ink/45 dark:text-white/45">
+          Hesabınız Google vasitəsilə yaradılıb. Çıxış etdikdən sonra eyni
+          hesabla yenidən daxil ola bilərsiniz; irəliləyişiniz saxlanılır.
+        </p>
+      </section>
     </main>
   );
 }

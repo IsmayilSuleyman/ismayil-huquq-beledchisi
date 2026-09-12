@@ -6,7 +6,10 @@ export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
   const { pathname } = request.nextUrl;
   const isProtected =
-    pathname.startsWith("/courses") || pathname.startsWith("/account");
+    pathname.startsWith("/courses") ||
+    pathname.startsWith("/account") ||
+    pathname.startsWith("/learn") ||
+    pathname.startsWith("/resources");
   const isAuthPage = pathname.startsWith("/login");
   const config = getSupabaseConfig();
 
@@ -99,5 +102,5 @@ export async function middleware(request: NextRequest) {
 // icons and prefetches out of the matcher avoids the refresh-token stampede
 // that used to log everyone out after each deploy.
 export const config = {
-  matcher: ["/courses/:path*", "/account/:path*", "/login", "/"],
+  matcher: ["/courses/:path*", "/account/:path*", "/learn", "/resources/:path*", "/login", "/"],
 };

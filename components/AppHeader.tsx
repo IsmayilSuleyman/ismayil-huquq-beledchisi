@@ -6,19 +6,34 @@ import { usePathname, useRouter } from "next/navigation";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { GAZETTE_URL } from "@/lib/gazette";
 import { Wordmark } from "@/components/Wordmark";
-import { OmniMark } from "@/components/gazette/OmniLogo";
-
-const NAV = [
-  { href: "/courses", label: "Kurslar" },
-  { href: "/account", label: "Hesab" },
-];
+import { SectionMenu } from "@/components/SectionMenu";
 
 /**
- * Sticky site header for the signed-in area: wordmark on the left; on the
- * right the switch pill to the gazette (mirroring the gazette's own header),
- * the section links, a hairline, then the account cluster. Without a `name`
- * the account cluster collapses to a sign-in link.
+ * Sticky, edge-to-edge site header for the signed-in area: wordmark on the
+ * left; on the right the switch pill to the gazette (mirroring the gazette's
+ * own header), the section dropdown, the account link, a hairline, then the
+ * account cluster. Without a `name` the cluster collapses to a sign-in link.
  */
+/** Sign-out control for pages where the header hides it (phones). */
+export function LogoutButton({ className = "" }: { className?: string }) {
+  const router = useRouter();
+  const supabase = createSupabaseBrowserClient();
+  const onLogout = async () => {
+    if (supabase) await supabase.auth.signOut();
+    router.push("/login");
+    router.refresh();
+  };
+  return (
+    <button
+      type="button"
+      onClick={onLogout}
+      className={`inline-flex items-center justify-center rounded-xl border border-brand-wood/30 px-5 py-3 text-sm font-medium uppercase tracking-[0.14em] text-brand-wood transition hover:-translate-y-0.5 hover:bg-brand-wood-mist dark:border-brand-brass/40 dark:text-brand-brass-soft dark:hover:bg-white/10 ${className}`}
+    >
+      Çıxış
+    </button>
+  );
+}
+
 export function AppHeader({
   name,
   avatarUrl,
@@ -43,45 +58,40 @@ export function AppHeader({
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-40 -mx-6 mb-12 border-b border-brand-wood/15 bg-white/55 px-6 backdrop-blur-md dark:bg-white/5"
+      className="sticky top-0 z-40 mb-12 w-screen border-b border-brand-wood/15 bg-white/55 backdrop-blur-md [margin-left:calc(50%-50vw)] dark:bg-white/5"
     >
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 py-3.5">
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-3.5">
         <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
-          <Wordmark size="sm" />
+          <Wordmark size="xs" className="sm:hidden" />
+          <Wordmark size="sm" className="hidden sm:inline-flex" />
         </Link>
 
         <div className="flex min-w-0 items-center gap-3 sm:gap-5">
-          {/* Sister-site switch pill, mirrored from the gazette header */}
+          {/* Sister-site switch pill, mirrored from the gazette header; phones use the Qəzet tab */}
           <a
             href={GAZETTE_URL}
             title="Omni Law Gazette"
-            aria-label="Omni Law Gazette-ə keç"
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/10 px-2.5 py-1.5 transition hover:border-brand-brass/50 hover:bg-white/60 dark:border-white/15 dark:hover:bg-white/10"
+            className="hidden shrink-0 items-center gap-1.5 rounded-lg border border-ink/10 px-2.5 py-1.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:border-brand-brass/50 hover:bg-white/60 hover:text-brand-wood dark:border-white/15 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-brand-brass-soft sm:inline-flex"
           >
-            <OmniMark size={18} />
-            <span className="hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/55 dark:text-white/60 sm:inline">
-              Qəzetə keç
-            </span>
+            Qəzetə keç
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M7 17L17 7M9 7h8v8" />
+            </svg>
           </a>
 
-          <nav className="hidden items-center gap-5 md:flex" aria-label="Bölmələr">
-            {NAV.map((item) => {
-              const active = pathname.startsWith(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] transition ${
-                    active
-                      ? "text-brand-wood dark:text-brand-brass-soft"
-                      : "text-ink/45 hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
+          <nav className="flex items-center gap-1 sm:gap-3" aria-label="Bölmələr">
+            <SectionMenu />
+            <Link
+              href="/account"
+              aria-current={pathname.startsWith("/account") ? "page" : undefined}
+              className={`hidden rounded-lg px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] transition hover:bg-white/60 dark:hover:bg-white/10 md:inline-flex ${
+                pathname.startsWith("/account")
+                  ? "text-brand-wood dark:text-brand-brass-soft"
+                  : "text-ink/45 hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
+              }`}
+            >
+              Hesab
+            </Link>
           </nav>
 
           <span aria-hidden className="hidden h-5 w-px bg-ink/10 dark:bg-white/15 md:block" />
@@ -111,9 +121,10 @@ export function AppHeader({
                 )}
                 <span className="hidden text-xs text-ink/60 dark:text-white/60 lg:inline">{name}</span>
               </Link>
+              {/* On phones sign-out lives on the account page (Hesab tab). */}
               <button
                 onClick={onLogout}
-                className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/45 transition hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
+                className="hidden text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/45 transition hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft md:inline"
               >
                 Çıxış
               </button>
