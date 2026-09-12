@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth-guard";
 import { getCourse } from "@/lib/content";
-import { courseProgress, getCompletedLessons, progressKey } from "@/lib/progress";
+import { courseProgress, getCompletedLessons, getQuizBests, progressKey } from "@/lib/progress";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader } from "@/components/AppHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -24,11 +24,14 @@ export default async function CoursePage({ params }: { params: Params }) {
   const { course: slug } = await params;
   const user = await requireUser(`/courses/${slug}`);
   const profile = profileFromUser(user);
-  const [course, completed] = await Promise.all([
+  const [course, completed, bests] = await Promise.all([
     getCourse(slug),
     getCompletedLessons(user.id),
+    getQuizBests(user.id),
   ]);
   if (!course) notFound();
+  const quizCount = course.lessons.filter((l) => l.hasQuiz).length;
+  const passedCount = course.lessons.filter((l) => bests.get(progressKey(course.slug, l.slug))?.passed).length;
 
   const progress = courseProgress(course, completed);
   const totalMinutes = course.lessons.reduce((s, l) => s + (l.minutes ?? 0), 0);
@@ -78,13 +81,16 @@ export default async function CoursePage({ params }: { params: Params }) {
             tone={progress.completed > 0 ? "positive" : "neutral"}
             sub={`${progress.percent}%`}
           />
-          {totalMinutes > 0 ? (
+          {quizCount > 0 ? (
             <StatTile
-              label="Ümumi müddət"
-              value={totalMinutes}
-              sub="dəqiqə"
-              className="glass col-span-2 flex flex-col gap-2 p-6 sm:col-span-1"
+              label="Testlər"
+              value={passedCount}
+              tone={passedCount > 0 ? "positive" : "neutral"}
+              sub={`${quizCount} testdən keçilib`}
             />
+          ) : null}
+          {totalMinutes > 0 ? (
+            <StatTile label="Ümumi müddət" value={totalMinutes} sub="dəqiqə" />
           ) : null}
         </div>
       </header>
@@ -103,6 +109,7 @@ export default async function CoursePage({ params }: { params: Params }) {
         <ol className="glass divide-y divide-brand-wood-ring/60 dark:divide-white/10">
           {course.lessons.map((lesson, i) => {
             const done = completed.has(progressKey(course.slug, lesson.slug));
+            const best = bests.get(progressKey(course.slug, lesson.slug)) ?? null;
             return (
               <li key={lesson.slug}>
                 <Link
@@ -134,11 +141,24 @@ export default async function CoursePage({ params }: { params: Params }) {
                       </span>
                     ) : null}
                   </span>
-                  {lesson.minutes ? (
-                    <span className="num shrink-0 text-[11px] uppercase tracking-[0.16em] text-ink/45 dark:text-white/45">
-                      {lesson.minutes} dəq
-                    </span>
-                  ) : null}
+                  <span className="flex shrink-0 flex-col items-end gap-1.5">
+                    {lesson.minutes ? (
+                      <span className="num text-[11px] uppercase tracking-[0.16em] text-ink/45 dark:text-white/45">
+                        {lesson.minutes} dəq
+                      </span>
+                    ) : null}
+                    {lesson.hasQuiz ? (
+                      <span
+                        className={`num rounded-full border px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.16em] ${
+                          best?.passed
+                            ? "border-status-done/40 text-status-done dark:border-brand-brass/40 dark:text-brand-brass-soft"
+                            : "border-brand-wood-ring text-ink/45 dark:border-white/15 dark:text-white/45"
+                        }`}
+                      >
+                        {best ? `Test ${best.percent}%` : "Test"}
+                      </span>
+                    ) : null}
+                  </span>
                 </Link>
               </li>
             );

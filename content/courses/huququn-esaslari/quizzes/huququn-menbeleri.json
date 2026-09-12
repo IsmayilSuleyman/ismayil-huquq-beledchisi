@@ -1,0 +1,65 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Azərbaycan Respublikasında hüququn əsas mənbəyi hansıdır?",
+      "options": [
+        "Məhkəmə presedenti",
+        "Hüquqi adət",
+        "Normativ hüquqi akt",
+        "Hüquq doktrinası"
+      ],
+      "answer": 2,
+      "explanation": "Azərbaycan Respublikası roman-german (kontinental) hüquq ailəsinə aiddir; bu səbəbdən hüququn əsas mənbəyi normativ hüquqi aktdır, məhkəmə presedenti isə rəsmi mənbə hesab edilmir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Nazirlər Kabinetinin qərarı ilə qanun arasında ziddiyyət yaranarsa, hansı akt tətbiq edilir və bu qayda Konstitusiyanın hansı maddəsində təsbit olunub?",
+      "options": [
+        "Nazirlər Kabinetinin qərarı; 148-ci maddə",
+        "Qanun; 149-cu maddə",
+        "Qanun; 151-ci maddə",
+        "Sonradan qəbul edilmiş akt; 147-ci maddə"
+      ],
+      "answer": 1,
+      "explanation": "Konstitusiyanın 149-cu maddəsinə əsasən Nazirlər Kabinetinin qərarları Konstitusiyaya, qanunlara və Prezidentin fərmanlarına zidd ola bilməz; deməli, qanun tətbiq edilir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Konstitusiyanın 147-ci maddəsinə əsasən Konstitusiyanın \"birbaşa hüquqi qüvvəyə\" malik olması nə deməkdir?",
+      "options": [
+        "Konstitusiya yalnız Milli Məclis tərəfindən dəyişdirilə bilər",
+        "Konstitusiya normalarına istinad etmək üçün əlavə qanunun qəbulu tələb olunmur",
+        "Konstitusiya beynəlxalq müqavilələrdən üstündür",
+        "Konstitusiya yalnız referendumla qəbul edilir"
+      ],
+      "answer": 1,
+      "explanation": "Birbaşa hüquqi qüvvə o deməkdir ki, Konstitusiya normaları əlavə qanun qəbul edilmədən bilavasitə tətbiq oluna bilər."
+    },
+    {
+      "id": "q4",
+      "prompt": "Qanunvericilik sisteminə daxil olan normativ hüquqi akt (Konstitusiya və referendumla qəbul edilən aktlar istisna olmaqla) ilə Azərbaycan Respublikasının tərəfdar çıxdığı dövlətlərarası müqavilə arasında ziddiyyət yaranarsa, hansı tətbiq edilir?",
+      "options": [
+        "Normativ hüquqi akt",
+        "Beynəlxalq müqavilə",
+        "Sonradan qəbul edilmiş sənəd",
+        "Məsələ Konstitusiya Məhkəməsi tərəfindən hər dəfə ayrıca həll edilir"
+      ],
+      "answer": 1,
+      "explanation": "Konstitusiyanın 151-ci maddəsinə əsasən belə ziddiyyət zamanı beynəlxalq müqavilələr tətbiq edilir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Hansı normativ hüquqi aktların qüvvəsi geriyə şamil edilir?",
+      "options": [
+        "Bütün normativ hüquqi aktların",
+        "Yalnız Prezidentin fərmanlarının",
+        "Şəxslərin hüquqi vəziyyətini yaxşılaşdıran, məsuliyyəti aradan qaldıran və ya yüngülləşdirən aktların",
+        "Heç bir aktın"
+      ],
+      "answer": 2,
+      "explanation": "Konstitusiyanın 149-cu maddəsinə əsasən fiziki və hüquqi şəxslərin hüquqi vəziyyətini yaxşılaşdıran, hüquqi məsuliyyəti aradan qaldıran və ya yüngülləşdirən aktların qüvvəsi geriyə şamil edilir; digər aktların qüvvəsi geriyə şamil edilmir."
+    }
+  ]
+}

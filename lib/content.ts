@@ -30,6 +30,8 @@ export type LessonMeta = {
   summary: string;
   order: number;
   minutes: number | null;
+  /** True when content/courses/<course>/quizzes/<lesson>.json exists. */
+  hasQuiz: boolean;
 };
 
 export type Lesson = LessonMeta & { body: string };
@@ -76,6 +78,7 @@ function toLessonMeta(
   courseSlug: string,
   parsed: { slug: string; order: number | null },
   data: Record<string, unknown>,
+  hasQuiz: boolean,
 ): LessonMeta {
   return {
     slug: parsed.slug,
@@ -84,19 +87,37 @@ function toLessonMeta(
     summary: asString(data.summary, ""),
     order: asNumber(data.order) ?? parsed.order ?? 0,
     minutes: asNumber(data.minutes),
+    hasQuiz,
   };
+}
+
+/** Lesson slugs that have a test file next to the lessons folder. */
+async function readQuizSlugs(quizzesDir: string): Promise<Set<string>> {
+  try {
+    const files = await fs.readdir(quizzesDir);
+    return new Set(
+      files
+        .filter((f) => f.endsWith(".json"))
+        .map((f) => f.slice(0, -".json".length))
+        .filter(isSlug),
+    );
+  } catch {
+    return new Set();
+  }
 }
 
 async function readLessonMetas(
   courseSlug: string,
-  lessonsDir: string,
+  courseDir: string,
 ): Promise<LessonMeta[]> {
+  const lessonsDir = path.join(courseDir, "lessons");
   let files: string[];
   try {
     files = await fs.readdir(lessonsDir);
   } catch {
     return [];
   }
+  const quizzes = await readQuizSlugs(path.join(courseDir, "quizzes"));
 
   const metas: LessonMeta[] = [];
   for (const file of files) {
@@ -104,7 +125,7 @@ async function readLessonMetas(
     if (!parsed) continue;
     const raw = await fs.readFile(path.join(lessonsDir, file), "utf8");
     const { data } = matter(raw);
-    metas.push(toLessonMeta(courseSlug, parsed, data));
+    metas.push(toLessonMeta(courseSlug, parsed, data, quizzes.has(parsed.slug)));
   }
   return sortLessons(metas);
 }
@@ -124,7 +145,7 @@ export async function getCourse(
   }
 
   const meta = JSON.parse(raw) as Record<string, unknown>;
-  const lessons = await readLessonMetas(slug, path.join(dir, "lessons"));
+  const lessons = await readLessonMetas(slug, dir);
 
   return {
     slug,
@@ -187,4 +208,8 @@ export async function getLesson(
 
 export function countLessons(courses: Course[]): number {
   return courses.reduce((sum, c) => sum + c.lessons.length, 0);
+}
+
+export function countQuizzes(courses: Course[]): number {
+  return courses.reduce((sum, c) => sum + c.lessons.filter((l) => l.hasQuiz).length, 0);
 }

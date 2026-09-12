@@ -1,0 +1,65 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Hüququn hansı əlaməti onu əxlaq normalarından fərqləndirir?",
+      "options": [
+        "Normativlik – qaydaların ümumi xarakter daşıması",
+        "Dövlət təminatı – pozuntuya görə dövlətin məcburetmə tədbirlərinin tətbiqi",
+        "Qaydaların insanların davranışını tənzimləməsi",
+        "Qaydaların cəmiyyətdə uzun müddət mövcud olması"
+      ],
+      "answer": 1,
+      "explanation": "Əxlaq normaları da ümumi xarakter daşıyır və davranışı tənzimləyir, lakin onların pozulması dövlətin məcburetmə qüvvəsi ilə deyil, ictimai qınaqla qarşılanır. Dövlət təminatı yalnız hüquq normalarına xasdır."
+    },
+    {
+      "id": "q2",
+      "prompt": "\"Mülkiyyətçinin öz əmlakına sahiblik etmək hüququ\" ifadəsi hansı mənada işlədilən \"hüquq\" terminidir?",
+      "options": [
+        "Obyektiv hüquq",
+        "Subyektiv hüquq",
+        "Hüquq sahəsi",
+        "Hüquq instituti"
+      ],
+      "answer": 1,
+      "explanation": "Subyektiv hüquq – obyektiv hüquqla konkret şəxsə verilən mümkün davranış ölçüsüdür. Obyektiv hüquq isə şəxsdən asılı olmayaraq mövcud olan normaların məcmusudur."
+    },
+    {
+      "id": "q3",
+      "prompt": "\"Əgər borclu öhdəliyi vaxtında icra etməzsə, o, kreditora dəymiş zərəri ödəməlidir.\" Bu normada \"kreditora dəymiş zərəri ödəməlidir\" hissəsi hansı ünsürdür?",
+      "options": [
+        "Hipoteza",
+        "Dispozisiya",
+        "Sanksiya",
+        "Preambula"
+      ],
+      "answer": 2,
+      "explanation": "Hipoteza tətbiq şərtini göstərir (öhdəliyin vaxtında icra edilməməsi), sanksiya isə dispozisiyaya əməl edilmədikdə yaranan mənfi nəticəni – zərərin ödənilməsini – müəyyən edir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Aşağıdakı sahələrdən hansı xüsusi hüquqa aid edilir?",
+      "options": [
+        "Konstitusiya hüququ",
+        "İnzibati hüquq",
+        "Cinayət hüququ",
+        "Ailə hüququ"
+      ],
+      "answer": 3,
+      "explanation": "Xüsusi hüquq bərabərhüquqlu subyektlər arasındakı münasibətləri tənzimləyir; buraya mülki, ailə və əmək hüququ daxildir. Konstitusiya, inzibati və cinayət hüququ hakimiyyət-tabeçilik münasibətlərini tənzimləyən ümumi (publik) hüquq sahələridir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Hüquq münasibətlərinin yaranmasına, dəyişməsinə və ya xitamına səbəb olan hal necə adlanır?",
+      "options": [
+        "Hüquq norması",
+        "Hüquqi fakt",
+        "Hüquq subyekti",
+        "Hüquqi vəzifə"
+      ],
+      "answer": 1,
+      "explanation": "Hüquqi fakt – hüquq münasibətlərinin yaranmasına, dəyişməsinə və ya xitamına səbəb olan haldır; o, hadisə (məsələn, ölüm) və ya hərəkət (məsələn, müqavilənin bağlanması) ola bilər."
+    }
+  ]
+}

@@ -60,3 +60,56 @@ export function courseProgress(
     nextLessonSlug,
   };
 }
+
+export type QuizBest = {
+  score: number;
+  total: number;
+  percent: number;
+  passed: boolean;
+  attempts: number;
+};
+
+/**
+ * Best test result per lesson for the signed-in person, keyed like
+ * progressKey. Reads every attempt (a handful of rows per lesson) and folds
+ * them here; the same "degrade to empty" rule as completed lessons applies.
+ */
+export async function getQuizBests(userId: string): Promise<Map<string, QuizBest>> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return new Map();
+
+  const { data, error } = await supabase
+    .from("quiz_attempts")
+    .select("course_slug, lesson_slug, score, total, passed")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("quiz_attempts read failed:", error);
+    return new Map();
+  }
+
+  const bests = new Map<string, QuizBest>();
+  for (const row of data ?? []) {
+    const key = progressKey(row.course_slug, row.lesson_slug);
+    const percent = row.total > 0 ? Math.round((row.score / row.total) * 100) : 0;
+    const prev = bests.get(key);
+    if (!prev) {
+      bests.set(key, { score: row.score, total: row.total, percent, passed: row.passed, attempts: 1 });
+    } else {
+      bests.set(key, {
+        score: percent > prev.percent ? row.score : prev.score,
+        total: percent > prev.percent ? row.total : prev.total,
+        percent: Math.max(prev.percent, percent),
+        passed: prev.passed || row.passed,
+        attempts: prev.attempts + 1,
+      });
+    }
+  }
+  return bests;
+}
+
+export function countPassed(bests: Map<string, QuizBest>): number {
+  let n = 0;
+  for (const b of bests.values()) if (b.passed) n += 1;
+  return n;
+}

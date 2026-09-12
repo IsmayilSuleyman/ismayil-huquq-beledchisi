@@ -29,6 +29,9 @@ The site shares one Supabase project with the gazette (the
 
 - `lesson_progress` — the guide's per-user lesson completion (migration in
   `supabase/migrations/20260912120000_lesson_progress.sql`, already applied);
+- `quiz_attempts` — every test submission with score, pass flag and the
+  chosen answers (`supabase/migrations/20260912200000_quiz_attempts.sql`,
+  already applied);
 - `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
   — the gazette's data, managed from `/gazette/admin`.
 
@@ -139,6 +142,37 @@ Body in Markdown. Tables, lists and blockquotes work (GitHub-flavoured
 Markdown). Avoid raw `<` and `{` characters in prose: the files are MDX.
 ```
 
+### Tests per lesson
+
+A lesson gets a test when a JSON file with the lesson's slug sits in the
+course's `quizzes` folder:
+
+```
+content/courses/<course-slug>/quizzes/<lesson-slug>.json
+```
+
+```json
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Sual mətni",
+      "options": ["A", "B", "C", "D"],
+      "answer": 1,
+      "explanation": "Nə üçün belədir; dərsin hansı hissəsinə əsaslanır."
+    }
+  ]
+}
+```
+
+`answer` is the index of the correct option, `pass` the percentage needed
+(default 70). The answer key never reaches the browser: the page only sends
+the prompts and options, a server action grades the submission, stores the
+attempt in `quiz_attempts` and returns the explanations. Passing marks the
+lesson completed. `npm test` checks every quiz file: valid shape, unique
+option text, an explanation on every question, and a matching lesson.
+
 Rules:
 
 - Slugs are lowercase letters, digits and hyphens only. The numeric prefix on a
@@ -162,7 +196,8 @@ app/
   (guide)/page.tsx                Public landing page
   (guide)/login/page.tsx          Google sign-in card
   (guide)/courses/page.tsx        Course list with progress
-  (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX) + completion action
+  (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion
+                                  and grading actions
   (guide)/account/page.tsx        Profile and per-course progress
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
   (gazette)/gazette/              Library, issues/[number] viewer, admin
@@ -171,20 +206,21 @@ lib/
   gazette-format.ts               Azerbaijani date helpers
   gazette/                        Gazette's own Supabase clients, types, formatting, PDF analysis
   content.ts                      File-based course/lesson loader
-  progress.ts                     Completed-lessons reads and per-course maths
+  quiz.ts                         Test loader, validation and grading
+  progress.ts                     Completed lessons, best test scores, per-course maths
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
   supabase/                       Server, browser clients and env config
 components/
   AppHeader (with the switch pill to the gazette), MobileTabBar, ThemeToggle,
   PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
-  ProgressBar, Skeleton, StatTile, gazette/OmniLogo
+  ProgressBar, Skeleton, StatTile, LessonQuiz, gazette/OmniLogo
 components/gazette/               Gazette UI: SiteHeader (pill back to /), IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
-content/courses/                  Courses and lessons (MDX)
+content/courses/                  Courses, lessons (MDX) and tests (JSON)
 scripts/                          pdf.js worker copy, gazette scraper and drafts
-supabase/migrations/              lesson_progress table + policies
-tests/                            Vitest: content loader
+supabase/migrations/              lesson_progress and quiz_attempts tables + policies
+tests/                            Vitest: content loader, tests, lesson compile, dates
 middleware.ts                     Auth gate for /courses and /account
 ```
 
@@ -192,7 +228,7 @@ middleware.ts                     Auth gate for /courses and /account
 
 1. ✅ Design system, Google sign-in, file-based courses, lesson progress
    ✅ Omni Law Gazette folded in at `/gazette`, original design, shared database
+   ✅ Tests per lesson with saved attempts and best scores
 2. Private beta with a few readers; more courses
-3. Tests and quizzes per lesson (MDX components + attempts table)
-4. AI tutor grounded in the open lesson
-5. Payments (merchant of record) and public launch
+3. AI tutor grounded in the open lesson
+4. Payments (merchant of record) and public launch

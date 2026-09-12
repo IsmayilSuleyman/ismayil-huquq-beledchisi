@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { requireUser } from "@/lib/auth-guard";
-import { listCourses, countLessons } from "@/lib/content";
-import { courseProgress, getCompletedLessons } from "@/lib/progress";
+import { listCourses, countLessons, countQuizzes } from "@/lib/content";
+import { countPassed, courseProgress, getCompletedLessons, getQuizBests } from "@/lib/progress";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader } from "@/components/AppHeader";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -14,11 +14,14 @@ export const metadata: Metadata = { title: "Hesab" };
 export default async function AccountPage() {
   const user = await requireUser("/account");
   const profile = profileFromUser(user);
-  const [courses, completed] = await Promise.all([
+  const [courses, completed, bests] = await Promise.all([
     listCourses(),
     getCompletedLessons(user.id),
+    getQuizBests(user.id),
   ]);
   const totalLessons = countLessons(courses);
+  const totalQuizzes = countQuizzes(courses);
+  const passed = countPassed(bests);
   const joined = user.created_at
     ? new Date(user.created_at).toLocaleDateString("az-AZ", {
         day: "numeric",
@@ -56,9 +59,15 @@ export default async function AccountPage() {
         </div>
       </header>
 
-      <section className="grid gap-4 sm:grid-cols-3">
+      <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatTile label="Kurslar" value={courses.length} />
         <StatTile label="Dərslər" value={totalLessons} />
+        <StatTile
+          label="Keçilmiş testlər"
+          value={passed}
+          tone={passed > 0 ? "positive" : "neutral"}
+          sub={totalQuizzes > 0 ? `${totalQuizzes} testdən` : undefined}
+        />
         <StatTile
           label="Tamamlanıb"
           value={completed.size}

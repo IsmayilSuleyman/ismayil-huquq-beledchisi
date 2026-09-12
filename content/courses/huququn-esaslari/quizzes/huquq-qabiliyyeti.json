@@ -1,0 +1,65 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Fiziki şəxsin mülki hüquq qabiliyyəti hansı andan yaranır?",
+      "options": [
+        "On dörd yaşına çatdıqda",
+        "On səkkiz yaşına çatdıqda",
+        "Doğulduğu andan",
+        "Şəxsiyyət vəsiqəsi aldıqda"
+      ],
+      "answer": 2,
+      "explanation": "Mülki Məcəllənin 25-ci maddəsinə əsasən fiziki şəxsin hüquq qabiliyyəti doğulduğu andan yaranır və ölümü ilə xitam olunur; o, yaşdan və sağlamlıq vəziyyətindən asılı deyildir."
+    },
+    {
+      "id": "q2",
+      "prompt": "On yeddi yaşlı şəxs qanunla yol verilən qaydada nikaha daxil olmuşdur. Onun fəaliyyət qabiliyyəti necə dəyişir?",
+      "options": [
+        "Dəyişmir; on səkkiz yaşınadək məhdud fəaliyyət qabiliyyətli qalır",
+        "Nikaha daxil olduğu vaxtdan tam həcmdə fəaliyyət qabiliyyəti əldə edir",
+        "Yalnız məhkəmə qərarı ilə tam fəaliyyət qabiliyyətli elan edilə bilər",
+        "Yalnız məişət əqdləri bağlamaq hüququ qazanır"
+      ],
+      "answer": 1,
+      "explanation": "Mülki Məcəllənin 28-ci maddəsinə əsasən on səkkiz yaşına çatmamış şəxs nikaha daxil olduqda nikaha daxil olduğu vaxtdan tam həcmdə fəaliyyət qabiliyyəti əldə edir."
+    },
+    {
+      "id": "q3",
+      "prompt": "On beş yaşlı şəxs öz təqaüdünə müstəqil sərəncam verə bilərmi?",
+      "options": [
+        "Xeyr, yalnız on səkkiz yaşından",
+        "Xeyr, yalnız qanuni nümayəndələrin razılığı ilə",
+        "Bəli, on dörd yaşından etibarən öz qazancına və təqaüdünə müstəqil sərəncam vermək hüququ var",
+        "Bəli, lakin yalnız xırda məişət əqdləri həcmində"
+      ],
+      "answer": 2,
+      "explanation": "On dörd yaşından etibarən yetkinlik yaşına çatmayanlar öz qazancına, təqaüdünə və digər gəlirlərinə müstəqil sərəncam vermək hüququna malikdirlər."
+    },
+    {
+      "id": "q4",
+      "prompt": "Fiziki şəxsin fəaliyyət qabiliyyəti hansı orqanın qərarı ilə məhdudlaşdırıla bilər?",
+      "options": [
+        "Qəyyumluq və himayəçilik orqanının qərarı ilə",
+        "Məhkəmənin qərarı ilə",
+        "Notariusun qərarı ilə",
+        "Yaşayış yeri üzrə icra hakimiyyətinin qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "Fəaliyyət qabiliyyəti yalnız qanunla müəyyən edilmiş hallarda və qaydada, məhkəmə qərarı ilə məhdudlaşdırıla və ya şəxs fəaliyyət qabiliyyəti olmayan hesab edilə bilər."
+    },
+    {
+      "id": "q5",
+      "prompt": "Hüquqi şəxsin hüquq qabiliyyəti və fəaliyyət qabiliyyəti nə vaxt yaranır?",
+      "options": [
+        "Təsis müqaviləsi imzalandığı andan",
+        "Nizamnamə kapitalı ödənildiyi andan",
+        "Eyni vaxtda – dövlət qeydiyyatına alındığı andan",
+        "Hüquq qabiliyyəti qeydiyyatdan, fəaliyyət qabiliyyəti rəhbər təyin edildikdən sonra"
+      ],
+      "answer": 2,
+      "explanation": "Fiziki şəxsdən fərqli olaraq hüquqi şəxsin hüquq qabiliyyəti və fəaliyyət qabiliyyəti eyni vaxtda – dövlət qeydiyyatına alındığı andan – yaranır və ləğv başa çatdıqda xitam olunur."
+    }
+  ]
+}

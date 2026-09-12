@@ -1,0 +1,26 @@
+{
+  "pass": 50,
+  "questions": [
+    {
+      "id": "a",
+      "prompt": "Birinci sual?",
+      "options": [
+        "yox",
+        "hə"
+      ],
+      "answer": 1,
+      "explanation": "Çünki hə."
+    },
+    {
+      "id": "b",
+      "prompt": "İkinci sual?",
+      "options": [
+        "bir",
+        "iki",
+        "üç"
+      ],
+      "answer": 0,
+      "explanation": "Çünki bir."
+    }
+  ]
+}

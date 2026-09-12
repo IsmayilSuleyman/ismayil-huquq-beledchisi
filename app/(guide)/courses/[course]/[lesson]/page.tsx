@@ -3,12 +3,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth-guard";
 import { getLesson } from "@/lib/content";
-import { getCompletedLessons, progressKey } from "@/lib/progress";
+import { getCompletedLessons, getQuizBests, progressKey } from "@/lib/progress";
+import { getQuiz, toPublicQuestions } from "@/lib/quiz";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader } from "@/components/AppHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CompleteToggle } from "@/components/CompleteToggle";
 import { LessonBody } from "@/components/LessonBody";
+import { LessonQuiz } from "@/components/LessonQuiz";
 
 export const dynamic = "force-dynamic";
 
@@ -24,15 +26,19 @@ export default async function LessonPage({ params }: { params: Params }) {
   const { course: courseSlug, lesson: lessonSlug } = await params;
   const user = await requireUser(`/courses/${courseSlug}/${lessonSlug}`);
   const profile = profileFromUser(user);
-  const [page, completed] = await Promise.all([
+  const [page, completed, quiz, bests] = await Promise.all([
     getLesson(courseSlug, lessonSlug),
     getCompletedLessons(user.id),
+    getQuiz(courseSlug, lessonSlug),
+    getQuizBests(user.id),
   ]);
   if (!page) notFound();
 
   const { course, lesson, prev, next } = page;
   const index = course.lessons.findIndex((l) => l.slug === lesson.slug);
-  const isDone = completed.has(progressKey(course.slug, lesson.slug));
+  const key = progressKey(course.slug, lesson.slug);
+  const isDone = completed.has(key);
+  const best = bests.get(key) ?? null;
 
   return (
     <main className="mx-auto w-full max-w-5xl px-6 pb-16">
@@ -77,6 +83,16 @@ export default async function LessonPage({ params }: { params: Params }) {
         <div className="glass-strong px-6 py-8 sm:px-10 sm:py-12">
           <LessonBody source={lesson.body} />
         </div>
+
+        {quiz ? (
+          <LessonQuiz
+            courseSlug={course.slug}
+            lessonSlug={lesson.slug}
+            questions={toPublicQuestions(quiz)}
+            pass={quiz.pass}
+            best={best}
+          />
+        ) : null}
 
         <div className="mt-10 flex flex-col items-start gap-6 border-t border-brand-wood-ring/70 pt-8 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
           <CompleteToggle
