@@ -18,7 +18,7 @@ export function OmniMark({
       style={{ fontSize: size * 0.48 }}
     >
       <span
-        className="rounded-[3px] bg-[#1d4287] px-[0.5em] pb-[0.3em] pt-[0.08em] font-light lowercase tracking-[0.04em] text-white shadow-[0_4px_14px_-6px_rgba(29,66,135,0.9),inset_0_1px_0_rgba(255,255,255,0.18)]"
+        className="rounded-[3px] bg-[#1d4287] px-[0.5em] pb-[0.3em] pt-[0.08em] font-light lowercase tracking-[0.015em] text-white shadow-[0_4px_14px_-6px_rgba(29,66,135,0.9),inset_0_1px_0_rgba(255,255,255,0.18)]"
         style={{ fontSize: "1.75em", lineHeight: 1.05 }}
       >
         omni

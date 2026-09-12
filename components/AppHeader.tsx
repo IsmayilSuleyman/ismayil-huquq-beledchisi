@@ -14,10 +14,10 @@ const NAV = [
 ];
 
 /**
- * Sticky site header for the signed-in area. The pill next to the wordmark
- * switches to the gazette site — the same pattern as the İRF ↔ İsmayılBank
- * switch on the fund portal. Without a `name` the account cluster collapses
- * to a sign-in link.
+ * Sticky site header for the signed-in area: wordmark on the left; on the
+ * right the switch pill to the gazette (mirroring the gazette's own header),
+ * the section links, a hairline, then the account cluster. Without a `name`
+ * the account cluster collapses to a sign-in link.
  */
 export function AppHeader({
   name,
@@ -45,46 +45,47 @@ export function AppHeader({
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="sticky top-0 z-40 -mx-6 mb-12 border-b border-brand-wood/15 bg-white/55 px-6 backdrop-blur-md dark:bg-white/5"
     >
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 py-4">
-        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-          <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
-            <Wordmark size="sm" />
-          </Link>
+      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 py-3.5">
+        <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
+          <Wordmark size="sm" />
+        </Link>
 
-          {/* Sister-site switch pill */}
+        <div className="flex min-w-0 items-center gap-3 sm:gap-5">
+          {/* Sister-site switch pill, mirrored from the gazette header */}
           <a
             href={GAZETTE_URL}
+            title="Omni Law Gazette"
             aria-label="Omni Law Gazette-ə keç"
-            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/10 bg-white/80 px-3 py-2 transition hover:-translate-y-px hover:border-brand-brass/50 hover:shadow-sm dark:border-white/15 dark:bg-white/10"
+            className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-ink/10 px-2.5 py-1.5 transition hover:border-brand-brass/50 hover:bg-white/60 dark:border-white/15 dark:hover:bg-white/10"
           >
-            <OmniMark size={22} />
+            <OmniMark size={18} />
             <span className="hidden text-[9px] font-semibold uppercase tracking-[0.18em] text-ink/55 dark:text-white/60 sm:inline">
               Qəzetə keç
             </span>
           </a>
-        </div>
 
-        <nav className="hidden items-center gap-6 md:flex" aria-label="Bölmələr">
-          {NAV.map((item) => {
-            const active = pathname.startsWith(item.href);
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={`text-[10px] font-semibold uppercase tracking-[0.18em] transition ${
-                  active
-                    ? "text-brand-wood dark:text-brand-brass-soft"
-                    : "text-ink/45 hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+          <nav className="hidden items-center gap-5 md:flex" aria-label="Bölmələr">
+            {NAV.map((item) => {
+              const active = pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`text-[10px] font-semibold uppercase tracking-[0.18em] transition ${
+                    active
+                      ? "text-brand-wood dark:text-brand-brass-soft"
+                      : "text-ink/45 hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-        <div className="flex shrink-0 items-center gap-3 sm:gap-5">
+          <span aria-hidden className="hidden h-5 w-px bg-ink/10 dark:bg-white/15 md:block" />
+
           {!name ? (
             <Link
               href={`/login?next=${encodeURIComponent(pathname)}`}
@@ -93,7 +94,7 @@ export function AppHeader({
               Daxil olun
             </Link>
           ) : (
-            <>
+            <div className="flex items-center gap-3 sm:gap-4">
               <Link href="/account" className="flex items-center gap-2" aria-label="Hesab səhifəsi">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -101,22 +102,22 @@ export function AppHeader({
                     src={avatarUrl}
                     alt=""
                     referrerPolicy="no-referrer"
-                    className="h-8 w-8 rounded-full border border-ink/10 object-cover dark:border-white/15"
+                    className="h-7 w-7 rounded-full border border-ink/10 object-cover dark:border-white/15"
                   />
                 ) : (
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-wood-mist text-xs font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-wood-mist text-xs font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
                     {name.slice(0, 1).toUpperCase()}
                   </span>
                 )}
-                <span className="hidden text-xs text-ink/55 dark:text-white/55 lg:inline">{name}</span>
+                <span className="hidden text-xs text-ink/60 dark:text-white/60 lg:inline">{name}</span>
               </Link>
               <button
                 onClick={onLogout}
-                className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:text-brand-wood dark:text-white/60 dark:hover:text-brand-brass-soft"
+                className="text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/45 transition hover:text-brand-wood dark:text-white/50 dark:hover:text-brand-brass-soft"
               >
                 Çıxış
               </button>
-            </>
+            </div>
           )}
         </div>
       </div>
