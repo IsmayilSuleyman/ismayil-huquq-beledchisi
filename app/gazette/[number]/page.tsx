@@ -59,7 +59,7 @@ export default async function IssuePage({ params }: { params: Params }) {
         </div>
         <div className="mt-3.5 flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
           <div className="max-w-3xl">
-            <h1 className="font-serif text-3xl font-semibold leading-tight text-ink dark:text-brand-cream sm:text-4xl">
+            <h1 className="text-3xl font-semibold leading-tight text-ink dark:text-brand-cream sm:text-4xl">
               {issue.title}
             </h1>
             {issue.summary && (

@@ -38,23 +38,19 @@ const config: Config = {
         hero: "2rem", // large feature cards / page shells
       },
       fontFamily: {
+        // SF Pro Display where it exists (Apple devices, via the system
+        // font), Inter (self-hosted) everywhere else — the closest open face.
         sans: [
-          "var(--font-inter)",
           "-apple-system",
           "BlinkMacSystemFont",
           "SF Pro Display",
           "SF Pro Text",
+          "var(--font-inter)",
           "Segoe UI",
           "system-ui",
           "sans-serif",
         ],
         brand: ["var(--font-brand)", "Nunito", "var(--font-inter)", "sans-serif"],
-        serif: [
-          "var(--font-serif)",
-          "Georgia",
-          "Times New Roman",
-          "serif",
-        ],
         mono: ["SF Mono", "ui-monospace", "Menlo", "Monaco", "Consolas", "monospace"],
       },
       boxShadow: {

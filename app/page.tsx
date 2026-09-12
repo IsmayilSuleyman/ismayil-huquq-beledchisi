@@ -63,7 +63,7 @@ export default async function HomePage({
         <div className="relative flex w-full max-w-3xl flex-col items-center text-center">
           <Wordmark size="lg" />
 
-          <h1 className="mt-10 font-serif text-[clamp(1.9rem,3.4vw,3rem)] font-semibold leading-[1.12] tracking-[-0.02em] text-ink dark:text-brand-cream">
+          <h1 className="mt-10 text-[clamp(1.9rem,3.4vw,3rem)] font-semibold leading-[1.12] tracking-[-0.02em] text-ink dark:text-brand-cream">
             Hüququ ardıcıl, aydın və Azərbaycan dilində öyrənin.
           </h1>
           <p className="mt-5 max-w-xl text-base leading-7 text-ink/60 dark:text-white/60">
@@ -114,7 +114,7 @@ export default async function HomePage({
                     Tezliklə
                   </span>
                 ) : null}
-                <h2 className="font-serif text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
+                <h2 className="text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
                   {f.title}
                 </h2>
                 <p className="mt-3 text-sm leading-6 text-ink/55 dark:text-white/55">

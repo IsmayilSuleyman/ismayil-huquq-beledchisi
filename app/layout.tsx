@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Nunito, Source_Serif_4 } from "next/font/google";
+import { Inter, Nunito } from "next/font/google";
 import "./globals.css";
 import { PageBackground } from "@/components/PageBackground";
 import { MotionProvider } from "@/components/MotionProvider";
@@ -10,8 +10,9 @@ import { MobileTabBar } from "@/components/MobileTabBar";
 // as a `dark` class on <html> so there is no light-flash on load.
 const themeInitScript = `(function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}var d=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)})();`;
 
-// Self-hosted via next/font so every platform renders the same faces.
-// latin-ext covers the Azerbaijani letters (ə, ı, ş, ğ, ö, ü, ç).
+// Body face: SF Pro Display on Apple devices (system font), Inter elsewhere.
+// Inter is self-hosted via next/font; latin-ext covers the Azerbaijani
+// letters (ə, ı, ş, ğ, ö, ü, ç).
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   variable: "--font-inter",
@@ -23,13 +24,6 @@ const brand = Nunito({
   subsets: ["latin", "latin-ext"],
   weight: ["800"],
   variable: "--font-brand",
-  display: "swap",
-});
-
-// Serif for headings and lesson text: legal prose reads best in a book face.
-const serif = Source_Serif_4({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-serif",
   display: "swap",
 });
 
@@ -58,7 +52,7 @@ export default function RootLayout({
   return (
     <html
       lang="az"
-      className={`${inter.variable} ${serif.variable} ${brand.variable}`}
+      className={`${inter.variable} ${brand.variable}`}
       suppressHydrationWarning
     >
       <head>

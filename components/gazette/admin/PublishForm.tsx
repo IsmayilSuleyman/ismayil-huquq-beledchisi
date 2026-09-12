@@ -160,7 +160,7 @@ export function PublishForm() {
   if (publishedNumber !== null) {
     return (
       <div className="glass rise p-10 text-center">
-        <h2 className="mb-2 font-serif text-2xl font-semibold text-ink dark:text-brand-cream">
+        <h2 className="mb-2 text-2xl font-semibold text-ink dark:text-brand-cream">
           {publishedNumber} nömrəli buraxılış nəşr olundu.
         </h2>
         <p className="mb-7 text-sm text-ink/55 dark:text-white/55">

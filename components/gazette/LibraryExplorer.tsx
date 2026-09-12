@@ -89,7 +89,7 @@ export function LibraryExplorer({ issues }: { issues: IssueWithUrls[] }) {
 
       {filtered.length === 0 ? (
         <div className="glass p-12 text-center">
-          <p className="mb-1.5 font-serif text-xl text-ink dark:text-brand-cream">
+          <p className="mb-1.5 text-xl text-ink dark:text-brand-cream">
             Bu axtarışa uyğun buraxılış yoxdur.
           </p>
           <p className="text-sm text-ink/45 dark:text-white/45">

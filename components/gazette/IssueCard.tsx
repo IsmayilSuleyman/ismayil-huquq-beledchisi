@@ -29,7 +29,7 @@ export function IssueCard({ issue, index = 0 }: { issue: IssueWithUrls; index?: 
           />
         ) : (
           <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand-wood/40 via-brand-wood-deep to-brand-wood-deep">
-            <span className="font-serif text-6xl text-white/25">№{issue.issue_number}</span>
+            <span className="text-6xl text-white/25">№{issue.issue_number}</span>
           </div>
         )}
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#1c1410] via-[#1c1410]/50 to-transparent" />
@@ -42,7 +42,7 @@ export function IssueCard({ issue, index = 0 }: { issue: IssueWithUrls; index?: 
         <p className="text-[10px] uppercase tracking-[0.18em] text-ink/45 dark:text-white/45">
           {formatDate(issue.published_at)}
         </p>
-        <h3 className="line-clamp-2 font-serif text-[1.13rem] font-semibold leading-snug text-ink dark:text-brand-cream">
+        <h3 className="line-clamp-2 text-[1.13rem] font-semibold leading-snug text-ink dark:text-brand-cream">
           {issue.title}
         </h3>
         {issue.summary ? (

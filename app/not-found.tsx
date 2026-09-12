@@ -6,7 +6,7 @@ export default function NotFound() {
     <main className="flex min-h-screen items-center justify-center px-6">
       <div className="glass w-full max-w-sm p-10 text-center">
         <Wordmark size="sm" className="justify-center" />
-        <h1 className="mt-8 font-serif text-2xl font-semibold text-ink dark:text-brand-cream">
+        <h1 className="mt-8 text-2xl font-semibold text-ink dark:text-brand-cream">
           Səhifə tapılmadı
         </h1>
         <p className="mt-3 text-sm leading-6 text-ink/55 dark:text-white/55">

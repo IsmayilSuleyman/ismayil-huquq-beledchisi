@@ -37,7 +37,7 @@ export default async function GazettePage() {
         <p className="mb-5 text-[10px] font-semibold uppercase tracking-[0.3em] text-brand-brass">
           Omni Law Firm · Həftəlik qanunvericilik icmalı
         </p>
-        <h1 className="font-serif text-[clamp(2.4rem,6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-ink dark:text-brand-cream">
+        <h1 className="text-[clamp(2.4rem,6vw,4.4rem)] font-semibold leading-[1.04] tracking-tight text-ink dark:text-brand-cream">
           Omni Law <span className="italic text-brand-wood dark:text-brand-brass-soft">Gazette</span>
         </h1>
         <p className="mt-5 text-base leading-relaxed text-ink/60 dark:text-white/60 sm:text-lg">
@@ -82,7 +82,7 @@ export default async function GazettePage() {
                 />
               ) : (
                 <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand-wood/50 via-brand-wood-deep to-brand-wood-deep">
-                  <span className="font-serif text-7xl text-white/25">№{latest.issue_number}</span>
+                  <span className="text-7xl text-white/25">№{latest.issue_number}</span>
                 </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#1c1410]/60 via-transparent to-transparent md:bg-gradient-to-r" />
@@ -95,7 +95,7 @@ export default async function GazettePage() {
                   № {latest.issue_number} · {weekOf(latest.published_at)} həftəsi
                 </span>
               </div>
-              <h2 className="mt-4 font-serif text-2xl font-semibold leading-tight text-ink dark:text-brand-cream sm:text-[2.1rem]">
+              <h2 className="mt-4 text-2xl font-semibold leading-tight text-ink dark:text-brand-cream sm:text-[2.1rem]">
                 {latest.title}
               </h2>
               {latest.summary && (
@@ -133,7 +133,7 @@ export default async function GazettePage() {
       ) : (
         <section className="mt-14">
           <div className="glass mx-auto max-w-xl p-12 text-center">
-            <p className="mb-2 font-serif text-2xl text-ink dark:text-brand-cream">Kitabxana hazırdır.</p>
+            <p className="mb-2 text-2xl text-ink dark:text-brand-cream">Kitabxana hazırdır.</p>
             <p className="text-sm leading-relaxed text-ink/55 dark:text-white/55">
               Hələ heç bir buraxılış nəşr olunmayıb.
               {editor ? (
@@ -159,7 +159,7 @@ export default async function GazettePage() {
               <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
                 Arxiv
               </p>
-              <h2 className="font-serif text-3xl font-semibold text-ink dark:text-brand-cream sm:text-4xl">
+              <h2 className="text-3xl font-semibold text-ink dark:text-brand-cream sm:text-4xl">
                 Kitabxanaya baxın
               </h2>
             </div>

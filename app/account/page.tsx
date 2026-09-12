@@ -41,12 +41,12 @@ export default async function AccountPage() {
             className="h-16 w-16 rounded-full border border-ink/10 object-cover dark:border-white/15"
           />
         ) : (
-          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-wood-mist font-serif text-2xl font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-brand-wood-mist text-2xl font-semibold text-brand-wood dark:bg-white/10 dark:text-brand-brass-soft">
             {profile.fullName.slice(0, 1).toUpperCase()}
           </span>
         )}
         <div>
-          <h1 className="font-serif text-[clamp(1.8rem,3.4vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
+          <h1 className="text-[clamp(1.8rem,3.4vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
             {profile.fullName}
           </h1>
           <p className="mt-1 text-sm text-ink/55 dark:text-white/55">
@@ -88,7 +88,7 @@ export default async function AccountPage() {
                   <div className="flex items-center justify-between gap-4">
                     <Link
                       href={`/courses/${course.slug}`}
-                      className="font-serif text-lg font-semibold text-ink transition hover:text-brand-wood dark:text-brand-cream dark:hover:text-brand-brass-soft"
+                      className="text-lg font-semibold text-ink transition hover:text-brand-wood dark:text-brand-cream dark:hover:text-brand-brass-soft"
                     >
                       {course.title}
                     </Link>

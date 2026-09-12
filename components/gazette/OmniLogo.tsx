@@ -55,7 +55,7 @@ export function GazetteWordmark({
           Omni Law Firm
         </span>
         <span
-          className={`mt-1 font-serif font-semibold tracking-[-0.01em] text-ink dark:text-brand-cream ${nameClass}`}
+          className={`mt-1 font-semibold tracking-[-0.01em] text-ink dark:text-brand-cream ${nameClass}`}
         >
           Law Gazette
         </span>

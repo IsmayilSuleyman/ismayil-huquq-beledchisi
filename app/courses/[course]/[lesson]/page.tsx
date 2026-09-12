@@ -64,7 +64,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               </>
             ) : null}
           </div>
-          <h1 className="mt-4 font-serif text-[clamp(1.9rem,3.6vw,2.7rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
+          <h1 className="mt-4 text-[clamp(1.9rem,3.6vw,2.7rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
             {lesson.title}
           </h1>
           {lesson.summary ? (
@@ -101,7 +101,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               <span className="text-[10px] uppercase tracking-[0.2em] text-ink/45 dark:text-white/45">
                 Əvvəlki dərs
               </span>
-              <span className="mt-2 block font-serif text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
+              <span className="mt-2 block text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
                 {prev.title}
               </span>
             </Link>
@@ -116,7 +116,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               <span className="text-[10px] uppercase tracking-[0.2em] text-ink/45 dark:text-white/45">
                 Növbəti dərs
               </span>
-              <span className="mt-2 block font-serif text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
+              <span className="mt-2 block text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
                 {next.title}
               </span>
             </Link>
@@ -128,7 +128,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               <span className="text-[10px] uppercase tracking-[0.2em] text-ink/45 dark:text-white/45">
                 Kursun sonu
               </span>
-              <span className="mt-2 block font-serif text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
+              <span className="mt-2 block text-lg font-semibold leading-snug text-ink dark:text-brand-cream">
                 Mündəricata qayıdın
               </span>
             </Link>

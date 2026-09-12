@@ -535,7 +535,7 @@ export default function PdfViewer({ fileUrl, issueId, issueNumber }: Props) {
         error={
           <div className="grid flex-1 place-items-center p-10">
             <div className="max-w-sm text-center">
-              <p className="mb-2 font-serif text-xl text-ink dark:text-brand-cream">Bu buraxılış açılmadı.</p>
+              <p className="mb-2 text-xl text-ink dark:text-brand-cream">Bu buraxılış açılmadı.</p>
               <p className={`mb-5 text-sm ${muted}`}>{loadError ?? "PDF yüklənmədi."}</p>
               <a className="btn btn-ghost" href={fileUrl} target="_blank" rel="noreferrer">
                 PDF-i birbaşa açın

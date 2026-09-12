@@ -118,7 +118,7 @@ export function Comments({
   return (
     <section id="comments" className="glass scroll-mt-24 p-6 sm:p-8">
       <div className="mb-6 flex items-baseline justify-between gap-4">
-        <h2 className="font-serif text-2xl font-semibold text-ink dark:text-brand-cream">
+        <h2 className="text-2xl font-semibold text-ink dark:text-brand-cream">
           Müzakirə{" "}
           <span className="num align-middle text-base font-normal text-ink/45 dark:text-white/45">
             {comments === null ? "" : `· ${count}`}

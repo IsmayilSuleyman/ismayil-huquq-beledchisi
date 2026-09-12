@@ -32,7 +32,7 @@ export default async function GazetteAdminPage() {
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
           Omni Law Gazette
         </div>
-        <h1 className="mt-3 font-serif text-[clamp(1.9rem,3.6vw,2.6rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
+        <h1 className="mt-3 text-[clamp(1.9rem,3.6vw,2.6rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
           Redaktor masası
         </h1>
         <p className="mt-2 text-sm text-ink/55 dark:text-white/55">{profile.email}</p>
@@ -42,7 +42,7 @@ export default async function GazetteAdminPage() {
         <AdminDesk email={profile.email ?? ""} />
       ) : (
         <div className="glass max-w-xl p-8">
-          <p className="font-serif text-xl font-semibold text-ink dark:text-brand-cream">
+          <p className="text-xl font-semibold text-ink dark:text-brand-cream">
             Bu bölmə yalnız redaktorlar üçündür.
           </p>
           <p className="mt-3 text-sm leading-6 text-ink/55 dark:text-white/55">

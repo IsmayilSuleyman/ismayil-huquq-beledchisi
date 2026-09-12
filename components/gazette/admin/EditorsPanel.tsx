@@ -51,7 +51,7 @@ export function EditorsPanel({ currentEmail }: { currentEmail: string }) {
 
   return (
     <section className="glass max-w-2xl p-6 sm:p-7">
-      <h2 className="mb-1.5 font-serif text-xl font-semibold text-ink dark:text-brand-cream">
+      <h2 className="mb-1.5 text-xl font-semibold text-ink dark:text-brand-cream">
         Redaktorlar
       </h2>
       <p className="mb-5 text-xs leading-relaxed text-ink/55 dark:text-white/55">

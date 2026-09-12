@@ -26,7 +26,7 @@ export default async function CoursesPage() {
         <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
           Xoş gəlmisiniz, {profile.firstName}
         </div>
-        <h1 className="mt-3 font-serif text-[clamp(2rem,4vw,2.8rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
+        <h1 className="mt-3 text-[clamp(2rem,4vw,2.8rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
           Kurslar
         </h1>
         <p className="mt-3 max-w-xl text-sm leading-6 text-ink/55 dark:text-white/55">
@@ -61,7 +61,7 @@ export default async function CoursesPage() {
                     {course.lessons.length} dərs
                   </span>
                 </div>
-                <h2 className="mt-4 font-serif text-2xl font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
+                <h2 className="mt-4 text-2xl font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
                   {course.title}
                 </h2>
                 <p className="mt-3 flex-1 text-sm leading-6 text-ink/55 dark:text-white/55">

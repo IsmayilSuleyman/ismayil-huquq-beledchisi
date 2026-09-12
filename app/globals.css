@@ -113,11 +113,10 @@ body {
   }
 }
 
-/* Lesson body: legal text reads best in a serif with generous leading.
-   Headings pick up the serif face; the typography plugin supplies the rest
-   (colors are set in tailwind.config.ts so light/dark both work). */
+/* Lesson body: generous leading for legal text; headings share the body
+   face. The typography plugin supplies the rest (colors are set in
+   tailwind.config.ts so light/dark both work). */
 .prose :is(h1, h2, h3, h4) {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
   letter-spacing: -0.01em;
   font-weight: 600;
 }

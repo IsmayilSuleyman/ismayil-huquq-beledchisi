@@ -50,7 +50,7 @@ export default async function CoursePage({ params }: { params: Params }) {
               {course.level}
             </span>
           ) : null}
-          <h1 className="mt-4 font-serif text-[clamp(2rem,4vw,2.9rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
+          <h1 className="mt-4 text-[clamp(2rem,4vw,2.9rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
             {course.title}
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-ink/60 dark:text-white/60">
@@ -125,7 +125,7 @@ export default async function CoursePage({ params }: { params: Params }) {
                     )}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block font-serif text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
+                    <span className="block text-lg font-semibold leading-snug text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
                       {lesson.title}
                     </span>
                     {lesson.summary ? (
