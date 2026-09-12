@@ -4,7 +4,7 @@ import { getSupabaseServerUser } from "@/lib/supabase/server";
 import { listCourses, countLessons } from "@/lib/content";
 import { GAZETTE_URL, issueUrl, listIssues } from "@/lib/gazette";
 import { formatDate } from "@/lib/gazette-format";
-import { Mark, Wordmark } from "@/components/Wordmark";
+import { Wordmark } from "@/components/Wordmark";
 import { OmniMark } from "@/components/gazette/OmniLogo";
 import { MotionSection } from "@/components/MotionSection";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -24,11 +24,6 @@ const STEPS = [
     title: "Qanunvericilikdən xəbərdar qalın",
     text: "Omni Law Gazette hər həftə qanunvericilikdəki dəyişikliklərin icmalını dərc edir.",
   },
-];
-
-const SOON = [
-  { title: "Testlər", text: "Hər mövzu üzrə suallar və izahlı cavablar." },
-  { title: "Süni intellekt köməkçisi", text: "Dərsin mətninə əsaslanaraq suallarınıza cavab verir." },
 ];
 
 export default async function HomePage({
@@ -235,57 +230,6 @@ export default async function HomePage({
           </div>
         </MotionSection>
       ) : null}
-
-      {/* What is inside */}
-      <MotionSection delay={0.05} className="mt-16">
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
-          Platformada nələr var
-        </p>
-        <h2 className="text-3xl font-bold tracking-[-0.02em] text-ink dark:text-brand-cream">
-          Öyrənmək və xəbərdar qalmaq üçün bir yer
-        </h2>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          <Link href="/courses" className="glass group flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-glass-wood">
-            <Mark size={34} />
-            <h3 className="mt-5 text-lg font-bold text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
-              Kurslar
-            </h3>
-            <p className="mt-2 flex-1 text-sm leading-6 text-ink/55 dark:text-white/55">
-              Mövzular üzrə ardıcıl qurulmuş dərslər. Hər dərsin sonunda əsas
-              terminlər və özünüyoxlama sualları. Tamamladığınız dərslər
-              hesabınızda qeyd olunur.
-            </p>
-            <span className="mt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-wood dark:text-brand-brass-soft">
-              Kurslara bax →
-            </span>
-          </Link>
-          <Link href={GAZETTE_URL} className="glass group flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-glass-wood">
-            <OmniMark size={34} />
-            <h3 className="mt-5 text-lg font-bold text-ink transition group-hover:text-brand-wood dark:text-brand-cream dark:group-hover:text-brand-brass-soft">
-              Omni Law Gazette
-            </h3>
-            <p className="mt-2 flex-1 text-sm leading-6 text-ink/55 dark:text-white/55">
-              Qanunvericilikdəki dəyişikliklərin həftəlik icmalı. Buraxılışlar
-              oxu otağında açılır, yüklənə bilir və müzakirəyə açıqdır.
-            </p>
-            <span className="mt-5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-wood dark:text-brand-brass-soft">
-              Kitabxanaya keç →
-            </span>
-          </Link>
-          <div className="glass flex flex-col p-6">
-            <span className="chip self-start">Tezliklə</span>
-            <h3 className="mt-5 text-lg font-bold text-ink dark:text-brand-cream">Növbəti addımlar</h3>
-            <ul className="mt-2 flex-1 space-y-3">
-              {SOON.map((item) => (
-                <li key={item.title} className="text-sm leading-6 text-ink/55 dark:text-white/55">
-                  <span className="font-semibold text-ink/80 dark:text-white/80">{item.title}.</span>{" "}
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </MotionSection>
 
       {/* How it works */}
       <MotionSection delay={0.05} className="mt-16">

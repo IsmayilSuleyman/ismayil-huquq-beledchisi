@@ -20,20 +20,20 @@ export default function SiteHeader() {
               Weekly legislature digest
             </span>
           </Link>
+        </div>
+        <nav className="flex items-center gap-1.5 sm:gap-2 text-sm">
           <a
             href={GUIDE_URL}
             title="İsmayıl Hüquq Bələdçisi"
             aria-label="İsmayıl Hüquq Bələdçisinə keç"
-            className="hidden sm:inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/[0.12] bg-white/5 hover:bg-white/10 hover:border-azure/40 transition-colors shrink-0"
+            className="inline-flex items-center gap-2 px-3 py-2 mr-1 sm:mr-2 rounded-lg border border-white/[0.12] bg-white/5 hover:bg-white/10 hover:border-azure/40 transition-colors shrink-0"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/ihb-mark.svg" alt="" width={18} height={18} />
-            <span className="hidden md:inline text-[0.62rem] uppercase tracking-[0.2em] text-silver">
+            <span className="hidden sm:inline text-[0.62rem] uppercase tracking-[0.2em] text-silver">
               Bələdçiyə keç
             </span>
           </a>
-        </div>
-        <nav className="flex items-center gap-1.5 sm:gap-2 text-sm">
           <Link
             href="/gazette"
             className="px-3.5 py-2 rounded-lg text-foreground/85 hover:text-white hover:bg-white/[0.08] transition-colors"

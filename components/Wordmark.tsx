@@ -1,8 +1,12 @@
 // İsmayıl Hüquq Bələdçisi logo: the four-pointed cross mark in gold and
 // bronze (public/images/ihb-mark.svg, traced from the artwork) beside the
-// name in Nunito Extra Bold capitals. Proportions follow the artwork: two
-// flush-left lines of almost equal size, tight leading, and a mark about as
-// tall as the two-line block, with a gap of roughly half a line.
+// name. The name is shipped as vector outlines of Nunito Extra Bold
+// (public/images/ihb-wordmark-*.svg, generated from the font file), so it
+// renders identically everywhere and never falls back to a system face.
+// Proportions follow the artwork: two flush-left lines, the first slightly
+// smaller, tight leading, and a mark about as tall as the two-line block.
+
+const WORDMARK_RATIO = 4.6393; // width / height of the text block
 
 export function Mark({ size = 28, className = "" }: { size?: number; className?: string }) {
   return (
@@ -20,9 +24,9 @@ export function Mark({ size = 28, className = "" }: { size?: number; className?:
 }
 
 const SIZES = {
-  sm: { text: "text-[0.95rem]", mark: 30, gap: 9 },
-  md: { text: "text-[1.3rem] sm:text-[1.45rem]", mark: 44, gap: 13 },
-  lg: { text: "text-[1.95rem] sm:text-[2.3rem]", mark: 70, gap: 20 },
+  sm: { text: 30, mark: 30, gap: 9 },
+  md: { text: 46, mark: 44, gap: 13 },
+  lg: { text: 72, mark: 70, gap: 20 },
 } as const;
 
 export function Wordmark({
@@ -33,15 +37,25 @@ export function Wordmark({
   className?: string;
 }) {
   const s = SIZES[size];
+  const width = Math.round(s.text * WORDMARK_RATIO);
+  const img = (src: string, cls: string) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      width={width}
+      height={s.text}
+      className={`select-none ${cls}`}
+      style={{ width, height: s.text }}
+    />
+  );
   return (
     <span className={`inline-flex items-center ${className}`} style={{ gap: s.gap }}>
       <Mark size={s.mark} />
-      <span
-        className={`flex flex-col text-left font-brand font-extrabold uppercase leading-[1.08] tracking-[-0.005em] text-ink dark:text-brand-cream ${s.text}`}
-      >
-        <span className="text-[0.9em] leading-[1.08]">İsmayıl</span>
-        <span className="whitespace-nowrap">Hüquq Bələdçisi</span>
-      </span>
+      <span className="sr-only">İsmayıl Hüquq Bələdçisi</span>
+      {img("/images/ihb-wordmark-ink.svg", "dark:hidden")}
+      {img("/images/ihb-wordmark-cream.svg", "hidden dark:block")}
     </span>
   );
 }
