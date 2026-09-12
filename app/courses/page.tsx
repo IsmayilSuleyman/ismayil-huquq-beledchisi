@@ -43,13 +43,10 @@ export default async function CoursesPage() {
         <div className="grid gap-5 sm:grid-cols-2">
           {courses.map((course) => {
             const progress = courseProgress(course, completed);
-            const href = progress.nextLessonSlug
-              ? `/courses/${course.slug}`
-              : `/courses/${course.slug}`;
             return (
               <Link
                 key={course.slug}
-                href={href}
+                href={`/courses/${course.slug}`}
                 className="glass group flex flex-col p-6 transition hover:-translate-y-0.5 hover:shadow-glass-wood"
               >
                 <div className="flex items-center justify-between gap-3">
