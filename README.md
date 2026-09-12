@@ -91,26 +91,28 @@ Checks: `npm test` (loader tests), `npm run lint`, `npm run build`.
 
 ## 3. Deploy to Vercel
 
-Reuse the existing **omnilawgazette** Vercel project rather than creating a
-new one, so its hostnames and settings carry over:
+The site is served by the existing **omnilawgazette** Vercel project at
+<https://ismayilhuquqbeledchisi.vercel.app> (the `omnilawgazette.vercel.app`
+alias redirects there). Until that project's Git connection is repointed to
+this repo, it deploys from the `omnilawgazette` GitHub repo, whose `main`
+mirrors this one through merge commits:
 
-1. **Project → Settings → Git**: disconnect `IsmayilSuleyman/omnilawgazette`
-   and connect `IsmayilSuleyman/ismayil-huquq-beledchisi` (production branch
-   `main`).
-2. **Settings → Environment Variables**: the site reads
-   `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and also
-   accepts the old name `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` for the key, so
-   whatever the gazette project already has keeps working.
-3. Optional: set `GAZETTE_HOSTS` to the hostnames that used to serve the
-   standalone gazette (comma-separated, e.g.
-   `omnilawgazette-ismayilsuleymans-projects.vercel.app`). Requests to `/` on
-   those hosts redirect to `/gazette`; every other host lands on the guide.
-4. Redeploy, then add the production hostname to the Supabase
-   **Redirect URLs** (`https://<host>/auth/callback`) and to the Google
-   client's **Authorized JavaScript origins**.
+```bash
+# from a clone of omnilawgazette with this repo added as remote "guide"
+git fetch guide main && git merge guide/main && git push origin main
+```
 
-The gazette pages are public and indexable; only `/gazette/admin` is
-`noindex`.
+To make this repo the direct source instead: **Project → Settings → Git**,
+disconnect `omnilawgazette`, connect `ismayil-huquq-beledchisi` with `main`
+as the production branch. Nothing else changes: `.env.production` carries the
+public Supabase values, the old key name `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+is accepted too, and `GAZETTE_HOSTS` (also in `.env.production`) lists the
+former gazette hostnames whose root should open `/gazette`.
+
+After any new hostname is added, put it in the Supabase **Redirect URLs**
+(`https://<host>/auth/callback`) and the Google client's **Authorized
+JavaScript origins**. Gazette pages are public and indexable; only
+`/gazette/admin` is `noindex`.
 
 ## 4. Adding a course
 
