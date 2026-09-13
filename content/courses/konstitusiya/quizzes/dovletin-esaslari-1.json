@@ -1,0 +1,113 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "7-ci maddəyə görə Azərbaycan dövləti hansı dörd sifətlə səciyyələndirilir?",
+      "options": [
+        "Demokratik, sosial, federativ, respublika",
+        "Demokratik, hüquqi, dünyəvi, unitar respublika",
+        "Hüquqi, dünyəvi, sosial, parlamentli respublika",
+        "Demokratik, hüquqi, dini, unitar respublika"
+      ],
+      "answer": 1,
+      "explanation": "7-ci maddənin I hissəsi: Azərbaycan dövləti demokratik, hüquqi, dünyəvi, unitar respublikadır. 'Sosial' sifəti burada yoxdur; dövlətin sosial xarakteri 12, 15 və 16-cı maddələrdən çıxır."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiyaya görə icra hakimiyyəti kimə mənsubdur?",
+      "options": [
+        "Nazirlər Kabinetinə",
+        "Baş nazirə",
+        "Azərbaycan Respublikasının Prezidentinə",
+        "Prezidentə və Nazirlər Kabinetinə birlikdə"
+      ],
+      "answer": 2,
+      "explanation": "7-ci maddənin III hissəsi və 99-cu maddə: icra hakimiyyəti Prezidentə mənsubdur. Nazirlər Kabineti Prezidentin yuxarı icra orqanıdır (114-cü maddə)."
+    },
+    {
+      "id": "q3",
+      "prompt": "Dövlət hakimiyyəti xarici məsələlərdə nə ilə məhdudlaşır?",
+      "options": [
+        "BMT Təhlükəsizlik Şurasının qərarları ilə",
+        "Yalnız Azərbaycanın tərəfdar çıxdığı beynəlxalq müqavilələrdən irəli gələn müddəalarla",
+        "Qonşu dövlətlərin qanunları ilə",
+        "Heç nə ilə məhdudlaşmır"
+      ],
+      "answer": 1,
+      "explanation": "7-ci maddənin II hissəsi: dövlət hakimiyyəti daxili məsələlərdə yalnız hüquqla, xarici məsələlərdə isə yalnız tərəfdar çıxdığı beynəlxalq müqavilələrdən irəli gələn müddəalarla məhdudlaşır."
+    },
+    {
+      "id": "q4",
+      "prompt": "8-ci maddəyə görə aşağıdakılardan hansı Prezidentin statusuna aid deyil?",
+      "options": [
+        "Xalqın vahidliyini təcəssüm etdirir",
+        "Məhkəmə hakimiyyətinin müstəqilliyinin təminatçısıdır",
+        "Qanunvericilik hakimiyyətini həyata keçirir",
+        "Dövlətin müstəqilliyinin və ərazi bütövlüyünün təminatçısıdır"
+      ],
+      "answer": 2,
+      "explanation": "Qanunvericilik hakimiyyətini Milli Məclis həyata keçirir (7-ci maddənin III hissəsi, 81-ci maddə). Digər üç müddəa 8-ci maddədə Prezidentin dövlət başçısı kimi statusuna aiddir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Dövlət sərhədləri hansı qaydada dəyişdirilə bilər?",
+      "options": [
+        "Milli Məclisin 95 səslə qəbul etdiyi Konstitusiya qanunu ilə",
+        "Prezidentin fərmanı və Milli Məclisin təsdiqi ilə",
+        "Milli Məclisin qərarı ilə bütün əhali arasında keçirilən referendumla",
+        "Beynəlxalq müqavilənin ratifikasiyası ilə"
+      ],
+      "answer": 2,
+      "explanation": "11-ci maddənin III hissəsi: dövlət sərhədləri yalnız Milli Məclisin qərarı ilə Azərbaycanın bütün əhalisi arasında referendum keçirmək yolu ilə xalqın iradəsi əsasında dəyişdirilə bilər (bax: 3-cü maddənin II hissəsi)."
+    },
+    {
+      "id": "q6",
+      "prompt": "Konstitusiyanın 11-ci maddəsinə görə Azərbaycan Respublikasının ərazisinə aşağıdakılardan hansı daxil deyil?",
+      "options": [
+        "Daxili sular",
+        "Xəzər dənizinin Azərbaycana mənsub olan bölməsi",
+        "Azərbaycan üzərindəki hava məkanı",
+        "Azərbaycanın xaricdəki diplomatik nümayəndəliklərinin binaları"
+      ],
+      "answer": 3,
+      "explanation": "11-ci maddənin II hissəsi daxili suları, Xəzərin Azərbaycana mənsub bölməsini və hava məkanını ərazinin tərkib hissəsi kimi göstərir. Diplomatik nümayəndəliklərin binaları beynəlxalq hüquqla toxunulmazdır, lakin dövlət ərazisi sayılmır."
+    },
+    {
+      "id": "q7",
+      "prompt": "12-ci maddəyə görə dövlətin ali məqsədi nədir?",
+      "options": [
+        "İqtisadi inkişafın və dövlət gəlirlərinin artırılması",
+        "İnsan və vətəndaş hüquqlarının və azadlıqlarının, vətəndaşlara layiqli həyat səviyyəsinin təmin edilməsi",
+        "Ərazi bütövlüyünün və müdafiə qabiliyyətinin təmin edilməsi",
+        "Dövlət dilinin inkişafı və mədəni irsin qorunması"
+      ],
+      "answer": 1,
+      "explanation": "12-ci maddənin I hissəsi dövlətin ali məqsədini insan və vətəndaş hüquqlarının və azadlıqlarının, vətəndaşlara layiqli həyat səviyyəsinin təmin edilməsi kimi müəyyən edir. 'Layiqli həyat səviyyəsi' sözləri 2009-cu ildə əlavə olunub."
+    },
+    {
+      "id": "q8",
+      "prompt": "Silahlı Qüvvələrin Ali Baş Komandanı kimdir?",
+      "options": [
+        "Müdafiə naziri",
+        "Baş nazir",
+        "Azərbaycan Respublikasının Prezidenti",
+        "Təhlükəsizlik Şurasının katibi"
+      ],
+      "answer": 2,
+      "explanation": "9-cu maddənin III hissəsi: Prezident Silahlı Qüvvələrin Ali Baş Komandanıdır. Ali komanda heyətini də o təyin edir (109-cu maddənin 12-ci bəndi)."
+    },
+    {
+      "id": "q9",
+      "prompt": "Konstitusiyada sadalanan insan və vətəndaş hüquqları hansı meyara uyğun tətbiq edilir?",
+      "options": [
+        "Yalnız Azərbaycan qanunlarına uyğun",
+        "Azərbaycanın tərəfdar çıxdığı beynəlxalq müqavilələrə uyğun",
+        "Konstitusiya Məhkəməsinin hər il təsdiq etdiyi siyahıya uyğun",
+        "Nazirlər Kabinetinin qərarlarına uyğun"
+      ],
+      "answer": 1,
+      "explanation": "12-ci maddənin II hissəsi: Konstitusiyada sadalanan hüquq və azadlıqlar Azərbaycanın tərəfdar çıxdığı beynəlxalq müqavilələrə uyğun tətbiq edilir. Bu, 155-ci maddə ilə birlikdə hüquqların beynəlxalq standartdan aşağı məhdudlaşdırılmasını istisna edir."
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "39-cu maddəyə görə hər kəsin ətraf mühitlə bağlı hansı hüququ vardır?",
+      "options": [
+        "Təbii ehtiyatlardan pulsuz istifadə etmək",
+        "Ətraf mühitin əsl vəziyyəti haqqında məlumat toplamaq və ekoloji hüquqpozma ilə vurulmuş zərərin əvəzini almaq",
+        "Ekoloji nəzarət orqanlarının yoxlamalarında iştirak etmək",
+        "Yaşayış yerində sənaye obyektlərinin tikintisinə veto qoymaq"
+      ],
+      "answer": 1,
+      "explanation": "39-cu maddənin II hissəsi: hər kəsin ətraf mühitin əsl vəziyyəti haqqında məlumat toplamaq və ekoloji hüquqpozma ilə əlaqədar sağlamlığına və əmlakına vurulmuş zərərin əvəzini almaq hüququ vardır."
+    },
+    {
+      "id": "q2",
+      "prompt": "42-ci maddəyə görə dövlət hansı təhsili pulsuz və icbari olaraq təmin edir?",
+      "options": [
+        "Ali təhsili",
+        "Ümumi orta təhsili",
+        "Peşə təhsilini",
+        "Məktəbəqədər təhsili"
+      ],
+      "answer": 1,
+      "explanation": "42-ci maddənin II hissəsi: dövlət pulsuz icbari ümumi orta təhsil almaq hüququnu təmin edir. İstedadlı şəxslərin təhsili davam etdirməsinə isə maddi vəziyyətdən asılı olmayaraq zəmanət verilir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Təhsil hüququ Konstitusiyada kimə aid edilir?",
+      "options": [
+        "Hər kəsə",
+        "Hər bir vətəndaşa",
+        "Yalnız 18 yaşınadək şəxslərə",
+        "Yalnız Azərbaycanda daimi yaşayanlara"
+      ],
+      "answer": 1,
+      "explanation": "42-ci maddənin I hissəsi 'hər bir vətəndaşın təhsil almaq hüququ vardır' deyir. Əcnəbilərin təhsil hüququ 69-cu maddə üzrə qanunla və ya beynəlxalq müqavilə ilə tənzimlənir."
+    },
+    {
+      "id": "q4",
+      "prompt": "41-ci maddəyə görə insanların həyatı və sağlamlığı üçün təhlükə törədən faktları gizlədən vəzifəli şəxslər üçün nə nəzərdə tutulur?",
+      "options": [
+        "Yalnız intizam tənbehi",
+        "Qanun əsasında məsuliyyətə cəlb edilmə",
+        "Vəzifədən kənarlaşdırılma Prezidentin sərəncamı ilə",
+        "Konstitusiya bu barədə heç nə demir"
+      ],
+      "answer": 1,
+      "explanation": "41-ci maddənin III hissəsi: insanların həyatı və sağlamlığı üçün təhlükə törədən faktları və halları gizlədən vəzifəli şəxslər qanun əsasında məsuliyyətə cəlb edilirlər."
+    },
+    {
+      "id": "q5",
+      "prompt": "Dövlət 42-ci maddəyə görə təhsil sahəsində nəyi müəyyən edir?",
+      "options": [
+        "Bütün təhsil müəssisələrinin tədris planlarını",
+        "Minimum təhsil standartlarını",
+        "Müəllimlərin əmək haqqını",
+        "Ali məktəblərə qəbul üçün yaş həddini"
+      ],
+      "answer": 1,
+      "explanation": "42-ci maddənin V hissəsi: dövlət minimum təhsil standartlarını müəyyən edir; III hissəyə görə təhsil sisteminə dövlət nəzarət edir."
+    },
+    {
+      "id": "q6",
+      "prompt": "40-cı maddə mədəniyyət hüququ ilə yanaşı hər kəsin üzərinə hansı vəzifəni qoyur?",
+      "options": [
+        "Muzeylərə bilet almaq",
+        "Tarixi, mədəni və mənəvi irsə hörmətlə yanaşmaq və abidələri qorumaq",
+        "Milli mədəniyyəti təbliğ etmək",
+        "Mədəniyyət müəssisələrini maliyyələşdirmək"
+      ],
+      "answer": 1,
+      "explanation": "40-cı maddənin II hissəsi: hər kəs tarixi, mədəni və mənəvi irsə hörmətlə yanaşmalı, ona qayğı göstərməli, tarix və mədəniyyət abidələrini qorumalıdır. 77-ci maddə bu vəzifəni təkrar edir."
+    },
+    {
+      "id": "q7",
+      "prompt": "39-cu maddənin III və IV hissələri (ətraf mühitə zərər vurmağın qadağası və dövlətin ekoloji tarazlığa təminatı) Konstitusiyaya nə vaxt daxil edilib?",
+      "options": [
+        "1995-ci ildə",
+        "2002-ci ildə",
+        "2009-cu ildə",
+        "2016-cı ildə"
+      ],
+      "answer": 2,
+      "explanation": "2009-cu il Referendum Aktının 9-cu bəndi 39-cu maddəyə III və IV hissələri əlavə etdi."
+    },
+    {
+      "id": "q8",
+      "prompt": "Konstitusiya dövlət təhsil sistemini hansı xarakterdə müəyyən edir və bu, hansı maddədədir?",
+      "options": [
+        "Dünyəvi – 18-ci maddənin III hissəsi",
+        "Dünyəvi – 42-ci maddənin II hissəsi",
+        "Milli – 21-ci maddə",
+        "Konstitusiya bu barədə susur"
+      ],
+      "answer": 0,
+      "explanation": "Dövlət təhsil sisteminin dünyəvi xarakteri 18-ci maddənin III hissəsində təsbit edilib; 42-ci maddə isə təhsil hüququnun məzmununu verir."
+    }
+  ]
+}

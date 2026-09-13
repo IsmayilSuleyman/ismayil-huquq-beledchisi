@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Azərbaycan Respublikasının Konstitusiyası hansı yolla qəbul edilib?",
+      "options": [
+        "Milli Məclisin 95 səs çoxluğu ilə",
+        "Ümumxalq səsverməsi (referendum) yolu ilə",
+        "Prezidentin fərmanı ilə",
+        "Konstitusiya komissiyasının qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "Konstitusiya 1995-ci il noyabrın 12-də referendumla qəbul edilib. 3-cü maddənin II hissəsinə görə Konstitusiyanın qəbulu və ona dəyişikliklər yalnız referendumla həll olunur."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiya hansı gündən qüvvəyə minib?",
+      "options": [
+        "Referendumun keçirildiyi gündən – 12 noyabr 1995",
+        "Rəsmən dərc olunduğu gündən – 27 noyabr 1995",
+        "Milli Məclisin ilk iclası günündən",
+        "1996-cı il yanvarın 1-dən"
+      ],
+      "answer": 1,
+      "explanation": "Keçid müddəalarının 1-ci bəndinə görə Konstitusiya referendumla qəbul edildikdən sonra rəsmən dərc olunduğu gündən qüvvəyə minir; bu, 1995-ci il noyabrın 27-si olub."
+    },
+    {
+      "id": "q3",
+      "prompt": "Konstitusiyanın 'birbaşa qüvvəsi' nə deməkdir?",
+      "options": [
+        "Konstitusiya yalnız Konstitusiya Məhkəməsi tərəfindən tətbiq edilə bilər",
+        "Konstitusiya normalarına əlavə qanun gözləmədən bilavasitə istinad etmək olar",
+        "Konstitusiya beynəlxalq müqavilələrdən üstündür",
+        "Konstitusiya yalnız dövlət orqanları üçün məcburidir"
+      ],
+      "answer": 1,
+      "explanation": "147-ci maddənin II hissəsi Konstitusiyanın birbaşa hüquqi qüvvəsini təsbit edir: onun normaları tətbiq üçün ayrıca qanun tələb etmir və məhkəmədə bilavasitə istinad edilə bilər."
+    },
+    {
+      "id": "q4",
+      "prompt": "Aşağıdakılardan hansı müstəqillik dövründə, 1995-ci il Konstitusiyasınadək keçid dövrünün əsas sənədi olub?",
+      "options": [
+        "1978-ci il Konstitusiyası",
+        "1918-ci il İstiqlal Bəyannaməsi",
+        "\"Azərbaycan Respublikasının dövlət müstəqilliyi haqqında\" Konstitusiya Aktı (1991)",
+        "1937-ci il Konstitusiyası"
+      ],
+      "answer": 2,
+      "explanation": "1991-ci il 18 oktyabr tarixli Konstitusiya Aktı keçid dövrünün əsas sənədi idi; 1978-ci il Konstitusiyası yalnız Akta zidd olmayan hissədə tətbiq edilirdi. Preambula da məhz bu Akta istinad edir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Konstitusiyaya dəyişikliklər hansı illərdə keçirilmiş referendumlarla edilib?",
+      "options": [
+        "1998, 2003, 2008",
+        "2002, 2009, 2016",
+        "2000, 2005, 2010",
+        "2003, 2013, 2018"
+      ],
+      "answer": 1,
+      "explanation": "Üç referendum keçirilib: 24 avqust 2002, 18 mart 2009 və 26 sentyabr 2016. Digər variantlardakı illər Prezident və ya Milli Məclis seçkiləri ilə bağlıdır."
+    },
+    {
+      "id": "q6",
+      "prompt": "Birinci vitse-prezident və vitse-prezidentlər vəzifələri Konstitusiyaya hansı referendumla daxil edilib?",
+      "options": [
+        "2002-ci il referendumu",
+        "2009-cu il referendumu",
+        "2016-cı il referendumu",
+        "1995-ci ildə Konstitusiyanın ilkin mətnində var idi"
+      ],
+      "answer": 2,
+      "explanation": "103-1-ci maddə 2016-cı il referendumu ilə əlavə edilib. Həmin referendumla Prezidentin səlahiyyət müddəti də 7 ilə qaldırılıb."
+    },
+    {
+      "id": "q7",
+      "prompt": "Konstitusiyanın 'sərt' konstitusiya sayılmasının səbəbi nədir?",
+      "options": [
+        "Maddələrin sayının çox olması",
+        "Adi qanunlardan daha ağır qaydada dəyişdirilməsi",
+        "Yalnız dövlət dilində yazılması",
+        "Konstitusiya Məhkəməsinin mövcudluğu"
+      ],
+      "answer": 1,
+      "explanation": "Sərtlik dəyişdirilmə qaydasına aiddir: mətndə dəyişikliklər yalnız referendumla, əlavələr isə 95 səslə iki dəfə səsə qoyulan Konstitusiya qanunları ilə edilir."
+    },
+    {
+      "id": "q8",
+      "prompt": "\"Konstitusiyanın 25-ci maddəsinin III hissəsi\" ifadəsində 'hissə' rəsmi mətndə necə işarələnir?",
+      "options": [
+        "Ərəb rəqəmi ilə (3)",
+        "Roma rəqəmi ilə (III)",
+        "Hərflə (c)",
+        "Heç bir işarə olmadan, abzasla"
+      ],
+      "answer": 1,
+      "explanation": "Maddələrin hissələri Roma rəqəmləri ilə (I, II, III), bəndləri isə ərəb rəqəmləri ilə (1, 2, 3) nömrələnir."
+    }
+  ]
+}

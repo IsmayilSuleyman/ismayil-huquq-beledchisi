@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "134-cü maddəyə görə Naxçıvan Muxtar Respublikasının statusu nədir?",
+      "options": [
+        "Azərbaycanın tərkibində federativ subyekt",
+        "Azərbaycanın tərkibində muxtar dövlət və onun ayrılmaz tərkib hissəsi",
+        "Xüsusi statuslu inzibati rayon",
+        "Assosiasiya olunmuş dövlət"
+      ],
+      "answer": 1,
+      "explanation": "134-cü maddənin I və III hissələri: Naxçıvan Muxtar Respublikası Azərbaycan Respublikasının tərkibində muxtar dövlətdir və Azərbaycanın ayrılmaz tərkib hissəsidir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Naxçıvan MR Ali Məclisi neçə üzvdən ibarətdir və səlahiyyət müddəti nə qədərdir?",
+      "options": [
+        "45 üzv, 5 il",
+        "45 üzv, 4 il",
+        "55 üzv, 5 il",
+        "125 üzv, 5 il"
+      ],
+      "answer": 0,
+      "explanation": "137-ci maddə: Ali Məclis 45 üzvdən ibarətdir; səlahiyyət müddəti 5 ildir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Naxçıvan MR-in ali vəzifəli şəxsi kimdir?",
+      "options": [
+        "Naxçıvan MR-in Prezidenti",
+        "Naxçıvan MR-in Baş naziri",
+        "Naxçıvan MR Ali Məclisinin sədri",
+        "Azərbaycan Prezidentinin Naxçıvandakı səlahiyyətli nümayəndəsi"
+      ],
+      "answer": 2,
+      "explanation": "136-cı maddə: Naxçıvan Muxtar Respublikasının ali vəzifəli şəxsi Naxçıvan Muxtar Respublikası Ali Məclisinin sədridir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Naxçıvan MR Baş nazirini kim təyin edir?",
+      "options": [
+        "Azərbaycan Prezidenti təkbaşına",
+        "Ali Məclis – Azərbaycan Prezidentinin təqdimatına əsasən",
+        "Ali Məclisin sədri",
+        "Azərbaycan Baş naziri"
+      ],
+      "answer": 1,
+      "explanation": "140-cı maddənin II hissəsi: Naxçıvan MR Baş nazirini Azərbaycan Prezidentinin təqdimatına əsasən Naxçıvan MR Ali Məclisi təyin edir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Naxçıvan MR-in Konstitusiyası necə təsdiq edilir?",
+      "options": [
+        "Naxçıvanda referendumla",
+        "Ali Məclis tərəfindən qəbul edildikdən sonra Prezident Milli Məclisə təqdim edir və Konstitusiya qanunu ilə təsdiq edilir",
+        "Azərbaycan Prezidentinin fərmanı ilə",
+        "Konstitusiya Məhkəməsinin qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "134-cü maddənin VI hissəsi (2002): Naxçıvan MR-in Konstitusiyası Milli Məclisə Prezident tərəfindən təqdim edilir və Konstitusiya qanunu ilə təsdiq edilir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Naxçıvanda yerli icra hakimiyyəti başçılarını kim təyin edir?",
+      "options": [
+        "Ali Məclisin sədri təkbaşına",
+        "Azərbaycan Prezidenti – Ali Məclis sədrinin təqdimatı əsasında",
+        "Naxçıvan Nazirlər Kabineti",
+        "Ali Məclis səsvermə yolu ilə"
+      ],
+      "answer": 1,
+      "explanation": "141-ci maddə: Naxçıvanda yerli icra hakimiyyətlərinin başçılarını Ali Məclis sədrinin təqdimatı əsasında Azərbaycan Prezidenti təyin edir."
+    },
+    {
+      "id": "q7",
+      "prompt": "Aşağıdakılardan hansı 138-ci maddəyə görə Naxçıvan Ali Məclisinin ümumi qaydalar müəyyən etdiyi sahələrə daxil deyil?",
+      "options": [
+        "Vergilər",
+        "Turizm",
+        "Cinayət məsuliyyəti",
+        "Ətraf mühitin qorunması"
+      ],
+      "answer": 2,
+      "explanation": "138-ci maddə yeddi sahəni göstərir: Ali Məclisə seçkilər, vergilər, iqtisadi inkişaf istiqamətləri, sosial təminat, ətraf mühit, turizm, səhiyyə-elm-mədəniyyət. Cinayət məsuliyyəti yalnız Milli Məclisin səlahiyyətindədir (94-cü maddənin 17-ci bəndi)."
+    },
+    {
+      "id": "q8",
+      "prompt": "Naxçıvan MR Ali Məclisi Milli Məclisdə hansı hüquqa malikdir?",
+      "options": [
+        "Veto hüququna",
+        "Qanunvericilik təşəbbüsü hüququna",
+        "Səsvermədə iştirak hüququna",
+        "Heç bir hüququ yoxdur"
+      ],
+      "answer": 1,
+      "explanation": "96-cı maddə Naxçıvan MR Ali Məclisini qanunvericilik təşəbbüsü hüququnun subyektləri sırasında göstərir; onun layihələri təqdim olunmuş şəkildə səsə qoyulur və iki ay ərzində baxılır."
+    }
+  ]
+}

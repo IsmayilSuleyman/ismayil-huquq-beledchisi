@@ -1,0 +1,113 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiyanın 1-ci maddəsinə görə Azərbaycan Respublikasında dövlət hakimiyyətinin yeganə mənbəyi kimdir?",
+      "options": [
+        "Azərbaycan Respublikasının Prezidenti",
+        "Azərbaycan xalqı",
+        "Milli Məclis",
+        "Dövlət orqanlarının məcmusu"
+      ],
+      "answer": 1,
+      "explanation": "1-ci maddənin I hissəsi: dövlət hakimiyyətinin yeganə mənbəyi Azərbaycan xalqıdır. Bütün orqanlar səlahiyyətlərini xalqdan alır."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiya mənasında 'Azərbaycan xalqı' kimlərdən ibarətdir?",
+      "options": [
+        "Yalnız Azərbaycan ərazisində yaşayan etnik azərbaycanlılardan",
+        "Ölkə daxilində və xaricdə yaşayan, Azərbaycan dövlətinə və qanunlarına tabe sayılan vətəndaşlardan",
+        "Azərbaycanda daimi yaşayan bütün şəxslərdən, o cümlədən əcnəbilərdən",
+        "Seçki hüququ olan şəxslərdən"
+      ],
+      "answer": 1,
+      "explanation": "1-ci maddənin II hissəsi xalqı etnik deyil, siyasi-hüquqi anlayış kimi müəyyən edir: ərazidə və ondan kənarda yaşayan, dövlətə və qanunlara tabe sayılan vətəndaşlar."
+    },
+    {
+      "id": "q3",
+      "prompt": "Aşağıdakı məsələlərdən hansı yalnız referendumla həll oluna bilər?",
+      "options": [
+        "Dövlət büdcəsinin təsdiqi",
+        "Baş nazirin təyin edilməsi",
+        "Dövlət sərhədlərinin dəyişdirilməsi",
+        "Amnistiya elan edilməsi"
+      ],
+      "answer": 2,
+      "explanation": "3-cü maddənin II hissəsinə görə yalnız Konstitusiyanın qəbulu və ona dəyişikliklər, habelə dövlət sərhədlərinin dəyişdirilməsi referendumla həll olunur. Büdcə, amnistiya və vəzifəli şəxslərin təyini isə referenduma çıxarıla bilməyən məsələlərdir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Referendum keçirilə bilməyən məsələlərin siyahısı (3-cü maddənin III hissəsi) Konstitusiyaya nə vaxt daxil edilib?",
+      "options": [
+        "1995-ci ildə, ilkin mətndə",
+        "2002-ci il referendumu ilə",
+        "2009-cu il referendumu ilə",
+        "2016-cı il referendumu ilə"
+      ],
+      "answer": 1,
+      "explanation": "III hissə 2002-ci il 24 avqust referendumu ilə əlavə edilib: vergilər və dövlət büdcəsi, amnistiya və əfv, vəzifəli şəxslərin seçilməsi, təyini və təsdiqi referenduma çıxarıla bilməz."
+    },
+    {
+      "id": "q5",
+      "prompt": "2-ci maddəyə görə xalq öz suveren hüququnu hansı üsullarla həyata keçirir?",
+      "options": [
+        "Yalnız referendum yolu ilə",
+        "Yalnız seçilmiş nümayəndələr vasitəsilə",
+        "Bilavasitə referendum və seçilmiş nümayəndələr vasitəsilə",
+        "Prezident və Milli Məclis vasitəsilə"
+      ],
+      "answer": 2,
+      "explanation": "2-ci maddənin II hissəsi iki üsulu göstərir: bilavasitə ümumxalq səsverməsi (referendum) və ümumi, bərabər, birbaşa seçki hüququ əsasında seçilmiş nümayəndələr vasitəsilə."
+    },
+    {
+      "id": "q6",
+      "prompt": "6-cı maddəyə görə hakimiyyətin mənimsənilməsi necə qiymətləndirilir?",
+      "options": [
+        "İnzibati xəta kimi",
+        "Xalqa qarşı ən ağır cinayət kimi",
+        "Konstitusiya Məhkəməsinin həll etdiyi səlahiyyət mübahisəsi kimi",
+        "Siyasi məsuliyyət tələb edən hərəkət kimi"
+      ],
+      "answer": 1,
+      "explanation": "6-cı maddənin II hissəsi hakimiyyətin mənimsənilməsini xalqa qarşı ən ağır cinayət elan edir. 54-cü maddənin II hissəsi isə qiyama və çevrilişə müqavimət göstərməyi vətəndaşın hüququ kimi təsbit edir."
+    },
+    {
+      "id": "q7",
+      "prompt": "4-cü maddəyə görə kim xalqın adından danışmaq hüququna malikdir?",
+      "options": [
+        "Ən çox üzvü olan siyasi partiya",
+        "Yalnız Prezident",
+        "Xalqın seçdiyi səlahiyyətli nümayəndələr",
+        "Hər bir vətəndaş"
+      ],
+      "answer": 2,
+      "explanation": "4-cü maddə: xalqın seçdiyi səlahiyyətli nümayəndələrindən başqa heç kəsin xalqı təmsil etmək, xalqın adından danışmaq və müraciət etmək hüququ yoxdur."
+    },
+    {
+      "id": "q8",
+      "prompt": "Seçki hüququnun Konstitusiyada sadalanan prinsiplərinə aşağıdakılardan hansı daxil deyil?",
+      "options": [
+        "Ümumi seçki hüququ",
+        "Bərabər seçki hüququ",
+        "Proporsional seçki hüququ",
+        "Birbaşa seçki hüququ"
+      ],
+      "answer": 2,
+      "explanation": "2-ci maddə ümumi, bərabər və birbaşa seçki hüququnu, sərbəst, gizli və şəxsi səsverməni nəzərdə tutur. Proporsional sistem prinsip deyil, seçki sisteminin növüdür və 2002-ci ildən Milli Məclis seçkilərində tətbiq edilmir."
+    },
+    {
+      "id": "q9",
+      "prompt": "155-ci maddə I fəslin hansı maddələrində dəyişiklik təkliflərinin referenduma çıxarılmasını qadağan edir?",
+      "options": [
+        "1, 2 və 6-cı maddələr",
+        "3, 4 və 5-ci maddələr",
+        "Bütün altı maddə",
+        "Yalnız 1-ci maddə"
+      ],
+      "answer": 0,
+      "explanation": "155-ci maddə 1, 2, 6, 7, 8 və 21-ci maddələri dəyişdirilməz elan edir; I fəsildən bunlar hakimiyyətin mənbəyi, xalqın suverenliyi və hakimiyyətin mənimsənilməsinə yol verilməməsi maddələridir."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "27-ci maddəyə görə insana qarşı silah işlədilməsinə hansı halda yol verilir?",
+      "options": [
+        "İctimai qaydanı pozan hər hansı şəxsə qarşı",
+        "Zəruri müdafiə, son zərurət, cinayətkarın tutulması, həbsdə olanın qaçmasının qarşısının alınması, qiyamın yatırılması, silahlı basqın hallarında",
+        "Yalnız məhkəmənin qərarı ilə",
+        "Heç bir halda"
+      ],
+      "answer": 1,
+      "explanation": "27-ci maddənin IV hissəsi silah işlədilməsini qadağan edir və istisnaları dəqiq sadalayır: zəruri müdafiə, son zərurət, cinayətkarın yaxalanması və tutulması, həbsdə olanın qaçmasının qarşısının alınması, qiyamın yatırılması və ya çevrilişin qarşısının alınması, ölkəyə silahlı basqın."
+    },
+    {
+      "id": "q2",
+      "prompt": "28-ci maddəyə görə azadlıq hüququ hansı yollarla məhdudlaşdırıla bilər?",
+      "options": [
+        "Yalnız qanunla nəzərdə tutulmuş qaydada tutulma, həbsəalma və ya azadlıqdan məhrumetmə yolu ilə",
+        "Polisin qərarı ilə istənilən müddətə",
+        "Yalnız Prezidentin fərmanı ilə",
+        "Yalnız fövqəladə vəziyyətdə"
+      ],
+      "answer": 0,
+      "explanation": "28-ci maddənin II hissəsi azadlıq hüququnun məhdudlaşdırılmasının yalnız üç formasını tanıyır: tutulma, həbsəalma və azadlıqdan məhrumetmə – hamısı qanunla nəzərdə tutulmuş qaydada."
+    },
+    {
+      "id": "q3",
+      "prompt": "Hər zaman maneəsiz öz ölkəsinə qayıtmaq hüququ kimə məxsusdur?",
+      "options": [
+        "Azərbaycanda qanuni əsaslarla olan hər kəsə",
+        "Yalnız Azərbaycan Respublikasının vətəndaşlarına",
+        "Əcnəbilərə və vətəndaşlığı olmayan şəxslərə",
+        "Yalnız Azərbaycanda daimi yaşayış icazəsi olanlara"
+      ],
+      "answer": 1,
+      "explanation": "28-ci maddənin IV hissəsi: Azərbaycan Respublikası vətəndaşlarının hər zaman maneəsiz öz ölkəsinə qayıtmaq hüququ vardır. Ölkədən kənara getmək hüququ isə (III hissə) hər kəsə aiddir."
+    },
+    {
+      "id": "q4",
+      "prompt": "32-ci maddəyə görə rabitə vasitələri ilə ötürülən məlumatın sirri hansı məqsədlə məhdudlaşdırıla bilər?",
+      "options": [
+        "Vergi yoxlaması aparmaq üçün",
+        "Cinayətin qarşısını almaq və ya cinayət işinin istintaqında həqiqəti üzə çıxarmaq üçün",
+        "Dövlət qulluqçularının fəaliyyətinə nəzarət üçün",
+        "İstənilən inzibati icraat üçün"
+      ],
+      "answer": 1,
+      "explanation": "32-ci maddənin IV hissəsi rabitə sirrinin yalnız iki məqsədlə – cinayətin qarşısını almaq və istintaq zamanı həqiqəti üzə çıxarmaq üçün – və qanunla nəzərdə tutulmuş qaydada məhdudlaşdırılmasına icazə verir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Fərdi məlumatların dairəsi və mühafizəsi şərtləri haqqında müddəa (32-ci maddənin VIII hissəsi) Konstitusiyaya nə vaxt daxil edilib?",
+      "options": [
+        "1995",
+        "2002",
+        "2009",
+        "2016"
+      ],
+      "answer": 3,
+      "explanation": "32-ci maddənin VI, VII və VIII hissələri 2016-cı il referendumu ilə əlavə edilib. 2009-cu ildə isə II, III və V hissələr genişləndirilmişdi."
+    },
+    {
+      "id": "q6",
+      "prompt": "33-cü maddəyə görə mənzildə yaşayanların iradəsi ziddinə mənzilə daxil olmaq hansı hallarda mümkündür?",
+      "options": [
+        "Yalnız mülkiyyətçinin razılığı ilə",
+        "Qanunla müəyyən edilmiş hallarda və ya məhkəmə qərarı ilə",
+        "Polis əməkdaşının qərarı ilə istənilən vaxt",
+        "Yalnız fövqəladə vəziyyətdə"
+      ],
+      "answer": 1,
+      "explanation": "33-cü maddənin II hissəsi iki istisna tanıyır: qanunla müəyyən edilmiş hallar və məhkəmə qərarı. Maddə mülkiyyətçini deyil, mənzildə faktiki yaşayanları qoruyur."
+    },
+    {
+      "id": "q7",
+      "prompt": "34-cü maddəyə görə əmək qabiliyyəti olmayan valideynləri saxlamaq kimin borcudur?",
+      "options": [
+        "Dövlətin",
+        "Bələdiyyənin",
+        "18 yaşına çatmış əmək qabiliyyətli uşaqların",
+        "Yaxın qohumların"
+      ],
+      "answer": 2,
+      "explanation": "34-cü maddənin V hissəsi: 18 yaşına çatmış əmək qabiliyyətli uşaqlar əmək qabiliyyəti olmayan valideynlərini saxlamağa borcludurlar. 38-ci maddə də yardıma möhtac olanlara köməyi ilk növbədə ailə üzvlərinin borcu sayır."
+    },
+    {
+      "id": "q8",
+      "prompt": "46-cı maddəyə görə şəxsin üzərində tibbi, elmi və başqa təcrübələr hansı şərtlə aparıla bilər?",
+      "options": [
+        "Həkimin qərarı ilə",
+        "Şəxsin könüllü razılığı ilə",
+        "Məhkəmənin qərarı ilə",
+        "Elmi müəssisənin rəhbərinin icazəsi ilə"
+      ],
+      "answer": 1,
+      "explanation": "46-cı maddənin III hissəsi: özünün könüllü razılığı olmadan heç kəsin üzərində tibbi, elmi və başqa təcrübələr aparıla bilməz. Eyni hissə işgəncəni və ləyaqəti alçaldan rəftarı mütləq qadağan edir."
+    },
+    {
+      "id": "q9",
+      "prompt": "Konstitusiyanın 27-ci maddəsi ölüm cəzası barədə nə deyir?",
+      "options": [
+        "Ölüm cəzası bütün ağır cinayətlərə görə tətbiq edilə bilər",
+        "Ölüm cəzası Konstitusiya ilə birbaşa ləğv edilib",
+        "Tam ləğv edilənədək müstəsna tədbir kimi yalnız dövlətə, insan həyatına və sağlamlığına qarşı xüsusilə ağır cinayətlərə görə qanunla müəyyən edilə bilər",
+        "Ölüm cəzası yalnız hərbi vəziyyətdə tətbiq edilir"
+      ],
+      "answer": 2,
+      "explanation": "27-ci maddənin III hissəsi ölüm cəzasını 'tam ləğv edilənədək' müstəsna tədbir kimi məhdud cinayət dairəsi üçün saxlayır. Ölüm cəzası 1998-ci ildə qanunla ləğv edilib, ona görə bu norma hazırda tətbiq olunmur."
+    },
+    {
+      "id": "q10",
+      "prompt": "45-ci maddəyə görə hər kəsin hansı hüququ vardır?",
+      "options": [
+        "Yalnız dövlət dilində təhsil almaq",
+        "Ana dilindən istifadə etmək və istədiyi dildə tərbiyə və təhsil almaq",
+        "Dövlət orqanlarından istənilən dildə cavab tələb etmək",
+        "Milli mənsubiyyətini dəyişdirmək"
+      ],
+      "answer": 1,
+      "explanation": "45-ci maddə: hər kəsin ana dilindən istifadə etmək, istədiyi dildə tərbiyə və təhsil almaq, yaradıcılıqla məşğul olmaq hüququ vardır və heç kəs bu hüquqdan məhrum edilə bilməz."
+    }
+  ]
+}

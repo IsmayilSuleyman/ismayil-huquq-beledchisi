@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Baş prokuroru kim və hansı qaydada təyin edir?",
+      "options": [
+        "Milli Məclis – Prezidentin təqdimatı ilə",
+        "Prezident – Milli Məclisin razılığı ilə",
+        "Prezident – təkbaşına",
+        "Ali Məhkəmə – Konstitusiya Məhkəməsinin rəyi ilə"
+      ],
+      "answer": 1,
+      "explanation": "133-cü maddənin III hissəsi: Baş prokuroru Prezident Milli Məclisin razılığı ilə vəzifəyə təyin və vəzifədən azad edir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Ərazi və ixtisaslaşdırılmış prokurorları kim təyin edir?",
+      "options": [
+        "Prezident – Baş prokurorun təqdimatı ilə",
+        "Baş prokuror – Prezidentin razılığı ilə",
+        "Milli Məclis",
+        "Yerli icra hakimiyyəti başçıları"
+      ],
+      "answer": 1,
+      "explanation": "133-cü maddənin V hissəsi: ərazi və ixtisaslaşdırılmış prokurorları Prezidentin razılığı ilə Baş prokuror təyin və azad edir. Baş prokurorun müavinlərini isə Baş prokurorun təqdimatı ilə Prezident təyin edir (IV hissə)."
+    },
+    {
+      "id": "q3",
+      "prompt": "Aşağıdakılardan hansı 133-cü maddəyə görə Prokurorluğun funksiyası deyil?",
+      "options": [
+        "Məhkəmədə dövlət ittihamını müdafiə etmək",
+        "Məhkəmə qərarlarından protest vermək",
+        "Ədalət mühakiməsini həyata keçirmək",
+        "Cinayət işləri başlamaq və istintaq aparmaq"
+      ],
+      "answer": 2,
+      "explanation": "Ədalət mühakiməsini yalnız məhkəmələr həyata keçirir (125-ci maddənin I hissəsi). Prokurorluq qanunların icrasına nəzarət edir, cinayət işləri başlayır, ittihamı müdafiə edir, iddia qaldırır və protest verir."
+    },
+    {
+      "id": "q4",
+      "prompt": "İnsan hüquqları üzrə müvəkkili kim seçir?",
+      "options": [
+        "Prezident təyin edir",
+        "Milli Məclis – Prezidentin təqdimatı ilə seçir",
+        "Konstitusiya Məhkəməsi seçir",
+        "Ümumxalq səsverməsi ilə seçilir"
+      ],
+      "answer": 1,
+      "explanation": "95-ci maddənin I hissəsinin 6-cı bəndi: Milli Məclis Prezidentin təqdimatı ilə İnsan hüquqları üzrə müvəkkili seçir; 109-cu maddənin 14-cü bəndi Prezidentin təqdimat vermə səlahiyyətini göstərir."
+    },
+    {
+      "id": "q5",
+      "prompt": "İnsan hüquqları üzrə müvəkkil Konstitusiya Məhkəməsinə hansı məsələ ilə bağlı sorğu verə bilər?",
+      "options": [
+        "Prezidentin impiçmenti ilə bağlı",
+        "İnsan hüquqlarını pozan normativ aktlar, bələdiyyə və məhkəmə aktları ilə bağlı",
+        "Seçkilərin nəticələri ilə bağlı",
+        "Beynəlxalq müqavilələrin ratifikasiyası ilə bağlı"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin VII hissəsi: Müvəkkil insan hüquq və azadlıqlarını pozan qanunvericilik və icra hakimiyyəti orqanlarının normativ aktlarından, bələdiyyə və məhkəmə aktlarından Konstitusiya Məhkəməsinə sorğu verə bilər."
+    },
+    {
+      "id": "q6",
+      "prompt": "Mərkəzi Bankın sədrini kim təyin edir?",
+      "options": [
+        "Milli Məclis – Prezidentin təqdimatı ilə",
+        "Prezident – Mərkəzi Bank İdarə Heyətinin üzvləri sırasından",
+        "Nazirlər Kabineti",
+        "İdarə Heyəti öz üzvləri sırasından seçir"
+      ],
+      "answer": 1,
+      "explanation": "109-cu maddənin 10-cu bəndi: İdarə Heyəti üzvlərinin təyini haqqında Prezident Milli Məclisə təqdimat verir; sədri isə İdarə Heyətinin üzvləri sırasından Prezident təyin edir."
+    },
+    {
+      "id": "q7",
+      "prompt": "Hesablama Palatasını hansı orqan yaradır?",
+      "options": [
+        "Prezident",
+        "Nazirlər Kabineti",
+        "Milli Məclis",
+        "Maliyyə Nazirliyi"
+      ],
+      "answer": 2,
+      "explanation": "92-ci maddə: Milli Məclis öz orqanlarını yaradır, o cümlədən Hesablama Palatası yaradır. Palata büdcənin icrasına parlament nəzarətinin alətidir."
+    },
+    {
+      "id": "q8",
+      "prompt": "Prokurorluğun quruluşu Konstitusiyada necə müəyyən edilib?",
+      "options": [
+        "Yerli icra hakimiyyətlərinə tabe olan ərazi orqanları sistemi",
+        "Ərazi və ixtisaslaşdırılmış prokurorların Baş prokurora tabeliyinə əsaslanan vahid mərkəzləşdirilmiş orqan",
+        "Ədliyyə Nazirliyinin tərkibində struktur bölmə",
+        "Məhkəmələrin nəzdində fəaliyyət göstərən müstəqil bölmələr"
+      ],
+      "answer": 1,
+      "explanation": "133-cü maddənin II hissəsi: Prokurorluq ərazi və ixtisaslaşdırılmış prokurorların Baş prokurora tabeliyinə əsaslanan vahid mərkəzləşdirilmiş orqandır."
+    }
+  ]
+}

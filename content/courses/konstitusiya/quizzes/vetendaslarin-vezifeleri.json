@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "72-ci maddəyə görə hər kəsin üzərinə vəzifələr hansı aktlarla qoyula bilər?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Yalnız Konstitusiya ilə və ya qanunla",
+        "Nazirlər Kabinetinin qərarı ilə",
+        "İstənilən normativ hüquqi aktla"
+      ],
+      "answer": 1,
+      "explanation": "72-ci maddənin I hissəsinin 2009-cu ildə əlavə olunmuş ikinci cümləsi: hər kəsin üzərinə vəzifələr yalnız bu Konstitusiya ilə və ya qanunla qoyula bilər."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiya 'qanunu bilməmək' barədə nə deyir?",
+      "options": [
+        "Qanunu bilməmək məsuliyyəti yüngülləşdirir",
+        "Qanunu bilməmək məsuliyyətdən azad etmir",
+        "Qanunu bilməmək yalnız əcnəbilər üçün üzrlü səbəbdir",
+        "Konstitusiya bu barədə susur"
+      ],
+      "answer": 1,
+      "explanation": "72-ci maddənin III hissəsi: qanunu bilməmək məsuliyyətdən azad etmir. Bunun qarşılığında 149-cu maddənin VIII hissəsi dərc edilməmiş aktın icrasına məcbur etməyi qadağan edir."
+    },
+    {
+      "id": "q3",
+      "prompt": "73-cü maddəyə görə şəxs hansı vergiləri ödəməyə məcbur edilə bilməz?",
+      "options": [
+        "Yerli vergiləri",
+        "Qanunla nəzərdə tutulmuş əsaslar olmadan və qanunda göstərilmiş həcmdən əlavə vergiləri",
+        "Gəlir vergisini",
+        "Beynəlxalq müqavilə ilə müəyyən edilmiş vergiləri"
+      ],
+      "answer": 1,
+      "explanation": "73-cü maddənin II hissəsi: heç kəs qanunla nəzərdə tutulmuş əsaslar olmadan və qanunda göstərilmiş həcmdən əlavə vergiləri və başqa dövlət ödənişləri ödəməyə məcbur edilə bilməz."
+    },
+    {
+      "id": "q4",
+      "prompt": "74-cü maddəyə görə Konstitusiyaya sadiqlik andı içmiş vəzifəli şəxs dövlətə qarşı cinayətdə məhkum olunarsa, nə baş verir?",
+      "options": [
+        "O, yalnız Milli Məclisin qərarı ilə vəzifədən azad edilir",
+        "O, vəzifədən getmiş sayılır və bir daha bu vəzifəni tuta bilməz",
+        "O, cəzasını çəkdikdən sonra vəzifəyə qayıdır",
+        "O, yalnız Prezidentin əfvi ilə vəzifədə qala bilər"
+      ],
+      "answer": 1,
+      "explanation": "74-cü maddənin III hissəsi: and içmiş şəxs dövlətə qarşı cinayətdə, o cümlədən qiyamda və ya dövlət çevrilişində ittiham edilib məhkum olunubsa, həmin vəzifədən getmiş sayılır və bir daha bu vəzifəni tuta bilməz."
+    },
+    {
+      "id": "q5",
+      "prompt": "76-cı maddəyə görə vətəndaşın əqidəsi həqiqi hərbi xidmətə ziddirsə, nə nəzərdə tutulur?",
+      "options": [
+        "Vətəndaş hərbi xidmətdən tam azad edilir",
+        "Qanunla müəyyən edilmiş hallarda həqiqi hərbi xidmət alternativ xidmətlə əvəz olunur",
+        "Vətəndaş cərimə ödəyir",
+        "Vətəndaş vətəndaşlığını itirir"
+      ],
+      "answer": 1,
+      "explanation": "76-cı maddənin II hissəsi: vətəndaşların əqidəsi həqiqi hərbi xidmət keçməyə ziddirsə, qanunla müəyyən edilmiş hallarda həqiqi hərbi xidmətin alternativ xidmətlə əvəz olunmasına yol verilir."
+    },
+    {
+      "id": "q6",
+      "prompt": "IV fəsildə hansı vəzifələr yalnız vətəndaşlara ünvanlanıb?",
+      "options": [
+        "Vergiləri ödəmək və ətraf mühiti qorumaq",
+        "Dövlət rəmzlərinə hörmət və Vətəni müdafiə",
+        "Abidələri qorumaq və qanunlara əməl etmək",
+        "Bütün vəzifələr yalnız vətəndaşlara aiddir"
+      ],
+      "answer": 1,
+      "explanation": "75-ci maddə ('hər bir vətəndaş') və 76-cı maddə ('hər bir vətəndaşın borcudur') vətəndaşlara ünvanlanıb; digər maddələr 'hər kəs' və ya 'hər bir şəxs' ifadələri ilə başlayır."
+    },
+    {
+      "id": "q7",
+      "prompt": "79-cu maddə nəyi qadağan edir?",
+      "options": [
+        "Qanunla nəzərdə tutulmuş vəzifələrdən imtinanı",
+        "Konstitusiyaya və ya qanunlara zidd vəzifələrin icrasına məcbur etməyi",
+        "Vəzifəli şəxslərin tənqidini",
+        "Alternativ xidməti"
+      ],
+      "answer": 1,
+      "explanation": "79-cu maddə: heç kəs Konstitusiyaya və ya qanunlara zidd vəzifələrin icrasına məcbur edilə bilməz. Bu, qanunsuz əmrdən imtina hüququnun konstitusion əsasıdır."
+    },
+    {
+      "id": "q8",
+      "prompt": "80-ci maddəyə görə hüquqlardan sui-istifadə nəyə səbəb olur?",
+      "options": [
+        "Heç bir nəticəyə, çünki hüquqdan istifadə azaddır",
+        "Qanunla müəyyən edilən məsuliyyətə",
+        "Yalnız ictimai qınağa",
+        "Vətəndaşlığın itirilməsinə"
+      ],
+      "answer": 1,
+      "explanation": "80-ci maddə: Konstitusiyanın və qanunların pozulması, o cümlədən hüquqlardan sui-istifadə və ya vəzifələrin yerinə yetirilməməsi qanunla müəyyən edilən məsuliyyətə səbəb olur."
+    }
+  ]
+}

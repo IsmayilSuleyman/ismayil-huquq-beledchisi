@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiyanın mətnində dəyişikliklər hansı qaydada qəbul edilə bilər?",
+      "options": [
+        "Milli Məclisdə 95 səslə",
+        "Yalnız referendumla",
+        "Prezidentin fərmanı və Konstitusiya Məhkəməsinin təsdiqi ilə",
+        "Konstitusiya qanunu ilə"
+      ],
+      "answer": 1,
+      "explanation": "152-ci maddə: Konstitusiyanın mətnində dəyişikliklər yalnız referendumla qəbul edilə bilər. Konstitusiya qanunları isə mətnə toxunmayan əlavələr üçündür."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiyaya əlavələr haqqında Konstitusiya qanunları necə qəbul edilir?",
+      "options": [
+        "Bir dəfə, 83 səslə",
+        "İki dəfə səsə qoyulmaqla, 95 səslə; ikinci səsvermə birincidən 6 ay sonra",
+        "İki dəfə səsə qoyulmaqla, 63 səslə; ikinci səsvermə bir il sonra",
+        "Referendumla"
+      ],
+      "answer": 1,
+      "explanation": "156-cı maddə: əlavələr 95 səslə Konstitusiya qanunları şəklində qəbul edilir, iki dəfə səsə qoyulur, ikinci səsvermə birincidən 6 ay sonra keçirilir; Prezident ikinci səsvermədən sonra imzaladıqda qüvvəyə minir."
+    },
+    {
+      "id": "q3",
+      "prompt": "155-ci maddəyə görə hansı maddələrdə dəyişikliklər referenduma çıxarıla bilməz?",
+      "options": [
+        "1, 2, 6, 7, 8 və 21-ci maddələrdə",
+        "1–23-cü maddələrdə",
+        "147–151-ci maddələrdə",
+        "Yalnız 1-ci maddədə"
+      ],
+      "answer": 0,
+      "explanation": "155-ci maddə 1, 2, 6, 7, 8 və 21-ci maddələrdə dəyişikliklər və ya onların ləğvi, habelə III fəsildəki hüquqların ləğvi və ya müqavilələrdən artıq məhdudlaşdırılması haqqında təkliflərin referenduma çıxarılmasını qadağan edir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Konstitusiyaya əlavələri kim təklif edə bilər?",
+      "options": [
+        "Yalnız Prezident",
+        "Prezident və ya Milli Məclisin azı 63 deputatı",
+        "Milli Məclisin 42 deputatı",
+        "Konstitusiya Məhkəməsi"
+      ],
+      "answer": 1,
+      "explanation": "157-ci maddə: Konstitusiyaya əlavələri Prezident və ya Milli Məclisin azı 63 deputatı təklif edə bilər. Dəyişiklikləri isə Milli Məclis və ya Prezident təklif edir (153)."
+    },
+    {
+      "id": "q5",
+      "prompt": "Konstitusiya Məhkəməsinin dəyişikliklər prosesindəki rolu barədə hansı ifadə doğrudur?",
+      "options": [
+        "Referendumla qəbul edilmiş dəyişiklikləri ləğv edə bilər",
+        "Təkliflərə əvvəlcədən rəy verir, lakin referendumla qəbul edilmiş dəyişikliklərə dair qərar qəbul edə bilməz",
+        "Dəyişiklikləri özü qəbul edir",
+        "Prosesdə iştirak etmir"
+      ],
+      "answer": 1,
+      "explanation": "153-cü maddəyə görə Milli Məclisin və ya Prezidentin təklif etdiyi dəyişikliklərə əvvəlcədən Konstitusiya Məhkəməsinin rəyi alınır; 154-cü maddəyə görə Məhkəmə referendumla qəbul olunmuş dəyişikliklərə dair qərar qəbul edə bilməz."
+    },
+    {
+      "id": "q6",
+      "prompt": "Konstitusiyanın hansı bölməsi ilə əlaqədar əlavələr təklif edilə bilməz?",
+      "options": [
+        "II bölmə – hüquqlar və vəzifələr",
+        "I bölmə – ümumi müddəalar",
+        "III bölmə – dövlət hakimiyyəti",
+        "V bölmə – hüquq və qanun"
+      ],
+      "answer": 1,
+      "explanation": "158-ci maddə: Konstitusiyanın birinci bölməsində əks etdirilmiş müddəalarla əlaqədar Konstitusiyaya əlavələr təklif edilə bilməz."
+    },
+    {
+      "id": "q7",
+      "prompt": "2009-cu il referendumunun təşəbbüsçüsü kim olub?",
+      "options": [
+        "Prezident",
+        "Milli Məclis",
+        "Konstitusiya Məhkəməsi",
+        "40 min vətəndaş"
+      ],
+      "answer": 1,
+      "explanation": "2009-cu il referendumu Milli Məclisin 26 dekabr 2008-ci il tarixli qərarı ilə təyin edilib; 2002 və 2016-cı il referendumlarını isə Prezident təşəbbüs edib."
+    },
+    {
+      "id": "q8",
+      "prompt": "Aşağıdakı maddələrdən hansı 2016-cı il referendumu ilə əlavə edilməyib?",
+      "options": [
+        "98-1 – Milli Məclisin buraxılması",
+        "103-1 – vitse-prezidentlər",
+        "130 V – Konstitusiya Məhkəməsinə fərdi şikayət",
+        "146-1 – bələdiyyələrin məsuliyyəti"
+      ],
+      "answer": 2,
+      "explanation": "Fərdi şikayət hüququ (130-cu maddənin V hissəsi) 2002-ci il referendumu ilə əlavə edilib. 98-1, 103-1, 106-1, 108-1, 110-1 və 146-1-ci maddələr 2016-cı ilin altı yeni maddəsidir."
+    },
+    {
+      "id": "q9",
+      "prompt": "Konstitusiya qanunlarının Konstitusiya ilə nisbəti necədir?",
+      "options": [
+        "Adi qanunlarla eyni səviyyədədir",
+        "Konstitusiyanın ayrılmaz hissəsidir, lakin əsas mətnə zidd olmamalıdır",
+        "Konstitusiyadan üstündür",
+        "Yalnız Naxçıvanda qüvvədədir"
+      ],
+      "answer": 1,
+      "explanation": "156-cı maddənin V hissəsi: Konstitusiya qanunları Konstitusiyanın ayrılmaz hissəsidir və Konstitusiyanın əsas mətninə zidd olmamalıdır."
+    },
+    {
+      "id": "q10",
+      "prompt": "2002-ci il referendumu Prezident seçkilərinə hansı dəyişikliyi gətirdi?",
+      "options": [
+        "Müddəti 5 ildən 7 ilə qaldırdı",
+        "Birinci dövrədə üçdə iki əvəzinə səslərin yarısından çoxunu tələb etdi",
+        "İki müddət həddini ləğv etdi",
+        "35 yaş həddini ləğv etdi"
+      ],
+      "answer": 1,
+      "explanation": "2002-ci il referendumu 101-ci maddənin II hissəsində 'üçdə iki səs çoxluğu' ifadəsini 'yarısından çoxunun səs çoxluğu' ilə əvəz etdi. Müddət həddi 2009-cu ildə, 7 il və 35 yaş məsələləri 2016-cı ildə dəyişdirilib."
+    }
+  ]
+}

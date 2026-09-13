@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "52-ci maddəyə görə valideynlərindən yalnız biri Azərbaycan vətəndaşı olan şəxs kimdir?",
+      "options": [
+        "Yalnız Azərbaycanda doğulubsa vətəndaşdır",
+        "Azərbaycan Respublikasının vətəndaşıdır",
+        "18 yaşında seçim etməlidir",
+        "Vətəndaşlığı olmayan şəxsdir"
+      ],
+      "answer": 1,
+      "explanation": "52-ci maddənin üçüncü cümləsi: valideynlərindən biri Azərbaycan Respublikasının vətəndaşı olan şəxs Azərbaycan Respublikasının vətəndaşıdır."
+    },
+    {
+      "id": "q2",
+      "prompt": "53-cü maddəyə görə Azərbaycan vətəndaşı xarici dövlətə verilə bilərmi?",
+      "options": [
+        "Bəli, beynəlxalq müqavilə əsasında",
+        "Bəli, ağır cinayət törətdikdə",
+        "Xeyr, heç bir halda",
+        "Bəli, Prezidentin qərarı ilə"
+      ],
+      "answer": 2,
+      "explanation": "53-cü maddənin II hissəsi: vətəndaş heç bir halda Azərbaycan Respublikasından qovula və ya xarici dövlətə verilə bilməz. Bu qadağa mütləqdir."
+    },
+    {
+      "id": "q3",
+      "prompt": "2016-cı il referendumu 53-cü maddənin I hissəsində hansı dəyişikliyi etdi?",
+      "options": [
+        "Vətəndaşlıqdan məhrumetməyə tam icazə verdi",
+        "\"Heç bir halda\" sözlərini çıxardı və vətəndaşlığın qanunla müəyyən edilmiş itirilmə hallarını istisna kimi əlavə etdi",
+        "İkili vətəndaşlığı tanıdı",
+        "Vətəndaşlığın yalnız doğulma ilə əldə edilməsini müəyyən etdi"
+      ],
+      "answer": 1,
+      "explanation": "2016-cı il Referendum Aktının 9-cu bəndi 53-cü maddənin I hissəsindən 'heç bir halda' sözlərini çıxardı və 'onun qanunla müəyyən edilmiş itirilmə halları istisna olmaqla' sözlərini əlavə etdi."
+    },
+    {
+      "id": "q4",
+      "prompt": "69-cu maddəyə görə əcnəbilərin və vətəndaşlığı olmayan şəxslərin hüquqları hansı aktlarla məhdudlaşdırıla bilər?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Yalnız beynəlxalq hüquq normalarına və Azərbaycan qanunlarına uyğun olaraq",
+        "Yerli icra hakimiyyətinin qərarı ilə",
+        "Nazirlər Kabinetinin qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "69-cu maddənin II hissəsi: əcnəbilərin və vətəndaşlığı olmayan şəxslərin hüquq və azadlıqları yalnız beynəlxalq hüquq normalarına və Azərbaycan Respublikasının qanunlarına uyğun olaraq məhdudlaşdırıla bilər."
+    },
+    {
+      "id": "q5",
+      "prompt": "70-ci maddəyə görə hansı şəxslərin başqa dövlətə verilməsinə yol verilmir?",
+      "options": [
+        "Bütün əcnəbilərin",
+        "Siyasi əqidəsinə görə, habelə Azərbaycanda cinayət sayılmayan əmələ görə təqib edilən şəxslərin",
+        "Yalnız Azərbaycanda daimi yaşayan əcnəbilərin",
+        "Ağır cinayət törətmiş şəxslərin"
+      ],
+      "answer": 1,
+      "explanation": "70-ci maddənin II hissəsi iki halı göstərir: siyasi əqidəyə görə təqib və Azərbaycanda cinayət sayılmayan əmələ görə təqib. Digər hallarda əcnəbinin ekstradisiyası beynəlxalq müqavilələr əsasında mümkündür."
+    },
+    {
+      "id": "q6",
+      "prompt": "Vətəndaşlıq və siyasi sığınacaq məsələlərini Konstitusiyaya görə kim həll edir?",
+      "options": [
+        "Milli Məclis",
+        "Ali Məhkəmə",
+        "Azərbaycan Respublikasının Prezidenti",
+        "Daxili İşlər Nazirliyi"
+      ],
+      "answer": 2,
+      "explanation": "109-cu maddənin 20-ci bəndinə görə Prezident vətəndaşlıq məsələlərini, 21-ci bəndinə görə isə siyasi sığınacaq verilməsi məsələlərini həll edir."
+    },
+    {
+      "id": "q7",
+      "prompt": "Aşağıdakı vəzifələrdən hansı üçün Konstitusiya ikili vətəndaşlığın olmamasını tələb edir?",
+      "options": [
+        "Bələdiyyə üzvü",
+        "Milli Məclisin deputatı və Prezident",
+        "Yerli icra hakimiyyəti başçısı",
+        "Hakim"
+      ],
+      "answer": 1,
+      "explanation": "85-ci maddənin II hissəsi ikili vətəndaşlığı olan şəxslərin deputat seçilməsini, 100-cü maddə isə Prezident seçilməsini istisna edir."
+    },
+    {
+      "id": "q8",
+      "prompt": "53-cü maddənin III hissəsi xaricdə yaşayan vətəndaşlar barədə nə deyir?",
+      "options": [
+        "Onlar vətəndaşlığını itirir",
+        "Dövlət onların hüquqi müdafiəsinə təminat verir və onlara hamilik edir",
+        "Onlar seçkilərdə iştirak edə bilməz",
+        "Onlar hərbi xidmətdən azad edilir"
+      ],
+      "answer": 1,
+      "explanation": "53-cü maddənin III hissəsi: dövlət ərazisindən kənarda müvəqqəti və ya daimi yaşayan vətəndaşlarının hüquqi müdafiəsinə təminat verir və onlara hamilik edir."
+    }
+  ]
+}

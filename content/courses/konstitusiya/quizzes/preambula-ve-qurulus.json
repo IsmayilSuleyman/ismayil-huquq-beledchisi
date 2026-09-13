@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiya neçə bölmə, fəsil və maddədən ibarətdir?",
+      "options": [
+        "4 bölmə, 10 fəsil, 150 maddə",
+        "5 bölmə, 12 fəsil, 158 maddə",
+        "5 bölmə, 15 fəsil, 164 maddə",
+        "6 bölmə, 12 fəsil, 158 maddə"
+      ],
+      "answer": 1,
+      "explanation": "Konstitusiya beş bölmə, on iki fəsil və 158 maddədən ibarətdir. 2016-cı ildə əlavə olunmuş '-1' nömrəli maddələr rəsmi hesabda ümumi sayı dəyişmir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiyanın hansı bölməsi 'Hüquq və qanun' adlanır və nəyi tənzimləyir?",
+      "options": [
+        "I bölmə – xalq hakimiyyəti və dövlətin əsasları",
+        "III bölmə – dövlət hakimiyyəti orqanları",
+        "V bölmə – qanunvericilik sistemi, Konstitusiyada dəyişikliklər və əlavələr",
+        "IV bölmə – bələdiyyələr"
+      ],
+      "answer": 2,
+      "explanation": "V bölmə X, XI və XII fəsilləri əhatə edir: qanunvericilik sistemi (147–151), dəyişikliklər (152–155) və əlavələr (156–158)."
+    },
+    {
+      "id": "q3",
+      "prompt": "Preambulanın hüquqi rolu nədir?",
+      "options": [
+        "Konkret hüquq və vəzifələr yaradır və məhkəmədə bilavasitə tətbiq edilir",
+        "Konstitusiyanın məqsədlərini bəyan edir və təfsirə istiqamət verir",
+        "Yalnız tarixi məlumat daşıyır və hüquqi əhəmiyyəti yoxdur",
+        "Konstitusiyanın mətnində dəyişikliklərin qaydasını müəyyən edir"
+      ],
+      "answer": 1,
+      "explanation": "Preambula maddələrə bölünmür və birbaşa norma yaratmır, lakin Konstitusiyanın məqsədlərini bəyan edir; mübahisəli normalar şərh edilərkən bu məqsədlərə istinad olunur."
+    },
+    {
+      "id": "q4",
+      "prompt": "147-ci maddəyə görə Konstitusiya hansı üç xüsusiyyətə malikdir?",
+      "options": [
+        "Ali hüquqi qüvvə, birbaşa hüquqi qüvvə, qanunvericilik sisteminin əsası olmaq",
+        "Sabitlik, dünyəvilik, unitarlıq",
+        "Ali hüquqi qüvvə, beynəlxalq müqavilələrdən asılılıq, geriyə qüvvə",
+        "Birbaşa qüvvə, referendumla qəbul, Preambulanın məcburiliyi"
+      ],
+      "answer": 0,
+      "explanation": "147-ci maddənin üç hissəsi: Konstitusiya ən yüksək hüquqi qüvvəyə malikdir, birbaşa hüquqi qüvvəyə malikdir və qanunvericilik sisteminin əsasıdır."
+    },
+    {
+      "id": "q5",
+      "prompt": "Konstitusiya qanunları Milli Məclisdə neçə səslə qəbul edilir?",
+      "options": [
+        "63 səslə",
+        "83 səslə",
+        "95 səslə",
+        "125 səslə"
+      ],
+      "answer": 2,
+      "explanation": "Konstitusiyaya əlavələr haqqında Konstitusiya qanunları 95 səs çoxluğu ilə qəbul edilir (156-cı maddə). 63 və 83 səs adi qanunlar üçün nəzərdə tutulan hədlərdir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Keçid müddəalarına görə 1995-ci il Konstitusiyası qüvvəyə mindikdə hansı sənəd qüvvədən düşdü?",
+      "options": [
+        "1991-ci il Konstitusiya Aktı",
+        "1978-ci il Konstitusiyası (Əsas Qanunu)",
+        "1937-ci il Konstitusiyası",
+        "SSRİ-nin 1977-ci il Konstitusiyası"
+      ],
+      "answer": 1,
+      "explanation": "Keçid müddəalarının 1-ci bəndi: Konstitusiyanın qüvvəyə mindiyi gündən 1978-ci il aprelin 21-də qəbul edilmiş Konstitusiya qüvvədən düşür."
+    },
+    {
+      "id": "q7",
+      "prompt": "Konstitusiyada 'hər kəsin' və 'vətəndaşların' hüquqları arasındakı fərq nəyi ifadə edir?",
+      "options": [
+        "Heç bir fərq yoxdur, terminlər sinonimdir",
+        "'Hər kəsin' hüququ əcnəbilərə də şamil olunur, 'vətəndaşların' hüququ yalnız Azərbaycan vətəndaşlarına",
+        "'Hər kəsin' hüququ yalnız yetkinlik yaşına çatanlara aiddir",
+        "'Vətəndaşların' hüququ yalnız Bakıda yaşayanlara aiddir"
+      ],
+      "answer": 1,
+      "explanation": "Konstitusiya insan hüquqlarını ('hər kəs') və vətəndaş hüquqlarını ('vətəndaşlar') fərqləndirir. 69-cu maddəyə görə əcnəbilər qanunla və ya beynəlxalq müqavilə ilə başqa hal nəzərdə tutulmayıbsa vətəndaşlarla bərabər hüquqlardan istifadə edir, lakin seçki hüququ kimi siyasi hüquqlar vətəndaşlara məxsusdur."
+    },
+    {
+      "id": "q8",
+      "prompt": "Konstitusiya Məhkəməsi yaradılanadək onun səlahiyyətləri barədə Keçid müddəaları nə deyirdi?",
+      "options": [
+        "Səlahiyyətləri Ali Məhkəmə tam həcmdə həyata keçirirdi",
+        "Səlahiyyətləri Milli Məclis həyata keçirirdi",
+        "Səlahiyyətlər həyata keçirilmirdi; yalnız bir məsələni Ali Məhkəmə həll edirdi",
+        "Səlahiyyətləri Prezident həyata keçirirdi"
+      ],
+      "answer": 2,
+      "explanation": "Keçid müddəalarının 11-ci bəndinə görə Konstitusiya Məhkəməsi yaradılanadək onun səlahiyyətləri həyata keçirilmirdi; yalnız 130-cu maddənin III hissəsinin 7-ci bəndindəki məsələni Ali Məhkəmə həll edirdi."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Milli Məclis hansı növ aktlar qəbul edir?",
+      "options": [
+        "Qanunlar və fərmanlar",
+        "Konstitusiya qanunları, qanunlar və qərarlar",
+        "Qanunlar, qərarlar və sərəncamlar",
+        "Yalnız qanunlar"
+      ],
+      "answer": 1,
+      "explanation": "93-cü maddənin I hissəsi: Milli Məclis öz səlahiyyətlərinə aid məsələlər üzrə Konstitusiya qanunları, qanunlar və qərarlar qəbul edir. Fərman və sərəncam Prezidentin aktlarıdır."
+    },
+    {
+      "id": "q2",
+      "prompt": "Hansı məsələlərə dair qanunlar 83 səs çoxluğu ilə qəbul edilir?",
+      "options": [
+        "Vergilər və dövlət büdcəsi",
+        "Prezident seçkiləri, Milli Məclisə seçkilər və deputatların statusu, referendum",
+        "Cinayət məsuliyyəti və məhkəmə quruluşu",
+        "Beynəlxalq müqavilələrin təsdiqi"
+      ],
+      "answer": 1,
+      "explanation": "94-cü maddənin II hissəsi: I hissənin 2, 3 və 4-cü bəndlərində göstərilən məsələlərə – Prezident seçkiləri, Milli Məclisə seçkilər və deputatların statusu, referendum – dair qanunlar 83 səs çoxluğu ilə, qalanları 63 səslə qəbul edilir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Aşağıdakılardan hansı qanunvericilik təşəbbüsü hüququnun subyekti deyil?",
+      "options": [
+        "Ali Məhkəmə",
+        "Seçki hüququ olan 40 min vətəndaş",
+        "Nazirlər Kabineti",
+        "Naxçıvan Muxtar Respublikasının Ali Məclisi"
+      ],
+      "answer": 2,
+      "explanation": "96-cı maddə altı subyekt göstərir: deputatlar, Prezident, Ali Məhkəmə, 40 min vətəndaş, Prokurorluq və Naxçıvan MR Ali Məclisi. Nazirlər Kabineti bu siyahıda yoxdur."
+    },
+    {
+      "id": "q4",
+      "prompt": "Prezident ona təqdim olunmuş qanunu neçə gün ərzində imzalayır və ya etirazla qaytarır?",
+      "options": [
+        "14 gün",
+        "30 gün",
+        "56 gün",
+        "60 gün"
+      ],
+      "answer": 2,
+      "explanation": "110-cu maddənin I hissəsi: Prezident qanunları ona təqdim olunmuş gündən başlayaraq 56 gün ərzində imzalayır; etirazı varsa, həmin müddətdə etirazları ilə birlikdə Milli Məclisə qaytara bilər."
+    },
+    {
+      "id": "q5",
+      "prompt": "Prezidentin 63 səslə qəbul edilmiş qanuna vetosunu aşmaq üçün Milli Məclis qanunu neçə səslə yenidən qəbul etməlidir?",
+      "options": [
+        "63",
+        "83",
+        "95",
+        "125"
+      ],
+      "answer": 1,
+      "explanation": "110-cu maddənin II hissəsi: 63 səslə qəbul edilən qanunlar 83 səslə, 83 səslə qəbul edilən qanunlar isə 95 səslə yenidən qəbul edildikdə təkrar səsvermədən sonra qüvvəyə minir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Konstitusiya qanunlarına Prezidentin vetosu barədə hansı qayda tətbiq olunur?",
+      "options": [
+        "Veto 95 səslə aşıla bilər",
+        "Veto 83 səslə aşıla bilər",
+        "Prezident imzalamazsa Konstitusiya qanunu qüvvəyə minmir",
+        "Konstitusiya qanunlarına veto tətbiq edilə bilməz"
+      ],
+      "answer": 2,
+      "explanation": "110-cu maddənin II hissəsinin birinci cümləsi: Konstitusiya qanunları Prezident tərəfindən imzalanmazsa qüvvəyə minmir. Bu, mütləq vetodur."
+    },
+    {
+      "id": "q7",
+      "prompt": "Prezidentin, Ali Məhkəmənin və ya Prokurorluğun təcili elan etdiyi qanun layihəsi neçə gün ərzində səsə qoyulur?",
+      "options": [
+        "10 gün",
+        "14 gün",
+        "20 gün",
+        "2 ay"
+      ],
+      "answer": 2,
+      "explanation": "96-cı maddənin IV və V hissələri: bu subyektlərin layihələri iki ay ərzində, təcili elan edildikdə isə 20 gün ərzində səsə qoyulur."
+    },
+    {
+      "id": "q8",
+      "prompt": "98-1-ci maddəyə görə Prezident Milli Məclisi hansı halda buraxır?",
+      "options": [
+        "Milli Məclis Prezidentin təqdim etdiyi qanun layihəsini rədd etdikdə",
+        "Eyni çağırış bir il ərzində iki dəfə Nazirlər Kabinetinə etimadsızlıq göstərdikdə",
+        "Milli Məclis büdcəni bir ay gecikdirdikdə",
+        "Prezidentin istənilən vaxt mülahizəsi ilə"
+      ],
+      "answer": 1,
+      "explanation": "98-1-ci maddənin I hissəsi üç əsas göstərir: bir ildə iki dəfə etimadsızlıq; Konstitusiya Məhkəməsi, Ali Məhkəmə və Mərkəzi Bank İdarə Heyətinə namizədlərin iki dəfə təqdimindən sonra təyin edilməməsi; 94, 95, 96 (II–V), 97-ci maddələrdəki vəzifələrin aradan qaldırıla bilməyən səbəblərdən icra edilməməsi."
+    },
+    {
+      "id": "q9",
+      "prompt": "Qanunlar qəbul edildiyi gündən neçə gün ərzində Prezidentə imzalanmaq üçün təqdim edilir?",
+      "options": [
+        "3 gün",
+        "7 gün",
+        "14 gün",
+        "56 gün"
+      ],
+      "answer": 2,
+      "explanation": "97-ci maddənin I hissəsi: qanunlar qəbul edildiyi gündən 14 gün müddətində Prezidentə təqdim edilir; təcili elan olunan qanun – 24 saat ərzində."
+    },
+    {
+      "id": "q10",
+      "prompt": "93-cü maddəyə görə qanunlarda və Milli Məclisin qərarlarında nə nəzərdə tutula bilməz?",
+      "options": [
+        "Geriyə qüvvə",
+        "İcra hakimiyyəti və məhkəmə orqanlarına konkret tapşırıqlar",
+        "Beynəlxalq müqavilələrə istinad",
+        "Keçid müddəaları"
+      ],
+      "answer": 1,
+      "explanation": "93-cü maddənin IV hissəsi: qanunlarda və Milli Məclisin qərarlarında icra hakimiyyəti və məhkəmə orqanlarına konkret tapşırıqlar nəzərdə tutula bilməz – hakimiyyət bölgüsünün təminatı."
+    }
+  ]
+}
