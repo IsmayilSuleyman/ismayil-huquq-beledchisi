@@ -1,0 +1,101 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "142-ci maddəyə görə yerli özünüidarəni kim həyata keçirir və bələdiyyələr necə yaradılır?",
+      "options": [
+        "Yerli icra hakimiyyəti; Prezidentin təyinatı ilə",
+        "Bələdiyyələr; seçkilər əsasında",
+        "Rayon sovetləri; Milli Məclisin qərarı ilə",
+        "Bələdiyyələr; yerli icra hakimiyyəti başçısının təyinatı ilə"
+      ],
+      "answer": 1,
+      "explanation": "142-ci maddə: yerli özünüidarəni bələdiyyələr həyata keçirir; bələdiyyələr seçkilər əsasında yaradılır."
+    },
+    {
+      "id": "q2",
+      "prompt": "Yerli vergilər və ödənişlər ilə bağlı bələdiyyə qərarları hansı çoxluqla qəbul edilir?",
+      "options": [
+        "Sadə səs çoxluğu ilə",
+        "Üzvlərin üçdə iki səs çoxluğu ilə",
+        "Yekdilliklə",
+        "Sədrin qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "145-ci maddənin III hissəsi: yerli vergilər və ödənişlər ilə bağlı qərarlar bələdiyyə üzvlərinin üçdə iki səs çoxluğu ilə qəbul edilir; digər qərarlar sadə səs çoxluğu ilə."
+    },
+    {
+      "id": "q3",
+      "prompt": "Bələdiyyələrə əlavə səlahiyyətlər verildikdə Konstitusiya nəyi tələb edir?",
+      "options": [
+        "Bələdiyyənin razılığını",
+        "Müvafiq zəruri maliyyə vəsaitinin ayrılmasını",
+        "Referendum keçirilməsini",
+        "Konstitusiya Məhkəməsinin rəyini"
+      ],
+      "answer": 1,
+      "explanation": "144-cü maddənin II hissəsi: bələdiyyələrə əlavə səlahiyyətlər verildikdə onların həyata keçirilməsi üçün müvafiq zəruri maliyyə vəsaiti də ayrılmalıdır; icraya həmin hakimiyyətlər nəzarət edir."
+    },
+    {
+      "id": "q4",
+      "prompt": "2009-cu il referendumundan sonra bələdiyyələr kimə hesabat təqdim edir?",
+      "options": [
+        "Prezidentə",
+        "Yerli icra hakimiyyəti başçısına",
+        "Qanunla müəyyən edilmiş hallarda və qaydada Milli Məclisə",
+        "Nazirlər Kabinetinə"
+      ],
+      "answer": 2,
+      "explanation": "146-cı maddənin IV hissəsi (2009): qanunla müəyyən edilmiş hallarda və qaydada bələdiyyələr öz fəaliyyətləri barəsində Milli Məclisə hesabat təqdim edirlər; 95-ci maddənin 20-ci bəndi hesabatların dinlənilməsini Milli Məclisin səlahiyyəti kimi göstərir."
+    },
+    {
+      "id": "q5",
+      "prompt": "146-1-ci maddəyə görə bələdiyyə qulluqçularının qanuna zidd hərəkətləri ilə dəymiş ziyana görə kim məsuliyyət daşıyır?",
+      "options": [
+        "Yalnız bələdiyyə qulluqçusu",
+        "Bələdiyyələr, bələdiyyə qulluqçuları ilə birlikdə – mülki məsuliyyət",
+        "Dövlət büdcəsi",
+        "Yerli icra hakimiyyəti"
+      ],
+      "answer": 1,
+      "explanation": "146-1-ci maddə (2016): bələdiyyələr, bələdiyyə qulluqçuları ilə birlikdə, qulluqçuların qanuna zidd hərəkətləri və hərəkətsizliyi nəticəsində hüquq və azadlıqlara dəymiş ziyana görə mülki məsuliyyət daşıyırlar."
+    },
+    {
+      "id": "q6",
+      "prompt": "Aşağıdakılardan hansı 144-cü maddəyə görə bələdiyyə iclaslarında həll edilən məsələ deyil?",
+      "options": [
+        "Yerli büdcənin təsdiqi",
+        "Yerli ekoloji proqramların qəbulu",
+        "Yerli icra hakimiyyəti başçısının təyini",
+        "Bələdiyyə mülkiyyəti barəsində sərəncam"
+      ],
+      "answer": 2,
+      "explanation": "Yerli icra hakimiyyəti başçısını Prezident təyin edir (124-cü maddə). 144-cü maddədəki doqquz məsələ təşkilati, maliyyə-mülkiyyət və yerli proqram məsələləridir."
+    },
+    {
+      "id": "q7",
+      "prompt": "Bələdiyyələrin fəaliyyətinə nəzarət barədə Konstitusiya nə deyir?",
+      "options": [
+        "Bələdiyyələr heç bir nəzarətə tabe deyil",
+        "Dövlət bələdiyyələrin fəaliyyətinə nəzarət edir, lakin onların müstəqilliyi dövlətin suverenliyinə xələl gətirə bilməz",
+        "Bələdiyyələr yalnız məhkəmə nəzarətinə tabedir",
+        "Bələdiyyələr yerli icra hakimiyyətinə tabedir"
+      ],
+      "answer": 1,
+      "explanation": "146-cı maddənin II və III hissələri (2009): bələdiyyələrin müstəqilliyi dövlətin suverenliyinə xələl gətirə bilməz; dövlət bələdiyyələrin fəaliyyətinə nəzarət edir."
+    },
+    {
+      "id": "q8",
+      "prompt": "Bələdiyyə aktlarının Konstitusiyaya, qanunlara və fərmanlara uyğunluğunu hansı orqan yoxlaya bilər?",
+      "options": [
+        "Yerli icra hakimiyyəti",
+        "Konstitusiya Məhkəməsi",
+        "Milli Məclis",
+        "Ədliyyə Nazirliyi"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin III hissəsinin 5-ci bəndi: Konstitusiya Məhkəməsi bələdiyyə aktlarının Konstitusiyaya, qanunlara, Prezidentin fərmanlarına və Nazirlər Kabinetinin qərarlarına uyğunluğunu həll edir."
+    }
+  ]
+}

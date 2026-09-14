@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Prezident neçə il müddətinə seçilir?",
+      "options": [
+        "4 il",
+        "5 il",
+        "6 il",
+        "7 il"
+      ],
+      "answer": 3,
+      "explanation": "101-ci maddənin I hissəsi: Prezident 7 il müddətinə seçilir. 2016-cı ilədək müddət 5 il idi."
+    },
+    {
+      "id": "q2",
+      "prompt": "Prezident seçilmək üçün birinci dövrədə nə qədər səs tələb olunur?",
+      "options": [
+        "Səsvermədə iştirak edənlərin üçdə ikisi",
+        "Səsvermədə iştirak edənlərin yarısından çoxu",
+        "Qeydiyyatdan keçmiş seçicilərin yarısından çoxu",
+        "Sadə çoxluq"
+      ],
+      "answer": 1,
+      "explanation": "101-ci maddənin II hissəsi: Prezident səsvermədə iştirak edənlərin yarısından çoxunun səs çoxluğu ilə seçilir. 2002-ci ilədək üçdə iki çoxluq tələb olunurdu."
+    },
+    {
+      "id": "q3",
+      "prompt": "Aşağıdakılardan hansı 100-cü maddəyə görə Prezidentliyə namizədə aid tələb deyil?",
+      "options": [
+        "Azərbaycan ərazisində 10 ildən artıq daimi yaşamaq",
+        "Ali təhsilli olmaq",
+        "35 yaşına çatmış olmaq",
+        "İkili vətəndaşlığı olmamaq"
+      ],
+      "answer": 2,
+      "explanation": "35 yaş həddi 2016-cı il referendumu ilə 100-cü maddədən çıxarılıb. Qalan tələblər: 10 ildən artıq daimi yaşayış, seçki hüququ, ağır cinayətə görə məhkum olunmamaq, başqa dövlətlər qarşısında öhdəliyin olmaması, ali təhsil, ikili vətəndaşlığın olmaması."
+    },
+    {
+      "id": "q4",
+      "prompt": "Prezident seçkilərinin yekunlarını kim və hansı müddətdə rəsmən elan edir?",
+      "options": [
+        "Mərkəzi Seçki Komissiyası – 7 gün ərzində",
+        "Konstitusiya Məhkəməsi – səsvermə günündən sonra 14 gün ərzində",
+        "Milli Məclis – 30 gün ərzində",
+        "Ali Məhkəmə – 3 gün ərzində"
+      ],
+      "answer": 1,
+      "explanation": "102-ci maddə: Prezident seçkilərinin yekunları haqqında məlumatı səsvermə günündən sonra 14 gün ərzində Konstitusiya Məhkəməsi rəsmən elan edir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Prezident vaxtından əvvəl vəzifədən getdikdə onun səlahiyyətlərini ilk növbədə kim icra edir?",
+      "options": [
+        "Baş nazir",
+        "Milli Məclisin sədri",
+        "Birinci vitse-prezident",
+        "Konstitusiya Məhkəməsinin sədri"
+      ],
+      "answer": 2,
+      "explanation": "105-ci maddənin I hissəsi (2016): yeni Prezident seçilənədək səlahiyyətləri Birinci vitse-prezident icra edir. Ardıcıllıq: Birinci vitse-prezident, vitse-prezident, Baş nazir, Milli Məclisin sədri."
+    },
+    {
+      "id": "q6",
+      "prompt": "Prezident vaxtından əvvəl vəzifədən getdikdə növbədənkənar seçkilər hansı müddətdə keçirilir?",
+      "options": [
+        "30 gün",
+        "60 gün",
+        "3 ay",
+        "6 ay"
+      ],
+      "answer": 1,
+      "explanation": "105-ci maddənin I hissəsi: Prezident vaxtından əvvəl vəzifədən getdikdə 60 gün müddətində növbədənkənar Prezident seçkiləri keçirilir. 2016-cı ilədək bu müddət üç ay idi."
+    },
+    {
+      "id": "q7",
+      "prompt": "Prezidentin impiçment qaydasında vəzifədən kənarlaşdırılması üçün Milli Məclisdə neçə səs tələb olunur?",
+      "options": [
+        "63",
+        "83",
+        "95",
+        "125"
+      ],
+      "answer": 2,
+      "explanation": "107-ci maddənin II hissəsi: Milli Məclisin deputatlarının 95 səs çoxluğu ilə qəbul olunmuş qərar əsasında Prezident vəzifədən kənarlaşdırıla bilər; qərarı Konstitusiya Məhkəməsinin sədri imzalayır."
+    },
+    {
+      "id": "q8",
+      "prompt": "İmpiçment təşəbbüsünü kim irəli sürür?",
+      "options": [
+        "Milli Məclisin 42 deputatı",
+        "Baş prokuror",
+        "Konstitusiya Məhkəməsi – Ali Məhkəmənin 30 gün ərzində verilən rəyi əsasında",
+        "Ali Məhkəmə bilavasitə"
+      ],
+      "answer": 2,
+      "explanation": "107-ci maddənin I hissəsi: Prezident ağır cinayət törətdikdə vəzifədən kənarlaşdırılması təşəbbüsü Konstitusiya Məhkəməsinin təşəbbüsü ilə Ali Məhkəmənin 30 gün müddətində verilən rəyi əsasında Milli Məclis qarşısında irəli sürülə bilər."
+    },
+    {
+      "id": "q9",
+      "prompt": "Prezidentin səhhətinə görə səlahiyyətlərini icra etmək qabiliyyətini tamamilə itirməsi faktını kim və necə təsdiq edir?",
+      "options": [
+        "Milli Məclis – 83 səslə",
+        "Konstitusiya Məhkəməsi – Milli Məclisin müraciəti əsasında, hakimlərin 6 səs çoxluğu ilə",
+        "Nazirlər Kabineti – tibbi komissiyanın rəyi ilə",
+        "Ali Məhkəmə – Baş prokurorun təqdimatı ilə"
+      ],
+      "answer": 1,
+      "explanation": "104-cü maddənin III hissəsi: Milli Məclis faktın aydınlaşdırılması üçün Konstitusiya Məhkəməsinə müraciət edir; Məhkəmə qərarı hakimlərin 6 səs çoxluğu ilə qəbul edir."
+    },
+    {
+      "id": "q10",
+      "prompt": "Prezidentin iki dəfədən artıq seçilməməsi qaydası Konstitusiyadan nə vaxt çıxarılıb?",
+      "options": [
+        "2002-ci il referendumu ilə",
+        "2009-cu il referendumu ilə",
+        "2016-cı il referendumu ilə",
+        "Bu qayda hələ də qüvvədədir"
+      ],
+      "answer": 1,
+      "explanation": "2009-cu il Referendum Aktının 21-ci bəndi 101-ci maddənin V hissəsini müharibə şəraitində müddətin uzadılması haqqında normа ilə əvəz etdi; əvvəlki V hissə iki müddət həddini nəzərdə tuturdu."
+    }
+  ]
+}

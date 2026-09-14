@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiya Məhkəməsi neçə hakimdən ibarətdir və onları kim təyin edir?",
+      "options": [
+        "7 hakim; Prezident təyin edir",
+        "9 hakim; Prezidentin təqdimatı ilə Milli Məclis təyin edir",
+        "9 hakim; Ali Məhkəmənin təqdimatı ilə Prezident təyin edir",
+        "11 hakim; Milli Məclis seçir"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin I və II hissələri: Konstitusiya Məhkəməsi 9 hakimdən ibarətdir; hakimləri Prezidentin təqdimatı ilə Milli Məclis təyin edir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Aşağıdakılardan hansı Konstitusiya Məhkəməsinə normativ aktların yoxlanılması üçün sorğu verə bilən subyekt deyil?",
+      "options": [
+        "Nazirlər Kabineti",
+        "Prokurorluq",
+        "Naxçıvan Muxtar Respublikasının Ali Məclisi",
+        "Bakı Şəhər İcra Hakimiyyəti"
+      ],
+      "answer": 3,
+      "explanation": "130-cu maddənin III hissəsi altı sorğu subyektini göstərir: Prezident, Milli Məclis, Nazirlər Kabineti, Ali Məhkəmə, Prokurorluq və Naxçıvan MR Ali Məclisi. Yerli icra hakimiyyəti orqanları bu siyahıda yoxdur."
+    },
+    {
+      "id": "q3",
+      "prompt": "Hər kəsin Konstitusiya Məhkəməsinə şikayət vermək hüququ Konstitusiyaya nə vaxt daxil edilib?",
+      "options": [
+        "1995-ci ildə, ilkin mətndə",
+        "2002-ci il referendumu ilə",
+        "2009-cu il referendumu ilə",
+        "2016-cı il referendumu ilə"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin V, VI və VII hissələri (fərdi şikayət, məhkəmələrin müraciəti, İnsan hüquqları üzrə müvəkkilin sorğusu) 2002-ci il referendumu ilə əlavə edilib."
+    },
+    {
+      "id": "q4",
+      "prompt": "Konstitusiya Məhkəməsi Nazirlər Kabinetinin qərarlarını nəyə uyğunluq baxımından yoxlaya bilər?",
+      "options": [
+        "Yalnız Konstitusiyaya",
+        "Konstitusiyaya və qanunlara",
+        "Konstitusiyaya, qanunlara və Prezidentin fərmanlarına",
+        "Yalnız Prezidentin fərmanlarına"
+      ],
+      "answer": 2,
+      "explanation": "130-cu maddənin III hissəsinin 1, 2 və 3-cü bəndləri Nazirlər Kabinetinin qərarlarının müvafiq olaraq Konstitusiyaya, qanunlara və Prezidentin fərmanlarına uyğunluğunu yoxlamağı nəzərdə tutur – 149-cu maddədəki iyerarxiyaya uyğun."
+    },
+    {
+      "id": "q5",
+      "prompt": "Konstitusiya Məhkəməsinin qərarı ilə Konstitusiyaya uyğun olmadığı müəyyən edilən dövlətlərarası müqavilə barədə hansı nəticə yaranır?",
+      "options": [
+        "Müqavilə qüvvədən düşür",
+        "Müqavilə qüvvəyə minmir",
+        "Müqavilə Milli Məclisə qaytarılır",
+        "Müqavilə Konstitusiyadan üstün olduğu üçün heç bir nəticə yaranmır"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin X hissəsi: qanunlar, digər aktlar və hökumətlərarası müqavilələr qərarda müəyyən edilmiş müddətdə qüvvədən düşür, dövlətlərarası müqavilələr isə qüvvəyə minmir. Dövlətlərarası müqavilələr qüvvəyə minməzdən əvvəl yoxlanılır."
+    },
+    {
+      "id": "q6",
+      "prompt": "Konstitusiya Məhkəməsi 154-cü maddəyə görə nəyə dair qərar qəbul edə bilməz?",
+      "options": [
+        "Prezidentin fərmanlarına dair",
+        "Referendumla qəbul olunmuş Konstitusiya dəyişikliklərinə dair",
+        "Bələdiyyə aktlarına dair",
+        "Ali Məhkəmənin qərarlarına dair"
+      ],
+      "answer": 1,
+      "explanation": "154-cü maddə: Konstitusiya Məhkəməsi referendumla qəbul olunmuş Konstitusiya mətnində dəyişikliklərə dair qərar qəbul edə bilməz. Xalqın bilavasitə iradəsi Məhkəmənin nəzarətindən kənardır; Məhkəmə yalnız təkliflərə əvvəlcədən rəy verir (153)."
+    },
+    {
+      "id": "q7",
+      "prompt": "Məhkəmələr Konstitusiya Məhkəməsinə hansı məsələ ilə bağlı müraciət edə bilər?",
+      "options": [
+        "İşin faktiki hallarının yenidən araşdırılması üçün",
+        "İnsan hüquq və azadlıqlarının həyata keçirilməsi ilə bağlı Konstitusiyanın və qanunların şərh edilməsi üçün",
+        "Cəzanın yüngülləşdirilməsi üçün",
+        "Hakimin başqa məhkəməyə keçirilməsi üçün"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin VI hissəsi: məhkəmələr insan hüquq və azadlıqlarının həyata keçirilməsi məsələləri ilə bağlı Konstitusiyanın və qanunların şərh edilməsi haqqında Konstitusiya Məhkəməsinə müraciət edə bilər."
+    },
+    {
+      "id": "q8",
+      "prompt": "Konstitusiya Məhkəməsinin qərarlarının hüquqi qüvvəsi barədə aşağıdakılardan hansı doğrudur?",
+      "options": [
+        "Qərarlar tövsiyə xarakteri daşıyır",
+        "Qərarlar yalnız sorğu verən orqan üçün məcburidir",
+        "Qərarlar Azərbaycan ərazisində məcburi qüvvəyə malikdir və dərc edilməlidir",
+        "Qərarlardan Ali Məhkəməyə şikayət verilə bilər"
+      ],
+      "answer": 2,
+      "explanation": "130-cu maddənin IX hissəsi: Konstitusiya Məhkəməsinin qərarı Azərbaycan ərazisində məcburi qüvvəyə malikdir; qərarlar dərc edilməlidir (2009-cu il əlavəsi)."
+    },
+    {
+      "id": "q9",
+      "prompt": "Konstitusiya Məhkəməsi hakimiyyət qolları arasında hansı mübahisələri həll edir?",
+      "options": [
+        "Büdcə vəsaitlərinin bölgüsü ilə bağlı",
+        "Qanunvericilik, icra və məhkəmə hakimiyyətləri arasında səlahiyyətlər bölgüsü ilə bağlı",
+        "Kadr təyinatları ilə bağlı",
+        "Beynəlxalq təmsilçilik ilə bağlı"
+      ],
+      "answer": 1,
+      "explanation": "130-cu maddənin III hissəsinin 8-ci bəndi: Məhkəmə qanunvericilik, icra və məhkəmə hakimiyyətləri arasında səlahiyyətlər bölgüsü ilə bağlı mübahisələri həll edir – 7-ci maddədəki hakimiyyət bölgüsünün təminatı."
+    },
+    {
+      "id": "q10",
+      "prompt": "Konstitusiya Məhkəməsi Konstitusiyaya dəyişikliklər prosesində hansı rolu oynayır?",
+      "options": [
+        "Dəyişiklikləri özü qəbul edir",
+        "Milli Məclisin və ya Prezidentin təklif etdiyi dəyişikliklərə əvvəlcədən rəy verir",
+        "Referendumun nəticələrini ləğv edə bilər",
+        "Heç bir rolu yoxdur"
+      ],
+      "answer": 1,
+      "explanation": "153-cü maddə: Konstitusiyanın mətnində dəyişiklikləri Milli Məclis və ya Prezident təklif etdikdə əvvəlcədən Konstitusiya Məhkəməsinin rəyi alınır. Referendumla qəbul edilmiş dəyişikliklərə dair isə Məhkəmə qərar qəbul edə bilməz (154)."
+    }
+  ]
+}

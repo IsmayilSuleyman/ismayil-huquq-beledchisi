@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "24-cü maddəyə görə hər kəsin hüquqları hansı andan mövcuddur?",
+      "options": [
+        "Vətəndaşlıq aldığı andan",
+        "18 yaşına çatdığı andan",
+        "Doğulduğu andan",
+        "Şəxsiyyət vəsiqəsi aldığı andan"
+      ],
+      "answer": 2,
+      "explanation": "24-cü maddənin II hissəsi: hər kəsin doğulduğu andan toxunulmaz, pozulmaz və ayrılmaz hüquqları və azadlıqları vardır. Hüquqlar dövlət tərəfindən verilmir, insana təbiətən məxsusdur."
+    },
+    {
+      "id": "q2",
+      "prompt": "\"İnsan ləyaqəti qorunur və ona hörmət edilir\" müddəası 24-cü maddəyə nə vaxt daxil edilib?",
+      "options": [
+        "1995-ci il ilkin mətnində",
+        "2002-ci il referendumu ilə",
+        "2009-cu il referendumu ilə",
+        "2016-cı il referendumu ilə"
+      ],
+      "answer": 3,
+      "explanation": "2016-cı il Referendum Aktının 2-ci bəndi 24-cü maddəyə insan ləyaqəti haqqında yeni I hissə və hüquqlardan sui-istifadənin qadağası haqqında cümlə əlavə etdi."
+    },
+    {
+      "id": "q3",
+      "prompt": "71-ci maddəyə görə hüquq və azadlıqların məhdudlaşdırılması hansı tələbə cavab verməlidir?",
+      "options": [
+        "Yalnız Prezidentin fərmanı ilə edilməlidir",
+        "Dövlət tərəfindən gözlənilən nəticəyə mütənasib olmalıdır",
+        "Konstitusiya Məhkəməsinin əvvəlcədən razılığı ilə edilməlidir",
+        "Yalnız referendumla edilməlidir"
+      ],
+      "answer": 1,
+      "explanation": "71-ci maddənin II hissəsinin 2016-cı ildə əlavə olunmuş üçüncü cümləsi: hüquq və azadlıqların məhdudlaşdırılması dövlət tərəfindən gözlənilən nəticəyə mütənasib olmalıdır."
+    },
+    {
+      "id": "q4",
+      "prompt": "Fövqəladə vəziyyət elan edilərkən hüquqlar necə məhdudlaşdırıla bilər?",
+      "options": [
+        "Tam və qeyri-müəyyən müddətə",
+        "Qismən və müvəqqəti, beynəlxalq öhdəliklər nəzərə alınmaqla, əhaliyə qabaqcadan məlumat verilməklə",
+        "Yalnız Milli Məclisin qanunu ilə",
+        "Heç bir halda məhdudlaşdırıla bilməz"
+      ],
+      "answer": 1,
+      "explanation": "71-ci maddənin III hissəsi: müharibə, hərbi və fövqəladə vəziyyət, səfərbərlik zamanı hüquqlar beynəlxalq öhdəliklər nəzərə alınmaq şərti ilə qismən və müvəqqəti məhdudlaşdırıla bilər; məhdudlaşdırılan hüquqlar haqqında əhaliyə qabaqcadan məlumat verilir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Aşağıdakılardan hansı 71-ci maddəyə görə heç bir halda yolverilməzdir?",
+      "options": [
+        "Yazışma sirrinin cinayətin istintaqı üçün məhdudlaşdırılması",
+        "Şəxsin din, vicdan, fikir və əqidəsini açıqlamağa məcbur edilməsi",
+        "Hərbi vəziyyətdə hərəkət azadlığının məhdudlaşdırılması",
+        "Tətil hüququnun qanunla məhdudlaşdırılması"
+      ],
+      "answer": 1,
+      "explanation": "71-ci maddənin IV hissəsi: heç bir halda heç kəs din, vicdan, fikir və əqidəsini açıqlamağa məcbur edilə bilməz. Digər variantlar Konstitusiyanın özündə nəzərdə tutulmuş yolverilən məhdudiyyətlərdir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Hüquq pozuntusu törədildikdən sonra yeni qanun məsuliyyəti yüngülləşdirirsə, hansı qanun tətbiq edilir?",
+      "options": [
+        "Pozuntu zamanı qüvvədə olan qanun",
+        "Yeni qanun",
+        "Məhkəmənin seçdiyi qanun",
+        "Daha ağır cəza nəzərdə tutan qanun"
+      ],
+      "answer": 1,
+      "explanation": "71-ci maddənin VIII hissəsi: məsuliyyəti aradan qaldıran və ya yüngülləşdirən yeni qanun geriyə tətbiq edilir. Məsuliyyəti ağırlaşdıran qanunun isə geriyə qüvvəsi yoxdur (149-cu maddənin VII hissəsi)."
+    },
+    {
+      "id": "q7",
+      "prompt": "25-ci maddəyə görə aşağıdakı hansı əlamətə görə hüquqların məhdudlaşdırılması qadağandır?",
+      "options": [
+        "Yaşa görə",
+        "Peşə təcrübəsinə görə",
+        "Etnik mənsubiyyətə, dinə, dilə, cinsə, mənşəyə, əmlak vəziyyətinə, əqidəyə görə",
+        "Təhsil səviyyəsinə görə"
+      ],
+      "answer": 2,
+      "explanation": "25-ci maddənin III hissəsi irqi, etnik, dini, dil, cinsi, mənşəyi, əqidə, siyasi və sosial mənsubiyyətə görə hüquqların məhdudlaşdırılmasını qadağan edir. Yaş, təcrübə və təhsil kimi obyektiv meyarlar üzrə fərqləndirmə (məsələn, hakim üçün 5 il iş stajı) ayrı-seçkilik sayılmır."
+    },
+    {
+      "id": "q8",
+      "prompt": "71-ci maddənin X hissəsinə görə dövlət orqanları necə fəaliyyət göstərə bilər?",
+      "options": [
+        "Qanunla qadağan olunmayan hər hansı qaydada",
+        "Yalnız Konstitusiya əsasında, qanunla müəyyən edilmiş qaydada və hüdudlarda",
+        "Prezidentin göstərişi ilə istənilən qaydada",
+        "Öz daxili qaydaları ilə"
+      ],
+      "answer": 1,
+      "explanation": "71-ci maddənin X hissəsi dövlət üçün 'icazə verilməyən hər şey qadağandır' prinsipini, IX hissə isə fərd üçün 'qadağan olunmayan hər şey icazəlidir' prinsipini təsbit edir."
+    },
+    {
+      "id": "q9",
+      "prompt": "155-ci maddəyə görə III fəsildəki hüquqlarla bağlı hansı təkliflər referenduma çıxarıla bilməz?",
+      "options": [
+        "Hüquqların genişləndirilməsi haqqında",
+        "Hüquqların ləğvi və ya beynəlxalq müqavilələrdə nəzərdə tutulandan artıq məhdudlaşdırılması haqqında",
+        "Yeni hüquqların əlavə edilməsi haqqında",
+        "Hüquqların ardıcıllığının dəyişdirilməsi haqqında"
+      ],
+      "answer": 1,
+      "explanation": "155-ci maddə III fəsildə nəzərdə tutulmuş hüquqların ləğvi və ya Azərbaycanın tərəfdar çıxdığı beynəlxalq müqavilələrdə nəzərdə tutulduğundan daha artıq dərəcədə məhdudlaşdırılması haqqında təkliflərin referenduma çıxarılmasını qadağan edir."
+    },
+    {
+      "id": "q10",
+      "prompt": "26-cı maddəyə görə hər kəs öz hüquqlarını hansı üsul və vasitələrlə müdafiə edə bilər?",
+      "options": [
+        "Yalnız məhkəmə vasitəsilə",
+        "Qanunla qadağan olunmayan üsul və vasitələrlə",
+        "Yalnız İnsan hüquqları üzrə müvəkkilə müraciətlə",
+        "Yalnız vəkil vasitəsilə"
+      ],
+      "answer": 1,
+      "explanation": "26-cı maddənin I hissəsi: hər kəsin qanunla qadağan olunmayan üsul və vasitələrlə öz hüquqlarını və azadlıqlarını müdafiə etmək hüququ vardır; II hissəyə görə dövlət də bu müdafiəyə təminat verir."
+    }
+  ]
+}

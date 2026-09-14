@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiyanın 63-cü maddəsi nəyə həsr olunub?",
+      "options": [
+        "Hüquqi yardım almaq hüququna",
+        "Təqsirsizlik prezumpsiyasına",
+        "Seçki hüququna",
+        "Məlumat azadlığına"
+      ],
+      "answer": 1,
+      "explanation": "63-cü maddə təqsirsizlik prezumpsiyasıdır. 61 – hüquqi yardım, 56 – seçki hüququ, 50 – məlumat azadlığı."
+    },
+    {
+      "id": "q2",
+      "prompt": "Aşağıdakı hansı halda 83 səs tələb olunmur?",
+      "options": [
+        "Referendum haqqında qanunun qəbulu",
+        "63 səslə qəbul edilmiş qanuna Prezidentin vetosunun aşılması",
+        "Konstitusiyaya əlavələr haqqında Konstitusiya qanununun qəbulu",
+        "Ali Məhkəmə hakiminin vəzifədən kənarlaşdırılması"
+      ],
+      "answer": 2,
+      "explanation": "Konstitusiya qanunları və əlavələr 95 səs tələb edir (156). Referendum qanunu (94 II), 63-lük qanuna vetonun aşılması (110 II) və ali məhkəmələrin hakimlərinin kənarlaşdırılması (128 V) 83 səslə həll olunur."
+    },
+    {
+      "id": "q3",
+      "prompt": "Hansı müddət Prezidentin qanunu imzalaması və ya etirazla qaytarması üçün nəzərdə tutulub?",
+      "options": [
+        "14 gün",
+        "30 gün",
+        "56 gün",
+        "60 gün"
+      ],
+      "answer": 2,
+      "explanation": "110-cu maddə: 56 gün. 14 gün – qanunun Prezidentə təqdimi və seçki yekunlarının elanı; 30 gün – Ali Məhkəmənin rəyi; 60 gün – növbədənkənar Prezident seçkiləri."
+    },
+    {
+      "id": "q4",
+      "prompt": "Aşağıdakı vəzifələrdən hansını Milli Məclis Prezidentin təqdimatı ilə təyin edir və ya seçir?",
+      "options": [
+        "Baş nazir",
+        "Yerli icra hakimiyyəti başçısı",
+        "Konstitusiya Məhkəməsinin hakimi",
+        "Vitse-prezident"
+      ],
+      "answer": 2,
+      "explanation": "Konstitusiya Məhkəməsi, Ali Məhkəmə və apellyasiya məhkəmələrinin hakimlərini, Müvəkkili və Mərkəzi Bankın İdarə Heyətini Milli Məclis Prezidentin təqdimatı ilə təyin edir. Baş naziri Prezident Milli Məclisin razılığı ilə, yerli icra başçılarını və vitse-prezidentləri Prezident təkbaşına təyin edir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Aşağıdakı qaydalardan hansı hazırda qüvvədədir?",
+      "options": [
+        "Prezident 5 il müddətinə seçilir",
+        "Heç kəs iki dəfədən artıq Prezident seçilə bilməz",
+        "Prezidentliyə namizəd 35 yaşına çatmalıdır",
+        "Prezident növbədənkənar Prezident seçkiləri elan edə bilər"
+      ],
+      "answer": 3,
+      "explanation": "Növbədənkənar seçkilər elan etmək hüququ 2016-cı ildə 101-ci maddəyə əlavə edilib və qüvvədədir. 5 illik müddət və 35 yaş 2016-cı ildə, iki müddət həddi 2009-cu ildə ləğv edilib."
+    },
+    {
+      "id": "q6",
+      "prompt": "Konstitusiyanın 130-cu maddəsi hansı orqana həsr olunub?",
+      "options": [
+        "Ali Məhkəməyə",
+        "Konstitusiya Məhkəməsinə",
+        "Prokurorluğa",
+        "Apellyasiya məhkəmələrinə"
+      ],
+      "answer": 1,
+      "explanation": "130 – Konstitusiya Məhkəməsi, 131 – Ali Məhkəmə, 132 – apellyasiya məhkəmələri, 133 – Prokurorluq."
+    },
+    {
+      "id": "q7",
+      "prompt": "Aşağıdakı hüquqlardan hansı Konstitusiyada 'hər kəsə' deyil, yalnız vətəndaşlara aid edilib?",
+      "options": [
+        "Sərbəst toplaşmaq azadlığı (49)",
+        "Birləşmək hüququ (58)",
+        "Təhsil hüququ (42)",
+        "Fikir və söz azadlığı (47)"
+      ],
+      "answer": 2,
+      "explanation": "42-ci maddə 'hər bir vətəndaşın təhsil almaq hüququ vardır' deyir. 47, 49 və 58-ci maddələr 'hər kəs' ifadəsi ilə başlayır."
+    },
+    {
+      "id": "q8",
+      "prompt": "Hərbi vəziyyət haqqında fərman, təcili qanun layihəsi və Prezidentin andı üçün müddətlər müvafiq olaraq hansılardır?",
+      "options": [
+        "24 saat, 24 saat, 3 gün",
+        "3 gün, 14 gün, 24 saat",
+        "24 saat, 14 gün, 7 gün",
+        "48 saat, 20 gün, 3 gün"
+      ],
+      "answer": 0,
+      "explanation": "Hərbi vəziyyət fərmanı 24 saat ərzində Milli Məclisə təqdim edilir (111); təcili elan olunan qanun 24 saat ərzində Prezidentə təqdim edilir (97); Prezident seçilmiş şəxs yekunlar elan olunduqdan sonra 3 gün ərzində and içir (103)."
+    },
+    {
+      "id": "q9",
+      "prompt": "Konstitusiyanın 147–151-ci maddələri hansı fəslə aiddir?",
+      "options": [
+        "IX fəsil – Bələdiyyələr",
+        "X fəsil – Qanunvericilik sistemi",
+        "XI fəsil – Konstitusiyada dəyişikliklər",
+        "XII fəsil – Konstitusiyaya əlavələr"
+      ],
+      "answer": 1,
+      "explanation": "X fəsil (147–151) qanunvericilik sistemidir; XI fəsil 152–155, XII fəsil 156–158, IX fəsil isə 142–146-1-ci maddələri əhatə edir."
+    },
+    {
+      "id": "q10",
+      "prompt": "Naxçıvan MR Ali Məclisinin üzvlərinin sayı və Konstitusiya Məhkəməsinin hakimlərinin sayı müvafiq olaraq neçədir?",
+      "options": [
+        "45 və 9",
+        "55 və 9",
+        "45 və 7",
+        "125 və 9"
+      ],
+      "answer": 0,
+      "explanation": "137-ci maddə: Ali Məclis 45 üzvdən; 130-cu maddə: Konstitusiya Məhkəməsi 9 hakimdən ibarətdir."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "114-cü maddəyə görə Nazirlər Kabineti nədir?",
+      "options": [
+        "Müstəqil icra hakimiyyəti qolu",
+        "Prezidentin yuxarı icra orqanı; ona tabedir və onun qarşısında cavabdehdir",
+        "Milli Məclisin icra orqanı",
+        "Prezidentlə Milli Məclisin birgə orqanı"
+      ],
+      "answer": 1,
+      "explanation": "114-cü maddə: Prezident icra səlahiyyətlərinin təşkili üçün Nazirlər Kabinetini yaradır; Kabinet Prezidentin yuxarı icra orqanıdır, ona tabedir və onun qarşısında cavabdehdir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Prezidentin təqdim etdiyi namizədlərin Baş nazir təyin olunmasına Milli Məclis neçə dəfə razılıq verməzsə, Prezident Baş naziri razılıq olmadan təyin edə bilər?",
+      "options": [
+        "Bir dəfə",
+        "İki dəfə",
+        "Üç dəfə",
+        "Heç bir halda razılıqsız təyin edə bilməz"
+      ],
+      "answer": 2,
+      "explanation": "118-ci maddənin III hissəsi: Milli Məclis bir həftə qaydasını pozarsa və ya namizədlərin təyin olunmasına üç dəfə razılıq verməzsə, Prezident Baş naziri Milli Məclisin razılığı olmadan təyin edə bilər."
+    },
+    {
+      "id": "q3",
+      "prompt": "Nazirlər Kabineti nə vaxt Prezidentə istefa verir?",
+      "options": [
+        "Hər il yanvarın 1-də",
+        "Milli Məclisin yeni çağırışının ilk iclası günü",
+        "Yeni seçilmiş Prezident vəzifəsini tutduğu və səlahiyyətlərini icra etməyə başladığı gün",
+        "Baş nazir istefa verdikdə"
+      ],
+      "answer": 2,
+      "explanation": "116-cı maddə: yeni seçilmiş Prezident vəzifəsini tutduğu və səlahiyyətlərini icra etməyə başladığı gün Nazirlər Kabineti Prezidentə istefa verir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Dövlət büdcəsinin layihəsini kim hazırlayır və kimə təqdim edir?",
+      "options": [
+        "Milli Məclis hazırlayır və Prezidentə təqdim edir",
+        "Nazirlər Kabineti hazırlayır və Prezidentə təqdim edir; Prezident Milli Məclisə təqdim edir",
+        "Prezident hazırlayır və Nazirlər Kabinetinə təqdim edir",
+        "Hesablama Palatası hazırlayır"
+      ],
+      "answer": 1,
+      "explanation": "119-cu maddə: Nazirlər Kabineti büdcə layihəsini hazırlayıb Prezidentə təqdim edir; 109-cu maddənin 2-ci bəndinə görə Prezident onu Milli Məclisin təsdiqinə verir; 95-ci maddənin 5-ci bəndinə görə Milli Məclis təsdiq edir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Ümumi qaydalar müəyyən etdikdə Nazirlər Kabineti hansı aktı qəbul edir?",
+      "options": [
+        "Fərman",
+        "Qərar",
+        "Sərəncam",
+        "Qanun"
+      ],
+      "answer": 1,
+      "explanation": "120-ci maddənin I hissəsi: ümumi qaydalar müəyyən etdikdə Nazirlər Kabineti qərarlar, başqa məsələlər üzrə sərəncamlar qəbul edir. Fərman Prezidentin normativ aktıdır."
+    },
+    {
+      "id": "q6",
+      "prompt": "Nazirlər Kabinetinin qərarları hansı aktlara zidd olmamalıdır?",
+      "options": [
+        "Yalnız Konstitusiyaya",
+        "Konstitusiyaya və qanunlara",
+        "Konstitusiyaya, qanunlara və Prezidentin fərmanlarına",
+        "Konstitusiyaya, qanunlara, fərmanlara və bələdiyyə aktlarına"
+      ],
+      "answer": 2,
+      "explanation": "149-cu maddənin V hissəsi: Nazirlər Kabinetinin qərarları Konstitusiyaya, qanunlara və Prezidentin fərmanlarına zidd olmamalıdır. Bələdiyyə aktları iyerarxiyada aşağıdadır."
+    },
+    {
+      "id": "q7",
+      "prompt": "Yerli icra hakimiyyəti başçılarını kim təyin edir və səlahiyyətlərini kim müəyyən edir?",
+      "options": [
+        "Bələdiyyələr seçir, səlahiyyətlərini qanun müəyyən edir",
+        "Nazirlər Kabineti təyin edir, səlahiyyətlərini Baş nazir müəyyən edir",
+        "Prezident təyin və azad edir, səlahiyyətlərini Prezident müəyyən edir",
+        "Milli Məclis təyin edir"
+      ],
+      "answer": 2,
+      "explanation": "124-cü maddə: yerli icra hakimiyyəti başçılarını Prezident vəzifəyə təyin və vəzifədən azad edir; yerli icra hakimiyyətlərinin səlahiyyətlərini Prezident müəyyən edir."
+    },
+    {
+      "id": "q8",
+      "prompt": "Baş nazirin toxunulmazlığına kim xitam verə bilər?",
+      "options": [
+        "Baş prokurorun təqdimatı ilə Milli Məclis",
+        "Baş prokurorun təqdimatı ilə Prezident",
+        "Konstitusiya Məhkəməsi",
+        "Ali Məhkəmə"
+      ],
+      "answer": 1,
+      "explanation": "123-cü maddənin IV hissəsi: Baş nazirin toxunulmazlığına yalnız Baş prokurorun təqdimatına əsasən Prezident tərəfindən xitam verilə bilər. Deputatlar üçün bu səlahiyyət Milli Məclisə məxsusdur."
+    },
+    {
+      "id": "q9",
+      "prompt": "Prezident Baş naziri vəzifədən azad etmək üçün Milli Məclisin razılığını almalıdırmı?",
+      "options": [
+        "Bəli, 63 səslə razılıq tələb olunur",
+        "Bəli, 83 səslə razılıq tələb olunur",
+        "Xeyr, azad etmək Prezidentin təkbaşına səlahiyyətidir",
+        "Bəli, Konstitusiya Məhkəməsinin rəyi tələb olunur"
+      ],
+      "answer": 2,
+      "explanation": "109-cu maddənin 4-cü bəndi: Prezident Milli Məclisin razılığı ilə Baş naziri təyin edir, Baş naziri vəzifədən azad edir – azad etmək üçün razılıq nəzərdə tutulmayıb."
+    }
+  ]
+}

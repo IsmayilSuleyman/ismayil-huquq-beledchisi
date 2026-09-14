@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Milli Məclis neçə deputatdan ibarətdir və hansı seçki sistemi ilə seçilir?",
+      "options": [
+        "125 deputat, majoritar sistem",
+        "125 deputat, proporsional sistem",
+        "100 deputat, qarışıq sistem",
+        "150 deputat, majoritar sistem"
+      ],
+      "answer": 0,
+      "explanation": "82-ci maddə: Milli Məclis 125 deputatdan ibarətdir; 83-cü maddə: deputatlar majoritar seçki sistemi ilə seçilir. Proporsional komponent 2002-ci il referendumu ilə ləğv edilib."
+    },
+    {
+      "id": "q2",
+      "prompt": "Milli Məclisə seçkilər nə vaxt keçirilir?",
+      "options": [
+        "Hər dörd ildən bir oktyabrın ilk bazar günü",
+        "Hər beş ildən bir noyabr ayının birinci bazar günü",
+        "Hər beş ildən bir Prezidentin təyin etdiyi gündə",
+        "Hər yeddi ildən bir"
+      ],
+      "answer": 1,
+      "explanation": "84-cü maddənin II hissəsi: Milli Məclisin hər çağırışının seçkiləri hər beş ildən bir noyabr ayının birinci bazar günü keçirilir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Milli Məclis neçə deputatın səlahiyyətləri təsdiq olunduqda səlahiyyətli sayılır?",
+      "options": [
+        "63",
+        "83",
+        "95",
+        "125"
+      ],
+      "answer": 1,
+      "explanation": "87-ci maddənin III hissəsi: Milli Məclis 83 deputatının səlahiyyətləri təsdiq olunduqda səlahiyyətlidir. Eyni rəqəm qapalı iclas tələbi üçün də nəzərdə tutulub."
+    },
+    {
+      "id": "q4",
+      "prompt": "Növbədənkənar sessiyanı kim və kimin tələbi ilə çağırır?",
+      "options": [
+        "Prezident öz təşəbbüsü ilə",
+        "Milli Məclisin sədri – Prezidentin və ya 42 deputatın tələbi əsasında",
+        "Milli Məclisin sədri – 83 deputatın tələbi əsasında",
+        "Konstitusiya Məhkəməsi"
+      ],
+      "answer": 1,
+      "explanation": "88-ci maddənin II hissəsi: növbədənkənar sessiyaları Milli Məclisin sədri Prezidentin və ya 42 deputatın tələbi əsasında çağırır."
+    },
+    {
+      "id": "q5",
+      "prompt": "Deputat seçkilərinin nəticələrinin düzgünlüyünü kim yoxlayır və təsdiq edir?",
+      "options": [
+        "Mərkəzi Seçki Komissiyası",
+        "Milli Məclisin özü",
+        "Konstitusiya Məhkəməsi",
+        "Ali Məhkəmə"
+      ],
+      "answer": 2,
+      "explanation": "86-cı maddə: seçkilərin nəticələrinin düzgünlüyünü qanunla müəyyən olunmuş qaydada Konstitusiya Məhkəməsi yoxlayır və təsdiq edir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Deputatın toxunulmazlığına hansı qaydada xitam verilə bilər?",
+      "options": [
+        "Prezidentin sərəncamı ilə",
+        "Baş prokurorun təqdimatına əsasən Milli Məclisin qərarı ilə",
+        "Konstitusiya Məhkəməsinin qərarı ilə",
+        "Ali Məhkəmənin rəyi ilə"
+      ],
+      "answer": 1,
+      "explanation": "90-cı maddənin II hissəsi: deputatın toxunulmazlığına yalnız Baş prokurorun təqdimatına əsasən Milli Məclisin qərarı ilə xitam verilə bilər."
+    },
+    {
+      "id": "q7",
+      "prompt": "2016-cı il referendumu deputatlığa namizədlər üçün hansı dəyişikliyi etdi?",
+      "options": [
+        "Yaş həddini 25-dən 30-a qaldırdı",
+        "25 yaş həddini ləğv etdi; seçki hüququ olan hər bir vətəndaş namizəd ola bilər",
+        "Ali təhsil tələbi əlavə etdi",
+        "10 il daimi yaşamaq tələbi əlavə etdi"
+      ],
+      "answer": 1,
+      "explanation": "2016-cı il Referendum Aktının 17-ci bəndi 85-ci maddədə 'yaşı 25-dən aşağı olmayan' sözlərini 'seçkilərdə iştirak etmək hüququna malik olan' sözləri ilə əvəz etdi."
+    },
+    {
+      "id": "q8",
+      "prompt": "Aşağıdakılardan hansı 89-cu maddəyə görə deputatın mandatdan məhrum edilməsi əsası deyil?",
+      "options": [
+        "Başqa dövlətin vətəndaşlığını qəbul etməsi",
+        "Din xadimi olması",
+        "Milli Məclisdə tənqidi fikir söyləməsi",
+        "Etik davranış qaydalarını kobud surətdə pozması"
+      ],
+      "answer": 2,
+      "explanation": "91-ci maddəyə görə deputat Milli Məclisdəki fəaliyyətinə, səsverməyə və söylədiyi fikrə görə məsuliyyətə cəlb oluna bilməz. Digər üç hal 89-cu maddədə mandatdan məhrumetmə əsasları kimi göstərilib."
+    },
+    {
+      "id": "q9",
+      "prompt": "Milli Məclisin səlahiyyət müddətinin bitməsinə nə qədər müddət qalarsa, boşalan yerə seçkilər keçirilmir?",
+      "options": [
+        "60 gündən az",
+        "90 gündən az",
+        "120 gündən az",
+        "180 gündən az"
+      ],
+      "answer": 2,
+      "explanation": "87-ci maddənin II hissəsi: deputatlıqdan çıxanların yerinə seçkilər Milli Məclisin səlahiyyət müddətinin bitməsinə 120 gündən az müddət qalarsa keçirilmir."
+    },
+    {
+      "id": "q10",
+      "prompt": "92-ci maddəyə görə Milli Məclis hansı nəzarət orqanını yaradır?",
+      "options": [
+        "Hesablama Palatasını",
+        "Mərkəzi Seçki Komissiyasını",
+        "Konstitusiya Məhkəməsini",
+        "Təhlükəsizlik Şurasını"
+      ],
+      "answer": 0,
+      "explanation": "92-ci maddə: Milli Məclis öz sədrini və müavinlərini seçir, komitələr və komissiyalar təşkil edir, Hesablama Palatası yaradır. Təhlükəsizlik Şurasını isə Prezident yaradır (109-cu maddənin 27-ci bəndi)."
+    }
+  ]
+}

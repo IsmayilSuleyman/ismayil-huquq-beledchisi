@@ -1,0 +1,113 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "148-ci maddəyə görə qanunvericilik sisteminə daxil olan aktların düzgün iyerarxik ardıcıllığı hansıdır?",
+      "options": [
+        "Konstitusiya – qanunlar – referendum aktları – fərmanlar – Nazirlər Kabinetinin qərarları",
+        "Konstitusiya – referendumla qəbul edilmiş aktlar – qanunlar – fərmanlar – Nazirlər Kabinetinin qərarları – mərkəzi icra orqanlarının normativ aktları",
+        "Konstitusiya – fərmanlar – qanunlar – Nazirlər Kabinetinin qərarları",
+        "Referendum aktları – Konstitusiya – qanunlar – fərmanlar"
+      ],
+      "answer": 1,
+      "explanation": "148-ci maddənin I hissəsi altı pilləni bu ardıcıllıqla sadalayır: Konstitusiya, referendumla qəbul edilmiş aktlar, qanunlar, fərmanlar, Nazirlər Kabinetinin qərarları, mərkəzi icra hakimiyyəti orqanlarının normativ aktları."
+    },
+    {
+      "id": "q2",
+      "prompt": "Prezidentin fərmanları hansı aktlara zidd olmamalıdır?",
+      "options": [
+        "Yalnız Konstitusiyaya",
+        "Konstitusiyaya və qanunlara",
+        "Konstitusiyaya, qanunlara və Nazirlər Kabinetinin qərarlarına",
+        "Yalnız beynəlxalq müqavilələrə"
+      ],
+      "answer": 1,
+      "explanation": "149-cu maddənin IV hissəsi: Prezidentin fərmanları Konstitusiyaya və qanunlara zidd olmamalıdır. Nazirlər Kabinetinin qərarları isə fərmanlara tabedir, əksinə yox."
+    },
+    {
+      "id": "q3",
+      "prompt": "Hansı normativ hüquqi aktların qüvvəsi geriyə şamil edilir?",
+      "options": [
+        "Bütün normativ aktların",
+        "Heç bir normativ aktın",
+        "Şəxslərin hüquqi vəziyyətini yaxşılaşdıran, məsuliyyəti aradan qaldıran və ya yüngülləşdirən aktların",
+        "Yalnız Prezidentin fərmanlarının"
+      ],
+      "answer": 2,
+      "explanation": "149-cu maddənin VII hissəsi: hüquqi vəziyyəti yaxşılaşdıran, məsuliyyəti aradan qaldıran və ya yüngülləşdirən aktların qüvvəsi geriyə şamil edilir; başqa aktların qüvvəsi geriyə şamil edilmir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Dərc edilməmiş normativ hüquqi akt barədə Konstitusiya nə deyir?",
+      "options": [
+        "Qəbul edildiyi gündən məcburidir",
+        "Heç kəs onun icrasına məcbur edilə bilməz və icra etməməyə görə məsuliyyətə cəlb edilə bilməz",
+        "Yalnız dövlət orqanları üçün məcburidir",
+        "Konstitusiya Məhkəməsinin qərarı ilə məcburi olur"
+      ],
+      "answer": 1,
+      "explanation": "149-cu maddənin VIII hissəsi (2009): normativ hüquqi aktlar dərc edilməlidir; heç kəs dərc edilməyən aktın icrasına məcbur edilə bilməz və belə aktın icra olunmamasına görə məsuliyyətə cəlb edilə bilməz."
+    },
+    {
+      "id": "q5",
+      "prompt": "151-ci maddəyə görə dövlətlərarası müqavilə ilə qanun arasında ziddiyyət yaranarsa, hansı tətbiq edilir?",
+      "options": [
+        "Həmişə qanun",
+        "Dövlətlərarası müqavilə",
+        "Sonra qəbul edilmiş akt",
+        "Konstitusiya Məhkəməsinin seçdiyi akt"
+      ],
+      "answer": 1,
+      "explanation": "151-ci maddə: qanunvericilik sisteminə daxil olan aktlarla (Konstitusiya və referendumla qəbul edilən aktlar istisna olmaqla) dövlətlərarası müqavilələr arasında ziddiyyət yaranarsa, beynəlxalq müqavilələr tətbiq edilir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Beynəlxalq müqavilələr hansı aktlardan üstün deyil?",
+      "options": [
+        "Qanunlardan",
+        "Prezidentin fərmanlarından",
+        "Konstitusiyadan və referendumla qəbul edilən aktlardan",
+        "Nazirlər Kabinetinin qərarlarından"
+      ],
+      "answer": 2,
+      "explanation": "151-ci maddə Konstitusiyanı və referendumla qəbul edilən aktları istisna edir: beynəlxalq müqavilələr onlardan üstün deyil. Buna görə dövlətlərarası müqavilələr qüvvəyə minməzdən əvvəl Konstitusiyaya uyğunluq baxımından yoxlanılır."
+    },
+    {
+      "id": "q7",
+      "prompt": "149-cu maddənin I hissəsinə görə normativ hüquqi aktlar nəyə əsaslanmalıdır?",
+      "options": [
+        "Yalnız iqtisadi məqsədəuyğunluğa",
+        "Hüquqa və haqq-ədalətə (bərabər mənafelərə bərabər münasibətə)",
+        "Beynəlxalq təcrübəyə",
+        "Prezidentin proqramlarına"
+      ],
+      "answer": 1,
+      "explanation": "149-cu maddənin I hissəsi normativ aktlar üçün məzmun standartı qoyur: onlar hüquqa və haqq-ədalətə, yəni bərabər mənafelərə bərabər münasibətə əsaslanmalıdır."
+    },
+    {
+      "id": "q8",
+      "prompt": "Bələdiyyə aktlarının icrası kimlər üçün məcburidir?",
+      "options": [
+        "Azərbaycanın bütün vətəndaşları üçün",
+        "Bələdiyyənin ərazisində yaşayan vətəndaşlar və orada yerləşən hüquqi şəxslər üçün",
+        "Yalnız bələdiyyə qulluqçuları üçün",
+        "Yerli icra hakimiyyəti orqanları üçün"
+      ],
+      "answer": 1,
+      "explanation": "150-ci maddənin II hissəsi: bələdiyyənin qəbul etdiyi aktın icrası onun ərazisində yaşayan vətəndaşlar və onun ərazisində yerləşən hüquqi şəxslər üçün məcburidir."
+    },
+    {
+      "id": "q9",
+      "prompt": "Normativ hüquqi aktların dərc edilməsi qaydası hansı aktla müəyyən edilir?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Konstitusiya qanunu ilə",
+        "Nazirlər Kabinetinin qərarı ilə",
+        "Ədliyyə Nazirliyinin qaydaları ilə"
+      ],
+      "answer": 1,
+      "explanation": "149-cu maddənin VIII hissəsi: normativ hüquqi aktların dərc edilməsi qaydası Konstitusiya qanunu ilə müəyyən edilir. 'Normativ hüquqi aktlar haqqında' Konstitusiya Qanunu bu normanın icrasıdır."
+    }
+  ]
+}

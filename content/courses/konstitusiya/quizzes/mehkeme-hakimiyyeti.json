@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "125-ci maddəyə görə məhkəmə hakimiyyətini kim həyata keçirir?",
+      "options": [
+        "Məhkəmələr və Prokurorluq birlikdə",
+        "Ədalət mühakiməsi yolu ilə yalnız məhkəmələr",
+        "Məhkəmələr və Ədliyyə Nazirliyi",
+        "Məhkəmələr və inzibati komissiyalar"
+      ],
+      "answer": 1,
+      "explanation": "125-ci maddənin I hissəsi: məhkəmə hakimiyyətini ədalət mühakiməsi yolu ilə yalnız məhkəmələr həyata keçirir. Prokurorluq cinayət icraatında tərəf kimi iştirak edir, məhkəmə hakimiyyəti həyata keçirmir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Hakim olmaq üçün 126-cı maddə hansı tələbləri qoyur?",
+      "options": [
+        "30 yaş, ali hüquq təhsili, 5 il iş stajı",
+        "Seçki hüququ, ali hüquq təhsili, hüquqşünas ixtisası üzrə 5 ildən artıq iş",
+        "Seçki hüququ, istənilən ali təhsil, 10 il iş stajı",
+        "35 yaş, ali hüquq təhsili, elmi dərəcə"
+      ],
+      "answer": 1,
+      "explanation": "126-cı maddənin I hissəsi: seçkilərdə iştirak etmək hüququna malik, ali hüquq təhsilli və hüquqşünas ixtisası üzrə 5 ildən artıq işləyən vətəndaşlar hakim ola bilər. 30 yaş həddi 2016-cı ildə ləğv edilib."
+    },
+    {
+      "id": "q3",
+      "prompt": "Aşağıdakılardan hansı yalnız hakimlərə şamil edilən qadağadır?",
+      "options": [
+        "Sahibkarlıq fəaliyyəti ilə məşğul olmaq",
+        "Siyasi fəaliyyətlə məşğul olmaq və siyasi partiyalara üzv olmaq",
+        "Başqa ödənişli vəzifə tutmaq",
+        "Pedaqoji fəaliyyətlə məşğul olmaq"
+      ],
+      "answer": 1,
+      "explanation": "126-cı maddənin II hissəsi hakimlərə siyasi fəaliyyəti və partiya üzvlüyünü qadağan edir; sahibkarlıq və başqa vəzifə qadağası deputat və nazirlər üçün də var, pedaqoji fəaliyyət isə hamıya icazəlidir."
+    },
+    {
+      "id": "q4",
+      "prompt": "127-ci maddəyə görə məhkəmə iclası hansı hallarda qapalı keçirilə bilər?",
+      "options": [
+        "Tərəflərdən birinin xahişi ilə istənilən halda",
+        "Açıq icraat dövlət, peşə və ya kommersiya sirrinin açılmasına səbəb ola bilərsə və ya şəxsi və ailə həyatının məxfiliyini qorumaq zərurəti varsa",
+        "Hakim belə qərar verərsə, əsas göstərmədən",
+        "Bütün cinayət işlərində"
+      ],
+      "answer": 1,
+      "explanation": "127-ci maddənin V hissəsi: işlərin icraatı açıq aparılır; qapalı iclasa yalnız dövlət, peşə və kommersiya sirrinin açılması ehtimalı və ya şəxsi və ailə həyatının məxfiliyini qorumaq zərurəti olduqda icazə verilir."
+    },
+    {
+      "id": "q5",
+      "prompt": "Konstitusiya Məhkəməsi, Ali Məhkəmə və apellyasiya məhkəmələri hakimlərinin vəzifədən kənarlaşdırılması haqqında qərar necə qəbul edilir?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Milli Məclisdə 63 səslə",
+        "Milli Məclisdə 83 səslə",
+        "Ali Məhkəmənin Plenumu tərəfindən"
+      ],
+      "answer": 2,
+      "explanation": "128-ci maddənin V hissəsi: bu üç məhkəmənin hakimlərinin kənarlaşdırılması haqqında qərar Milli Məclisdə 83 səs çoxluğu ilə, başqa hakimlərin kənarlaşdırılması haqqında qərar isə 63 səslə qəbul edilir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Ali Məhkəmə ədalət mühakiməsini hansı qaydada həyata keçirir?",
+      "options": [
+        "Birinci instansiya qaydasında",
+        "Apellyasiya qaydasında",
+        "Kassasiya qaydasında",
+        "Nəzarət qaydasında"
+      ],
+      "answer": 2,
+      "explanation": "131-ci maddənin I hissəsi: Ali Məhkəmə kassasiya qaydasında ədalət mühakiməsini həyata keçirir və məhkəmələrin praktikasına aid məsələlər üzrə izahatlar verir. 'Nəzarət' ifadəsi 2002-ci ildə çıxarılıb."
+    },
+    {
+      "id": "q7",
+      "prompt": "Apellyasiya məhkəmələrinin hakimlərini kim təyin edir?",
+      "options": [
+        "Prezident təkbaşına",
+        "Prezidentin təqdimatı ilə Milli Məclis",
+        "Ali Məhkəmənin sədri",
+        "Məhkəmə-Hüquq Şurası"
+      ],
+      "answer": 1,
+      "explanation": "132-ci maddənin II hissəsi: apellyasiya məhkəmələrinin hakimlərini Prezidentin təqdimatı ilə Milli Məclis təyin edir. Digər məhkəmələrin hakimlərini isə Prezident özü təyin edir."
+    },
+    {
+      "id": "q8",
+      "prompt": "129-cu maddəyə görə məhkəmə qərarları kimin adından çıxarılır və icrası necədir?",
+      "options": [
+        "Hakimin adından; icrası könüllüdür",
+        "Dövlətin adından; icrası məcburidir",
+        "Xalqın adından; icrası tərəflərin razılığı ilədir",
+        "Ədliyyə Nazirliyinin adından; icrası məcburidir"
+      ],
+      "answer": 1,
+      "explanation": "129-cu maddənin I hissəsi: məhkəmənin qəbul etdiyi qərarlar dövlətin adından çıxarılır və onların icrası məcburidir; icra olunmaması məsuliyyətə səbəb olur."
+    },
+    {
+      "id": "q9",
+      "prompt": "Hakimin vəzifədən kənarlaşdırılması təşəbbüsünü kim və nəyin əsasında irəli sürür?",
+      "options": [
+        "Baş prokuror – istintaq materialları əsasında",
+        "Prezident – Ali Məhkəmənin 30 gün ərzində verdiyi rəy əsasında",
+        "Konstitusiya Məhkəməsi – öz təşəbbüsü ilə",
+        "Milli Məclisin 42 deputatı"
+      ],
+      "answer": 1,
+      "explanation": "128-ci maddənin IV hissəsi: hakimlər cinayət törətdikdə kənarlaşdırma təşəbbüsünü Prezident Ali Məhkəmənin rəyi əsasında Milli Məclis qarşısında irəli sürə bilər; Ali Məhkəmə rəyi sorğudan sonra 30 gün müddətində verir."
+    },
+    {
+      "id": "q10",
+      "prompt": "Məhkəmə icraatı hansı dildə aparılır?",
+      "options": [
+        "Yalnız dövlət dilində",
+        "Dövlət dilində və ya müvafiq yerin əhalisinin çoxluq təşkil edən hissəsinin dilində",
+        "Tərəflərin seçdiyi istənilən dildə",
+        "Hakimin ana dilində"
+      ],
+      "answer": 1,
+      "explanation": "127-ci maddənin X hissəsi: məhkəmə icraatı dövlət dilində və ya müvafiq yerin əhalisinin çoxluq təşkil edən hissəsinin dilində aparılır; dili bilməyənlərə tərcüməçi və ana dilində çıxış hüququ təmin edilir."
+    }
+  ]
+}

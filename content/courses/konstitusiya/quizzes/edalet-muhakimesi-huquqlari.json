@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "63-cü maddəyə görə şəxs cinayətdə nə vaxtadək təqsirsiz sayılır?",
+      "options": [
+        "İttiham elan edilənədək",
+        "Prokuror ittiham aktını təsdiq edənədək",
+        "Təqsiri qanunla nəzərdə tutulan qaydada sübuta yetirilib məhkəmənin hökmü qanuni qüvvəyə minənədək",
+        "Həbsə alınanadək"
+      ],
+      "answer": 2,
+      "explanation": "63-cü maddənin I hissəsi: təqsirləndirilən şəxs təqsiri qanunla nəzərdə tutulan qaydada sübuta yetirilməyibsə və bu barədə məhkəmənin qanuni qüvvəyə minmiş hökmü yoxdursa, təqsirsiz sayılır."
+    },
+    {
+      "id": "q2",
+      "prompt": "Təqsirləndirilən şəxsin təqsirli olduğuna əsaslı şübhələr varsa, Konstitusiya nə tələb edir?",
+      "options": [
+        "Şübhələr ittihamın xeyrinə şərh olunur",
+        "Şəxsin təqsirli bilinməsinə yol verilmir",
+        "İş yenidən istintaqa qaytarılır",
+        "Məhkəmə əlavə sübut toplamağa borcludur"
+      ],
+      "answer": 1,
+      "explanation": "63-cü maddənin II hissəsi: şəxsin təqsirli olduğuna əsaslı şübhələr varsa, onun təqsirli bilinməsinə yol verilmir. Sübutetmə yükü də ittiham tərəfindədir (III hissə)."
+    },
+    {
+      "id": "q3",
+      "prompt": "61-ci maddəyə görə müdafiəçinin köməyindən istifadə etmək hüququ hansı andan yaranır?",
+      "options": [
+        "Məhkəmə iclası təyin edildiyi andan",
+        "İttiham aktı təqdim edildiyi andan",
+        "Tutulduğu, həbsə alındığı və ya cinayət törədilməsində ittiham olunduğu andan",
+        "Hökm çıxarıldığı andan"
+      ],
+      "answer": 2,
+      "explanation": "61-ci maddənin III hissəsi: hər bir şəxsin səlahiyyətli dövlət orqanları tərəfindən tutulduğu, həbsə alındığı, cinayət törədilməsində ittiham olunduğu andan müdafiəçinin köməyindən istifadə etmək hüququ vardır."
+    },
+    {
+      "id": "q4",
+      "prompt": "66-cı maddəyə görə heç kəs kimə qarşı ifadə verməyə məcbur edilə bilməz?",
+      "options": [
+        "Yalnız özünə qarşı",
+        "Özünə, arvadına (ərinə), övladlarına, valideynlərinə, qardaşına, bacısına qarşı",
+        "Bütün qohumlarına qarşı",
+        "İş yoldaşlarına qarşı"
+      ],
+      "answer": 1,
+      "explanation": "66-cı maddə minimum siyahını verir: özü, arvadı (əri), övladları, valideynləri, qardaşı, bacısı. Tam siyahı qanunla müəyyən edilir və Konstitusiyadakı siyahıdan dar ola bilməz."
+    },
+    {
+      "id": "q5",
+      "prompt": "60-cı maddənin 2016-cı il redaksiyası hansı yeniliyi gətirdi?",
+      "options": [
+        "Yalnız məhkəmə müdafiəsini saxladı",
+        "İnzibati icraatda da qərəzsizlik, ağlabatan müddət və dinlənilmək hüququnu təsbit etdi",
+        "Şikayət hüququnu yalnız dövlət orqanlarına qarşı məhdudlaşdırdı",
+        "Məhkəmə rüsumlarını ləğv etdi"
+      ],
+      "answer": 1,
+      "explanation": "2016-cı il redaksiyasında 60-cı maddə hüquqların inzibati qaydada və məhkəmədə müdafiəsinə təminat verir, işə qərəzsiz və ağlabatan müddətdə baxılmasını və dinlənilmək hüququnu həm inzibati icraata, həm məhkəmə prosesinə şamil edir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Qanunu pozmaqla əldə edilmiş sübutlar barədə Konstitusiya nə deyir?",
+      "options": [
+        "Məhkəmənin mülahizəsi ilə istifadə oluna bilər",
+        "Ədalət mühakiməsi həyata keçirilərkən onlardan istifadə oluna bilməz",
+        "Yalnız ağır cinayətlərdə istifadə oluna bilər",
+        "Prokurorun razılığı ilə istifadə oluna bilər"
+      ],
+      "answer": 1,
+      "explanation": "63-cü maddənin IV hissəsi: ədalət mühakiməsi həyata keçirilərkən qanunu pozmaqla əldə edilmiş sübutlardan istifadə oluna bilməz."
+    },
+    {
+      "id": "q7",
+      "prompt": "68-ci maddəyə görə dövlət qulluqçularının qanuna zidd hərəkətləri nəticəsində hüquqlara dəymiş ziyana görə kim məsuliyyət daşıyır?",
+      "options": [
+        "Yalnız dövlət qulluqçusu şəxsən",
+        "Yalnız dövlət",
+        "Dövlət, dövlət qulluqçuları ilə birlikdə – mülki məsuliyyət",
+        "Heç kim, əgər qulluqçu vəzifə borcunu icra edirdisə"
+      ],
+      "answer": 2,
+      "explanation": "68-ci maddənin IV hissəsi (2016): dövlət, dövlət qulluqçuları ilə birlikdə, onların qanuna zidd hərəkətləri və hərəkətsizliyi nəticəsində insan hüquq və azadlıqlarına dəymiş ziyana görə mülki məsuliyyət daşıyır."
+    },
+    {
+      "id": "q8",
+      "prompt": "62-ci maddə hansı prinsipi təsbit edir?",
+      "options": [
+        "Şəxsin razılığı olmadan işinə qanunla müəyyən edilmiş məhkəmədən başqa məhkəmədə baxılmasına yol verilmir",
+        "Hər kəs istədiyi məhkəməni seçə bilər",
+        "Ağır cinayətlərə yalnız Ali Məhkəmə baxır",
+        "Məhkəmə aidiyyəti prokurorun qərarı ilə dəyişdirilə bilər"
+      ],
+      "answer": 0,
+      "explanation": "62-ci maddə 'qanuni hakim' prinsipidir: hər kəsin işinə qanunla müəyyən edilmiş məhkəmədə baxılması hüququ vardır və razılığı olmadan iş başqa məhkəməyə verilə bilməz."
+    },
+    {
+      "id": "q9",
+      "prompt": "\"Cinayət törədilməsində təqsirləndirilən hər bir şəxs məhkum edilməzdən əvvəl dinlənilməlidir\" müddəası hansı maddədədir və nə vaxt əlavə edilib?",
+      "options": [
+        "63-cü maddə, 1995",
+        "67-ci maddənin II hissəsi, 2009",
+        "60-cı maddə, 2016",
+        "127-ci maddə, 2002"
+      ],
+      "answer": 1,
+      "explanation": "67-ci maddənin II hissəsi 2009-cu il referendumu ilə əlavə edilib. 2016-cı ildə isə 60-cı maddə ümumi dinlənilmək hüququnu inzibati icraata da şamil etdi."
+    },
+    {
+      "id": "q10",
+      "prompt": "65-ci maddəyə görə məhkum edilmiş şəxsin hansı hüquqları vardır?",
+      "options": [
+        "Yalnız əfv haqqında müraciət etmək",
+        "Hökmə yuxarı məhkəmədə yenidən baxılması, əfv və cəzanın yüngülləşdirilməsi haqqında müraciət etmək",
+        "Hökmün icrasından imtina etmək",
+        "İşə eyni məhkəmədə yenidən baxılmasını tələb etmək"
+      ],
+      "answer": 1,
+      "explanation": "65-ci maddə: məhkumun hökmə qanunla nəzərdə tutulan qaydada yuxarı məhkəmədə yenidən baxılması, habelə əfv edilməsi və cəzasının yüngülləşdirilməsi haqqında müraciət etmək hüququ vardır."
+    }
+  ]
+}

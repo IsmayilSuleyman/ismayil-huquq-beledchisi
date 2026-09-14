@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Konstitusiyanın 13-cü maddəsinə görə mülkiyyət hansı növlərdə ola bilər?",
+      "options": [
+        "Dövlət və xüsusi mülkiyyət",
+        "Dövlət, xüsusi və bələdiyyə mülkiyyəti",
+        "Dövlət, kollektiv və şəxsi mülkiyyət",
+        "Dövlət, xüsusi, bələdiyyə və beynəlxalq mülkiyyət"
+      ],
+      "answer": 1,
+      "explanation": "13-cü maddənin II hissəsi üç növ göstərir: dövlət mülkiyyəti, xüsusi mülkiyyət və bələdiyyə mülkiyyəti. 29-cu maddəyə görə heç birinə üstünlük verilmir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Konstitusiyaya görə təbii ehtiyatlar kimə mənsubdur?",
+      "options": [
+        "Torpaq sahiblərinə",
+        "Fiziki və hüquqi şəxslərin hüquqlarına xələl gətirmədən Azərbaycan Respublikasına",
+        "Yerli icra hakimiyyəti orqanlarına",
+        "Bələdiyyələrə"
+      ],
+      "answer": 1,
+      "explanation": "14-cü maddə: təbii ehtiyatlar hər hansı fiziki və ya hüquqi şəxslərin hüquqlarına və mənafelərinə xələl gətirmədən Azərbaycan Respublikasına mənsubdur."
+    },
+    {
+      "id": "q3",
+      "prompt": "15-ci maddəyə görə dövlət iqtisadi münasibətlərdə nəyə yol vermir?",
+      "options": [
+        "Xarici investisiyalara",
+        "Xüsusi mülkiyyətə",
+        "İnhisarçılığa və haqsız rəqabətə",
+        "Dövlət müəssisələrinin fəaliyyətinə"
+      ],
+      "answer": 2,
+      "explanation": "15-ci maddənin II hissəsi: dövlət bazar münasibətləri əsasında sosial yönümlü iqtisadiyyatın inkişafına şərait yaradır, azad sahibkarlığa təminat verir, inhisarçılığa və haqsız rəqabətə yol vermir."
+    },
+    {
+      "id": "q4",
+      "prompt": "17-ci maddəyə görə neçə yaşına çatmamış uşaqlar işə götürülə bilməz?",
+      "options": [
+        "14",
+        "15",
+        "16",
+        "18"
+      ],
+      "answer": 1,
+      "explanation": "17-ci maddənin V hissəsi (2009-cu il əlavəsi): 15 yaşına çatmamış uşaqlar işə götürülə bilməzlər."
+    },
+    {
+      "id": "q5",
+      "prompt": "Pul nişanlarının tədavülə buraxılması hüququ kimə mənsubdur?",
+      "options": [
+        "Maliyyə Nazirliyinə",
+        "Nazirlər Kabinetinə",
+        "Yalnız Mərkəzi Banka",
+        "Milli Məclisə"
+      ],
+      "answer": 2,
+      "explanation": "19-cu maddənin II hissəsi: pul nişanlarının tədavülə buraxılması və tədavüldən çıxarılması hüququ yalnız Mərkəzi Banka mənsubdur; Mərkəzi Bank dövlətin müstəsna mülkiyyətindədir."
+    },
+    {
+      "id": "q6",
+      "prompt": "18-ci maddəyə görə dövlət təhsil sistemi hansı xarakter daşıyır?",
+      "options": [
+        "Dini",
+        "Dünyəvi",
+        "Qarışıq",
+        "Konstitusiya bu barədə susur"
+      ],
+      "answer": 1,
+      "explanation": "18-ci maddənin III hissəsi: dövlət təhsil sistemi dünyəvi xarakter daşıyır. Bu, 7-ci maddədəki dünyəvi dövlət prinsipinin təzahürüdür."
+    },
+    {
+      "id": "q7",
+      "prompt": "Dövlət bayrağının rəngləri yuxarıdan aşağıya hansı ardıcıllıqladır və enin uzunluğa nisbəti nə qədərdir?",
+      "options": [
+        "Yaşıl, qırmızı, mavi; 1:2",
+        "Mavi, qırmızı, yaşıl; 1:2",
+        "Mavi, yaşıl, qırmızı; 2:3",
+        "Qırmızı, mavi, yaşıl; 1:2"
+      ],
+      "answer": 1,
+      "explanation": "23-cü maddənin II hissəsi: yuxarı zolaq mavi, orta qırmızı, aşağı yaşıl; qırmızı zolağın ortasında ağ aypara və səkkizguşəli ulduz; enin uzunluğa nisbəti 1:2."
+    },
+    {
+      "id": "q8",
+      "prompt": "Dövlət gerbinin təsviri, himnin musiqisi və mətni hansı aktla müəyyən edilir?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Nazirlər Kabinetinin qərarı ilə",
+        "Konstitusiya qanunu ilə",
+        "Bilavasitə Konstitusiyanın mətnində"
+      ],
+      "answer": 2,
+      "explanation": "23-cü maddənin III hissəsinə görə bayrağın və gerbin təsviri, himnin musiqisi və mətni Konstitusiya qanunu ilə müəyyən edilir. Konstitusiyanın özündə yalnız bayraq təsvir olunub."
+    },
+    {
+      "id": "q9",
+      "prompt": "20-ci maddəyə görə hansı borclar dövlət tərəfindən öhdəlik kimi qəbul edilə bilməz?",
+      "options": [
+        "Xarici dövlətlərdən alınmış bütün borclar",
+        "Dövlətə qarşı qiyama və dövlət çevrilişinə kömək məqsədi ilə alınmış borclar",
+        "Beynəlxalq maliyyə təşkilatlarından alınmış borclar",
+        "Bələdiyyələrin aldığı borclar"
+      ],
+      "answer": 1,
+      "explanation": "20-ci maddə yalnız qiyama və dövlət çevrilişinə kömək məqsədi ilə alınmış borclara aiddir. Bu, 6-cı maddədəki hakimiyyətin mənimsənilməsi qadağasının maliyyə davamıdır."
+    },
+    {
+      "id": "q10",
+      "prompt": "2009-cu il referendumu ilə 19-cu maddədə hansı dəyişiklik edildi?",
+      "options": [
+        "Manat avro ilə əvəz edildi",
+        "\"Milli Bank\" adı \"Mərkəzi Bank\" ilə əvəz edildi",
+        "Xarici valyuta ilə ödəniş icazə verildi",
+        "Emissiya hüququ Nazirlər Kabinetinə verildi"
+      ],
+      "answer": 1,
+      "explanation": "2009-cu il Referendum Aktının 5-ci bəndi 19-cu maddədə 'Milli' sözünü 'Mərkəzi' sözü ilə əvəz etdi; eyni dəyişiklik 95 və 109-cu maddələrdə də edildi."
+    }
+  ]
+}

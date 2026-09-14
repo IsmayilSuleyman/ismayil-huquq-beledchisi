@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "47-ci maddəyə görə hansı təşviqat və təbliğata yol verilmir?",
+      "options": [
+        "Hökuməti tənqid edən",
+        "İrqi, milli, dini, sosial və hər hansı digər meyara əsaslanan ədavət və düşmənçilik oyadan",
+        "Xarici dövlətləri tərifləyən",
+        "Seçkiqabağı"
+      ],
+      "answer": 1,
+      "explanation": "47-ci maddənin III hissəsi yalnız ədavət və düşmənçilik oyadan təşviqat və təbliğatı qadağan edir; 'hər hansı digər meyara əsaslanan' sözləri 2016-cı ildə əlavə olunub."
+    },
+    {
+      "id": "q2",
+      "prompt": "49-cu maddəyə görə toplantı, mitinq və nümayişlər hansı şərtlərlə keçirilir?",
+      "options": [
+        "Dövlət orqanının əvvəlcədən icazəsi ilə",
+        "Müvafiq dövlət orqanlarını qabaqcadan xəbərdar etməklə, ictimai qaydanı pozmamaq şərtilə, dinc və silahsız",
+        "Yalnız iş günləri və bağlı məkanlarda",
+        "Heç bir şərt olmadan"
+      ],
+      "answer": 1,
+      "explanation": "49-cu maddənin II hissəsi bildiriş qaydasını nəzərdə tutur (icazə deyil): dövlət orqanları qabaqcadan xəbərdar edilir, toplantı dinc, silahsız və ictimai qaydanı və ya əxlaqı pozmayan olmalıdır."
+    },
+    {
+      "id": "q3",
+      "prompt": "50-ci maddə kütləvi informasiya vasitələrində nəyi qadağan edir?",
+      "options": [
+        "Xarici kapitalın iştirakını",
+        "Dövlət senzurasını",
+        "Anonim məqalələri",
+        "Reklamı"
+      ],
+      "answer": 1,
+      "explanation": "50-ci maddənin II hissəsi: kütləvi informasiyanın azadlığına təminat verilir; kütləvi informasiya vasitələrində, o cümlədən mətbuatda dövlət senzurası qadağandır."
+    },
+    {
+      "id": "q4",
+      "prompt": "56-cı maddəyə görə hansı şəxslərin seçkilərdə və referendumda iştirak etmək hüququ yoxdur?",
+      "options": [
+        "Hərbi qulluqçuların",
+        "Məhkəmənin qərarı ilə fəaliyyət qabiliyyətsizliyi təsdiq olunmuş şəxslərin",
+        "Din xadimlərinin",
+        "Xaricdə yaşayan vətəndaşların"
+      ],
+      "answer": 1,
+      "explanation": "56-cı maddənin II hissəsi yeganə mütləq istisnanı verir: fəaliyyət qabiliyyətsizliyi məhkəmə qərarı ilə təsdiq olunmuş şəxslər. Hərbi qulluqçuların və din xadimlərinin isə yalnız seçilmək hüququ qanunla məhdudlaşdırıla bilər."
+    },
+    {
+      "id": "q5",
+      "prompt": "2016-cı il dəyişikliyindən sonra 56-cı maddənin III hissəsi hakimlər, dövlət məmurları və hərbi qulluqçular üçün hansı hüququn məhdudlaşdırılmasına icazə verir?",
+      "options": [
+        "Seçmək hüququnun",
+        "Yalnız seçilmək hüququnun",
+        "Referendumda iştirak hüququnun",
+        "Bütün seçki hüquqlarının"
+      ],
+      "answer": 1,
+      "explanation": "2016-cı ildə 'seçkilərdə iştirak etmək' sözləri 'seçilmək' sözü ilə əvəz edildi: bu kateqoriyaların səs vermək hüququ qorunur, yalnız passiv seçki hüququ qanunla məhdudlaşdırıla bilər."
+    },
+    {
+      "id": "q6",
+      "prompt": "57-ci maddəyə görə tənqid hüququ ilə bağlı aşağıdakılardan hansı doğrudur?",
+      "options": [
+        "Yalnız dövlət orqanlarını tənqid etmək olar",
+        "Tənqidə görə təqib qadağandır, lakin təhqir və böhtan tənqid sayıla bilməz",
+        "Tənqid yalnız yazılı formada mümkündür",
+        "Vəzifəli şəxsləri tənqid etmək qadağandır"
+      ],
+      "answer": 1,
+      "explanation": "57-ci maddənin II hissəsi dövlət orqanlarını, vəzifəli şəxsləri, partiyaları, həmkarlar ittifaqlarını, birlikləri və ayrı-ayrı vətəndaşları tənqid etmək hüququnu verir, tənqidə görə təqibi qadağan edir və təhqirlə böhtanı tənqiddən ayırır."
+    },
+    {
+      "id": "q7",
+      "prompt": "Konstitusiyanı və qanunları pozan birliyin fəaliyyətinə hansı qaydada xitam verilə bilər?",
+      "options": [
+        "Ədliyyə Nazirliyinin qərarı ilə",
+        "Yalnız məhkəmə qaydasında",
+        "Prezidentin fərmanı ilə",
+        "Milli Məclisin qərarı ilə"
+      ],
+      "answer": 1,
+      "explanation": "58-ci maddənin IV hissəsi: Konstitusiyanı və qanunları pozan birliklərin fəaliyyətinə yalnız məhkəmə qaydasında xitam verilə bilər."
+    },
+    {
+      "id": "q8",
+      "prompt": "Aşağıdakı hüquqlardan hansı Konstitusiyada yalnız vətəndaşlara aid edilib?",
+      "options": [
+        "Fikir və söz azadlığı",
+        "Sərbəst toplaşmaq azadlığı",
+        "Dövlət orqanlarına müraciət etmək hüququ",
+        "Birləşmək hüququ"
+      ],
+      "answer": 2,
+      "explanation": "57-ci maddə müraciət hüququnu Azərbaycan Respublikası vətəndaşlarına aid edir. 47, 49 və 58-ci maddələr isə 'hər kəs' ifadəsi ilə başlayır."
+    },
+    {
+      "id": "q9",
+      "prompt": "48-ci maddəyə görə dini etiqad və əqidə nəyə bəraət qazandırmır?",
+      "options": [
+        "Dini mərasimlərin keçirilməsinə",
+        "Hüquq pozuntusuna",
+        "Dini təhsilə",
+        "Dini ədəbiyyatın yayılmasına"
+      ],
+      "answer": 1,
+      "explanation": "48-ci maddənin IV hissəsi: dini etiqad və əqidə hüquq pozuntusuna bəraət qazandırmır. Dini əqidə qanuna əməl etməmək üçün əsas ola bilməz."
+    },
+    {
+      "id": "q10",
+      "prompt": "57-ci maddəyə görə hərbi qulluqçular müraciət hüququndan necə istifadə edə bilər?",
+      "options": [
+        "Yalnız komandirin icazəsi ilə",
+        "Yalnız fərdi qaydada",
+        "Yalnız kollektiv qaydada",
+        "Hərbi qulluqçuların müraciət hüququ yoxdur"
+      ],
+      "answer": 1,
+      "explanation": "57-ci maddənin I hissəsinə 2016-cı ildə əlavə olunmuş cümlə: hərbi qulluqçular bu hüquqdan yalnız fərdi qaydada istifadə edə bilərlər, yəni kollektiv müraciət göndərə bilməzlər."
+    }
+  ]
+}

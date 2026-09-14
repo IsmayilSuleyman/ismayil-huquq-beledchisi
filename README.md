@@ -239,6 +239,14 @@ Rules:
 - The starter course under `content/courses/huququn-esaslari` was written as
   an illustration of the intended register. Verify every article reference
   against the current text of the law before publishing it to paying users.
+- `content/courses/konstitusiya` is the Constitution textbook: 26 lessons
+  that follow the Constitution chapter by chapter (2016 wording), a test per
+  lesson, and seven matching flashcard decks under `content/decks/`
+  (`konstitusiya-*.json`). Article numbers, part numbers and the
+  attribution of each change to the 2002, 2009 or 2016 referendum were
+  checked against the text published on president.az and the three
+  referendum acts; still re-verify against e-qanun.az before relying on a
+  quotation.
 
 ---
 
@@ -295,6 +303,7 @@ middleware.ts                     Auth gate for /courses, /account, /learn, /res
    ✅ Tests per lesson with saved attempts and best scores
    ✅ "Mənbələr": study materials on laws and legal acts
    ✅ "Öyrən": flashcards with Anki-style spaced repetition
+   ✅ Constitution textbook: 26 lessons, tests and flashcard decks
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

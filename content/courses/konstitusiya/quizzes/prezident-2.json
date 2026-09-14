@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "Prezident Baş naziri hansı qaydada təyin edir?",
+      "options": [
+        "Təkbaşına, heç bir razılıq olmadan",
+        "Milli Məclisin razılığı ilə",
+        "Konstitusiya Məhkəməsinin rəyi ilə",
+        "Nazirlər Kabinetinin təklifi ilə"
+      ],
+      "answer": 1,
+      "explanation": "109-cu maddənin 4-cü bəndi: Prezident Milli Məclisin razılığı ilə Baş naziri vəzifəyə təyin edir; vəzifədən azad etmək üçün isə razılıq tələb olunmur."
+    },
+    {
+      "id": "q2",
+      "prompt": "Hərbi və ya fövqəladə vəziyyət haqqında fərman hansı müddətdə Milli Məclisin təsdiqinə verilir?",
+      "options": [
+        "24 saat",
+        "3 gün",
+        "7 gün",
+        "14 gün"
+      ],
+      "answer": 0,
+      "explanation": "111 və 112-ci maddələr: Prezident hərbi vəziyyət elan etdikdə və ya fövqəladə vəziyyət tətbiq etdikdə qəbul etdiyi fərmanı 24 saat müddətində Milli Məclisin təsdiqinə verir."
+    },
+    {
+      "id": "q3",
+      "prompt": "Ümumi qaydalar müəyyən etdikdə Prezident hansı aktı qəbul edir?",
+      "options": [
+        "Sərəncam",
+        "Fərman",
+        "Qərar",
+        "Qanun"
+      ],
+      "answer": 1,
+      "explanation": "113-cü maddənin I hissəsi: ümumi qaydalar müəyyən etdikdə Prezident fərmanlar, başqa məsələlər barəsində isə sərəncamlar qəbul edir."
+    },
+    {
+      "id": "q4",
+      "prompt": "Aşağıdakı hallardan hansı 112-ci maddəyə görə fövqəladə vəziyyətin tətbiqi əsasıdır?",
+      "options": [
+        "Xarici dövlətin Azərbaycana müharibə elan etməsi",
+        "Ərazinin blokadaya alınması",
+        "Zorakılıqla müşayiət olunan kütləvi iğtişaşlar",
+        "Ərazinin bir hissəsinin faktik işğalı"
+      ],
+      "answer": 2,
+      "explanation": "Kütləvi iğtişaşlar, təbii fəlakətlər, epidemiyalar, qiyam və çevrilişə yönəlmiş hərəkətlər fövqəladə vəziyyət əsaslarıdır (112). Müharibə elanı, blokada və işğal isə hərbi vəziyyət əsaslarıdır (111)."
+    },
+    {
+      "id": "q5",
+      "prompt": "Prezident hansı məhkəmələrin hakimlərini təkbaşına təyin edir?",
+      "options": [
+        "Konstitusiya Məhkəməsinin hakimlərini",
+        "Ali Məhkəmənin hakimlərini",
+        "Apellyasiya məhkəmələrinin hakimlərini",
+        "Konstitusiya Məhkəməsi, Ali Məhkəmə və apellyasiya məhkəmələrindən başqa digər məhkəmələrin hakimlərini"
+      ],
+      "answer": 3,
+      "explanation": "109-cu maddənin 9-cu bəndi: Prezident Konstitusiya Məhkəməsi, Ali Məhkəmə və apellyasiya məhkəmələri hakimlərinin təyini haqqında Milli Məclisə təqdimat verir, digər məhkəmələrin hakimlərini isə özü təyin edir."
+    },
+    {
+      "id": "q6",
+      "prompt": "Əfv etmək və amnistiya elan etmək səlahiyyətləri kimə məxsusdur?",
+      "options": [
+        "Hər ikisi Prezidentə",
+        "Hər ikisi Milli Məclisə",
+        "Əfv – Prezidentə, amnistiya – Milli Məclisə",
+        "Əfv – Milli Məclisə, amnistiya – Prezidentə"
+      ],
+      "answer": 2,
+      "explanation": "109-cu maddənin 22-ci bəndi əfvi Prezidentə, 95-ci maddənin 19-cu bəndi amnistiyanı Milli Məclisə aid edir. Əfv fərdi, amnistiya ümumi aktdır."
+    },
+    {
+      "id": "q7",
+      "prompt": "Mərkəzi Bankın sədrini kim təyin edir?",
+      "options": [
+        "Milli Məclis – Prezidentin təqdimatı ilə",
+        "Prezident – İdarə Heyətinin üzvləri sırasından",
+        "Nazirlər Kabineti",
+        "Mərkəzi Bankın İdarə Heyəti öz üzvləri sırasından seçir"
+      ],
+      "answer": 1,
+      "explanation": "109-cu maddənin 10-cu bəndi: İdarə Heyəti üzvlərinin təyini haqqında Prezident Milli Məclisə təqdimat verir, sədri isə İdarə Heyətinin üzvləri sırasından Prezident özü təyin edir."
+    },
+    {
+      "id": "q8",
+      "prompt": "109-cu maddənin 32-ci bəndi Prezidentə hansı səlahiyyəti verir?",
+      "options": [
+        "Konstitusiyanı şərh etmək",
+        "Milli Məclisin və məhkəmə orqanlarının səlahiyyətlərinə aid edilməyən digər məsələləri icra qaydasında həll etmək",
+        "Qanunları ləğv etmək",
+        "Məhkəmə qərarlarını dəyişdirmək"
+      ],
+      "answer": 1,
+      "explanation": "32-ci bənd 'qalıq səlahiyyətdir': Konstitusiya ilə Milli Məclisin və məhkəmə orqanlarının səlahiyyətlərinə aid edilməyən digər məsələləri Prezident icra qaydasında həll edir."
+    },
+    {
+      "id": "q9",
+      "prompt": "110-1-ci maddəyə görə Prezident beynəlxalq müqavilələr bağlamaq hüququnu kimə verə bilər?",
+      "options": [
+        "Yalnız Baş nazirə",
+        "Vitse-prezidentə, Nazirlər Kabinetinin üzvlərinə və müəyyən etdiyi digər şəxslərə",
+        "Milli Məclisin sədrinə",
+        "Heç kimə – bu səlahiyyət verilə bilməz"
+      ],
+      "answer": 1,
+      "explanation": "110-1-ci maddə (2016): Prezident dövlətlərarası və hökumətlərarası müqavilələr bağlamaq hüququnu vitse-prezidentə, Nazirlər Kabinetinin üzvlərinə və Prezidentin müəyyən etdiyi digər şəxslərə verə bilər."
+    },
+    {
+      "id": "q10",
+      "prompt": "Təhlükəsizlik Şurasını kim yaradır?",
+      "options": [
+        "Milli Məclis",
+        "Nazirlər Kabineti",
+        "Prezident",
+        "Müdafiə Nazirliyi"
+      ],
+      "answer": 2,
+      "explanation": "109-cu maddənin 27-ci bəndi: Prezident Azərbaycan Respublikasının Təhlükəsizlik Şurasını yaradır."
+    }
+  ]
+}

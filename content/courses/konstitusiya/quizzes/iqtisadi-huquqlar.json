@@ -1,0 +1,125 @@
+{
+  "pass": 70,
+  "questions": [
+    {
+      "id": "q1",
+      "prompt": "29-cu maddəyə görə mülkiyyət hüququ hansı səlahiyyətlərdən ibarətdir?",
+      "options": [
+        "Sahib olmaq, istifadə etmək və sərəncam vermək",
+        "Sahib olmaq və satmaq",
+        "İstifadə etmək və icarəyə vermək",
+        "Sahib olmaq, qorumaq və vərəsəyə vermək"
+      ],
+      "answer": 0,
+      "explanation": "29-cu maddənin III hissəsi: mülkiyyət hüququ mülkiyyətçinin təkbaşına və ya başqaları ilə birlikdə əmlaka sahib olmaq, əmlakdan istifadə etmək və onun barəsində sərəncam vermək hüquqlarından ibarətdir."
+    },
+    {
+      "id": "q2",
+      "prompt": "Dövlət ehtiyacları üçün mülkiyyətin özgəninkiləşdirilməsinə hansı şərtlə yol verilir?",
+      "options": [
+        "Yerli icra hakimiyyətinin qərarı ilə, sonradan kompensasiya ödənilməklə",
+        "Yalnız qabaqcadan onun dəyərini ədalətli ödəmək şərti ilə",
+        "Kompensasiya ödənilmədən, ictimai maraq olduqda",
+        "Mülkiyyətçinin razılığı olmadan mümkün deyil"
+      ],
+      "answer": 1,
+      "explanation": "29-cu maddənin IV hissəsi: dövlət ehtiyacları üçün mülkiyyətin özgəninkiləşdirilməsinə yalnız qabaqcadan onun dəyərini ədalətli ödəmək şərti ilə yol verilə bilər. Heç kəs məhkəmə qərarı olmadan mülkiyyətindən məhrum edilə bilməz."
+    },
+    {
+      "id": "q3",
+      "prompt": "Konstitusiya əmlakın müsadirəsi barədə nə deyir?",
+      "options": [
+        "Müsadirə tam qadağandır",
+        "Əmlakın tam müsadirəsinə yol verilmir",
+        "Müsadirə yalnız Prezidentin fərmanı ilə mümkündür",
+        "Konstitusiya müsadirəni tənzimləmir"
+      ],
+      "answer": 1,
+      "explanation": "29-cu maddənin IV hissəsi əmlakın tam müsadirəsini qadağan edir; cinayət yolu ilə əldə edilmiş və ya cinayət aləti olan əmlakın müsadirəsi isə qanunla mümkündür."
+    },
+    {
+      "id": "q4",
+      "prompt": "Aşağıdakılardan hansı 35-ci maddəyə görə məcburi əməyin qadağasının istisnası deyil?",
+      "options": [
+        "Məhkəmə qərarı əsasında, şərtləri qanunla nəzərdə tutulan məcburi əmək",
+        "Hərbi xidmət zamanı əmrlərin yerinə yetirilməsi ilə əlaqədar işlər",
+        "Fövqəladə və hərbi vəziyyət zamanı tələb olunan işlər",
+        "İşəgötürənin istehsal planını yerinə yetirmək üçün tələb etdiyi əlavə iş"
+      ],
+      "answer": 3,
+      "explanation": "35-ci maddənin V hissəsi yalnız üç istisna tanıyır: məhkəmə qərarı ilə məcburi əmək, hərbi xidmətlə bağlı işlər, fövqəladə və hərbi vəziyyət zamanı tələb olunan işlər. İşəgötürənin tələbi məcburi əməyə əsas ola bilməz; əmək müqaviləsi sərbəst bağlanılır."
+    },
+    {
+      "id": "q5",
+      "prompt": "37-ci maddəyə görə ödənişli məzuniyyətin minimum müddəti nə qədərdir?",
+      "options": [
+        "14 təqvim günü",
+        "21 təqvim günü",
+        "24 iş günü",
+        "30 təqvim günü"
+      ],
+      "answer": 1,
+      "explanation": "37-ci maddənin II hissəsi: əmək müqaviləsi ilə işləyənlərə ildə azı bir dəfə 21 təqvim günündən az olmayan ödənişli məzuniyyət verilir; iş günü isə 8 saatdan artıq ola bilməz."
+    },
+    {
+      "id": "q6",
+      "prompt": "36-cı maddəyə görə kimlər tətil edə bilməz?",
+      "options": [
+        "Dövlət qulluqçuları",
+        "Müəllimlər və həkimlər",
+        "Silahlı Qüvvələrdə xidmət edən hərbi qulluqçular və mülki şəxslər",
+        "Bələdiyyə üzvləri"
+      ],
+      "answer": 2,
+      "explanation": "36-cı maddənin II hissəsi: Silahlı Qüvvələrdə xidmət edən hərbi qulluqçular və mülki şəxslər tətil edə bilməzlər. Digər işçilərin tətil hüququ yalnız qanunla nəzərdə tutulmuş hallarda məhdudlaşdırıla bilər."
+    },
+    {
+      "id": "q7",
+      "prompt": "38-ci maddəyə görə yardıma möhtac olanlara kömək etmək ilk növbədə kimin borcudur?",
+      "options": [
+        "Dövlətin",
+        "Onların ailə üzvlərinin",
+        "İşəgötürənin",
+        "Xeyriyyə təşkilatlarının"
+      ],
+      "answer": 1,
+      "explanation": "38-ci maddənin II hissəsi: yardıma möhtac olanlara kömək etmək ilk növbədə onların ailə üzvlərinin borcudur. Bu, subsidiarlıq prinsipidir; dövlət təminatı ondan sonra gəlir."
+    },
+    {
+      "id": "q8",
+      "prompt": "2016-cı il referendumu ilə 59-cu maddəyə görə dövlətin sahibkarlıq sahəsində tənzimləməsi nə ilə məhdudlaşdırıldı?",
+      "options": [
+        "Yalnız vergi məsələləri ilə",
+        "Yalnız dövlət maraqlarının, insan həyatının və sağlamlığının müdafiəsi ilə",
+        "Yalnız iri sahibkarlıq subyektləri ilə",
+        "Heç bir məhdudiyyət qoyulmadı"
+      ],
+      "answer": 1,
+      "explanation": "59-cu maddənin II hissəsi (2016): dövlət sahibkarlıq sahəsində yalnız dövlət maraqlarının, insan həyatının və sağlamlığının müdafiəsi ilə bağlı tənzimləməni həyata keçirir."
+    },
+    {
+      "id": "q9",
+      "prompt": "Təqaüdlərin və sosial müavinətlərin minimum məbləği hansı aktla müəyyən edilir?",
+      "options": [
+        "Prezidentin fərmanı ilə",
+        "Nazirlər Kabinetinin qərarı ilə",
+        "Qanunla",
+        "Əmək və Əhalinin Sosial Müdafiəsi Nazirliyinin əmri ilə"
+      ],
+      "answer": 2,
+      "explanation": "38-ci maddənin IV hissəsi: təqaüdlərin və sosial müavinətlərin minimum məbləği qanunla müəyyən edilir. Konstitusiya bu məsələni qanunverici orqana həvalə edir."
+    },
+    {
+      "id": "q10",
+      "prompt": "2016-cı ildə 29-cu maddəyə hansı müddəa əlavə edildi?",
+      "options": [
+        "Mülkiyyət hüququ yalnız vətəndaşlara məxsusdur",
+        "Xüsusi mülkiyyət sosial öhdəliklərə səbəb olur; torpaq üzərində mülkiyyət hüququ qanunla məhdudlaşdırıla bilər",
+        "Əcnəbilər daşınmaz əmlaka sahib ola bilməz",
+        "Vərəsəlik hüququ ləğv edildi"
+      ],
+      "answer": 1,
+      "explanation": "2016-cı il Referendum Aktının 4-cü bəndi 29-cu maddəyə V hissə (xüsusi mülkiyyət sosial öhdəliklərə səbəb olur) və VI hissə (sosial ədalət və torpaqlardan səmərəli istifadə məqsədi ilə torpaq üzərində mülkiyyət hüququnun qanunla məhdudlaşdırılması) əlavə etdi."
+    }
+  ]
+}
