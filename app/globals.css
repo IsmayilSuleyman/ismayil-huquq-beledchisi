@@ -404,3 +404,46 @@ mark.hl-flash {
 @media (prefers-reduced-motion: reduce) {
   .hl-pop { animation: none; }
 }
+
+/* ============================================================
+   Printing a lesson from the browser. The theme script drops the `dark`
+   class while printing; these rules flatten the glass surfaces, keep the
+   highlight colours (browsers skip backgrounds by default), and keep a
+   note with its passage. Chrome (header, tab bar, toggle, quiz, nav) is
+   hidden with Tailwind's print:hidden on the components themselves.
+   ============================================================ */
+@media print {
+  @page {
+    margin: 16mm;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #1c1410;
+  }
+  .glass,
+  .glass-strong,
+  .glass-tinted {
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    border-color: #d8c7b4 !important;
+  }
+  mark.hl,
+  [class*="hl-swatch-"] {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  mark.hl {
+    box-shadow: none;
+  }
+  #qeydler li,
+  .prose tr,
+  .prose li {
+    break-inside: avoid;
+  }
+  .prose :is(h1, h2, h3, h4) {
+    break-after: avoid;
+  }
+}

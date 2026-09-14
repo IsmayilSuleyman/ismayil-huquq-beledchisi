@@ -39,7 +39,7 @@ export function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={dark ? "İşıqlı mövzuya keçin" : "Qaranlıq mövzuya keçin"}
-      className={`fixed right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-white/80 text-ink/55 shadow-glass backdrop-blur-md transition hover:-translate-y-0.5 hover:text-ink/85 dark:border-white/15 dark:bg-white/10 dark:text-white/65 dark:hover:text-white/90 ${
+      className={`print:hidden fixed right-5 z-50 flex h-11 w-11 items-center justify-center rounded-full border border-ink/10 bg-white/80 text-ink/55 shadow-glass backdrop-blur-md transition hover:-translate-y-0.5 hover:text-ink/85 dark:border-white/15 dark:bg-white/10 dark:text-white/65 dark:hover:text-white/90 ${
         lifted ? "bottom-[5.5rem] sm:bottom-5" : "bottom-5"
       }`}
     >

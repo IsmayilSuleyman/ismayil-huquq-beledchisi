@@ -4,8 +4,9 @@ import "./globals.css";
 import { MotionProvider } from "@/components/MotionProvider";
 
 // Runs before paint: applies the persisted theme (or the system preference)
-// as a `dark` class on <html> so there is no light-flash on load.
-const themeInitScript = `(function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}var d=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d)})();`;
+// as a `dark` class on <html> so there is no light-flash on load. Printing
+// drops the class for the duration (paper is white) and puts it back.
+const themeInitScript = `(function(){var t=null;try{t=localStorage.getItem("theme")}catch(e){}var d=t==="dark"||(t!=="light"&&matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.classList.toggle("dark",d);var p=false;addEventListener("beforeprint",function(){p=document.documentElement.classList.contains("dark");document.documentElement.classList.remove("dark")});addEventListener("afterprint",function(){if(p)document.documentElement.classList.add("dark")})})();`;
 
 // Body face: SF Pro Display on Apple devices (system font), Inter elsewhere.
 // Inter is self-hosted via next/font; latin-ext covers the Azerbaijani

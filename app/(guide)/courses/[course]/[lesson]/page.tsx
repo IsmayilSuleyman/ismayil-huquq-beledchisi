@@ -77,7 +77,7 @@ export default async function LessonPage({ params }: { params: Params }) {
               href={`/courses/${course.slug}/${lesson.slug}/pdf`}
               download
               title="Dərsi PDF kimi yükləyin"
-              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-ink/10 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:border-brand-brass/50 hover:bg-white/60 hover:text-brand-wood dark:border-white/15 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-brand-brass-soft"
+              className="print:hidden inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-ink/10 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:border-brand-brass/50 hover:bg-white/60 hover:text-brand-wood dark:border-white/15 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-brand-brass-soft"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
@@ -109,7 +109,7 @@ export default async function LessonPage({ params }: { params: Params }) {
           />
         ) : null}
 
-        <div className="mt-10 flex flex-col items-start gap-6 border-t border-brand-wood-ring/70 pt-8 dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col items-start gap-6 border-t border-brand-wood-ring/70 pt-8 print:hidden dark:border-white/10 sm:flex-row sm:items-center sm:justify-between">
           <CompleteToggle
             courseSlug={course.slug}
             lessonSlug={lesson.slug}
@@ -123,7 +123,7 @@ export default async function LessonPage({ params }: { params: Params }) {
           </Link>
         </div>
 
-        <nav aria-label="Dərslər arasında keçid" className="mt-8 grid gap-4 sm:grid-cols-2">
+        <nav aria-label="Dərslər arasında keçid" className="mt-8 grid gap-4 print:hidden sm:grid-cols-2">
           {prev ? (
             <Link
               href={`/courses/${course.slug}/${prev.slug}`}

@@ -471,7 +471,7 @@ export function LessonAnnotator({
                 interacting.current = false;
               }, 300);
             }}
-            className={`hl-pop glass-strong absolute z-30 flex -translate-x-1/2 items-center gap-1 rounded-full px-2 py-1.5 shadow-glass-wood ${
+            className={`hl-pop glass-strong absolute z-30 flex -translate-x-1/2 items-center gap-1 rounded-full px-2 py-1.5 shadow-glass-wood print:hidden ${
               toolbar.below ? "" : "-translate-y-full"
             }`}
             style={{ left: toolbar.left, top: toolbar.top }}
@@ -513,7 +513,7 @@ export function LessonAnnotator({
             ref={popoverRef}
             role="dialog"
             aria-label="İşarələmə və qeyd"
-            className={`hl-pop glass-strong absolute z-30 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 p-3 shadow-glass-wood ${
+            className={`hl-pop glass-strong absolute z-30 w-72 max-w-[calc(100vw-2rem)] -translate-x-1/2 p-3 shadow-glass-wood print:hidden ${
               popover.below ? "" : "-translate-y-full"
             }`}
             style={{ left: popover.left, top: popover.top }}
@@ -628,7 +628,7 @@ export function LessonAnnotator({
                       ) : null}
 
                       {!editing ? (
-                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.16em]">
+                        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[11px] font-semibold uppercase tracking-[0.16em] print:hidden">
                           <button
                             type="button"
                             onClick={() => setEditingKey(h.key)}

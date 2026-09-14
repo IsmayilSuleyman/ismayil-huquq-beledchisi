@@ -13,7 +13,7 @@ export function PageBackground() {
       // read as a faint warm glow instead of bright patches.
       // `page-orbs`: hidden on iOS WebKit (see the crash-mitigation block in
       // globals.css).
-      className="page-orbs pointer-events-none fixed inset-0 -z-10 overflow-hidden dark:opacity-30"
+      className="page-orbs print:hidden pointer-events-none fixed inset-0 -z-10 overflow-hidden dark:opacity-30"
     >
       <div
         className="orb-drift-1 absolute -top-40 -left-32 h-[520px] w-[520px] rounded-full"

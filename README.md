@@ -224,14 +224,27 @@ revalidated on these writes.
 renders the lesson with `@react-pdf/renderer` (`lib/pdf/lesson-pdf.tsx`):
 the wordmark and course in a running header, the title block, the body laid
 out from the Markdown (headings, lists, tables, quotes, links), the reader's
-highlights and notes as an appendix, and page numbers. Text is set in Inter
+highlights tinted inside the text with each note printed under its passage,
+the full notebook (every highlight and note, untruncated) as an appendix,
+and page numbers. Highlights are found again in the Markdown tree's text
+blocks by their passage, whitespace-insensitively, one line at a time when
+a selection spans paragraphs; a passage that cannot be found is still in
+the appendix. Text is set in Inter
 (subset TTFs under `lib/pdf/fonts/`, SIL OFL) so Azerbaijani letters and
 Cyrillic render; the fonts and logo SVGs are listed in
 `outputFileTracingIncludes` so Vercel ships them with the route. Two
 react-pdf quirks are worked around in the file: a unitless `lineHeight` is
 multiplied by the `fontSize` declared in the same style object, and a
 `bottom`-anchored fixed footer drifts once line heights are set, so the
-footer is anchored from the top.
+footer is anchored from the top. pdfkit's built-in font metrics are added
+to the route's trace includes as well: pdfkit loads them through a package
+`imports` alias the tracer cannot follow, and every document opens on
+Helvetica before the Inter fonts are applied.
+
+Printing the lesson page from the browser (Ctrl+P) also works: the theme
+script drops dark mode for the duration of the print, `globals.css` keeps
+the highlight colours and flattens the glass surfaces, and the site chrome
+(header, tab bar, quiz, navigation, action buttons) carries `print:hidden`.
 
 ### Tests per lesson
 

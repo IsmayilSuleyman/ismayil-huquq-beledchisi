@@ -9,11 +9,16 @@ const nextConfig: NextConfig = {
     "/courses": ["./content/**/*"],
     "/courses/[course]": ["./content/**/*"],
     "/courses/[course]/[lesson]": ["./content/**/*"],
-    // The PDF export also needs its fonts and the logo artwork.
+    // The PDF export also needs its fonts, the logo artwork, and pdfkit's
+    // built-in font metrics: pdfkit loads those through a package "imports"
+    // alias (#standard-fonts/...) that the tracer cannot follow, and every
+    // document starts on Helvetica before our fonts take over.
     "/courses/[course]/[lesson]/pdf": [
       "./content/**/*",
       "./lib/pdf/fonts/*",
       "./public/images/ihb-*.svg",
+      "./node_modules/pdfkit/js/standard-fonts/**/*",
+      "./node_modules/pdfkit/js/data/**/*",
     ],
     "/account": ["./content/**/*"],
     "/learn": ["./content/**/*"],

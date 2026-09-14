@@ -58,7 +58,7 @@ export function AppHeader({
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="sticky top-0 z-40 mb-12 w-screen border-b border-brand-wood/15 bg-white/55 backdrop-blur-md [margin-left:calc(50%-50vw)] dark:bg-white/5"
+      className="print:hidden sticky top-0 z-40 mb-12 w-screen border-b border-brand-wood/15 bg-white/55 backdrop-blur-md [margin-left:calc(50%-50vw)] dark:bg-white/5"
     >
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-3.5">
         <Link href="/courses" aria-label="Kurslara keçin" className="shrink-0">
