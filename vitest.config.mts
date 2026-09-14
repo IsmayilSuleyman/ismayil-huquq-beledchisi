@@ -5,6 +5,8 @@ export default defineConfig({
   resolve: {
     alias: { "@": path.resolve(import.meta.dirname, ".") },
   },
+  // tsconfig keeps jsx: "preserve" for Next; the PDF renderer test needs it compiled.
+  oxc: { jsx: { runtime: "automatic" } },
   test: {
     environment: "node",
     include: ["tests/**/*.test.ts"],

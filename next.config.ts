@@ -9,12 +9,21 @@ const nextConfig: NextConfig = {
     "/courses": ["./content/**/*"],
     "/courses/[course]": ["./content/**/*"],
     "/courses/[course]/[lesson]": ["./content/**/*"],
+    // The PDF export also needs its fonts and the logo artwork.
+    "/courses/[course]/[lesson]/pdf": [
+      "./content/**/*",
+      "./lib/pdf/fonts/*",
+      "./public/images/ihb-*.svg",
+    ],
     "/account": ["./content/**/*"],
     "/learn": ["./content/**/*"],
     "/learn/[deck]": ["./content/**/*"],
     "/resources": ["./content/**/*"],
     "/resources/[slug]": ["./content/**/*"],
   },
+  // @react-pdf/renderer ships a layout engine (yoga) and font parser that
+  // do not survive webpack bundling; load it from node_modules at runtime.
+  serverExternalPackages: ["@react-pdf/renderer"],
   // Gazette covers are served from the public Supabase storage bucket.
   images: {
     remotePatterns: [

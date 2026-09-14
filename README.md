@@ -34,6 +34,9 @@ The site shares one Supabase project with the gazette (the
 - `quiz_attempts` — every test submission with score, pass flag and the
   chosen answers (`supabase/migrations/20260912200000_quiz_attempts.sql`,
   already applied);
+- `lesson_highlights` — the reader's highlights and notes inside lessons
+  (`supabase/migrations/20260914120000_lesson_highlights.sql`, already
+  applied);
 - `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
   — the gazette's data, managed from `/gazette/admin`.
 
@@ -198,6 +201,38 @@ Body in Markdown. Tables, lists and blockquotes work (GitHub-flavoured
 Markdown). Avoid raw `<` and `{` characters in prose: the files are MDX.
 ```
 
+### Highlights, notes and the PDF export
+
+Inside a lesson the reader can select a passage, pick one of four colours
+(sarı, yaşıl, mavi, çəhrayı) or press "Qeyd" to highlight it and write a
+note. Clicking a highlight opens a small editor (recolour, note, delete);
+the "İşarələmələr və qeydlər" list under the lesson shows every highlight
+with its note, jumps to the passage and edits inline. The account page
+lists the lessons that carry highlights.
+
+A highlight is stored as a quote anchor, not a DOM path: the exact passage,
+up to 48 characters of context on each side, and the character offsets
+seen when it was made (`lib/highlights.ts`). On load the browser re-finds
+the passage by offset first and by text search second, so a small edit to
+the lesson elsewhere keeps the marks; a highlight whose passage was
+rewritten is listed as "Mətndə tapılmadı" and can be deleted. Marks are
+`<mark>` elements inserted into the rendered lesson (`lib/highlights-dom.ts`,
+`components/LessonAnnotator.tsx`); the lesson page is deliberately not
+revalidated on these writes.
+
+"PDF yüklə" on a lesson calls `GET /courses/<course>/<lesson>/pdf`, which
+renders the lesson with `@react-pdf/renderer` (`lib/pdf/lesson-pdf.tsx`):
+the wordmark and course in a running header, the title block, the body laid
+out from the Markdown (headings, lists, tables, quotes, links), the reader's
+highlights and notes as an appendix, and page numbers. Text is set in Inter
+(subset TTFs under `lib/pdf/fonts/`, SIL OFL) so Azerbaijani letters and
+Cyrillic render; the fonts and logo SVGs are listed in
+`outputFileTracingIncludes` so Vercel ships them with the route. Two
+react-pdf quirks are worked around in the file: a unitless `lineHeight` is
+multiplied by the `fontSize` declared in the same style object, and a
+`bottom`-anchored fixed footer drifts once line heights are set, so the
+footer is anchored from the top.
+
 ### Tests per lesson
 
 A lesson gets a test when a JSON file with the lesson's slug sits in the
@@ -260,8 +295,8 @@ app/
   (guide)/page.tsx                Public landing page
   (guide)/login/page.tsx          Google sign-in card
   (guide)/courses/page.tsx        Course list with progress
-  (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion
-                                  and grading actions
+  (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion,
+                                  grading and highlight actions; [lesson]/pdf/ the PDF export
   (guide)/account/page.tsx        Profile and per-course progress
   (guide)/learn/                  "Öyrən": flashcard decks with spaced repetition; [deck]/ a session
   (guide)/resources/              "Mənbələr": laws and acts with study materials; [slug]/ one act
@@ -276,23 +311,27 @@ lib/
   sources.ts                      Study-material loader for laws and acts
   decks.ts                        Flashcard deck loader
   srs.ts                          SM-2 scheduler (pure functions)
-  progress.ts                     Completed lessons, best test scores, per-course maths
+  progress.ts                     Completed lessons, best test scores, highlights, per-course maths
+  highlights.ts                   Highlight types and quote-anchor logic (pure)
+  highlights-dom.ts               Selection → offsets, <mark> insertion and removal (browser)
+  pdf/lesson-pdf.tsx              Lesson → PDF with @react-pdf/renderer; pdf/fonts/ Inter subsets
   auth-guard.ts                   requireUser()
   user.ts                         Profile fields from the Google identity
   supabase/                       Server, browser clients and env config
 components/
   AppHeader (edge-to-edge, switch pill to the gazette), SectionMenu
   (Öyrən / Kurslar / Mənbələr dropdown), MobileTabBar, ThemeToggle,
-  PageBackground, Wordmark, LessonBody (MDX render), CompleteToggle,
-  ProgressBar, Skeleton, StatTile, LessonQuiz, FlashcardSession, gazette/OmniLogo
+  PageBackground, Wordmark, LessonBody (MDX render), LessonAnnotator
+  (highlights and notes), CompleteToggle, ProgressBar, Skeleton, StatTile,
+  LessonQuiz, FlashcardSession, gazette/OmniLogo
 components/gazette/               Gazette UI: SiteHeader (pill back to /), IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
 content/decks/                    Flashcard decks (JSON)
 scripts/                          pdf.js worker copy, gazette scraper and drafts
-supabase/migrations/              lesson_progress, quiz_attempts, card_reviews + policies
-tests/                            Vitest: content loader, tests, lesson compile, dates
+supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights + policies
+tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
 
@@ -304,6 +343,7 @@ middleware.ts                     Auth gate for /courses, /account, /learn, /res
    ✅ "Mənbələr": study materials on laws and legal acts
    ✅ "Öyrən": flashcards with Anki-style spaced repetition
    ✅ Constitution textbook: 26 lessons, tests and flashcard decks
+   ✅ Highlights and notes inside lessons; lesson PDF export with the logo
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

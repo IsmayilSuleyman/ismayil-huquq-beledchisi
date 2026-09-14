@@ -2,7 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { requireUser } from "@/lib/auth-guard";
 import { listCourses, countLessons, countQuizzes } from "@/lib/content";
-import { countPassed, courseProgress, getCompletedLessons, getQuizBests } from "@/lib/progress";
+import {
+  countPassed,
+  courseProgress,
+  getCompletedLessons,
+  getHighlightCounts,
+  getQuizBests,
+  progressKey,
+} from "@/lib/progress";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader, LogoutButton } from "@/components/AppHeader";
 import { ProgressBar } from "@/components/ProgressBar";
@@ -14,11 +21,21 @@ export const metadata: Metadata = { title: "Hesab" };
 export default async function AccountPage() {
   const user = await requireUser("/account");
   const profile = profileFromUser(user);
-  const [courses, completed, bests] = await Promise.all([
+  const [courses, completed, bests, highlightCounts] = await Promise.all([
     listCourses(),
     getCompletedLessons(user.id),
     getQuizBests(user.id),
+    getHighlightCounts(user.id),
   ]);
+  // Lessons the reader has marked up, in course order, for the notebook list.
+  const notebook = courses.flatMap((course) =>
+    course.lessons.flatMap((lesson, i) => {
+      const counts = highlightCounts.get(progressKey(course.slug, lesson.slug));
+      return counts
+        ? [{ course, lesson, index: i + 1, ...counts }]
+        : [];
+    }),
+  );
   const totalLessons = countLessons(courses);
   const totalQuizzes = countQuizzes(courses);
   const passed = countPassed(bests);
@@ -112,6 +129,40 @@ export default async function AccountPage() {
           </ul>
         )}
       </section>
+
+      {notebook.length > 0 ? (
+        <section className="mt-12">
+          <h2 className="mb-4 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
+            Qeyd dəftəri
+          </h2>
+          <ul className="glass divide-y divide-brand-wood-ring/60 dark:divide-white/10">
+            {notebook.map((row) => (
+              <li
+                key={`${row.course.slug}/${row.lesson.slug}`}
+                className="flex items-center justify-between gap-4 px-5 py-4 sm:px-6"
+              >
+                <div className="min-w-0">
+                  <Link
+                    href={`/courses/${row.course.slug}/${row.lesson.slug}#qeydler`}
+                    className="block truncate text-base font-semibold text-ink transition hover:text-brand-wood dark:text-brand-cream dark:hover:text-brand-brass-soft"
+                  >
+                    {row.lesson.title}
+                  </Link>
+                  <p className="mt-0.5 truncate text-xs text-ink/45 dark:text-white/45">
+                    {row.course.title} · Dərs {row.index}
+                  </p>
+                </div>
+                <span className="num shrink-0 text-right text-[11px] uppercase tracking-[0.16em] text-ink/45 dark:text-white/45">
+                  {row.highlights} işarələmə
+                  <br className="sm:hidden" />
+                  <span className="hidden sm:inline"> · </span>
+                  {row.notes} qeyd
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <section className="mt-12 flex flex-col items-start gap-3">
         <LogoutButton />

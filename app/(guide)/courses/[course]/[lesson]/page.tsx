@@ -3,12 +3,13 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireUser } from "@/lib/auth-guard";
 import { getLesson } from "@/lib/content";
-import { getCompletedLessons, getQuizBests, progressKey } from "@/lib/progress";
+import { getCompletedLessons, getLessonHighlights, getQuizBests, progressKey } from "@/lib/progress";
 import { getQuiz, toPublicQuestions } from "@/lib/quiz";
 import { profileFromUser } from "@/lib/user";
 import { AppHeader } from "@/components/AppHeader";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CompleteToggle } from "@/components/CompleteToggle";
+import { LessonAnnotator } from "@/components/LessonAnnotator";
 import { LessonBody } from "@/components/LessonBody";
 import { LessonQuiz } from "@/components/LessonQuiz";
 
@@ -26,11 +27,12 @@ export default async function LessonPage({ params }: { params: Params }) {
   const { course: courseSlug, lesson: lessonSlug } = await params;
   const user = await requireUser(`/courses/${courseSlug}/${lessonSlug}`);
   const profile = profileFromUser(user);
-  const [page, completed, quiz, bests] = await Promise.all([
+  const [page, completed, quiz, bests, highlights] = await Promise.all([
     getLesson(courseSlug, lessonSlug),
     getCompletedLessons(user.id),
     getQuiz(courseSlug, lessonSlug),
     getQuizBests(user.id),
+    getLessonHighlights(user.id, courseSlug, lessonSlug),
   ]);
   if (!page) notFound();
 
@@ -53,22 +55,35 @@ export default async function LessonPage({ params }: { params: Params }) {
 
       <article className="mx-auto max-w-3xl">
         <header className="mb-10">
-          <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
-            <span className="num">
-              Dərs {index + 1} / {course.lessons.length}
-            </span>
-            {lesson.minutes ? (
-              <>
-                <span aria-hidden className="text-brand-wood-ring">·</span>
-                <span className="num">{lesson.minutes} dəqiqə</span>
-              </>
-            ) : null}
-            {isDone ? (
-              <>
-                <span aria-hidden className="text-brand-wood-ring">·</span>
-                <span className="text-status-done dark:text-brand-brass-soft">Tamamlanıb</span>
-              </>
-            ) : null}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">
+              <span className="num">
+                Dərs {index + 1} / {course.lessons.length}
+              </span>
+              {lesson.minutes ? (
+                <>
+                  <span aria-hidden className="text-brand-wood-ring">·</span>
+                  <span className="num">{lesson.minutes} dəqiqə</span>
+                </>
+              ) : null}
+              {isDone ? (
+                <>
+                  <span aria-hidden className="text-brand-wood-ring">·</span>
+                  <span className="text-status-done dark:text-brand-brass-soft">Tamamlanıb</span>
+                </>
+              ) : null}
+            </div>
+            <a
+              href={`/courses/${course.slug}/${lesson.slug}/pdf`}
+              download
+              title="Dərsi PDF kimi yükləyin"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-ink/10 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-ink/55 transition hover:border-brand-brass/50 hover:bg-white/60 hover:text-brand-wood dark:border-white/15 dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-brand-brass-soft"
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+              </svg>
+              PDF yüklə
+            </a>
           </div>
           <h1 className="mt-4 text-[clamp(1.9rem,3.6vw,2.7rem)] font-semibold leading-tight tracking-[-0.02em] text-ink dark:text-brand-cream">
             {lesson.title}
@@ -80,9 +95,9 @@ export default async function LessonPage({ params }: { params: Params }) {
           ) : null}
         </header>
 
-        <div className="glass-strong px-6 py-8 sm:px-10 sm:py-12">
+        <LessonAnnotator courseSlug={course.slug} lessonSlug={lesson.slug} initial={highlights}>
           <LessonBody source={lesson.body} />
-        </div>
+        </LessonAnnotator>
 
         {quiz ? (
           <LessonQuiz

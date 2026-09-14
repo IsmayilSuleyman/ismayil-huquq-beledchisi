@@ -332,3 +332,75 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rise { animation: none; }
 }
+
+/* ============================================================
+   Lesson highlights. Marks are inserted into the rendered lesson by
+   components/LessonAnnotator.tsx; a highlight that spans several text
+   nodes becomes several marks sharing one data-hl id. Colours are
+   translucent so they read as highlighter ink on cream paper and on
+   dark wood alike. A dotted brass underline marks a passage with a note.
+   ============================================================ */
+mark.hl {
+  color: inherit;
+  background-color: transparent;
+  border-radius: 3px;
+  padding: 0.08em 0;
+  cursor: pointer;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+mark.hl:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+/* `mark.hl-*` (not `.hl-*`) so these outrank the reset on `mark.hl`. */
+mark.hl-yellow { background-color: rgba(252, 211, 77, 0.5); }
+mark.hl-green  { background-color: rgba(134, 239, 172, 0.55); }
+mark.hl-blue   { background-color: rgba(147, 197, 253, 0.55); }
+mark.hl-pink   { background-color: rgba(249, 168, 212, 0.55); }
+.dark mark.hl-yellow { background-color: rgba(252, 211, 77, 0.3); }
+.dark mark.hl-green  { background-color: rgba(134, 239, 172, 0.28); }
+.dark mark.hl-blue   { background-color: rgba(147, 197, 253, 0.3); }
+.dark mark.hl-pink   { background-color: rgba(249, 168, 212, 0.3); }
+mark.hl:hover {
+  box-shadow: 0 0 0 2px rgba(169, 132, 63, 0.35);
+}
+mark.hl[data-note="1"] {
+  text-decoration: underline dotted;
+  text-decoration-color: #a9843f;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.dark mark.hl[data-note="1"] {
+  text-decoration-color: #c9a75f;
+}
+@keyframes hl-flash {
+  0% { box-shadow: 0 0 0 5px rgba(169, 132, 63, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(169, 132, 63, 0); }
+}
+mark.hl-flash {
+  animation: hl-flash 1.4s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  mark.hl-flash { animation: none; }
+}
+
+/* Colour swatches in the highlight toolbar and popover. */
+.hl-swatch-yellow { background-color: #fcd34d; }
+.hl-swatch-green  { background-color: #86efac; }
+.hl-swatch-blue   { background-color: #93c5fd; }
+.hl-swatch-pink   { background-color: #f9a8d4; }
+
+/* Highlight toolbar / popover entrance: opacity only, so it never fights
+   the translate utilities that position the bubble. */
+@keyframes hl-pop {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.hl-pop {
+  animation: hl-pop 0.18s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-pop { animation: none; }
+}
