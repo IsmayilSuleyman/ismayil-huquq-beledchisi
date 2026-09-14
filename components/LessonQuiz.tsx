@@ -63,7 +63,7 @@ export function LessonQuiz({
   };
 
   return (
-    <section aria-labelledby="quiz-heading" className="mt-12">
+    <section aria-labelledby="quiz-heading" className="mt-12 print:hidden">
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-brass">

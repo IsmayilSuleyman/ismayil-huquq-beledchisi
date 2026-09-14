@@ -1,6 +1,6 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
-import React, { type ReactNode } from "react";
+import React, { Fragment, type ReactNode } from "react";
 import {
   Document,
   Font,
@@ -17,14 +17,15 @@ import type { ListItem, PhrasingContent, RootContent, Table } from "mdast";
 import { remark } from "remark";
 import remarkGfm from "remark-gfm";
 import type { LessonPage } from "@/lib/content";
-import { excerpt, type Highlight, type HighlightColor } from "@/lib/highlights";
+import type { Highlight, HighlightColor } from "@/lib/highlights";
 
 /**
  * Renders a lesson as a branded A4 PDF: the wordmark and course in a
  * running header, the lesson title block, the body laid out from the
- * lesson's Markdown, the reader's highlights and notes as an appendix, and
- * page numbers in the footer. Built with @react-pdf/renderer so the text
- * stays selectable and the logo stays vector.
+ * lesson's Markdown, the reader's highlights painted into the text with
+ * each note printed under its passage, the full notebook as an appendix,
+ * and page numbers in the footer. Built with @react-pdf/renderer so the
+ * text stays selectable and the logo stays vector.
  *
  * The Markdown is parsed with remark (GitHub flavour) rather than the MDX
  * pipeline the page uses: lessons are plain Markdown in practice, and an
@@ -40,11 +41,20 @@ const RING = "#d8c7b4";
 const MIST = "#f3ebe0";
 const MUTED = "#7b6a5c";
 
+/** Swatch colours for bars and dots (as on the site). */
 const SWATCH: Record<HighlightColor, string> = {
   yellow: "#fcd34d",
   green: "#86efac",
   blue: "#93c5fd",
   pink: "#f9a8d4",
+};
+
+/** Paler tints behind highlighted text, so the words stay easy to read in print. */
+const TINT: Record<HighlightColor, string> = {
+  yellow: "#fde68a",
+  green: "#bbf7d0",
+  blue: "#bfdbfe",
+  pink: "#fbcfe8",
 };
 
 /** A4 height in PDF points. */
@@ -70,6 +80,8 @@ function registerFonts() {
     ],
   });
   // The default hyphenator knows English; Azerbaijani words are left whole.
+  // (Breaking at dashes is not an option either: react-pdf adds its own
+  // hyphen at the break, which reads badly after an en dash.)
   Font.registerHyphenationCallback((word) => [word]);
   fontsRegistered = true;
 }
@@ -198,6 +210,10 @@ const styles = StyleSheet.create({
   row: { flexDirection: "row" },
   cell: { paddingVertical: 4, paddingHorizontal: 6, borderLeftWidth: 0.75, borderLeftColor: RING },
   cellText: { fontSize: 9.5, lineHeight: 1.45 },
+  // A note printed right under the passage it belongs to.
+  noteBox: { marginTop: 1, marginBottom: 9, paddingLeft: 8, borderLeftWidth: 2 },
+  noteLabel: { fontSize: 7, letterSpacing: 1.4, color: BRASS, fontWeight: 600, marginBottom: 1 },
+  noteBody: { fontSize: 9.5, lineHeight: 1.5, color: INK },
   appendix: { marginTop: 24, paddingTop: 14, borderTopWidth: 0.75, borderTopColor: RING },
   appendixTitle: { fontSize: 15, fontWeight: 600, color: INK, marginTop: 4, marginBottom: 6, lineHeight: 1.3 },
   noteItem: { flexDirection: "row", marginTop: 8 },
@@ -208,80 +224,300 @@ const styles = StyleSheet.create({
 
 const HEADING_SIZE: Record<number, number> = { 1: 18, 2: 15, 3: 12.5, 4: 11, 5: 10.5, 6: 10.5 };
 
-function inline(nodes: PhrasingContent[]): ReactNode[] {
+// ---------------------------------------------------------------------------
+// Placing highlights in the Markdown tree
+// ---------------------------------------------------------------------------
+
+/**
+ * A highlight is anchored to the rendered page's plain text. The PDF lays
+ * out the Markdown tree instead, so each highlight is looked up again in
+ * the plain text of the tree's text blocks (paragraphs, headings, table
+ * cells) in document order, ignoring differences in whitespace. A passage
+ * that runs over several blocks is matched line by line. Whatever cannot
+ * be placed is still listed in the appendix.
+ */
+
+export type Mark = { start: number; end: number; color: HighlightColor };
+export type BlockPlan = { marks: Mark[]; notes: Highlight[] };
+export type HighlightPlan = { blocks: Map<number, BlockPlan>; placed: Set<string> };
+
+/** The text a run of inline nodes contributes, in the order inlineMarked() emits it. */
+export function plainText(nodes: PhrasingContent[]): string {
+  let out = "";
+  for (const n of nodes) {
+    switch (n.type) {
+      case "text":
+      case "inlineCode":
+        out += n.value;
+        break;
+      case "break":
+        out += "\n";
+        break;
+      case "image":
+        out += n.alt ?? "";
+        break;
+      default:
+        if ("children" in n) out += plainText(n.children as PhrasingContent[]);
+    }
+  }
+  return out;
+}
+
+/** Plain text of every text block, in the order the renderer numbers them. */
+export function collectTextBlocks(nodes: RootContent[], out: string[] = []): string[] {
+  for (const node of nodes) {
+    switch (node.type) {
+      case "paragraph":
+      case "heading":
+        out.push(plainText(node.children));
+        break;
+      case "list":
+        for (const item of node.children) collectTextBlocks(item.children, out);
+        break;
+      case "blockquote":
+        collectTextBlocks(node.children, out);
+        break;
+      case "table":
+        for (const row of node.children) for (const cell of row.children) out.push(plainText(cell.children));
+        break;
+      case "code":
+      case "thematicBreak":
+      case "html":
+      case "definition":
+      case "footnoteDefinition":
+      case "yaml":
+        break;
+      default:
+        if ("children" in node) collectTextBlocks(node.children as RootContent[], out);
+    }
+  }
+  return out;
+}
+
+/**
+ * Finds `needle` in `hay` treating any run of whitespace as one space.
+ * Returns raw [start, end) offsets into `hay`, or null.
+ */
+export function findLoose(hay: string, needle: string): [number, number] | null {
+  const wanted = needle.replace(/\s+/g, " ").trim();
+  if (!wanted) return null;
+  let norm = "";
+  const raw: number[] = [];
+  let inSpace = false;
+  for (let i = 0; i < hay.length; i += 1) {
+    const ch = hay[i];
+    if (/\s/.test(ch)) {
+      if (inSpace) continue;
+      inSpace = true;
+      norm += " ";
+    } else {
+      inSpace = false;
+      norm += ch;
+    }
+    raw.push(i);
+  }
+  const at = norm.indexOf(wanted);
+  if (at < 0) return null;
+  return [raw[at], raw[at + wanted.length - 1] + 1];
+}
+
+/** Decides which block shows each highlight's marks and note. */
+export function planHighlights(texts: string[], highlights: Highlight[]): HighlightPlan {
+  const blocks = new Map<number, BlockPlan>();
+  const placed = new Set<string>();
+  const plan = (b: number): BlockPlan => {
+    let p = blocks.get(b);
+    if (!p) {
+      p = { marks: [], notes: [] };
+      blocks.set(b, p);
+    }
+    return p;
+  };
+
+  for (const h of highlights) {
+    let first: number | null = null;
+
+    // The whole passage inside one block.
+    for (let b = 0; b < texts.length && first === null; b += 1) {
+      const hit = findLoose(texts[b], h.exact);
+      if (hit) {
+        plan(b).marks.push({ start: hit[0], end: hit[1], color: h.color });
+        first = b;
+      }
+    }
+
+    // A selection over several paragraphs: match it line by line, moving
+    // forward through the blocks.
+    if (first === null) {
+      const pieces = h.exact
+        .split(/\n+/)
+        .map((s) => s.trim())
+        .filter((s) => s.length > 0);
+      if (pieces.length > 1) {
+        let b = 0;
+        for (const piece of pieces) {
+          for (let k = b; k < texts.length; k += 1) {
+            const hit = findLoose(texts[k], piece);
+            if (!hit) continue;
+            plan(k).marks.push({ start: hit[0], end: hit[1], color: h.color });
+            if (first === null) first = k;
+            b = k;
+            break;
+          }
+        }
+      }
+    }
+
+    if (first !== null) {
+      placed.add(h.id);
+      if (h.note.trim()) plan(first).notes.push(h);
+    }
+  }
+  return { blocks, placed };
+}
+
+// ---------------------------------------------------------------------------
+// Rendering
+// ---------------------------------------------------------------------------
+
+type Cursor = { pos: number };
+type Ctx = { plan: HighlightPlan; index: number };
+const NO_PLAN: BlockPlan = { marks: [], notes: [] };
+
+/** The plan for the next text block, advancing the block counter. */
+function nextBlock(ctx: Ctx): BlockPlan {
+  const p = ctx.plan.blocks.get(ctx.index) ?? NO_PLAN;
+  ctx.index += 1;
+  return p;
+}
+
+/** Splits a text run at mark boundaries and tints the marked parts. */
+function segments(value: string, marks: Mark[], cur: Cursor): ReactNode[] {
+  const start = cur.pos;
+  const end = start + value.length;
+  cur.pos = end;
+  if (marks.length === 0 || value.length === 0) return [value];
+  const cuts = new Set<number>([start, end]);
+  for (const m of marks) {
+    if (m.start > start && m.start < end) cuts.add(m.start);
+    if (m.end > start && m.end < end) cuts.add(m.end);
+  }
+  const points = [...cuts].sort((a, b) => a - b);
+  const out: ReactNode[] = [];
+  for (let k = 0; k < points.length - 1; k += 1) {
+    const a = points[k];
+    const b = points[k + 1];
+    const text = value.slice(a - start, b - start);
+    const mark = marks.find((m) => m.start <= a && m.end >= b);
+    out.push(
+      mark ? (
+        <Text key={k} style={{ backgroundColor: TINT[mark.color] }}>
+          {text}
+        </Text>
+      ) : (
+        text
+      ),
+    );
+  }
+  return out;
+}
+
+function inlineMarked(nodes: PhrasingContent[], marks: Mark[], cur: Cursor): ReactNode[] {
   return nodes.map((node, i) => {
     switch (node.type) {
       case "text":
-        return node.value;
+        return <Fragment key={i}>{segments(node.value, marks, cur)}</Fragment>;
       case "strong":
         return (
           <Text key={i} style={{ fontWeight: 600 }}>
-            {inline(node.children)}
+            {inlineMarked(node.children, marks, cur)}
           </Text>
         );
       case "emphasis":
         return (
           <Text key={i} style={{ fontStyle: "italic" }}>
-            {inline(node.children)}
+            {inlineMarked(node.children, marks, cur)}
           </Text>
         );
       case "delete":
         return (
           <Text key={i} style={{ textDecoration: "line-through" }}>
-            {inline(node.children)}
+            {inlineMarked(node.children, marks, cur)}
           </Text>
         );
       case "inlineCode":
         return (
           <Text key={i} style={{ color: WOOD_DEEP }}>
-            {node.value}
+            {segments(node.value, marks, cur)}
           </Text>
         );
       case "link":
         return (
           <Link key={i} src={node.url} style={{ color: BRASS, textDecoration: "underline" }}>
-            {inline(node.children)}
+            {inlineMarked(node.children, marks, cur)}
           </Link>
         );
       case "break":
+        cur.pos += 1;
         return "\n";
       case "image":
+        cur.pos += (node.alt ?? "").length;
         return node.alt ?? "";
-      case "linkReference":
-      case "footnoteReference":
-      case "imageReference":
-      case "html":
       default:
-        return "children" in node ? inline(node.children as PhrasingContent[]) : "";
+        return "children" in node
+          ? inlineMarked(node.children as PhrasingContent[], marks, cur)
+          : "";
     }
   });
 }
 
-function blocks(nodes: RootContent[], tight = false): ReactNode[] {
+function NoteBox({ h }: { h: Highlight }) {
+  return (
+    <View style={[styles.noteBox, { borderLeftColor: SWATCH[h.color] }]} wrap={h.note.length > 600}>
+      <Text style={styles.noteLabel}>QEYD</Text>
+      <Text style={styles.noteBody}>{h.note.trim()}</Text>
+    </View>
+  );
+}
+
+function notesAfter(plan: BlockPlan): ReactNode {
+  return plan.notes.map((h) => <NoteBox key={h.id} h={h} />);
+}
+
+function blocks(nodes: RootContent[], ctx: Ctx, tight = false): ReactNode[] {
   return nodes.map((node, i) => {
     switch (node.type) {
-      case "paragraph":
+      case "paragraph": {
+        const plan = nextBlock(ctx);
         return (
-          <Text key={i} style={tight ? styles.pTight : styles.p}>
-            {inline(node.children)}
-          </Text>
+          <Fragment key={i}>
+            <Text style={tight ? styles.pTight : styles.p}>
+              {inlineMarked(node.children, plan.marks, { pos: 0 })}
+            </Text>
+            {notesAfter(plan)}
+          </Fragment>
         );
-      case "heading":
+      }
+      case "heading": {
+        const plan = nextBlock(ctx);
         return (
-          <Text
-            key={i}
-            minPresenceAhead={60}
-            style={[
-              styles.h,
-              {
-                fontSize: HEADING_SIZE[node.depth] ?? BODY_SIZE,
-                lineHeight: 1.3,
-              },
-            ]}
-          >
-            {inline(node.children)}
-          </Text>
+          <Fragment key={i}>
+            <Text
+              minPresenceAhead={60}
+              style={[
+                styles.h,
+                {
+                  fontSize: HEADING_SIZE[node.depth] ?? BODY_SIZE,
+                  lineHeight: 1.3,
+                },
+              ]}
+            >
+              {inlineMarked(node.children, plan.marks, { pos: 0 })}
+            </Text>
+            {notesAfter(plan)}
+          </Fragment>
         );
+      }
       case "list":
         return (
           <View key={i} style={tight ? { marginTop: 2, marginBottom: 2 } : styles.list}>
@@ -296,7 +532,7 @@ function blocks(nodes: RootContent[], tight = false): ReactNode[] {
               return (
                 <View key={j} style={styles.listItem}>
                   <Text style={styles.bullet}>{marker}</Text>
-                  <View style={styles.listBody}>{blocks(item.children, !node.spread)}</View>
+                  <View style={styles.listBody}>{blocks(item.children, ctx, !node.spread)}</View>
                 </View>
               );
             })}
@@ -305,7 +541,7 @@ function blocks(nodes: RootContent[], tight = false): ReactNode[] {
       case "blockquote":
         return (
           <View key={i} style={styles.quote}>
-            {blocks(node.children)}
+            {blocks(node.children, ctx)}
           </View>
         );
       case "thematicBreak":
@@ -317,7 +553,9 @@ function blocks(nodes: RootContent[], tight = false): ReactNode[] {
           </View>
         );
       case "table":
-        return <TableBlock key={i} table={node} />;
+        // A plain call, not a component: the block counter must advance while
+        // this tree is being built, before the paragraphs after the table.
+        return tableBlock(node, ctx, i);
       case "html":
       case "definition":
       case "footnoteDefinition":
@@ -325,28 +563,27 @@ function blocks(nodes: RootContent[], tight = false): ReactNode[] {
         return null;
       default:
         return "children" in node ? (
-          <View key={i}>{blocks(node.children as RootContent[])}</View>
+          <View key={i}>{blocks(node.children as RootContent[], ctx)}</View>
         ) : null;
     }
   });
 }
 
-function plain(nodes: PhrasingContent[]): string {
-  return nodes
-    .map((n) => ("value" in n ? n.value : "children" in n ? plain(n.children as PhrasingContent[]) : ""))
-    .join("");
-}
-
-/** Columns share the width in proportion to how much text they carry. */
-function TableBlock({ table }: { table: Table }) {
+/**
+ * Columns share the width in proportion to how much text they carry, but
+ * never narrower than their longest unbreakable token (words are not
+ * hyphenated, so "142–146-1" or "özünüidarəetmə" must fit on one line).
+ */
+function tableBlock(table: Table, ctx: Ctx, key: number): ReactNode {
   const columns = Math.max(...table.children.map((r) => r.children.length), 1);
   const weights = Array.from({ length: columns }, (_, c) => {
-    const lengths = table.children.map((r) => plain(r.children[c]?.children ?? []).length);
-    const avg = lengths.reduce((a, b) => a + b, 0) / Math.max(lengths.length, 1);
-    return Math.min(Math.max(avg, 8), 60);
+    const texts = table.children.map((r) => plainText(r.children[c]?.children ?? []));
+    const avg = texts.reduce((a, t) => a + t.length, 0) / Math.max(texts.length, 1);
+    const longest = Math.max(0, ...texts.flatMap((t) => t.split(/\s+/).map((w) => w.length)));
+    return Math.min(Math.max(avg, longest * 1.25 + 2, 8), 60);
   });
   return (
-    <View style={styles.table}>
+    <View key={key} style={styles.table}>
       {table.children.map((row, r) => (
         <View
           key={r}
@@ -357,12 +594,14 @@ function TableBlock({ table }: { table: Table }) {
             r === 0 ? { backgroundColor: MIST } : {},
           ]}
         >
-          {Array.from({ length: columns }, (_, c) => {
-            const cell = row.children[c];
+          {row.children.map((cell, c) => {
+            // Every cell is a text block, so the counter must advance for each
+            // one the planner counted, in the same order.
+            const plan = nextBlock(ctx);
             return (
               <View
                 key={c}
-                style={[styles.cell, { flex: weights[c] }, c === 0 ? { borderLeftWidth: 0 } : {}]}
+                style={[styles.cell, { flex: weights[c] ?? 8 }, c === 0 ? { borderLeftWidth: 0 } : {}]}
               >
                 <Text
                   style={[
@@ -375,11 +614,15 @@ function TableBlock({ table }: { table: Table }) {
                         : {},
                   ]}
                 >
-                  {cell ? inline(cell.children) : ""}
+                  {inlineMarked(cell.children, plan.marks, { pos: 0 })}
                 </Text>
+                {notesAfter(plan)}
               </View>
             );
           })}
+          {Array.from({ length: columns - row.children.length }, (_, k) => (
+            <View key={`pad-${k}`} style={[styles.cell, { flex: weights[row.children.length + k] ?? 8 }]} />
+          ))}
         </View>
       ))}
     </View>
@@ -422,6 +665,7 @@ function LessonDocument({
   const when = date.toLocaleDateString("az-AZ", { day: "numeric", month: "long", year: "numeric" });
   const footerLeft = [host, readerName, when].filter(Boolean).join("  ·  ");
   const tree = parseLessonBody(lesson.body);
+  const ctx: Ctx = { plan: planHighlights(collectTextBlocks(tree), highlights), index: 0 };
   const notes = highlights.filter((h) => h.note.trim().length > 0).length;
 
   return (
@@ -452,7 +696,7 @@ function LessonDocument({
         {lesson.summary ? <Text style={styles.summary}>{lesson.summary}</Text> : null}
         <View style={styles.titleRule} />
 
-        {blocks(tree)}
+        {blocks(tree, ctx)}
 
         {highlights.length > 0 ? (
           <View style={styles.appendix} minPresenceAhead={90}>
@@ -462,10 +706,14 @@ function LessonDocument({
               {highlights.length} işarələmə · {notes} qeyd
             </Text>
             {highlights.map((h) => (
-              <View key={h.id} style={styles.noteItem} wrap={h.note.length > 600}>
+              <View
+                key={h.id}
+                style={styles.noteItem}
+                wrap={h.exact.length + h.note.length > 600}
+              >
                 <View style={[styles.noteBar, { backgroundColor: SWATCH[h.color] }]} />
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.noteQuote}>“{excerpt(h.exact, 400)}”</Text>
+                  <Text style={styles.noteQuote}>“{h.exact.replace(/\s+/g, " ").trim()}”</Text>
                   {h.note.trim() ? <Text style={styles.noteText}>{h.note.trim()}</Text> : null}
                 </View>
               </View>

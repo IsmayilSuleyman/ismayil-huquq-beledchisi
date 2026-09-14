@@ -68,10 +68,10 @@ export function MobileTabBar() {
   return (
     <>
       {/* In-flow spacer so page content can scroll clear of the fixed bar. */}
-      <div aria-hidden className="h-20 sm:hidden" />
+      <div aria-hidden className="h-20 print:hidden sm:hidden" />
       <nav
         aria-label="Əsas naviqasiya"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-white/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md dark:border-white/15 dark:bg-black/60 sm:hidden"
+        className="print:hidden fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-white/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md dark:border-white/15 dark:bg-black/60 sm:hidden"
       >
         <div className="mx-auto flex max-w-md items-stretch justify-around">
           {TABS.map((tab) => {
