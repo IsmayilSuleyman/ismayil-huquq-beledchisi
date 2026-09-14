@@ -94,10 +94,10 @@ Checks: `npm test` (loader and date tests), `npm run lint`, `npm run build`.
 
 One Vercel project serves both sections: the existing **omnilawgazette**
 project, with `ismayilhuquqbeledchisi.vercel.app` as its main hostname. Its
-Git connection still points at `IsmayilSuleyman/omnilawgazette`, so a deploy
-is a push of this repo's `main` to that repo's `main` (the two histories are
-kept in step with a merge commit, never a force push). Repointing the Vercel
-project's Git connection to this repo removes that step.
+Git connection points at this repository, so every merge into `main` builds
+and deploys on its own; nothing needs to be pushed anywhere else. The old
+`IsmayilSuleyman/omnilawgazette` repository is no longer part of the deploy
+path and only keeps the gazette's earlier history.
 
 `.env.production` carries the public Supabase values, so no dashboard
 variables are needed; dashboard variables override the file if you add them.
