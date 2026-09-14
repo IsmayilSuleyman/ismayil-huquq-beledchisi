@@ -12,6 +12,7 @@
     "gazette:scrape": "node scripts/scrape-gazette.mjs"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.9.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.116.0",
     "framer-motion": "^12.38.0",
@@ -21,6 +22,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pdf": "^10.4.1",
+    "remark": "^15.0.1",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {

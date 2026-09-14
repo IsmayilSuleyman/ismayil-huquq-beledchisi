@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import type { Course } from "@/lib/content";
 import type { CardState } from "@/lib/srs";
+import { isHighlightColor, sortHighlights, type Highlight } from "@/lib/highlights";
 
 /** Key used in the completed-lessons set: "course-slug/lesson-slug". */
 export function progressKey(courseSlug: string, lessonSlug: string): string {
@@ -189,4 +190,89 @@ export function deckStats(
     if (new Date(s.reviewedAt).getTime() >= dayStart.getTime()) reviewedToday += 1;
   }
   return { total: cardIds.length, fresh, due, learned, reviewedToday };
+}
+
+// ---------------------------------------------------------------------------
+// Highlights and notes
+// ---------------------------------------------------------------------------
+
+type HighlightRow = {
+  id: string;
+  exact: string;
+  prefix: string;
+  suffix: string;
+  start_offset: number;
+  end_offset: number;
+  color: string;
+  note: string;
+  created_at: string;
+};
+
+function toHighlight(row: HighlightRow): Highlight {
+  return {
+    id: row.id,
+    exact: row.exact,
+    prefix: row.prefix,
+    suffix: row.suffix,
+    start: row.start_offset,
+    end: row.end_offset,
+    color: isHighlightColor(row.color) ? row.color : "yellow",
+    note: row.note ?? "",
+    createdAt: row.created_at,
+  };
+}
+
+/**
+ * The reader's highlights in one lesson, in text order. Same degrade-to-empty
+ * rule as progress: a database hiccup hides the marks, never the lesson.
+ */
+export async function getLessonHighlights(
+  userId: string,
+  courseSlug: string,
+  lessonSlug: string,
+): Promise<Highlight[]> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("lesson_highlights")
+    .select("id, exact, prefix, suffix, start_offset, end_offset, color, note, created_at")
+    .eq("user_id", userId)
+    .eq("course_slug", courseSlug)
+    .eq("lesson_slug", lessonSlug);
+
+  if (error) {
+    console.error("lesson_highlights read failed:", error);
+    return [];
+  }
+  return sortHighlights((data ?? []).map((row) => toHighlight(row as HighlightRow)));
+}
+
+export type HighlightCount = { highlights: number; notes: number };
+
+/** How many highlights and notes the reader has per lesson, keyed like progressKey. */
+export async function getHighlightCounts(userId: string): Promise<Map<string, HighlightCount>> {
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return new Map();
+
+  const { data, error } = await supabase
+    .from("lesson_highlights")
+    .select("course_slug, lesson_slug, note")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("lesson_highlights read failed:", error);
+    return new Map();
+  }
+
+  const counts = new Map<string, HighlightCount>();
+  for (const row of data ?? []) {
+    const key = progressKey(row.course_slug, row.lesson_slug);
+    const prev = counts.get(key) ?? { highlights: 0, notes: 0 };
+    counts.set(key, {
+      highlights: prev.highlights + 1,
+      notes: prev.notes + (row.note && row.note.trim() ? 1 : 0),
+    });
+  }
+  return counts;
 }
