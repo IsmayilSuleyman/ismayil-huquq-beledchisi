@@ -136,10 +136,10 @@ its number and a "Mənbə" link. Each run:
    (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`).
 3. `npm run gazette:publish -- draft.json --dry-run` checks the draft (one
    sentence per act, no number inside it, dates in the period, nothing
-   twice), lays it out (`scripts/gazette/issue-pdf.tsx`: Arimo and Source
-   Serif 4 in place of the old issues' Arial and Cambria, colours measured
-   from issue 12) and renders the WebP cover from page 1, without
-   uploading.
+   twice), lays it out (`scripts/gazette/issue-pdf.tsx`: the old issues'
+   logo artwork in the header, Arimo and Source Serif 4 in place of their
+   Arial and Cambria, colours measured from issue 12) and renders the WebP
+   cover from page 1, without uploading.
 4. Without `--dry-run` it signs in as the publisher account, uploads the
    PDF and cover to the `gazette` bucket and inserts the `issues` row with
    the next number and a title like the old ones ("Weekly Legislature
