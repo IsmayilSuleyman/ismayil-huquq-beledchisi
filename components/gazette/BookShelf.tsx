@@ -33,12 +33,18 @@ function BookCard({ book, index }: { book: BookWithUrls; index: number }) {
 
       <div className="p-4 flex flex-col gap-2 grow">
         {(book.author || book.year) && (
-          <p className="text-[0.7rem] tracking-[0.18em] uppercase text-silver truncate">
+          <p className="text-[0.7rem] tracking-[0.18em] uppercase text-silver truncate" lang="az">
             {[book.author, book.year].filter(Boolean).join(" · ")}
           </p>
         )}
-        <h3 className="font-serif text-[1.13rem] leading-snug text-foreground line-clamp-2">{book.title}</h3>
-        {book.description && <p className="text-sm text-foreground/60 line-clamp-2">{book.description}</p>}
+        <h3 className="font-serif text-[1.13rem] leading-snug text-foreground line-clamp-2" lang="az">
+          {book.title}
+        </h3>
+        {book.description && (
+          <p className="text-sm text-foreground/60 line-clamp-2" lang="az">
+            {book.description}
+          </p>
+        )}
         <div className="mt-auto pt-2 flex items-center justify-between gap-2 text-xs text-silver">
           <span>{book.page_count ? `${book.page_count} pages` : ""}</span>
           <span className="relative z-10">
