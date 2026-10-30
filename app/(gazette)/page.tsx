@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import DownloadButton from "@/components/gazette/DownloadButton";
@@ -8,6 +9,9 @@ import { getServerSupabase, publicUrl } from "@/lib/gazette/supabase";
 import type { Issue } from "@/lib/gazette/types";
 
 export const revalidate = 60;
+
+// The site's landing page: no guide suffix in the tab title.
+export const metadata: Metadata = { title: { absolute: "Omni Law Gazette" } };
 
 async function getIssues(): Promise<IssueWithUrls[]> {
   const supabase = getServerSupabase();
@@ -69,7 +73,7 @@ export default async function LibraryPage() {
         <section className="mt-14 olg-rise" style={{ animationDelay: "120ms" }}>
           <div className="olg-glass-deep rounded-3xl overflow-hidden md:grid md:grid-cols-[280px_1fr] lg:grid-cols-[320px_1fr]">
             <Link
-              href={`/gazette/issues/${latest.issue_number}`}
+              href={`/issues/${latest.issue_number}`}
               className="relative block aspect-[5/6] md:aspect-auto md:h-full min-h-[260px] group overflow-hidden"
               aria-label={`Read the latest issue: ${latest.title}`}
             >
@@ -117,7 +121,7 @@ export default async function LibraryPage() {
                 ))}
               </div>
               <div className="mt-7 flex items-center gap-3 flex-wrap">
-                <Link href={`/gazette/issues/${latest.issue_number}`} className="olg-btn olg-btn-primary">
+                <Link href={`/issues/${latest.issue_number}`} className="olg-btn olg-btn-primary">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path
                       d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"
@@ -144,7 +148,7 @@ export default async function LibraryPage() {
             <p className="font-serif text-2xl mb-2">The library is ready.</p>
             <p className="text-foreground/60 text-sm leading-relaxed">
               No issues have been published yet. Head to the{" "}
-              <Link href="/gazette/admin" className="text-azure hover:underline">
+              <Link href="/admin" className="text-azure hover:underline">
                 admin desk
               </Link>{" "}
               to publish the first weekly issue — it will appear here instantly.

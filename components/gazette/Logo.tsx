@@ -9,7 +9,7 @@ import Link from "next/link";
  */
 export default function Logo({
   size = "md",
-  href = "/gazette",
+  href = "/",
 }: {
   size?: "sm" | "md" | "lg";
   href?: string | null;

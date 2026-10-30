@@ -25,7 +25,7 @@ const brand = Nunito({
   display: "swap",
 });
 
-// Faces of the Omni Law Gazette section (/gazette), which keeps its own
+// Faces of the Omni Law Gazette (the landing page), which keeps its own
 // design: Fraunces for its mastheads, Jost for its small caps.
 const fraunces = Fraunces({
   subsets: ["latin"],

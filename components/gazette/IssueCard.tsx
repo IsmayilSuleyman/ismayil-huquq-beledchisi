@@ -15,7 +15,7 @@ export default function IssueCard({ issue, index = 0 }: { issue: IssueWithUrls; 
       style={{ animationDelay: `${Math.min(index, 11) * 55}ms` }}
     >
       <Link
-        href={`/gazette/issues/${issue.issue_number}`}
+        href={`/issues/${issue.issue_number}`}
         className="absolute inset-0 z-[5]"
         aria-label={`Read issue No. ${issue.issue_number}: ${issue.title}`}
       />

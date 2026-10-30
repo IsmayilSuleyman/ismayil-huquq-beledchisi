@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { MobileTabBar } from "@/components/MobileTabBar";
 
 // The guide's chrome: drifting orbs behind the page, the phone tab bar and
-// the theme switch. The gazette section under /gazette has its own layout.
+// the theme switch. The gazette, at the root, has its own layout.
 export default function GuideLayout({ children }: { children: React.ReactNode }) {
   return (
     <>

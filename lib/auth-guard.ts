@@ -11,7 +11,7 @@ export async function requireUser(loginRedirect?: string): Promise<User> {
   const { reason, user } = await getSupabaseServerUser();
 
   if (reason === "missing_config") {
-    redirect("/?setup=supabase");
+    redirect("/beledci?setup=supabase");
   }
 
   if (reason === "error" || !user) {

@@ -10,11 +10,11 @@ import { getSupabaseConfig } from "@/lib/supabase/config";
 export const GAZETTE_BUCKET = "gazette";
 
 /** Where the gazette section is mounted. */
-export const GAZETTE_URL = "/gazette";
+export const GAZETTE_URL = "/";
 
 /** Reading-room URL of an issue on the gazette site. */
 export function issueUrl(issueNumber: number): string {
-  return `${GAZETTE_URL}/issues/${issueNumber}`;
+  return `/issues/${issueNumber}`;
 }
 
 export type Issue = {

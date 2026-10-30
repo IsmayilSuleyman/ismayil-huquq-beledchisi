@@ -35,7 +35,7 @@ import { allEntries, checkDraft, issueTitle, type GazetteDraft } from "@/scripts
 import { renderIssuePdf } from "@/scripts/gazette/issue-pdf";
 import { printedIn, recentIssues } from "@/scripts/gazette/previous";
 
-const SITE = "https://ismayilhuquqbeledchisi.vercel.app";
+const SITE = "https://omnilawgazette.vercel.app";
 const MAX_PDF_BYTES = 50 * 1024 * 1024;
 
 const { values, positionals } = parseArgs({
@@ -213,7 +213,7 @@ async function main() {
   const check = await fetch(publicUrl(pdfPath), { method: "HEAD" });
   if (!check.ok) console.warn(`  ! The PDF answered ${check.status} at ${publicUrl(pdfPath)}`);
 
-  console.log(`\n✓ Published No. ${issueNumber}\n   ${SITE}/gazette/issues/${issueNumber}\n`);
+  console.log(`\n✓ Published No. ${issueNumber}\n   ${SITE}/issues/${issueNumber}\n`);
 }
 
 main().catch((e) => fail(e instanceof Error ? (e.stack ?? e.message) : String(e)));

@@ -33,7 +33,7 @@ export default async function LoginPage({
           <div className="flex flex-col gap-4">
             <GoogleSignInButton />
             <Link
-              href="/"
+              href="/beledci"
               className="rounded-xl border border-brand-wood/20 bg-white/70 px-4 py-3 text-center text-sm font-medium uppercase tracking-[0.18em] text-ink/70 transition hover:-translate-y-0.5 hover:border-brand-wood hover:text-brand-wood dark:bg-white/10 dark:text-white/75 dark:hover:text-brand-brass-soft"
             >
               Ana səhifə

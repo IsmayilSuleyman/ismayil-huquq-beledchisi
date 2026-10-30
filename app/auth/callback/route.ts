@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) {
-    return NextResponse.redirect(`${origin}/?setup=supabase`);
+    return NextResponse.redirect(`${origin}/beledci?setup=supabase`);
   }
 
   if (code) {

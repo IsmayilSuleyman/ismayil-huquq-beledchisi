@@ -163,7 +163,7 @@ export default function PublishForm() {
           It is live for everyone now (the library page refreshes within a minute).
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
-          <Link href={`/gazette/issues/${publishedNumber}`} className="olg-btn olg-btn-primary">
+          <Link href={`/issues/${publishedNumber}`} className="olg-btn olg-btn-primary">
             View the issue
           </Link>
           <button className="olg-btn olg-btn-ghost" onClick={() => setPublishedNumber(null)}>

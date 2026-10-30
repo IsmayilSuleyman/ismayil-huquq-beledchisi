@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   // Course content is read from disk at request time; make sure the MDX
   // files ship with the server functions that render them on Vercel.
   outputFileTracingIncludes: {
-    "/": ["./content/**/*"],
+    "/beledci": ["./content/**/*"],
     "/courses": ["./content/**/*"],
     "/courses/[course]": ["./content/**/*"],
     "/courses/[course]/[lesson]": ["./content/**/*"],
@@ -39,12 +39,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // The gazette used to live at the root of its own hostname; old links to
-  // its issues and admin desk land here after the hostname redirect.
+  // The gazette is the landing page again; it spent a while under /gazette,
+  // and the guide's old hostname opened on the guide's home page.
   async redirects() {
     return [
-      { source: "/issues/:number", destination: "/gazette/issues/:number", permanent: true },
-      { source: "/admin", destination: "/gazette/admin", permanent: true },
+      { source: "/gazette", destination: "/", permanent: true },
+      { source: "/gazette/issues/:number", destination: "/issues/:number", permanent: true },
+      { source: "/gazette/admin", destination: "/admin", permanent: true },
+      {
+        source: "/",
+        has: [{ type: "host", value: "ismayilhuquqbeledchisi.vercel.app" }],
+        destination: "/beledci",
+        permanent: false,
+      },
     ];
   },
   // pdf.js probes for the optional `canvas` package; it is browser-only

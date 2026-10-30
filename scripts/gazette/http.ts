@@ -5,7 +5,7 @@
  * is not retried; nothing here tries to get around one.
  */
 
-const UA = "Mozilla/5.0 (compatible; OmniLawGazette/2.0; +https://ismayilhuquqbeledchisi.vercel.app/gazette)";
+const UA = "Mozilla/5.0 (compatible; OmniLawGazette/2.0; +https://omnilawgazette.vercel.app)";
 
 let retried = 0;
 
