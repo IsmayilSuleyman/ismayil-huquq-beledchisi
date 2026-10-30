@@ -177,6 +177,30 @@ Run it by hand the same way: `npm run gazette:collect -- --from 2026-10-26
 week is published late with its own period and the Monday after it as its
 date; the PDF says when it was actually written.
 
+**Books.** The gazette's second shelf, at `/books`: legal texts and
+reference books as PDFs, read in the same viewer as the issues or
+downloaded. Add, edit and delete them in the admin desk's **Books** tab; the
+first page becomes the cover. The header's **Library** menu switches
+between Gazette and Books. Table and policies:
+`supabase/migrations/20261030200000_books.sql` (applied on 30 October
+2026); files go to the `gazette` bucket under `books/`.
+
+**Notifications.** Readers tap the bell in the gazette header to get a
+browser notification for every new issue; no account needed. On iPhone and
+iPad, Apple allows this only once the site is added to the home screen
+(`app/manifest.ts`), and the bell says so. `gazette:publish` notifies the
+subscribers right after the issue goes live; for an issue uploaded from the
+admin desk, press **Notify** next to it under Manage issues. Each issue is
+announced once (`push_sends`); Notify asks before sending again.
+`lib/gazette/push.ts` sends, `public/sw.js` shows the notice and opens the
+issue. The tables and functions are in
+`supabase/migrations/20261030180000_gazette_push.sql` (applied on 30
+October 2026). The signing keys are made once, in the browser, by
+**Settings → Notifications → Turn on notifications** in the admin desk: the
+private key goes straight into `push_config`, which only admins and the
+publisher can read, and is never in the repository. The bell stays hidden
+until then.
+
 ## 5. Adding a course
 
 ### Flashcard decks ("Öyrən")
@@ -372,7 +396,7 @@ app/
   layout.tsx                      Root layout: fonts (Inter, Nunito, Fraunces, Jost), theme script
   auth/callback/route.ts          OAuth code → session exchange
   (guide)/layout.tsx              Guide chrome: background, phone tab bar, theme toggle
-  (guide)/page.tsx                Public landing page
+  (guide)/beledci/page.tsx        The guide's home page
   (guide)/login/page.tsx          Google sign-in card
   (guide)/courses/page.tsx        Course list with progress
   (guide)/courses/[course]/       Course page; [lesson]/ lesson page (MDX), test, completion,
@@ -381,11 +405,15 @@ app/
   (guide)/learn/                  "Öyrən": flashcard decks with spaced repetition; [deck]/ a session
   (guide)/resources/              "Mənbələr": laws and acts with study materials; [slug]/ one act
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
-  (gazette)/gazette/              Library, issues/[number] viewer, admin
+  (gazette)/                      Library (the site's landing page), issues/[number] viewer,
+                                  books/ and books/[id], admin
+  api/gazette/notify/route.ts     Admin desk's "Notify subscribers" (push)
+  manifest.ts                     Home-screen manifest (needed for push on iPhone)
 lib/
-  gazette.ts                      Gazette issue reads for the landing page + /gazette URL
+  gazette.ts                      Gazette issue reads for the guide's home page + gazette URLs
   gazette-format.ts               Azerbaijani date helpers
-  gazette/                        Gazette's own Supabase clients, types, formatting, PDF analysis
+  gazette/                        Gazette's own Supabase clients, types, formatting, PDF analysis,
+                                  push.ts (new-issue notifications)
   content.ts                      File-based course/lesson loader
   quiz.ts                         Test loader, validation and grading
   sources.ts                      Study-material loader for laws and acts
@@ -404,7 +432,8 @@ components/
   PageBackground, Wordmark, LessonBody (MDX render), LessonAnnotator
   (highlights and notes), CompleteToggle, ProgressBar, Skeleton, StatTile,
   LessonQuiz, FlashcardSession, gazette/OmniLogo
-components/gazette/               Gazette UI: SiteHeader (pill back to /), IssueCard,
+components/gazette/               Gazette UI: SiteHeader (Library menu, Admin + /beledci switch),
+                                  NotifyButton, BookShelf, IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
@@ -413,9 +442,9 @@ scripts/                          pdf.js worker copy; gazettes/ early hand-made 
 scripts/gazette/                  Automated gazette: collect, draft format, issue PDF + cover, publish,
                                   ROUTINE.md (the weekly routine's playbook)
 supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights,
-                                  gazette publisher + policies
+                                  gazette publisher + policies, gazette push notifications, books
 tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF,
-                                  gazette drafts and issue PDF
+                                  gazette drafts, issue PDF and push signing
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
 

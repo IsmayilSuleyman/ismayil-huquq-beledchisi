@@ -197,7 +197,9 @@ don't force it.
 End the run with a short message (it reaches the owner as the routine's
 notification):
 
-- published: issue number, link, period, number of acts per section;
+- published: issue number, link, period, number of acts per section, and
+  how many subscribers were notified (or the warning, if notifying failed:
+  the issue stays published; the owner can press Notify in the admin desk);
 - any source that failed or was incomplete, acts added by hand, numbering
   gaps you couldn't resolve, and anything left out as unconfirmed;
 - or, if nothing was published, exactly why and what is needed to fix it.

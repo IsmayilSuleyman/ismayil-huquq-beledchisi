@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { ReactNode } from "react";
 
 // pdf.js touches browser-only APIs, so the viewer must never render on the server.
 const PdfViewer = dynamic(() => import("@/components/gazette/PdfViewer"), {
@@ -17,10 +18,6 @@ const PdfViewer = dynamic(() => import("@/components/gazette/PdfViewer"), {
   ),
 });
 
-export default function PdfViewerShell(props: {
-  fileUrl: string;
-  issueId: string;
-  issueNumber: number;
-}) {
+export default function PdfViewerShell(props: { fileUrl: string; download?: ReactNode }) {
   return <PdfViewer {...props} />;
 }

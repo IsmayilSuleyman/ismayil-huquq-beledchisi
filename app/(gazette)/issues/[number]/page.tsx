@@ -145,7 +145,18 @@ export default async function IssuePage({ params }: { params: Promise<Params> })
 
       {/* Reader */}
       <div className="olg-rise" style={{ animationDelay: "90ms" }}>
-        <PdfViewerShell fileUrl={pdfUrl} issueId={issue.id} issueNumber={issue.issue_number} />
+        <PdfViewerShell
+          fileUrl={pdfUrl}
+          download={
+            <DownloadButton
+              issueId={issue.id}
+              issueNumber={issue.issue_number}
+              pdfUrl={pdfUrl}
+              variant="icon"
+              className="!w-[2.125rem] !h-[2.125rem]"
+            />
+          }
+        />
         <p className="hidden sm:block text-[0.7rem] text-silver text-center mt-3">
           Tip: click the viewer, then use ← → to flip pages and +/− to zoom.
         </p>

@@ -12,6 +12,9 @@ export default function ManageIssues() {
   const [editing, setEditing] = useState<string | null>(null);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  // issue_number → when subscribers were notified of it
+  const [sent, setSent] = useState<Record<number, string>>({});
 
   // edit fields
   const [title, setTitle] = useState("");
@@ -26,6 +29,44 @@ export default function ManageIssues() {
       .order("issue_number", { ascending: false });
     if (err) setError(err.message);
     setIssues((data as Issue[]) ?? []);
+    const sends = await supabase.from("push_sends").select("issue_number,sent_at");
+    setSent(Object.fromEntries((sends.data ?? []).map((r) => [r.issue_number as number, r.sent_at as string])));
+  }
+
+  async function notify(issue: Issue) {
+    const again = Boolean(sent[issue.issue_number]);
+    if (
+      !confirm(
+        again
+          ? `Subscribers were already notified of No. ${issue.issue_number} on ${formatDate(sent[issue.issue_number])}. Send the notification again?`
+          : `Send a notification about No. ${issue.issue_number} to everyone subscribed?`
+      )
+    )
+      return;
+    setBusy(issue.id);
+    setError(null);
+    setNotice(null);
+    const { data: auth } = await supabase.auth.getSession();
+    const res = await fetch("/api/gazette/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.session?.access_token ?? ""}` },
+      body: JSON.stringify({ issue_number: issue.issue_number, force: again }),
+    });
+    const body = await res.json().catch(() => ({}));
+    setBusy(null);
+    if (!res.ok) {
+      setError(`Notify failed: ${body.error ?? res.status}`);
+      return;
+    }
+    if (body.status === "sent") {
+      setNotice(
+        `No. ${issue.issue_number}: notified ${body.delivered} of ${body.subscribers} subscriber(s)` +
+          (body.removed ? `; ${body.removed} expired subscription(s) removed` : "") +
+          (body.failed ? `; ${body.failed} failed` : "") +
+          "."
+      );
+    }
+    await load();
   }
 
   useEffect(() => {
@@ -103,6 +144,7 @@ export default function ManageIssues() {
   return (
     <div className="space-y-3">
       {error && <p className="text-sm text-red-300">{error}</p>}
+      {notice && <p className="text-sm text-azure-soft">{notice}</p>}
       {issues.map((issue) => (
         <div key={issue.id} className="olg-glass rounded-xl overflow-hidden">
           <div className="p-4 flex items-center gap-4">
@@ -138,6 +180,18 @@ export default function ManageIssues() {
               >
                 View
               </Link>
+              <button
+                className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs"
+                disabled={busy === issue.id}
+                title={
+                  sent[issue.issue_number]
+                    ? `Subscribers notified ${formatDate(sent[issue.issue_number])}`
+                    : "Send a push notification to subscribers"
+                }
+                onClick={() => void notify(issue)}
+              >
+                {sent[issue.issue_number] ? "Notified ✓" : "Notify"}
+              </button>
               <button
                 className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs"
                 onClick={() => (editing === issue.id ? setEditing(null) : startEdit(issue))}

@@ -17,6 +17,9 @@
  * supabase/migrations/20261030120000_gazette_publisher.sql) with
  * GAZETTE_PUBLISHER_EMAIL and GAZETTE_PUBLISHER_PASSWORD.
  *
+ * Once the issue is live it notifies the browsers subscribed to new issues
+ * (lib/gazette/push.ts); a failed notice is a warning, not a failure.
+ *
  * Before rendering it compares the draft with the last three issues and
  * warns about any act they already printed (by number or register id).
  *
@@ -29,6 +32,7 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { parseArgs } from "node:util";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { notifyNewIssue } from "@/lib/gazette/push";
 import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gazette/supabase";
 import { analyzePdfBuffer } from "@/scripts/gazette/cover";
 import { allEntries, checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
@@ -205,6 +209,20 @@ async function main() {
     }
     await db.auth.signOut();
     fail((e as Error).message);
+  }
+
+  // The issue is live whatever happens here; a failed notice is only a warning.
+  try {
+    const sent = await notifyNewIssue(db, { issue_number: issueNumber, title });
+    if (sent.status === "sent") {
+      console.log(
+        `   Notified ${sent.delivered} of ${sent.subscribers} subscriber(s)` +
+          (sent.removed ? `, removed ${sent.removed} gone` : "") +
+          (sent.failed ? `, ${sent.failed} failed` : ""),
+      );
+    }
+  } catch (e) {
+    console.warn(`  ! Subscribers were not notified: ${(e as Error).message}`);
   }
 
   await db.auth.signOut();

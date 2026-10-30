@@ -11,7 +11,6 @@ import {
 } from "react";
 import { Document, Page, Thumbnail, pdfjs } from "react-pdf";
 import type { PDFDocumentProxy } from "pdfjs-dist";
-import DownloadButton from "@/components/gazette/DownloadButton";
 import "react-pdf/dist/Page/TextLayer.css";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 
@@ -22,8 +21,8 @@ const MAX_ZOOM = 4;
 
 type Props = {
   fileUrl: string;
-  issueId: string;
-  issueNumber: number;
+  /** The toolbar's download button: an issue's counts its downloads, a book's doesn't. */
+  download?: ReactNode;
 };
 
 function ToolButton({
@@ -61,7 +60,7 @@ function escapeRegExp(s: string) {
   return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-export default function PdfViewer({ fileUrl, issueId, issueNumber }: Props) {
+export default function PdfViewer({ fileUrl, download }: Props) {
   const shellRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const pdfRef = useRef<PDFDocumentProxy | null>(null);
@@ -515,7 +514,7 @@ export default function PdfViewer({ fileUrl, issueId, issueNumber }: Props) {
               <path d="M4 9V4h5M20 9V4h-5M4 15v5h5m11-5v5h-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </ToolButton>
-          <DownloadButton issueId={issueId} issueNumber={issueNumber} pdfUrl={fileUrl} variant="icon" className="!w-[2.125rem] !h-[2.125rem]" />
+          {download}
         </div>
       </div>
 
@@ -547,7 +546,7 @@ export default function PdfViewer({ fileUrl, issueId, issueNumber }: Props) {
         error={
           <div className="flex-1 grid place-items-center p-10">
             <div className="text-center max-w-sm">
-              <p className="font-serif text-xl mb-2">Couldn’t open this issue.</p>
+              <p className="font-serif text-xl mb-2">Couldn’t open this PDF.</p>
               <p className="text-sm text-silver mb-5">{loadError ?? "The PDF failed to load."}</p>
               <a className="olg-btn olg-btn-ghost" href={fileUrl} target="_blank" rel="noreferrer">
                 Open the raw PDF instead
