@@ -23,8 +23,13 @@
  * whether it looked back far enough to cover the whole period, and leads
  * that one of the last three issues already printed are marked.
  *
+ * The issue covers what issues 3–12 covered (see draft.ts): presidential
+ * decrees, Cabinet decisions, bills and Constitutional Court rulings. Other
+ * acts (laws, orders, ministries) are collected too but left out of the
+ * leads unless --all is given.
+ *
  * Usage:
- *   npm run gazette:collect -- --from 2026-10-26 --to 2026-11-01 [--out leads.json]
+ *   npm run gazette:collect -- --from 2026-10-26 --to 2026-11-01 [--out leads.json] [--all]
  * Without --from/--to: the Monday–Sunday week before today.
  */
 
@@ -32,7 +37,6 @@ import { writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
 import { createClient } from "@supabase/supabase-js";
 import { SUPABASE_KEY, SUPABASE_URL } from "@/lib/gazette/supabase";
-import type { EntryKind } from "@/scripts/gazette/draft";
 import { getText, retryCount } from "@/scripts/gazette/http";
 import {
   CABINET,
@@ -51,6 +55,7 @@ import {
   sameActAnyDate,
   sortLeads,
   stripActName,
+  type EntryKind,
   type Lead,
 } from "@/scripts/gazette/leads";
 import { printedIn, recentIssues } from "@/scripts/gazette/previous";
@@ -58,8 +63,18 @@ import { printedIn, recentIssues } from "@/scripts/gazette/previous";
 // ── Period ────────────────────────────────────────────────────────────────────
 
 const { values } = parseArgs({
-  options: { from: { type: "string" }, to: { type: "string" }, out: { type: "string" } },
+  options: { from: { type: "string" }, to: { type: "string" }, out: { type: "string" }, all: { type: "boolean", default: false } },
 });
+
+/** What the issue's four sections take. */
+function inScope(l: Lead): boolean {
+  return (
+    (l.kind === "decree" && l.institution === PRESIDENT) ||
+    (l.kind === "decision" && l.institution === CABINET) ||
+    l.kind === "bill" ||
+    l.kind === "court"
+  );
+}
 
 // Baku is UTC+4 all year; the routine runs on Monday morning there.
 const today = new Date(Date.now() + 4 * 3_600_000).toISOString().slice(0, 10);
@@ -414,15 +429,19 @@ async function main() {
   }
   // A late act that was already printed is not news.
   leads = leads.filter((l) => !(l.late && l.printedIn));
+  const outOfScope = leads.filter((l) => !inScope(l)).length;
+  if (!values.all) leads = leads.filter(inScope);
 
   const warnings: string[] = [];
   for (const r of reports) {
     if (!r.ok) warnings.push(`${r.source} failed: ${r.error}`);
     else if (!r.complete) warnings.push(`${r.source} did not reach the start of the period; acts from its first days may be missing`);
   }
-  if (!president) warnings.push("Without president.az this week's laws cannot be determined");
-  for (const law of laws) {
-    if (!law.number) warnings.push(`No number found for the law "${law.title.slice(0, 80)}…"; take it from its text`);
+  if (values.all) {
+    if (!president) warnings.push("Without president.az this week's laws cannot be determined");
+    for (const law of laws) {
+      if (!law.number) warnings.push(`No number found for the law "${law.title.slice(0, 80)}…"; take it from its text`);
+    }
   }
   for (const bill of bills?.undated ?? []) warnings.push(`Undated bill on meclis.gov.az, check whether it belongs here: ${bill}`);
   for (const lead of leads) {
@@ -438,7 +457,8 @@ async function main() {
 
   const byInstitution = new Map<string, number>();
   for (const l of leads) byInstitution.set(l.institution, (byInstitution.get(l.institution) ?? 0) + 1);
-  console.log(`\n   ${leads.length} act(s)${retries ? `, ${retries} retried request(s)` : ""}:`);
+  const left = !values.all && outOfScope ? ` (${outOfScope} other act(s) left out: laws, orders, other bodies; --all keeps them)` : "";
+  console.log(`\n   ${leads.length} act(s)${retries ? `, ${retries} retried request(s)` : ""}${left}:`);
   for (const [institution, n] of byInstitution) console.log(`     ${String(n).padStart(3)}  ${institution}`);
   for (const w of warnings) console.log(`   ! ${w}`);
   console.log(`\n✓ Leads saved: ${out}\n`);

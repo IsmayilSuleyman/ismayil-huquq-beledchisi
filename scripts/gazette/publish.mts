@@ -31,7 +31,7 @@ import { parseArgs } from "node:util";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gazette/supabase";
 import { analyzePdfBuffer } from "@/scripts/gazette/cover";
-import { checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
+import { allEntries, checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
 import { renderIssuePdf } from "@/scripts/gazette/issue-pdf";
 import { printedIn, recentIssues } from "@/scripts/gazette/previous";
 
@@ -120,13 +120,11 @@ async function main() {
       try {
         const issues = await recentIssues(db, 3);
         let repeats = 0;
-        for (const section of draft.sections) {
-          for (const entry of section.entries) {
-            const n = printedIn(entry, issues);
-            if (n === null) continue;
-            repeats++;
-            console.warn(`  ! ${entry.kind} ${entry.number ? `№ ${entry.number}` : `"${entry.title.slice(0, 50)}…"`} already appears in No. ${n}`);
-          }
+        for (const { section, entry } of allEntries(draft)) {
+          const n = printedIn(entry, issues);
+          if (n === null) continue;
+          repeats++;
+          console.warn(`  ! ${section} ${entry.number ? `№ ${entry.number}` : `"${entry.text.slice(0, 50)}…"`} already appears in No. ${n}`);
         }
         const compared = issues.map((i) => `No. ${i.issueNumber}`).join(", ");
         if (repeats === 0) console.log(`   Compared with ${compared || "no readable issue"}: no act repeated`);
@@ -147,12 +145,13 @@ async function main() {
   const { pageCount, cover } = await analyzePdfBuffer(pdf);
   console.log(`   ${pageCount} page(s), ${Math.round(pdf.byteLength / 1024)} KB, cover ${Math.round(cover.byteLength / 1024)} KB`);
 
+  // Like issues 1–12: the title only, no summary or tags.
   const row = {
     issue_number: issueNumber,
     title,
-    summary: draft.summary,
+    summary: null,
     published_at: draft.published_at,
-    tags: draft.tags,
+    tags: [] as string[],
     page_count: pageCount,
     file_size_bytes: pdf.byteLength,
   };

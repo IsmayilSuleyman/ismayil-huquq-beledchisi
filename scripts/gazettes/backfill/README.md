@@ -2,8 +2,10 @@
 
 The gazette published nothing between issue 12 (5–11 September) and the
 start of the weekly routine. These drafts fill the gap, one issue per week,
-each written by following `scripts/gazette/ROUTINE.md` as a catch-up run
-and checked with a dry run.
+in the format of issues 3–12 (decrees, Cabinet decisions, bills,
+Constitutional Court rulings; one sentence per act). Each was written by
+following `scripts/gazette/ROUTINE.md` as a catch-up run, reconciled
+against the collector, and checked with a dry run.
 
 | File | Period | Issue date |
 | --- | --- | --- |
@@ -26,7 +28,7 @@ that only for the issues a person has read and approved.
 ## Publishing
 
 Oldest first, one at a time, so they take numbers 13–18 in order. Each
-publish compares the draft with the issue before it and warns about
+publish compares the draft with the last three issues and warns about
 repeated act numbers; stop and look if it does.
 
 ```bash

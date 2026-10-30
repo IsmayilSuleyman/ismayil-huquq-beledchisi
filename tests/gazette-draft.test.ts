@@ -1,12 +1,17 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { checkDraft, countByKind, issueTitle } from "@/scripts/gazette/draft";
+import { allEntries, checkDraft, issueTitle } from "@/scripts/gazette/draft";
 import { formatPeriod } from "@/lib/gazette-format";
 
 const FIXTURE = path.join(import.meta.dirname, "fixtures", "gazette", "draft.json");
 
-function sample(): Record<string, unknown> {
+type Raw = {
+  sections: Record<string, { note?: string; entries: Record<string, unknown>[] }>;
+  [key: string]: unknown;
+};
+
+function sample(): Raw {
   return JSON.parse(readFileSync(FIXTURE, "utf8"));
 }
 
@@ -16,96 +21,99 @@ function errorsOf(raw: unknown): string[] {
 }
 
 describe("checkDraft", () => {
-  it("accepts the sample issue and counts acts per kind", () => {
+  it("accepts the sample issue and numbers its acts across the four sections", () => {
     const result = checkDraft(sample());
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.draft.sections).toHaveLength(4);
-    expect(countByKind(result.draft)).toEqual([
-      { kind: "law", count: 2 },
-      { kind: "bill", count: 1 },
-      { kind: "decree", count: 2 },
-      { kind: "order", count: 2 },
-      { kind: "decision", count: 2 },
-      { kind: "court", count: 1 },
+    expect(result.warnings).toEqual([]);
+    expect(allEntries(result.draft).map((e) => e.section)).toEqual([
+      "decrees",
+      "decrees",
+      "decisions",
+      "decisions",
+      "bills",
+      "bills",
+      "court",
+      "court",
     ]);
-    // Laws carry their adoption date, before the week they were signed in.
-    expect(result.warnings.filter((w) => w.includes("before the period starts"))).toHaveLength(2);
+    expect(result.draft.sections.court.entries.map((e) => e.ruling)).toEqual(["qərardad", "qərar"]);
   });
 
-  it("trims strings and drops duplicate tags", () => {
+  it("trims and collapses whitespace in a sentence", () => {
     const raw = sample();
-    raw.headline = "  Başlıq  ";
-    raw.tags = ["Vergi", "vergi ", "KOB"];
+    raw.sections.decrees.entries[0].text = "  Strategiya   təsdiq\nedilib.  ";
     const result = checkDraft(raw);
-    expect(result.ok && result.draft.headline).toBe("Başlıq");
-    expect(result.ok && result.draft.tags).toEqual(["Vergi", "KOB"]);
+    expect(result.ok && result.draft.sections.decrees.entries[0].text).toBe("Strategiya təsdiq edilib.");
   });
 
   it("rejects misspelt fields instead of dropping them", () => {
     const raw = sample();
     raw.summery = "typo";
-    expect(errorsOf(raw)).toContain('draft: unknown field "summery"');
+    raw.sections.decisions.entries[0].titel = "typo";
+    const errors = errorsOf(raw);
+    expect(errors).toContain('draft: unknown field "summery"');
+    expect(errors).toContain('sections.decisions.entries[0]: unknown field "titel"');
   });
 
-  it("rejects impossible dates and acts dated after the period", () => {
+  it("holds every act to one sentence, without its number", () => {
+    const raw = sample();
+    raw.sections.decisions.entries[0].text = "Strategiya təsdiq edilib. Nazirlik hesabat verəcək.";
+    raw.sections.decisions.entries[1].text = "Qayda təsdiq edilib (Qərar № 349).";
+    raw.sections.decrees.entries[0].text = "Tədbirlər müəyyən edilib";
+    const errors = errorsOf(raw);
+    expect(errors).toContain("sections.decisions.entries[0].text must be one sentence");
+    expect(errors.some((e) => e.startsWith("sections.decisions.entries[1].text must not carry the act's number"))).toBe(true);
+    expect(errors).toContain("sections.decrees.entries[0].text must end with a full stop");
+  });
+
+  it("needs a bill's reading and a court ruling's type to be valid", () => {
+    const raw = sample();
+    delete raw.sections.bills.entries[0].stage;
+    raw.sections.court.entries[0].ruling = "hökm";
+    const errors = errorsOf(raw);
+    expect(errors.some((e) => e.startsWith("sections.bills.entries[0].stage must be one of"))).toBe(true);
+    expect(errors).toContain('sections.court.entries[0].ruling must be "qərar" or "qərardad"');
+  });
+
+  it("rejects impossible dates and acts dated after the period, warns for earlier ones", () => {
     const raw = sample();
     (raw.period as Record<string, string>).from = "2026-02-30";
-    const sections = raw.sections as { entries: Record<string, string>[] }[];
-    sections[1].entries[0].date = "2026-11-20";
-    const errors = errorsOf(raw);
-    expect(errors.some((e) => e.startsWith("period.from must be a real date"))).toBe(true);
-    expect(errors.some((e) => e.includes("is after the end of the period"))).toBe(true);
-  });
+    raw.sections.decrees.entries[0].date = "2026-11-20";
+    expect(errorsOf(raw).some((e) => e.startsWith("period.from must be a real date"))).toBe(true);
+    expect(errorsOf(raw).some((e) => e.includes("is after the end of the period"))).toBe(true);
 
-  it("warns, but still passes, for acts dated before the period", () => {
-    const raw = sample();
-    const sections = raw.sections as { entries: Record<string, string>[] }[];
-    sections[1].entries[0].date = "2026-08-01";
-    const result = checkDraft(raw);
+    const early = sample();
+    early.sections.decrees.entries[0].date = "2026-10-01";
+    const result = checkDraft(early);
     expect(result.ok).toBe(true);
     expect(result.warnings.some((w) => w.includes("before the period starts"))).toBe(true);
   });
 
-  it("rejects the same act listed twice", () => {
+  it("rejects the same act twice in a section, and a missing section", () => {
     const raw = sample();
-    const sections = raw.sections as { entries: Record<string, string>[] }[];
-    sections[1].entries.push({ ...sections[1].entries[0] });
-    expect(errorsOf(raw).some((e) => e.includes("appears twice"))).toBe(true);
+    raw.sections.decisions.entries.push({ ...raw.sections.decisions.entries[0] });
+    expect(errorsOf(raw).some((e) => e.includes("the same act appears twice in decisions"))).toBe(true);
+
+    const missing = sample();
+    delete missing.sections.court;
+    expect(errorsOf(missing).some((e) => e.startsWith("sections.court is missing"))).toBe(true);
   });
 
-  it("needs a notice when a section has no entries", () => {
+  it("accepts an empty section", () => {
     const raw = sample();
-    const sections = raw.sections as Record<string, unknown>[];
-    sections.push({ institution: "Mərkəzi Bank", entries: [] });
-    expect(errorsOf(raw).some((e) => e.includes("no entries and no notice or intro"))).toBe(true);
-    sections[sections.length - 1].intro = "Hesabat dövründə Mərkəzi Bankın yeni normativ aktı qeydə alınmayıb.";
+    raw.sections.court = { entries: [] };
     expect(errorsOf(raw)).toEqual([]);
-  });
-
-  it("rejects unknown kinds, bad URLs and an empty source list", () => {
-    const raw = sample();
-    const sections = raw.sections as { entries: Record<string, string>[] }[];
-    sections[1].entries[0].kind = "ferman";
-    sections[1].entries[1].url = "javascript:alert(1)";
-    raw.sources = [];
-    const errors = errorsOf(raw);
-    expect(errors.some((e) => e.includes(".kind must be one of"))).toBe(true);
-    expect(errors.some((e) => e.includes(".url must be an http(s) URL"))).toBe(true);
-    expect(errors.some((e) => e.startsWith("sources is empty"))).toBe(true);
-  });
-
-  it("enforces the card-length limits", () => {
-    const raw = sample();
-    raw.headline = "x".repeat(200);
-    expect(errorsOf(raw).some((e) => e.startsWith("draft.headline is 200 characters"))).toBe(true);
   });
 });
 
 describe("issueTitle", () => {
-  it("follows the library's title pattern, in Azerbaijani", () => {
-    expect(issueTitle({ period: { from: "2026-10-26", to: "2026-11-01" } })).toBe(
-      "Həftəlik qanunvericilik icmalı, 26 oktyabr – 1 noyabr 2026"
+  it("follows the library's title pattern from issues 1–12", () => {
+    expect(issueTitle({ period: { from: "2026-10-19", to: "2026-10-25" } })).toBe("Weekly Legislature Update, October 19-25");
+    expect(issueTitle({ period: { from: "2026-09-28", to: "2026-10-04" } })).toBe(
+      "Weekly Legislature Update, September 28 – October 4"
+    );
+    expect(issueTitle({ period: { from: "2026-12-28", to: "2027-01-03" } })).toBe(
+      "Weekly Legislature Update, December 28, 2026 – January 3, 2027"
     );
   });
 });

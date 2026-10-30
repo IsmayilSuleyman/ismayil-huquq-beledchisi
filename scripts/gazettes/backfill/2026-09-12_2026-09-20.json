@@ -4,227 +4,73 @@
     "to": "2026-09-20"
   },
   "published_at": "2026-09-21",
-  "headline": "Elektron ticarətdə qeyri-rezidentlər üçün 10 000 dollarlıq vergi uçotu həddi; xüsusi karantin rejimi 2027-ci il 2 yanvaradək uzadılıb",
-  "summary": "Nazirlər Kabineti internet vasitəsilə elektron ticarət edən qeyri-rezidentlərin vergi uçotuna alınması qaydasını dəyişib və xüsusi karantin rejimini 2027-ci il 2 yanvaradək uzadıb. Maliyyə Nazirliyi ezamiyyə qaydalarını fiziki şəxs olan işəgötürənlərə şamil edib, Mərkəzi Bank kredit riskləri üzrə prudensial qaydalara dəyişikliklər edib.",
-  "tags": [
-    "Vergi",
-    "Elektron ticarət",
-    "Bank tənzimləməsi",
-    "Əmək hüququ",
-    "Səhiyyə",
-    "Bərpa olunan enerji",
-    "Seçkilər"
-  ],
-  "overview": "Həftənin əsas sənədi Nazirlər Kabinetinin 295 nömrəli Qərarıdır. Vergi orqanlarında uçotda olmayan şəxslərə internet vasitəsilə iş və xidmət göstərən qeyri-rezident, alıcısı Azərbaycanda olan iş və xidmətlərdən dövriyyəsi təqvim ili ərzində 10 000 ABŞ dollarının manat ekvivalentini keçdikdən sonra 30 gün müddətində elektron qaydada vergi uçotuna alınmalıdır; dövriyyə bu həddən aşağı olduqda uçota alınma könüllüdür. E-poçtla və digər interaktiv vasitələrlə göstərilən məsləhət, hüquq, maliyyə və mühasibat xidmətləri isə Vergi Məcəlləsinin 33.8-1-ci maddəsinin məqsədləri üçün elektron ticarət xidməti sayılmır.\n\nKabinet həmçinin xüsusi karantin rejimini 2027-ci il 2 yanvar saat 06:00-dək uzadıb, Bakının Zirə qəsəbəsində 198,45 hektar torpağı 100 MVt gücündə günəş elektrik stansiyası üçün bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edib. Maliyyə Nazirliyinin Kollegiyası İşçilərin Ezamiyyə Qaydalarını fiziki şəxs olan işəgötürənlərə də şamil edib. Mərkəzi Bank aktivlərin təsnifləşdirilməsi və kredit riskləri ilə bağlı üç qaydaya dəyişikliklər edib; bankın məlumatına görə, dəyişikliklər davranış modelləri əsasında kreditləşməyə, belə kreditlər üzrə ehtiyatlara və istehlak kreditlərində zaminliyə aiddir.\n\nHesabat dövründə yeni qanun, fərman və Konstitusiya Məhkəməsinin qərarı dərc olunmayıb; Prezidentin sərəncamları kadr və təltif məsələlərinə aiddir. Mərkəzi Seçki Komissiyası 125 dairə seçki komissiyasını yenidən təşkil edib.",
-  "highlights": [
-    "295 nömrəli Qərar: vergi uçotunda olmayan şəxslərə internetlə iş və xidmət göstərən qeyri-rezidentin bu dövriyyəsi təqvim ilində 10 000 ABŞ dolları ekvivalentini keçərsə, 30 gün ərzində vergi uçotuna alınmalıdır.",
-    "Koronavirusla bağlı xüsusi karantin rejimi 2027-ci il 2 yanvar saat 06:00-dək uzadılıb (303 nömrəli Qərar).",
-    "İşçilərin Ezamiyyə Qaydaları fiziki şəxs olan işəgötürənlərə də şamil edilir (Maliyyə Nazirliyi Kollegiyasının 3-23/3-4-10/2026 nömrəli Qərarı).",
-    "Mərkəzi Bankın 39/3 nömrəli Qərarı ilə bankların aktivlərinin təsnifləşdirilməsi və kredit risklərinin idarə edilməsi qaydalarına dəyişikliklər edilib.",
-    "Zirədə 198,45 hektar dövlət torpağı 100 MVt-lıq günəş elektrik stansiyası və 30 MVt-lıq enerji saxlanc sistemi üçün bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilib (302 nömrəli Qərar)."
-  ],
-  "sections": [
-    {
-      "institution": "Milli Məclis",
-      "subtitle": "Qanunlar və qanun layihələri",
-      "notice": "Hesabat dövründə Prezidentin rəsmi saytında imzalanmış yeni qanun dərc olunmayıb, Milli Məclisin saytında isə yeni qanun layihəsi yerləşdirilməyib.",
+  "sections": {
+    "decrees": {
       "entries": []
     },
-    {
-      "institution": "Azərbaycan Respublikasının Prezidenti",
-      "subtitle": "Fərmanlar və sərəncamlar",
-      "intro": "Prezident 15–19 sentyabrda 1 vəzifədən azadetmə və 5 təltif sərəncamı imzalayıb.",
-      "notice": "Hesabat dövründə Prezidentin fərmanı, habelə qurum yaradan, proqram təsdiq edən və ya dövlət vəsaiti ayıran sərəncamı dərc olunmayıb.",
-      "entries": []
-    },
-    {
-      "institution": "Nazirlər Kabineti",
-      "subtitle": "Qərarlar və sərəncamlar",
-      "intro": "Nazirlər Kabineti 14–17 sentyabrda 9 qərar qəbul edib; hesabat dövrünə aid sərəncamı dərc olunmayıb.",
+    "decisions": {
       "entries": [
         {
-          "kind": "decision",
           "number": "295",
           "date": "2026-09-14",
-          "title": "Elektron ticarəti həyata keçirən qeyri-rezidentlərin vergi uçotu və ƏDV Qaydasına dəyişikliklər",
-          "summary": "Qaydada “rezidentlərə” sözü “vergi orqanlarında uçotda olmayan şəxslərə” sözləri ilə əvəz edilir; yeni redaksiyaya görə, belə şəxslərə internet vasitəsilə iş və xidmət göstərən qeyri-rezident, alıcısı Azərbaycanda olan iş və xidmətlərdən dövriyyəsi təqvim ili ərzində 10 000 ABŞ dollarının manat ekvivalentini keçdikdən sonra 30 gün müddətində elektron qaydada vergi uçotuna alınmalıdır, dövriyyə bu həddən aşağı olduqda uçota alınma könüllüdür. E-poçt və digər interaktiv vasitələrlə göstərilən məsləhət, hüquq, maliyyə, mühasibat, dizayn və mühəndis xidmətləri, real vaxt rejimində onlayn tədris və təlim, habelə elm, təhsil, mədəniyyət, idman və əyləncə tədbirlərinə biletlərin onlayn sifarişi Vergi Məcəlləsinin 33.8-1-ci maddəsinin məqsədləri üçün elektron ticarət xidməti sayılmır. Qərar 355-VIIQD nömrəli Qanunun tətbiqinə dair 606 nömrəli Fərmanın icrası üçün qəbul edilib.",
+          "text": "Elektron ticarəti həyata keçirən qeyri-rezidentlərin vergi uçotu və ƏDV Qaydasında dəyişiklik edilib; vergi orqanlarında uçotda olmayan şəxslərə internet vasitəsilə iş və xidmət göstərən qeyri-rezident Azərbaycandakı alıcılar üzrə dövriyyəsi təqvim ili ərzində 10 000 ABŞ dollarının manat ekvivalentini keçdikdən sonra 30 gün müddətində vergi uçotuna alınmalıdır.",
           "url": "https://e-qanun.az/framework/62593"
         },
         {
-          "kind": "decision",
           "number": "296",
           "date": "2026-09-14",
-          "title": "Baytarlıq preparatlarına dair Qaydalara dəyişiklik (xaricdə istehsal edilmiş bioloji preparatların qeydiyyatı)",
-          "summary": "Xaricdə istehsal edilmiş və əvvəllər respublikada tətbiq olunmuş bioloji preparatların qeydiyyatı üçün tələb olunan Sənədlərin (baytarlıq preparatlarına dair Qaydalara 3 nömrəli əlavə) üçüncü abzasında “və” sözü “və ya” sözləri ilə əvəz edilir.",
+          "text": "Baytarlıq preparatlarına dair Qaydalarda dəyişiklik edilib; xaricdə istehsal edilmiş və əvvəllər respublikada tətbiq olunmuş bioloji preparatların qeydiyyatı üçün tələb olunan Sənədlərin üçüncü abzasında “və” sözü “və ya” sözləri ilə əvəz edilib.",
           "url": "https://e-qanun.az/framework/62594"
         },
         {
-          "kind": "decision",
           "number": "297",
           "date": "2026-09-15",
-          "title": "Mədəniyyət Nazirliyinin tabeliyindəki qurumların Siyahısına dəyişiklik",
-          "summary": "Siyahının “Təhsil müəssisələri” hissəsinin 1.93-cü və 1.133-cü bəndləri yeni redaksiyada verilir: “Füzuli şəhər Kurmanqazı adına İncəsənət Məktəbi” və “Xankəndi şəhər İncəsənət Məktəbi”.",
+          "text": "Mədəniyyət Nazirliyinin tabeliyindəki qurumların Siyahısında dəyişiklik edilib; “Təhsil müəssisələri” hissəsinin iki bəndi “Füzuli şəhər Kurmanqazı adına İncəsənət Məktəbi” və “Xankəndi şəhər İncəsənət Məktəbi” kimi yeni redaksiyada verilib.",
           "url": "https://e-qanun.az/framework/62601"
         },
         {
-          "kind": "decision",
           "number": "298",
           "date": "2026-09-16",
-          "title": "Qarayazı Dövlət Təbiət Qoruğunun sanitariya-mühafizə zonasının təsdiqi",
-          "summary": "Prezidentin 15 may 2014-cü il tarixli 166 nömrəli Fərmanının icrası üçün Qarayazı Dövlət Təbiət Qoruğunun sanitariya-mühafizə zonası əlavə olunmuş xəritədə göstərilən 3230,81 hektar sahədə təsdiq edilir.",
+          "text": "Qarayazı Dövlət Təbiət Qoruğunun 3230,81 hektarlıq sanitariya-mühafizə zonası təsdiq edilib.",
           "url": "https://e-qanun.az/framework/62599"
         },
         {
-          "kind": "decision",
           "number": "299",
           "date": "2026-09-16",
-          "title": "Sosial ödənişlər Qaydasına dəyişikliklər: həlak olmuş minatəmizləyənlərin ailələrinə Prezident təqaüdü",
-          "summary": "Prezidentin 31 mart 2026-cı il tarixli 634 nömrəli Fərmanının icrası üçün Qaydaya minatəmizləmə zamanı partlayıcı sursatın işə düşməsi nəticəsində həlak olan və ya aldığı xəsarətdən həyatını itirən minatəmizləyənlərin ailə üzvlərinə Prezident təqaüdünün təyin edilməsi üçün tələb olunan sənədlərin siyahısı əlavə edilir. Siyahıya Azərbaycan Respublikasının Minatəmizləmə Agentliyinin ölümün bu səbəbdən baş verdiyini təsdiq edən arayışı, ölüm haqqında şəhadətnamənin surəti, ailə üzvlüyünü, nikahı və 23 yaşınadək övladların təhsil aldığını təsdiq edən sənədlər daxildir.",
+          "text": "Sosial ödənişlər Qaydasında dəyişiklik edilib; Qaydaya minatəmizləmə zamanı partlayıcı sursatın işə düşməsi nəticəsində həlak olmuş və ya aldığı xəsarətdən həyatını itirmiş minatəmizləyənlərin ailə üzvlərinə Prezident təqaüdünün təyin edilməsi üçün tələb olunan sənədlərin siyahısı əlavə edilib.",
           "url": "https://e-qanun.az/framework/62596"
         },
         {
-          "kind": "decision",
           "number": "300",
           "date": "2026-09-16",
-          "title": "“Yol hərəkəti haqqında” Qanuna dəyişikliyin icrası ilə bağlı Kabinetin dörd qərarına dəyişikliklər",
-          "summary": "“Yol hərəkəti haqqında” Qanuna dəyişiklik edən 17 mart 2026-cı il tarixli 379-VIIQD nömrəli Qanunun icrası üçün nəqliyyat vasitələrinin dövlət qeydiyyatı, dövlət texniki baxışı, sürücülük imtahanlarının qəbulu və sürücülük vəsiqəsinin verilməsi, habelə rəqəmlərin və hərflərin kombinasiyası üzrə dövlət qeydiyyat nişanlarının verilməsi qaydalarında “57.4-cü” sözlərindən sonra “57.6.3-cü” sözləri əlavə edilir.",
+          "text": "“Yol hərəkəti haqqında” Qanunda dəyişiklik barədə 379-VIIQD nömrəli Qanunun icrası ilə əlaqədar nəqliyyat vasitələrinin dövlət qeydiyyatı, dövlət texniki baxışı, sürücülük imtahanlarının qəbulu və sürücülük vəsiqəsinin verilməsi, habelə rəqəmlərin və hərflərin kombinasiyası üzrə dövlət qeydiyyat nişanlarının verilməsi qaydalarına dair dörd qərarda dəyişiklik edilib.",
           "url": "https://e-qanun.az/framework/62600"
         },
         {
-          "kind": "decision",
           "number": "301",
           "date": "2026-09-17",
-          "title": "Strateji Obyektlərin Mühafizəsi Dövlət Agentliyi əməkdaşlarının tibbi təminatı",
-          "summary": "Agentliyin əməkdaşlarına (pensiyaya çıxmış əməkdaşlar da daxil olmaqla) və onların ailə üzvlərinə tibbi xidmət — profilaktika, ilkin tibbi-sanitariya, təcili və təxirəsalınmaz, ambulator-poliklinik və stasionar tibbi yardım, tibbi reabilitasiya və sağlamlaşdırma — Daxili İşlər Nazirliyinə həvalə edilir; Maliyyə Nazirliyi bunun üçün vəsaiti hər il Daxili İşlər Nazirliyinin saxlanılması xərclərinin tərkibində nəzərdə tutmalıdır. Kabinetin 29 yanvar 2024-cü il tarixli 54 nömrəli Qərarı ləğv edilir. Qərar 1 yanvar 2027-ci ildən qüvvəyə minir.",
+          "text": "Strateji Obyektlərin Mühafizəsi Dövlət Agentliyinin əməkdaşlarına (pensiyaya çıxmış əməkdaşlar da daxil olmaqla) və onların ailə üzvlərinə tibbi xidmət göstərilməsi 2027-ci il yanvarın 1-dən Daxili İşlər Nazirliyinə həvalə edilib; Nazirlər Kabinetinin 2024-cü il 29 yanvar tarixli 54 nömrəli Qərarı ləğv edilib.",
           "url": "https://e-qanun.az/framework/62607"
         },
         {
-          "kind": "decision",
           "number": "302",
           "date": "2026-09-17",
-          "title": "Zirədə 198,45 hektar torpağın bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilməsi",
-          "summary": "Bakının Xəzər rayonu, Zirə qəsəbəsi ərazisində yaşayış məntəqələrinin torpaqları kateqoriyasına aid 198,45 hektar dövlət torpağı qoyuluş gücü 100 MVt olan günəş elektrik stansiyasının və 30 MVt gücündə batareya enerji saxlanc sisteminin tikintisi üçün bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilir. Energetika Nazirliyi elektrik enerjisi istehsalçısının seçilməsini Prezidentin 2 avqust 2023-cü il tarixli 2285 nömrəli Fərmanı ilə təsdiq edilmiş Qaydaya uyğun həyata keçirməlidir; tikintiyə icazə Şəhərsalma və Tikinti Məcəlləsinə uyğun olaraq “Elektrik enerjisi istehsalında bərpa olunan enerji mənbələrindən istifadə haqqında” Qanunun 6.7-ci maddəsində nəzərdə tutulmuş müddətdə alınır.",
+          "text": "Bakının Xəzər rayonunun Zirə qəsəbəsində 198,45 hektar dövlət torpağı qoyuluş gücü 100 MVt olan günəş elektrik stansiyasının və 30 MVt gücündə batareya enerji saxlanc sisteminin tikintisi üçün bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilib.",
           "url": "https://e-qanun.az/framework/62605"
         },
         {
-          "kind": "decision",
           "number": "303",
           "date": "2026-09-17",
-          "title": "Xüsusi karantin rejiminin müddətinin uzadılması",
-          "summary": "Koronavirus (COVID-19) infeksiyasının yayılmasının qarşısını almaq məqsədilə xüsusi karantin rejiminin müddəti 2027-ci il 2 yanvar saat 06:00-dək uzadılır. Kabinetin 12 sentyabr 2020-ci il tarixli 336 nömrəli Qərarının 1.1-ci bəndində “2026-cı il 1 oktyabr” sözləri “2027-ci il 2 yanvar” sözləri ilə əvəz edilir.",
+          "text": "Xüsusi karantin rejiminin müddəti 2027-ci il 2 yanvar saat 06:00-dək uzadılıb (2020-ci il 12 sentyabr tarixli 336 nömrəli Qərar).",
           "url": "https://e-qanun.az/framework/62606"
         }
       ]
     },
-    {
-      "institution": "Konstitusiya Məhkəməsi",
-      "subtitle": "Qərarlar",
-      "notice": "Hesabat dövrünə aid Konstitusiya Məhkəməsinin qərarı dərc olunmayıb.",
+    "bills": {
       "entries": []
     },
-    {
-      "institution": "Mərkəzi Bank",
-      "subtitle": "İdarə Heyətinin qərarları",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "39/2",
-          "date": "2026-09-15",
-          "title": "Maliyyə bazarlarında lisenziya və icazə almaq üçün təqdim edilən sənədlərin formalarına dəyişikliklər",
-          "summary": "İdarə Heyətinin 31 yanvar 2024-cü il tarixli 06/7 nömrəli Qərarı ilə təsdiq edilmiş, maliyyə bazarlarında fəaliyyətə lisenziya və icazələrin verilməsi üçün təqdim edilən sənədlərin formalarına, o cümlədən səhmdarlar (iştirakçılar) arasındakı münasibətlər, benefisiar mülkiyyətçilər və vətəndaş qüsursuzluğu haqqında məlumat formalarına dəyişikliklər edilir.",
-          "url": "https://e-qanun.az/framework/62729"
-        },
-        {
-          "kind": "decision",
-          "number": "39/3",
-          "date": "2026-09-15",
-          "title": "Aktivlərin təsnifləşdirilməsi, kredit riskləri üzrə prudensial normativlər və kredit risklərinin idarə edilməsi qaydalarına dəyişikliklər",
-          "summary": "Aktivlərin təsnifləşdirilməsi və mümkün zərərlərin ödənilməsi üçün xüsusi ehtiyatların yaradılması Qaydasına, iri kredit riskləri də daxil olmaqla kredit riskləri ilə bağlı prudensial normativ və tələblərə dair Qaydaya və Banklarda kredit risklərinin idarə edilməsi Qaydasına dəyişikliklər edilir. Mərkəzi Bankın 13 oktyabr 2026-cı il tarixli məlumatına görə, dəyişikliklər davranış modelləri əsasında kreditləşməyə dair tələblərə və belə kreditlər üzrə ehtiyatların yaradılmasına, aktivlərin təsnifləşdirilməsinə, nisyə mal alqı-satqısı ilə məşğul olan şəxslərin kredit öhdəlikləri üzrə məlumatların qiymətləndirilməsinə və istehlak kreditlərində zaminlik mexanizminə aiddir.",
-          "url": "https://e-qanun.az/framework/62730"
-        }
-      ]
-    },
-    {
-      "institution": "Maliyyə Nazirliyi",
-      "subtitle": "Kollegiya qərarları",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "3-23/3-4-10/2026",
-          "date": "2026-09-15",
-          "title": "İşçilərin Ezamiyyə Qaydalarına dəyişikliklər",
-          "summary": "Ezamiyyətin tərifi yeni redaksiyada verilir: dövlət orqanının, müəssisə, idarə və təşkilatın rəhbərinin, habelə fiziki şəxs olan işəgötürənin əmri (sərəncamı, qərarı) ilə işçinin müəyyən müddətə işəgötürənin qanunauyğun tapşırığını yerinə yetirmək üçün iş yerindən başqa yerə getməsi ezamiyyət sayılır. Qaydaların bir sıra bəndlərində və əlavəsində təşkilat rəhbərinə istinadlar “işəgötürən” sözü ilə əvəz edilir, əlavəyə fiziki şəxs olan işəgötürənin möhürü və ya soyadı, adı və atasının adı əlavə olunur. Dəyişikliklər 332-VIIQD nömrəli Qanunun tətbiqi ilə bağlı Nazirlər Kabinetinin 26 yanvar 2026-cı il tarixli 52s nömrəli Sərəncamının icrası üçün edilir.",
-          "url": "https://e-qanun.az/framework/62703"
-        }
-      ]
-    },
-    {
-      "institution": "Ədliyyə Nazirliyi",
-      "subtitle": "Kollegiya qərarları",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "3-16/1-KQ/17/2026",
-          "date": "2026-09-14",
-          "title": "Xüsusi İcra Məmurlarının Müsabiqə Komissiyasının tərkibinə dəyişiklik",
-          "summary": "Ədliyyə Nazirliyi Kollegiyasının 28 noyabr 2025-ci il tarixli 3-16/1-KQ/9/2025 nömrəli Qərarı ilə təsdiq edilmiş Xüsusi İcra Məmurlarının Müsabiqə Komissiyasının tərkibində dəyişiklik edilir.",
-          "url": "https://e-qanun.az/framework/62610"
-        },
-        {
-          "kind": "decision",
-          "number": "3-16/1-KQ/18/2026",
-          "date": "2026-09-18",
-          "title": "Xüsusi icra məmurunun şəxsi işinin aparılması qaydasına dəyişiklik",
-          "summary": "Kollegiyanın 28 noyabr 2025-ci il tarixli 3-16/1-KQ/13/2025 nömrəli qərarı ilə təsdiq edilmiş “Xüsusi icra məmurunun şəxsi işinin aparılması qaydası”na dəyişiklik edilir.",
-          "url": "https://e-qanun.az/framework/62608"
-        }
-      ]
-    },
-    {
-      "institution": "Mərkəzi Seçki Komissiyası",
-      "subtitle": "Qərarlar",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "3/7",
-          "date": "2026-09-17",
-          "title": "26 may 2026-cı il tarixli iclas protokolunun təsdiqi",
-          "summary": "Mərkəzi Seçki Komissiyasının 26 may 2026-cı il tarixli iclasının protokolu təsdiq edilir.",
-          "url": "https://e-qanun.az/framework/62603"
-        },
-        {
-          "kind": "decision",
-          "number": "3/8",
-          "date": "2026-09-17",
-          "title": "Dairə seçki komissiyalarının yenidən təşkili",
-          "summary": "Seçki Məcəlləsinin 23.1-ci maddəsinə görə seçki komissiyalarının səlahiyyət müddəti 5 il olduğundan 125 dairə seçki komissiyası yenidən təşkil edilir və hər birinə 9 üzv təyin olunur. Məcəllənin 30.3-cü maddəsinə əsasən hər komissiyanın üç üzvünün namizədliyi Milli Məclisdə çoxluq təşkil edən partiyanı, üç üzvünün namizədliyi azlıq təşkil edən partiyaları, üç üzvünün namizədliyi isə heç bir partiyaya mənsub olmayan deputatları Mərkəzi Seçki Komissiyasında təmsil edən üzvlər tərəfindən təqdim edilir. Qərar dərc edildiyi gündən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62604"
-        }
-      ]
+    "court": {
+      "entries": []
     }
-  ],
-  "sources": [
-    "https://e-qanun.az",
-    "https://president.az/az/documents/category/decrees",
-    "https://president.az/az/documents/category/orders",
-    "https://president.az/az/documents/category/laws",
-    "https://nk.gov.az/az/senedler/hamisi",
-    "https://meclis.gov.az/cat-layihe.php?cat=83&lang=az",
-    "https://constcourt.gov.az/az/decisions",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2023-9775",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinda-baytarliqla-bagli-bezi-9776",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2014-9778",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinin-qarayazi-dovlet-tebiet-9781",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2024-9779",
-    "https://nk.gov.az/az/senedler/qerarlar/yol-hereketi-haqqinda-azerbaycan-respublikasinin-q-9780",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-strateji-obyektlerin-muhaf-9782",
-    "https://nk.gov.az/az/senedler/qerarlar/baki-seherinin-inzibati-erazisinde-dovlet-mulkiyye-9784",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinin-erazisinde-xususi-karan-9783",
-    "https://www.cbar.az/press-release-5569/central-bank-enhances-prudential-requirements-for-credit-risk-management",
-    "https://www.maliyye.gov.az/static/46/azerbaycan-respublikasi-maliyye-nazirliyinin-normativ-senedleri",
-    "https://www.maliyye.gov.az/uploads/static-pages/files/6abf4252521c8.pdf",
-    "https://www.msk.gov.az/az/decisions/view/1470",
-    "https://www.msk.gov.az/uploads/plugins/pdf/datafiles/az_FILE_969395-16BFDB-CE448E-2613D5-CD0C1E-B97539.pdf",
-    "https://www.msk.gov.az/uploads/plugins/pdf/datafiles/az_FILE_2C4B6F-984D15-BBD670-AD4DB6-BE78DF-BA08AF.pdf"
-  ]
+  }
 }

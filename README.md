@@ -117,30 +117,36 @@ JavaScript origins**.
 ## 4. The automated gazette
 
 A Claude Routine writes and publishes the gazette every Monday, with no
-review step. The issue covers the previous Monday–Sunday and is written in
-Azerbaijani. Each run:
+review step. The issue covers the previous Monday–Sunday, is written in
+Azerbaijani and keeps the format of the published issues 3–12: the navy
+"omni" / "law gazette" header band, four sections (the President's
+decrees, Cabinet decisions, bills in the Milli Məclis, Constitutional Court
+rulings), and a numbered list of acts in each, every act one sentence with
+its number and a "Mənbə" link. Each run:
 
 1. `npm run gazette:collect` lists the week's acts: the official register
-   (e-qanun.az's search API) for everything with numbers, plus the same-day
-   lists on president.az, nk.gov.az, meclis.gov.az (bills) and
-   constcourt.gov.az. The same act from two sources becomes one lead; laws
-   count from the week president.az publishes them as signed, so none lands
-   in two issues. Each source reports whether it reached back to the start
-   of the period. `npm run gazette:read -- <url>` prints an act's text, from the
-   page or the PDF it embeds.
-2. Claude reads the acts and writes the issue as JSON
-   (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`):
-   headline, overview, highlights, one section per institution.
-3. `npm run gazette:publish -- draft.json --dry-run` checks the draft
-   (unknown fields, impossible dates, duplicates, length limits), lays it out
-   as an A4 newspaper PDF (`scripts/gazette/issue-pdf.tsx`, Source Serif 4 +
-   Inter) and renders the WebP cover from page 1, without uploading.
+   (e-qanun.az's search API) plus the same-day lists on president.az,
+   nk.gov.az, meclis.gov.az (bills, with each reading) and
+   constcourt.gov.az. The same act from two sources becomes one lead, each
+   in the week it was first published. Only what the four sections take is
+   kept (`--all` keeps laws, orders and other bodies' acts too).
+   `npm run gazette:read -- <url>` prints an act's text, from the page or
+   the PDFs it embeds.
+2. Claude writes one sentence per act and saves the issue as JSON
+   (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`).
+3. `npm run gazette:publish -- draft.json --dry-run` checks the draft (one
+   sentence per act, no number inside it, dates in the period, nothing
+   twice), lays it out (`scripts/gazette/issue-pdf.tsx`: Arimo and Source
+   Serif 4 in place of the old issues' Arial and Cambria, colours measured
+   from issue 12) and renders the WebP cover from page 1, without
+   uploading.
 4. Without `--dry-run` it signs in as the publisher account, uploads the
    PDF and cover to the `gazette` bucket and inserts the `issues` row with
-   the next number and the title "Həftəlik qanunvericilik icmalı, <period>".
-   It refuses a period that is already published (and an issue date another
-   issue has), warns about acts the previous issue already printed, and
-   removes its uploads if the insert fails.
+   the next number and a title like the old ones ("Weekly Legislature
+   Update, October 19-25"), no summary or tags. It refuses a period that is
+   already published (and an issue date another issue has), warns about
+   acts the last three issues printed, and removes its uploads if the
+   insert fails.
 
 The routine follows `scripts/gazette/ROUTINE.md`: what goes in, how to write
 it, what to check before publishing and when to stop instead. Change the
