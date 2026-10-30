@@ -5,7 +5,9 @@
  * network.
  */
 
-import type { EntryKind } from "@/scripts/gazette/draft";
+/** Every kind of act the sources list; the issue itself takes decrees, Cabinet decisions, bills and court rulings. */
+export const ENTRY_KINDS = ["law", "bill", "decree", "order", "decision", "court", "other"] as const;
+export type EntryKind = (typeof ENTRY_KINDS)[number];
 
 export type Lead = {
   kind: EntryKind;

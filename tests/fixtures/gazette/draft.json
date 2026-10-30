@@ -1,139 +1,71 @@
 {
-  "period": {
-    "from": "2026-10-19",
-    "to": "2026-10-25"
-  },
+  "period": { "from": "2026-10-19", "to": "2026-10-25" },
   "published_at": "2026-10-26",
-  "headline": "Texnologiyalar parkları üçün 20 illik vergi güzəştləri və “rəqəmsal səyyah” statusu",
-  "summary": "Vergi və Miqrasiya məcəllələrinə texnologiyalar parkları və startaplarla bağlı dəyişikliklər imzalanıb. Nazirlər Kabineti Uzunmüddətli Aşağıkarbonlu İnkişaf Strategiyasını təsdiq edib.",
-  "tags": [
-    "Vergi",
-    "İnnovasiya",
-    "Miqrasiya",
-    "Cinayət prosesi",
-    "İqlim"
-  ],
-  "overview": "Həftənin əsas sənədi 476-VIIQD nömrəli Qanundur: o, Vergi Məcəlləsinə, Miqrasiya Məcəlləsinə və dövlət satınalmaları haqqında qanuna birlikdə dəyişiklik edir. 2027-ci ildən texnologiyalar parkı rezidentləri üçün vergi güzəştlərinin müddəti 20 il olur, xarici mənbədən gəlir əldə edən əcnəbilər üçün “rəqəmsal səyyah” statusu yaradılır. Prezidentin 807 nömrəli Fərmanı texnoparklarda qeydiyyat qaydalarını buna uyğunlaşdırır.\n\nKonstitusiya Məhkəməsi həbs qətimkan tədbirinə dair normaları şərh edib. Nazirlər Kabineti qeyri-neft-qaz ixracına dəstəyin tətbiqi qaydalarını və Uzunmüddətli Aşağıkarbonlu İnkişaf Strategiyasını təsdiq edib.",
-  "highlights": [
-    "476-VIIQD: 2027-ci ildən texnologiyalar parkı rezidentləri üçün vergi güzəştləri 20 il, işçilərin əmək haqqından gəlir vergisi 20 il 0 faiz.",
-    "Miqrasiya Məcəlləsinə “rəqəmsal səyyah” statusu daxil edilir; frilanserlər texnoparkın rezidenti ola bilər (807 nömrəli Fərman).",
-    "Konstitusiya Məhkəməsi: həbs barədə müraciətə baxan məhkəmə əsaslı şübhəni və ilkin sübutların kifayətliliyini yoxlamalıdır."
-  ],
-  "sections": [
-    {
-      "institution": "Milli Məclis",
-      "subtitle": "Qanunlar və qanun layihələri",
-      "intro": "Prezident 20–22 oktyabrda Milli Məclisin yeddi qanununu imzalayıb; burada ikisi verilir. Milli Məclisin saytında 23 oktyabrda qanun layihələri müzakirəyə çıxarılıb.",
+  "sections": {
+    "decrees": {
       "entries": [
         {
-          "kind": "law",
-          "number": "476-VIIQD",
-          "date": "2026-09-30",
-          "title": "Vergi Məcəlləsinə, Miqrasiya Məcəlləsinə, sosial sığorta, sahibkarlıqda yoxlamalar və dövlət satınalmaları haqqında qanunlara dəyişikliklər",
-          "summary": "2027-ci il yanvarın 1-dən texnologiyalar parkı rezidenti şəhadətnaməsi alanlar üçün mənfəət və gəlir vergisi güzəştlərinin müddəti 20 il müəyyən edilir, onların işçilərinin muzdlu işdən gəlirinə 20 il müddətinə 0 faiz gəlir vergisi tətbiq olunur; startaplara investisiya qoyan şəxslər, vençur kapitalı fondları və akkreditə olunmuş investorlar üçün 10 illik güzəştlər müəyyən edilir, elmi-tədqiqat xərcləri 2,5 əmsalla gəlirdən çıxılır. Miqrasiya Məcəlləsinə “rəqəmsal səyyah” anlayışı daxil edilir, dövlət satınalmalarında ehtimal olunan qiyməti 250 000 manatadək olan satınalmalarda startapların və park rezidentlərinin innovasiya məhsullarına 20 faiz güzəşt və pilot tətbiq müqavilələri nəzərdə tutulur. Qanun 1 yanvar 2027-ci ildən qüvvəyə minir.",
-          "url": "https://president.az/az/articles/view/74261"
+          "number": "804",
+          "date": "2026-10-19",
+          "text": "Səhiyyə sahəsində idarəetmənin təkmilləşdirilməsi ilə bağlı tədbirlər müəyyən edilib; “Tibbi Ərazi Bölmələrini İdarəetmə Birliyi” publik hüquqi şəxsi Səhiyyə Nazirliyinin tabeliyinə verilib.",
+          "url": "https://e-qanun.az/framework/62764"
         },
         {
-          "kind": "law",
-          "number": "486-VIIQ",
-          "date": "2026-10-13",
-          "title": "Azərbaycan-Qırğız İnkişaf Fondu haqqında Sazişə dəyişikliklər edilməsinə dair İkinci Əlavə Sazişin təsdiqi",
-          "summary": "Azərbaycan-Qırğız İnkişaf Fondunun yaradılması haqqında 2022-ci il 11 oktyabr tarixli Sazişə dəyişikliklər edən və 2026-cı il iyulun 31-də Çolpon-Ata şəhərində imzalanmış İkinci Əlavə Saziş təsdiq edilir.",
-          "url": "https://president.az/az/articles/view/74247"
+          "number": "807",
+          "date": "2026-10-22",
+          "text": "Texnologiyalar parkı haqqında Nümunəvi Əsasnaməyə dəyişiklik edilib; frilanserlər və rəqəmsal səyyahlar texnoparkın rezidenti ola biləcək.",
+          "url": "https://e-qanun.az/framework/62789"
+        }
+      ]
+    },
+    "decisions": {
+      "entries": [
+        {
+          "number": "346",
+          "date": "2026-10-21",
+          "text": "Azərbaycanın Uzunmüddətli Aşağıkarbonlu İnkişaf Strategiyası təsdiq edilib.",
+          "url": "https://e-qanun.az/framework/62804"
         },
         {
-          "kind": "bill",
+          "number": "349",
           "date": "2026-10-23",
-          "title": "“Aqrar sahə haqqında” Qanun",
-          "summary": "Layihə birinci oxunuşdadır, qanun deyil. Aqrar sahədə dövlət tənzimləməsi və dövlət dəstəyinin əsasları, Aqrar Subsidiya Şurasının yaradılması, kənd təsərrüfatı təyinatlı torpaqlardan və sudan istifadə, bitki və heyvan sağlamlığı, aqrar kooperativlər və aqroturizm tənzimlənir. Qanun qüvvəyə mindiyi gündən “Taxıl haqqında”, “Çayçılıq haqqında”, “Pambıqçılıq haqqında” və “Kənd təsərrüfatı kooperasiyası haqqında” qanunların ləğvi nəzərdə tutulur.",
+          "text": "İxrac və daxili daşıma dəstəyi ödənilərkən qeyri-neft-qaz mallarının Azərbaycan mənşəli olmasının müəyyən edilməsi Qaydası təsdiq edilib.",
+          "url": "https://e-qanun.az/framework/62806"
+        }
+      ]
+    },
+    "bills": {
+      "note": "Milli Məclisin 23 oktyabr 2026-cı il tarixli iclasında on bir qanun layihəsi müzakirə olunub; burada ikisi verilir.",
+      "entries": [
+        {
+          "date": "2026-10-23",
+          "stage": "III",
+          "text": "Cinayət Məcəlləsində və Cinayət-Prosessual Məcəllədə dəyişiklik (hüquqi şəxslərə cinayət-hüquqi tədbirlərin tətbiqi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2704&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-23",
+          "stage": "I",
+          "text": "“Aqrar sahə haqqında” Qanun layihəsi.",
           "url": "https://meclis.gov.az/news-layihe.php?id=2724&lang=az&par=0"
         }
       ]
     },
-    {
-      "institution": "Azərbaycan Respublikasının Prezidenti",
-      "subtitle": "Fərmanlar və sərəncamlar",
-      "intro": "Prezident həmçinin 3 təyinat, 2 vəzifədən azadetmə və 2 təltif sərəncamı imzalayıb.",
+    "court": {
       "entries": [
         {
-          "kind": "decree",
-          "number": "804",
           "date": "2026-10-19",
-          "title": "Səhiyyə sahəsində idarəetmənin təkmilləşdirilməsi tədbirləri",
-          "summary": "“Tibbi Ərazi Bölmələrini İdarəetmə Birliyi” (TƏBİB) publik hüquqi şəxsi Səhiyyə Nazirliyinin tabeliyinə verilir; onun hüquq, öhdəlik və əmlakı nazirliyin tabeliyindəki TƏBİB-ə keçir, cari rəhbərliyi nazirliyin təyin etdiyi sədr və 4 müavindən ibarət İdarə Heyəti həyata keçirəcək. Nazirlər Kabinetinə üç ay müddətində normativ aktların təkmilləşdirilməsi və TƏBİB-in nizamnamə layihəsi üzrə təkliflər hazırlamaq tapşırılır.",
-          "url": "https://e-qanun.az/framework/62764"
+          "ruling": "qərardad",
+          "text": "Ailə Məcəlləsinin 47.1-ci maddəsinin ananın doğum haqqında şəhadətnamədəki atalıq qeydini mübahisələndirmək hüququnu da əhatə etdiyi göstərilib.",
+          "url": "https://constcourt.gov.az/az/decision/1632"
         },
         {
-          "kind": "decree",
-          "number": "807",
-          "date": "2026-10-22",
-          "title": "Texnologiyalar parkı haqqında Nümunəvi Əsasnaməyə dəyişikliklər",
-          "summary": "Frilanserlər və rəqəmsal səyyahlar texnoparkın rezidenti ola bilər; rezident kimi qeydiyyatın müddəti 7 iş günü müəyyən edilir, uyğun fəaliyyət istiqamətləri (proqram təminatı, süni intellekt, kibertəhlükəsizlik, bulud xidmətləri və s.), hesabat vermə və qeydiyyat şəhadətnaməsinin ləğvi əsasları yenidən tənzimlənir. Dəyişikliklər 1 yanvar 2027-ci ildən qüvvəyə minir; həmin tarixədək verilmiş şəhadətnamələr qüvvəsini saxlayır.",
-          "url": "https://e-qanun.az/framework/62789"
-        },
-        {
-          "kind": "order",
-          "number": "1273",
           "date": "2026-10-20",
-          "title": "Qarabağ Milli Parkının yaradılması",
-          "summary": "Ağdərə, Xocalı, Kəlbəcər, Şuşa və Laçın rayonlarının dövlət mülkiyyətində olan torpaqlarından ayrılan 88 418 hektar sahədə Qarabağ Milli Parkı yaradılır; bu torpaqlar xüsusi qorunan ərazilərin torpaqları kateqoriyasına aid edilir.",
-          "url": "https://e-qanun.az/framework/62775"
-        }
-      ]
-    },
-    {
-      "institution": "Nazirlər Kabineti",
-      "subtitle": "Qərarlar və sərəncamlar",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "346",
-          "date": "2026-10-21",
-          "title": "Azərbaycanın Uzunmüddətli Aşağıkarbonlu İnkişaf Strategiyasının təsdiqi",
-          "summary": "Paris Sazişinin 4-cü maddəsinə əsasən Strategiya təsdiq edilir; qərarda Strategiyadakı 2060-cı ilədək “xalis sıfır emissiya” hədəfinin şərti olduğu və ona nail olunmasının əlavə maliyyə resurslarının cəlbindən asılı olacağı göstərilir. Ekologiya və Təbii Sərvətlər Nazirliyi Strategiyanı BMT-nin İqlim Dəyişmələri üzrə Çərçivə Konvensiyasının Katibliyinə təqdim edəcək, icrasının monitorinq nəticələrini iki ildən bir İqlim Dəyişmələri üzrə Dövlət Komissiyasına verəcək.",
-          "url": "https://e-qanun.az/framework/62804"
-        },
-        {
-          "kind": "decision",
-          "number": "349",
-          "date": "2026-10-23",
-          "title": "İxrac və daxili daşıma dəstəyi ödənilərkən malların Azərbaycan mənşəli olmasının müəyyən edilməsi Qaydası",
-          "summary": "Prezidentin 2026-cı il 9 iyun tarixli 681 nömrəli Fərmanının icrası üçün qeyri-neft-qaz mallarının Azərbaycan mənşəli olmasının müəyyən edilməsi Qaydası təsdiq edilir. Qərar 1 sentyabr 2026-cı ildən tətbiq edilir və 30 sentyabr 2036-cı ilədək həyata keçirilən ixrac və daxili daşımalara şamil olunur.",
-          "url": "https://e-qanun.az/framework/62806"
-        },
-        {
-          "kind": "order",
-          "number": "798s",
-          "date": "2026-10-23",
-          "title": "“Rəqəmsal rabitə” informasiya sistemi haqqında 802 nömrəli fərmanın icrası",
-          "summary": "Ədliyyə Nazirliyinə Rəqəmsal İnkişaf və Nəqliyyat Nazirliyi və Xüsusi Rabitə və İnformasiya Təhlükəsizliyi Dövlət Xidməti ilə razılaşdırmaqla Kabinetin aktlarının Fərmana uyğunlaşdırılması üzrə təkliflərini beş ay müddətində təqdim etmək tapşırılır. Sərəncam imzalandığı gündən qüvvəyə minir.",
-          "url": "https://nk.gov.az/az/senedler/serencamlar/reqemsal-rabite-informasiya-sisteminin-yaradilmasi-9845"
-        }
-      ]
-    },
-    {
-      "institution": "Konstitusiya Məhkəməsi",
-      "subtitle": "Qərarlar",
-      "entries": [
-        {
-          "kind": "court",
-          "date": "2026-10-20",
-          "title": "Həbs qətimkan tədbiri seçilərkən məhkəmə nəzarətinin hədləri (CPM-in 157.1-ci maddəsinin şərhi)",
-          "summary": "Prokurorluğun sorğusu əsasında Plenum müəyyən edib ki, həbs qətimkan tədbiri barədə müraciətə baxan məhkəmə əsaslı şübhənin olub-olmamasını, ilkin sübutların kifayət edib-etməməsini, həbsin qanuni əsaslarını və daha yüngül qətimkan tədbirinin mümkünlüyünü yoxlamalıdır. İlkin sübutların kifayət etməməsinə əsaslanan qərar təqsirlilik məsələsinin qabaqcadan həlli sayıla bilməz. Qərar dərc edildiyi gündən qüvvəyə minir.",
+          "ruling": "qərar",
+          "text": "Cinayət-Prosessual Məcəlləsinin 157.1-ci maddəsi həbs qətimkan tədbiri seçilərkən məhkəmə nəzarətinin hədləri baxımından şərh edilib.",
           "url": "https://e-qanun.az/framework/62784"
         }
       ]
     }
-  ],
-  "sources": [
-    "https://e-qanun.az",
-    "https://president.az/az/documents/category/laws",
-    "https://president.az/az/documents/category/decrees",
-    "https://nk.gov.az/az/senedler/hamisi",
-    "https://meclis.gov.az/cat-layihe.php?cat=83&lang=az",
-    "https://constcourt.gov.az/az/decisions",
-    "https://president.az/az/articles/view/74261",
-    "https://meclis.gov.az/news-layihe.php?id=2724&lang=az&par=0",
-    "https://constcourt.gov.az/az/decision/1633"
-  ]
+  }
 }

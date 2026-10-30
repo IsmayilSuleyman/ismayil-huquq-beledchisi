@@ -1,60 +1,51 @@
 /**
- * The automated gazette's source format. The weekly Claude Routine writes
- * one of these as JSON (see scripts/gazette/ROUTINE.md); the publisher
- * validates it, lays it out as the issue PDF and fills the `issues` row
- * from it (the row's title is built from the period, see issueTitle).
+ * The automated gazette's source format, in the shape of the published
+ * issues 3–12: four fixed sections, each a numbered list of acts, every act
+ * one sentence with its number and a source link. The weekly Claude Routine
+ * writes one of these as JSON (see scripts/gazette/ROUTINE.md); the
+ * publisher validates it, lays it out as the issue PDF and fills the
+ * `issues` row (title "Weekly Legislature Update, …", see issueTitle).
  * Everything a reader sees comes from this object, so the checks here are
  * the last line before an issue goes live without review.
  */
 
-import { formatPeriod } from "@/lib/gazette-format";
+/** The sections of every issue, in print order. */
+export const SECTION_KEYS = ["decrees", "decisions", "bills", "court"] as const;
+export type SectionKey = (typeof SECTION_KEYS)[number];
 
-export const ENTRY_KINDS = ["law", "bill", "decree", "order", "decision", "court", "other"] as const;
-export type EntryKind = (typeof ENTRY_KINDS)[number];
-
-/** Tag printed on each entry. */
-export const KIND_LABEL: Record<EntryKind, string> = {
-  law: "Qanun",
-  bill: "Qanun layihəsi",
-  decree: "Fərman",
-  order: "Sərəncam",
-  decision: "Qərar",
-  court: "Məhkəmə qərarı",
-  other: "Digər",
+export const SECTION_TITLE: Record<SectionKey, string> = {
+  decrees: "Azərbaycan Respublikası Prezidentinin Fərmanları",
+  decisions: "Azərbaycan Respublikası Nazirlər Kabinetinin Qərarları",
+  bills: "Milli Məclisdə müzakirə olunan qanun layihələri",
+  court: "Konstitusiya Məhkəməsinin Qərarları",
 };
 
-/** Label under each count in the at-a-glance box. */
-export const KIND_PLURAL: Record<EntryKind, string> = {
-  law: "Qanunlar",
-  bill: "Qanun layihələri",
-  decree: "Fərmanlar",
-  order: "Sərəncamlar",
-  decision: "Qərarlar",
-  court: "Məhkəmə qərarları",
-  other: "Digər sənədlər",
-};
+export const STAGES = ["I", "II", "III"] as const;
+export type Stage = (typeof STAGES)[number];
+
+export const RULINGS = ["qərar", "qərardad"] as const;
+export type Ruling = (typeof RULINGS)[number];
 
 export type GazetteEntry = {
-  kind: EntryKind;
-  /** The act's number as printed on it: "261", "648s", "472-VIIQD". */
+  /** The act's number as printed on it ("804", "264"); printed as "(Fərman № 804)". */
   number?: string;
-  /** Date the act was signed or adopted, YYYY-MM-DD. */
+  /** Date of the act (for a bill: of its reading), YYYY-MM-DD. */
   date: string;
-  title: string;
-  summary: string;
-  /** Official text or register page. */
-  url?: string;
+  /** One sentence saying what the act does, in the perfect: "… təsdiq edilib." */
+  text: string;
+  /** Printed as "Mənbə: <url>": the register page, or the issuing body's. */
+  url: string;
+  /** Bills only: the reading this week. */
+  stage?: Stage;
+  /** Constitutional Court only: a decision or a procedural ruling. */
+  ruling?: Ruling;
 };
 
 export type GazetteSection = {
-  /** "Milli Məclis", "Nazirlər Kabineti", … */
-  institution: string;
-  /** Right-hand line of the section header: "Qanunlar və qanun layihələri". */
-  subtitle?: string;
-  /** Short paragraph above the entries. */
-  intro?: string;
-  /** Printed instead of entries when the institution published nothing. */
-  notice?: string;
+  /** One italic line under the heading: the Majlis in recess, the agenda of a sitting. */
+  note?: string;
+  /** A source for the note, printed as "Mənbə: <url>". */
+  source?: string;
   entries: GazetteEntry[];
 };
 
@@ -62,19 +53,8 @@ export type GazetteDraft = {
   period: { from: string; to: string };
   /** Issue date, YYYY-MM-DD: the Monday after the period, also for a late (catch-up) issue. */
   published_at: string;
-  /** The week's lead headline, printed above the overview. */
-  headline: string;
-  /** One or two sentences for the library card and the issue page. */
-  summary: string;
-  tags: string[];
-  /** Editor's overview; paragraphs separated by blank lines. */
-  overview: string;
-  /** "Həftənin əsas məqamları": three to five one-line points. */
-  highlights: string[];
-  sections: GazetteSection[];
-  /** The list pages used and the act pages read, printed at the end of the issue. */
-  sources: string[];
-  /** Set only when a person read and approved the issue before publication; the disclaimer says so. */
+  sections: Record<SectionKey, GazetteSection>;
+  /** Set only when a person read and approved the issue before publication; the closing note says so. */
   reviewed?: boolean;
 };
 
@@ -82,20 +62,8 @@ export type DraftCheck =
   | { ok: true; draft: GazetteDraft; warnings: string[] }
   | { ok: false; errors: string[]; warnings: string[] };
 
-const LIMITS = {
-  headline: 140,
-  summary: 400,
-  tag: 40,
-  tags: 10,
-  overview: 2500,
-  highlight: 220,
-  highlights: 6,
-  entryTitle: 220,
-  entrySummary: 900,
-  sectionText: 1200,
-};
-
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
+const TEXT_MAX = 400;
 
 function isIsoDate(value: string): boolean {
   if (!ISO_DATE.test(value)) return false;
@@ -116,17 +84,20 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
+/** A sentence boundary inside the text: ". " (or "?", "!") followed by a capital or an opening quote. */
+const SECOND_SENTENCE = /[.!?][”"»)]?\s+[A-ZƏÖÜÇŞĞİI“"«(]/u;
+
 /**
- * Checks a parsed JSON draft and returns a clean copy (strings trimmed,
- * tags de-duplicated) or every problem found. Unknown keys are errors, so a
- * misspelt field fails loudly instead of quietly vanishing from the issue.
- * Warnings never block publishing; they are for the routine's log.
+ * Checks a parsed JSON draft and returns a clean copy (strings trimmed) or
+ * every problem found. Unknown keys are errors, so a misspelt field fails
+ * loudly instead of quietly vanishing from the issue. Warnings never block
+ * publishing; they are for the routine's log.
  */
 export function checkDraft(raw: unknown): DraftCheck {
   const errors: string[] = [];
   const warnings: string[] = [];
 
-  function unknownKeys(obj: Record<string, unknown>, allowed: string[], where: string) {
+  function unknownKeys(obj: Record<string, unknown>, allowed: readonly string[], where: string) {
     for (const key of Object.keys(obj)) {
       if (!allowed.includes(key)) errors.push(`${where}: unknown field "${key}"`);
     }
@@ -142,7 +113,7 @@ export function checkDraft(raw: unknown): DraftCheck {
       errors.push(`${where}.${key} must be a string`);
       return "";
     }
-    const trimmed = value.trim();
+    const trimmed = value.trim().replace(/\s+/g, " ");
     if (required && !trimmed) errors.push(`${where}.${key} is empty`);
     if (trimmed.length > max) errors.push(`${where}.${key} is ${trimmed.length} characters; the limit is ${max}`);
     return trimmed;
@@ -154,28 +125,11 @@ export function checkDraft(raw: unknown): DraftCheck {
     return value;
   }
 
-  function list(obj: Record<string, unknown>, key: string, where: string): unknown[] {
-    const value = obj[key];
-    if (value === undefined) {
-      errors.push(`${where}.${key} is missing`);
-      return [];
-    }
-    if (!Array.isArray(value)) {
-      errors.push(`${where}.${key} must be an array`);
-      return [];
-    }
-    return value;
-  }
-
   if (!isRecord(raw)) {
     return { ok: false, errors: ["The draft must be a JSON object"], warnings };
   }
 
-  unknownKeys(
-    raw,
-    ["period", "published_at", "headline", "summary", "tags", "overview", "highlights", "sections", "sources", "reviewed"],
-    "draft"
-  );
+  unknownKeys(raw, ["period", "published_at", "sections", "reviewed"], "draft");
 
   let from = "";
   let to = "";
@@ -193,157 +147,142 @@ export function checkDraft(raw: unknown): DraftCheck {
     errors.push(`published_at (${publishedAt}) is before the end of the period (${to})`);
   }
 
-  const headline = text(raw, "headline", "draft", LIMITS.headline);
-  const summary = text(raw, "summary", "draft", LIMITS.summary);
-  const overview = text(raw, "overview", "draft", LIMITS.overview);
-
-  const tags: string[] = [];
-  for (const [i, tag] of list(raw, "tags", "draft").entries()) {
-    if (typeof tag !== "string" || !tag.trim()) {
-      errors.push(`tags[${i}] must be a non-empty string`);
-      continue;
-    }
-    const clean = tag.trim();
-    if (clean.length > LIMITS.tag) errors.push(`tags[${i}] is longer than ${LIMITS.tag} characters`);
-    if (!tags.some((t) => t.toLowerCase() === clean.toLowerCase())) tags.push(clean);
-  }
-  if (tags.length > LIMITS.tags) errors.push(`${tags.length} tags; the limit is ${LIMITS.tags}`);
-
-  const highlights: string[] = [];
-  for (const [i, point] of list(raw, "highlights", "draft").entries()) {
-    if (typeof point !== "string" || !point.trim()) {
-      errors.push(`highlights[${i}] must be a non-empty string`);
-      continue;
-    }
-    if (point.trim().length > LIMITS.highlight) {
-      errors.push(`highlights[${i}] is longer than ${LIMITS.highlight} characters`);
-    }
-    highlights.push(point.trim());
-  }
-  if (highlights.length > LIMITS.highlights) {
-    errors.push(`${highlights.length} highlights; the limit is ${LIMITS.highlights}`);
-  }
-
-  const sources: string[] = [];
-  for (const [i, source] of list(raw, "sources", "draft").entries()) {
-    if (typeof source !== "string" || !isHttpUrl(source.trim())) {
-      errors.push(`sources[${i}] must be an http(s) URL`);
-      continue;
-    }
-    if (!sources.includes(source.trim())) sources.push(source.trim());
-  }
-  if (Array.isArray(raw.sources) && sources.length === 0) {
-    errors.push("sources is empty: list every page the issue was built from");
-  }
-
-  const sections: GazetteSection[] = [];
-  const seenActs = new Set<string>();
-  const rawSections = list(raw, "sections", "draft");
-  if (Array.isArray(raw.sections) && rawSections.length === 0) errors.push("sections is empty");
-
-  for (const [si, rawSection] of rawSections.entries()) {
-    const where = `sections[${si}]`;
-    if (!isRecord(rawSection)) {
-      errors.push(`${where} must be an object`);
-      continue;
-    }
-    unknownKeys(rawSection, ["institution", "subtitle", "intro", "notice", "entries"], where);
-    const institution = text(rawSection, "institution", where, 120);
-    const subtitle = text(rawSection, "subtitle", where, 160, false);
-    const intro = text(rawSection, "intro", where, LIMITS.sectionText, false);
-    const notice = text(rawSection, "notice", where, LIMITS.sectionText, false);
-
-    const entries: GazetteEntry[] = [];
-    for (const [ei, rawEntry] of list(rawSection, "entries", where).entries()) {
-      const at = `${where}.entries[${ei}]`;
-      if (!isRecord(rawEntry)) {
-        errors.push(`${at} must be an object`);
-        continue;
-      }
-      unknownKeys(rawEntry, ["kind", "number", "date", "title", "summary", "url"], at);
-
-      const kind = rawEntry.kind;
-      if (typeof kind !== "string" || !(ENTRY_KINDS as readonly string[]).includes(kind)) {
-        errors.push(`${at}.kind must be one of ${ENTRY_KINDS.join(", ")}`);
-      }
-      const number = text(rawEntry, "number", at, 40, false);
-      const entryDate = date(rawEntry, "date", at);
-      const entryTitle = text(rawEntry, "title", at, LIMITS.entryTitle);
-      const entrySummary = text(rawEntry, "summary", at, LIMITS.entrySummary);
-      const url = text(rawEntry, "url", at, 500, false);
-      if (url && !isHttpUrl(url)) errors.push(`${at}.url must be an http(s) URL`);
-
-      if (entryDate && to && entryDate > to) {
-        errors.push(`${at}.date (${entryDate}) is after the end of the period (${to})`);
-      } else if (entryDate && from && entryDate < from) {
-        warnings.push(`${at}.date (${entryDate}) is before the period starts (${from}); fine for acts published late`);
-      }
-
-      if (number) {
-        const key = `${kind}|${number.toLowerCase()}`;
-        if (seenActs.has(key)) errors.push(`${at}: ${kind} No. ${number} appears twice in the issue`);
-        seenActs.add(key);
-      }
-
-      entries.push({
-        kind: kind as EntryKind,
-        ...(number ? { number } : {}),
-        date: entryDate,
-        title: entryTitle,
-        summary: entrySummary,
-        ...(url ? { url } : {}),
-      });
-    }
-
-    if (entries.length === 0 && !notice && !intro) {
-      errors.push(`${where} (${institution || "unnamed"}) has no entries and no notice or intro explaining why`);
-    }
-
-    sections.push({
-      institution,
-      ...(subtitle ? { subtitle } : {}),
-      ...(intro ? { intro } : {}),
-      ...(notice ? { notice } : {}),
-      entries,
-    });
-  }
-
   if (raw.reviewed !== undefined && typeof raw.reviewed !== "boolean") errors.push("draft.reviewed must be true or false");
   const reviewed = raw.reviewed === true;
 
-  const total = sections.reduce((n, s) => n + s.entries.length, 0);
-  if (rawSections.length > 0 && total === 0) warnings.push("The issue lists no acts at all");
-  if (highlights.length === 0 && total > 0) warnings.push("No highlights: the at-a-glance box will show counts only");
+  const sections = {} as Record<SectionKey, GazetteSection>;
+  if (!isRecord(raw.sections)) {
+    errors.push(`sections must be an object with ${SECTION_KEYS.join(", ")}`);
+  } else {
+    unknownKeys(raw.sections, SECTION_KEYS, "sections");
+    for (const key of SECTION_KEYS) {
+      const where = `sections.${key}`;
+      const rawSection = raw.sections[key];
+      if (!isRecord(rawSection)) {
+        errors.push(`${where} is missing (an empty section is { "entries": [] })`);
+        sections[key] = { entries: [] };
+        continue;
+      }
+      unknownKeys(rawSection, ["note", "source", "entries"], where);
+      const note = text(rawSection, "note", where, 600, false);
+      const source = text(rawSection, "source", where, 500, false);
+      if (source && !isHttpUrl(source)) errors.push(`${where}.source must be an http(s) URL`);
+
+      const entries: GazetteEntry[] = [];
+      const seen = new Set<string>();
+      const rawEntries = Array.isArray(rawSection.entries) ? rawSection.entries : null;
+      if (!rawEntries) errors.push(`${where}.entries must be an array`);
+
+      for (const [i, rawEntry] of (rawEntries ?? []).entries()) {
+        const at = `${where}.entries[${i}]`;
+        if (!isRecord(rawEntry)) {
+          errors.push(`${at} must be an object`);
+          continue;
+        }
+        const allowed = ["number", "date", "text", "url", ...(key === "bills" ? ["stage"] : []), ...(key === "court" ? ["ruling"] : [])];
+        unknownKeys(rawEntry, allowed, at);
+
+        const number = text(rawEntry, "number", at, 40, false).replace(/^№\s*/, "");
+        const entryDate = date(rawEntry, "date", at);
+        const sentence = text(rawEntry, "text", at, TEXT_MAX);
+        const url = text(rawEntry, "url", at, 500);
+        if (url && !isHttpUrl(url)) errors.push(`${at}.url must be an http(s) URL`);
+
+        if (sentence) {
+          if (!/[.!?]$/.test(sentence)) errors.push(`${at}.text must end with a full stop`);
+          if (SECOND_SENTENCE.test(sentence)) errors.push(`${at}.text must be one sentence`);
+          if (/\((Fərman|Qərar)\s*№/u.test(sentence)) {
+            errors.push(`${at}.text must not carry the act's number; put it in "number" and it is printed for you`);
+          }
+        }
+
+        let stage: Stage | undefined;
+        if (key === "bills") {
+          if (typeof rawEntry.stage !== "string" || !(STAGES as readonly string[]).includes(rawEntry.stage)) {
+            errors.push(`${at}.stage must be one of ${STAGES.join(", ")} (the reading this week)`);
+          } else {
+            stage = rawEntry.stage as Stage;
+          }
+        }
+        let ruling: Ruling | undefined;
+        if (key === "court") {
+          if (rawEntry.ruling === undefined) ruling = "qərar";
+          else if (typeof rawEntry.ruling !== "string" || !(RULINGS as readonly string[]).includes(rawEntry.ruling)) {
+            errors.push(`${at}.ruling must be "qərar" or "qərardad"`);
+          } else {
+            ruling = rawEntry.ruling as Ruling;
+          }
+        }
+        if ((key === "decrees" || key === "decisions") && !number) {
+          warnings.push(`${at} has no number; the reader sees none`);
+        }
+
+        if (entryDate && to && entryDate > to) {
+          errors.push(`${at}.date (${entryDate}) is after the end of the period (${to})`);
+        } else if (entryDate && from && entryDate < from) {
+          warnings.push(`${at}.date (${entryDate}) is before the period starts (${from}); fine for acts published late`);
+        }
+
+        const identity = number ? `n:${number.toLowerCase()}` : `u:${url}`;
+        if (seen.has(identity)) errors.push(`${at}: the same act appears twice in ${key}`);
+        seen.add(identity);
+
+        entries.push({
+          ...(number ? { number } : {}),
+          date: entryDate,
+          text: sentence,
+          url,
+          ...(stage ? { stage } : {}),
+          ...(ruling ? { ruling } : {}),
+        });
+      }
+
+      sections[key] = { ...(note ? { note } : {}), ...(source ? { source } : {}), entries };
+    }
+  }
+
+  const total = SECTION_KEYS.reduce((n, k) => n + (sections[k]?.entries.length ?? 0), 0);
+  if (isRecord(raw.sections) && total === 0) warnings.push("The issue lists no acts at all");
 
   if (errors.length > 0) return { ok: false, errors, warnings };
   return {
     ok: true,
     warnings,
-    draft: {
-      period: { from, to },
-      published_at: publishedAt,
-      headline,
-      summary,
-      tags,
-      overview,
-      highlights,
-      sections,
-      sources,
-      ...(reviewed ? { reviewed } : {}),
-    },
+    draft: { period: { from, to }, published_at: publishedAt, sections, ...(reviewed ? { reviewed } : {}) },
   };
 }
 
-/** Library title, in the pattern every issue has used: "…, 5–11 sentyabr 2026". */
+const MONTHS_EN = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/**
+ * Library title, in the pattern of issues 1–12: "Weekly Legislature Update,
+ * September 5-11", "… July 29 – August 8"; years only when the period
+ * crosses one.
+ */
 export function issueTitle(draft: Pick<GazetteDraft, "period">): string {
-  return `Həftəlik qanunvericilik icmalı, ${formatPeriod(draft.period.from, draft.period.to)}`;
+  const [fy, fm, fd] = draft.period.from.split("-").map(Number);
+  const [ty, tm, td] = draft.period.to.split("-").map(Number);
+  let range: string;
+  if (fy !== ty) range = `${MONTHS_EN[fm - 1]} ${fd}, ${fy} – ${MONTHS_EN[tm - 1]} ${td}, ${ty}`;
+  else if (fm !== tm) range = `${MONTHS_EN[fm - 1]} ${fd} – ${MONTHS_EN[tm - 1]} ${td}`;
+  else range = `${MONTHS_EN[fm - 1]} ${fd}-${td}`;
+  return `Weekly Legislature Update, ${range}`;
 }
 
-/** Acts per kind across the issue, in ENTRY_KINDS order, zero counts left out. */
-export function countByKind(draft: GazetteDraft): { kind: EntryKind; count: number }[] {
-  const counts = new Map<EntryKind, number>();
-  for (const section of draft.sections) {
-    for (const entry of section.entries) counts.set(entry.kind, (counts.get(entry.kind) ?? 0) + 1);
-  }
-  return ENTRY_KINDS.filter((k) => counts.has(k)).map((kind) => ({ kind, count: counts.get(kind)! }));
+/** Every entry in print order, with its section; the issue numbers them 01, 02, … across sections. */
+export function allEntries(draft: Pick<GazetteDraft, "sections">): { section: SectionKey; entry: GazetteEntry }[] {
+  return SECTION_KEYS.flatMap((section) => draft.sections[section].entries.map((entry) => ({ section, entry })));
 }

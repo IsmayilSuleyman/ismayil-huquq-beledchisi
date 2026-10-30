@@ -2,8 +2,10 @@
 
 The gazette published nothing between issue 12 (5–11 September) and the
 start of the weekly routine. These drafts fill the gap, one issue per week,
-each written by following `scripts/gazette/ROUTINE.md` as a catch-up run
-and checked with a dry run.
+in the format of issues 3–12 (decrees, Cabinet decisions, bills,
+Constitutional Court rulings; one sentence per act). Each was written by
+following `scripts/gazette/ROUTINE.md` as a catch-up run, reconciled
+against the collector, and checked with a dry run.
 
 | File | Period | Issue date |
 | --- | --- | --- |
