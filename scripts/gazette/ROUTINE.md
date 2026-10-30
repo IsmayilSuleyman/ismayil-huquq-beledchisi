@@ -61,10 +61,10 @@ answered, whether each one reached back to the start of the period
 
 How the collector places acts:
 
-- **Laws** belong to the week the **President signed them** (president.az),
-  not the week the Milli Məclis adopted them. `date` is the signing date,
-  `actDate` the adoption date printed on the law. This keeps each law in
-  exactly one issue.
+- **Laws** belong to the week they appear, signed, on **president.az**, not
+  the week the Milli Məclis adopted them. `date` is that publication date,
+  `actDate` the date printed on the law (its adoption date). This keeps
+  each law in exactly one issue.
 - **Everything else** belongs to the week of its own date.
 - **Bills** come from meclis.gov.az, dated by the reading or publication
   for discussion.
@@ -163,8 +163,10 @@ Per entry:
 - `number` exactly as published ("1281", "798s", "494-VIIQD"); leave it out
   when unknown;
 - `date`: the date printed on the act. For a law that is its adoption date
-  (`actDate` in the leads); say in the summary when the President signed
-  it ("Prezident 22 oktyabrda imzalayıb");
+  (`actDate` in the leads); say in the section intro or the summary when it
+  was published on president.az ("Qanun 22 oktyabrda Prezidentin rəsmi
+  saytında dərc olunub"). Don't write that the President signed it on that
+  day: the sources don't give the signing date;
 - `title`, `summary` (1–3 sentences), and `url`: the lead's `url`, the
   register's page when there is one.
 

@@ -124,9 +124,9 @@ Azerbaijani. Each run:
    (e-qanun.az's search API) for everything with numbers, plus the same-day
    lists on president.az, nk.gov.az, meclis.gov.az (bills) and
    constcourt.gov.az. The same act from two sources becomes one lead; laws
-   count from the week the President signed them, so none lands in two
-   issues. Each source reports whether it reached back to the start of the
-   period. `npm run gazette:read -- <url>` prints an act's text, from the
+   count from the week president.az publishes them as signed, so none lands
+   in two issues. Each source reports whether it reached back to the start
+   of the period. `npm run gazette:read -- <url>` prints an act's text, from the
    page or the PDF it embeds.
 2. Claude reads the acts and writes the issue as JSON
    (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`):

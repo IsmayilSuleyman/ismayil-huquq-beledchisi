@@ -11,9 +11,9 @@
  *      (bills put to discussion) and constcourt.gov.az.
  *
  * The same act listed by two sources becomes one lead. Laws are placed in
- * the week the President signed them; the register and the Majlis list of
- * adopted laws only supply their numbers and adoption dates (see
- * enrichLaws in leads.ts). Each source reports whether it looked far
+ * the week president.az published them as signed; the register and the
+ * Majlis list of adopted laws only supply their numbers and adoption dates
+ * (see enrichLaws in leads.ts). Each source reports whether it looked far
  * enough back to cover the whole period.
  *
  * Usage:
@@ -124,7 +124,7 @@ async function presidentAz(): Promise<Found> {
   const categories: { path: string; kind: EntryKind; institution: string }[] = [
     { path: "decrees", kind: "decree", institution: PRESIDENT },
     { path: "orders", kind: "order", institution: PRESIDENT },
-    { path: "laws", kind: "law", institution: MAJLIS }, // dated by the President's signature
+    { path: "laws", kind: "law", institution: MAJLIS }, // dated by their publication as signed
   ];
   const leads: Lead[] = [];
   let covered: string | null = null; // the least far back any category reached
@@ -309,7 +309,7 @@ async function main() {
     console.log(`   ✗ ${"meclis.gov.az (qanunlar)".padEnd(26)} ${error} (law numbers may be missing)`);
   }
 
-  // Laws: signed this week (president.az), numbered from the register and the Majlis list.
+  // Laws: published as signed this week (president.az), numbered from the register and the Majlis list.
   const presidentLeads = president?.leads ?? [];
   const signedLaws = enrichLaws(
     presidentLeads.filter((l) => l.kind === "law"),

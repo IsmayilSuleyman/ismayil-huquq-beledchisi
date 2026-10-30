@@ -13,7 +13,7 @@ export type Lead = {
   number?: string;
   /**
    * The date that places the act in a week: the act's own date, except for
-   * laws, which count from the day the President signed them.
+   * laws, which count from the day president.az published them as signed.
    */
   date: string;
   /** The date printed on the act, when it differs from `date` (a law's adoption date). */
@@ -191,7 +191,7 @@ export function mergeLeads(base: Lead[], extra: Lead[]): Lead[] {
 }
 
 /**
- * Laws are placed in the week the President signed them (president.az),
+ * Laws are placed in the week president.az published them as signed,
  * whatever their adoption date: the register and the Majlis list date a
  * law by its adoption, which would put it in an earlier issue than the one
  * where it becomes law, or in two issues. Those listings only lend the
