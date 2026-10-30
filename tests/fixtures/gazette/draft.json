@@ -1,0 +1,82 @@
+{
+  "period": { "from": "2026-08-23", "to": "2026-09-04" },
+  "published_at": "2026-09-05",
+  "headline": "KOB və ixrac agentlikləri birləşir, metroya yeni stansiya adı",
+  "summary": "Nazirlər Kabineti iki qərar və beş sərəncam qəbul edib; Milli Məclis yay tətilindədir.",
+  "tags": ["Nazirlər Kabineti", "KOB", "Turizm", "Torpaq Məcəlləsi"],
+  "overview": "Hesabat dövründə qanunvericilik fəallığı əsasən Nazirlər Kabinetinin üzərinə düşüb. Kabinetin sərəncamlarının çoxu Prezident fərmanlarının icrası ilə bağlıdır: kiçik və orta biznesin inkişafı, turizm proqramı və torpaq qanunvericiliyinə dəyişikliklər.\n\nMilli Məclisin reyestrlərində bu dövrə aid yeni qanun və ya qərar yoxdur. Bu, yay tətili üçün adi haldır; payız sessiyasında fəallığın artması gözlənilir.",
+  "highlights": [
+    "KOBİA və AZPROMO İqtisadiyyat Nazirliyinin tabeliyində bir agentlikdə birləşir; dəyişiklik 1 oktyabr 2026-dan qüvvəyə minir.",
+    "Bakı metrosunun yeni stansiyası “20 Sentyabr” adlandırılıb.",
+    "2026–2030-cu illər üçün turizmin inkişafı proqramının icrasına başlanılıb."
+  ],
+  "sections": [
+    {
+      "institution": "Milli Məclis",
+      "subtitle": "Qanunlar, qərarlar və qanun layihələri",
+      "notice": "Hesabat dövründə meclis.gov.az reyestrlərində yeni qanun, qərar və ya qanun layihəsi qeydə alınmayıb. Sonuncu qanunlar 14 iyul 2026-cı il tarixlidir (№ 452–472-VIIQD).",
+      "entries": []
+    },
+    {
+      "institution": "Nazirlər Kabineti",
+      "subtitle": "Qərarlar və sərəncamlar",
+      "intro": "Kabinet iki qərar və beş sərəncam qəbul edib. Sərəncamlar iki dəstə ilə verilib: 27–28 avqust və 3 sentyabr.",
+      "entries": [
+        {
+          "kind": "decision",
+          "number": "261",
+          "date": "2026-08-28",
+          "title": "Diplomatik xidmət əməkdaşlarına güzəşt və kompensasiyaların verilməsi qaydalarına dəyişiklik",
+          "summary": "Nazirlər Kabinetinin 2008-ci il tarixli 11 nömrəli qərarı ilə təsdiq edilmiş qaydalara dəyişiklik edilir.",
+          "url": "https://nk.gov.az/az/senedler/qerarlar"
+        },
+        {
+          "kind": "decision",
+          "number": "262",
+          "date": "2026-09-04",
+          "title": "Bakı metrosunun yeni stansiyasına “20 Sentyabr” adının verilməsi",
+          "summary": "Yeni stansiyaya 1994-cü ildə imzalanmış “Əsrin müqaviləsi”nin tarixi olan “20 Sentyabr” adı verilir."
+        },
+        {
+          "kind": "order",
+          "number": "648s",
+          "date": "2026-09-03",
+          "title": "Kiçik və Orta Biznesin İnkişafı, İnvestisiya və İxracın Təşviqi Agentliyinin yaradılması ilə bağlı fərmanın icrası",
+          "summary": "KOBİA və AZPROMO İqtisadiyyat Nazirliyinin tabeliyində vahid agentlikdə birləşdirilir. Yeni agentliyin nizamnaməsi və strukturu təsdiq edilib; yenidən təşkil 1 oktyabr 2026-cı ildən qüvvəyə minir."
+        },
+        {
+          "kind": "order",
+          "number": "647s",
+          "date": "2026-09-03",
+          "title": "İpəkçilik və xalçaçılığın inkişafı tədbirləri haqqında fərmanın icrası",
+          "summary": "İpək istehsalının və ənənəvi xalçaçılığın inkişafı, bununla bağlı mədəni irsin qorunması üzrə tədbirlər həyata keçirilir."
+        },
+        {
+          "kind": "order",
+          "number": "639s",
+          "date": "2026-08-28",
+          "title": "2026–2030-cu illər üçün turizmin inkişafı Dövlət Proqramının icrası",
+          "summary": "Dövlət Proqramı üzrə tədbirlərin icrası təmin edilir."
+        },
+        {
+          "kind": "order",
+          "number": "637s",
+          "date": "2026-08-27",
+          "title": "Torpaq Məcəlləsinə, Mülki Məcəlləyə və qiymətləndirmə qanunvericiliyinə dəyişikliklər haqqında fərmanın icrası",
+          "summary": "Məcəllələrə edilmiş dəyişikliklərin tətbiqi üçün Kabinetin tədbirləri müəyyən edilir."
+        },
+        {
+          "kind": "order",
+          "number": "636s",
+          "date": "2026-08-27",
+          "title": "Xarici ticarətin liberallaşdırılması haqqında fərmanın icrası",
+          "summary": "Xarici ticarətin liberallaşdırılması üzrə tədbirlərin icrası təmin edilir."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    "https://meclis.gov.az/cat-qanun.php?cat=72&lang=az",
+    "https://nk.gov.az/az/senedler/hamisi"
+  ]
+}
