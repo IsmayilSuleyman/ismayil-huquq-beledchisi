@@ -122,9 +122,12 @@ Azerbaijani. Each run:
 
 1. `npm run gazette:collect` lists the week's acts: the official register
    (e-qanun.az's search API) for everything with numbers, plus the same-day
-   lists on president.az, nk.gov.az, meclis.gov.az (laws and bills) and
-   constcourt.gov.az. Duplicates are merged; each act keeps a link for
-   readers and a page with its full text.
+   lists on president.az, nk.gov.az, meclis.gov.az (bills) and
+   constcourt.gov.az. The same act from two sources becomes one lead; laws
+   count from the week the President signed them, so none lands in two
+   issues. Each source reports whether it reached back to the start of the
+   period. `npm run gazette:read -- <url>` prints an act's text, from the
+   page or the PDF it embeds.
 2. Claude reads the acts and writes the issue as JSON
    (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`):
    headline, overview, highlights, one section per institution.
@@ -135,8 +138,9 @@ Azerbaijani. Each run:
 4. Without `--dry-run` it signs in as the publisher account, uploads the
    PDF and cover to the `gazette` bucket and inserts the `issues` row with
    the next number and the title "Həftəlik qanunvericilik icmalı, <period>".
-   It refuses a period or date that is already published, and removes its
-   uploads if the insert fails.
+   It refuses a period that is already published (and an issue date another
+   issue has), warns about acts the previous issue already printed, and
+   removes its uploads if the insert fails.
 
 The routine follows `scripts/gazette/ROUTINE.md`: what goes in, how to write
 it, what to check before publishing and when to stop instead. Change the
@@ -160,7 +164,9 @@ these files as CommonJS. Next never imports this folder.
    variables `GAZETTE_PUBLISHER_EMAIL` and `GAZETTE_PUBLISHER_PASSWORD`.
 
 Run it by hand the same way: `npm run gazette:collect -- --from 2026-10-26
---to 2026-11-01`, write a draft, then `npm run gazette:publish`.
+--to 2026-11-01`, write a draft, then `npm run gazette:publish`. A missed
+week is published late with its own period and the Monday after it as its
+date; the PDF says when it was actually written.
 
 ## 5. Adding a course
 
