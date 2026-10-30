@@ -39,6 +39,12 @@ export type GazetteEntry = {
   stage?: Stage;
   /** Constitutional Court only: a decision or a procedural ruling. */
   ruling?: Ruling;
+  /**
+   * Overrides the board's rule for this act (lib/gazette/acts.ts): true puts
+   * it on the landing page's board, false keeps it off. Leave it out to let
+   * the rule decide, which is the normal case.
+   */
+  important?: boolean;
 };
 
 export type GazetteSection = {
@@ -179,7 +185,15 @@ export function checkDraft(raw: unknown): DraftCheck {
           errors.push(`${at} must be an object`);
           continue;
         }
-        const allowed = ["number", "date", "text", "url", ...(key === "bills" ? ["stage"] : []), ...(key === "court" ? ["ruling"] : [])];
+        const allowed = [
+          "number",
+          "date",
+          "text",
+          "url",
+          "important",
+          ...(key === "bills" ? ["stage"] : []),
+          ...(key === "court" ? ["ruling"] : []),
+        ];
         unknownKeys(rawEntry, allowed, at);
 
         const number = text(rawEntry, "number", at, 40, false).replace(/^№\s*/, "");
@@ -213,6 +227,11 @@ export function checkDraft(raw: unknown): DraftCheck {
             ruling = rawEntry.ruling as Ruling;
           }
         }
+        let important: boolean | undefined;
+        if (rawEntry.important !== undefined) {
+          if (typeof rawEntry.important !== "boolean") errors.push(`${at}.important must be true or false`);
+          else important = rawEntry.important;
+        }
         if ((key === "decrees" || key === "decisions") && !number) {
           warnings.push(`${at} has no number; the reader sees none`);
         }
@@ -234,6 +253,7 @@ export function checkDraft(raw: unknown): DraftCheck {
           url,
           ...(stage ? { stage } : {}),
           ...(ruling ? { ruling } : {}),
+          ...(important !== undefined ? { important } : {}),
         });
       }
 

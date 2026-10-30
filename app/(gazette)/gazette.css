@@ -239,3 +239,208 @@
   background-size: 450px 100%;
   animation: olg-shimmer 1.5s infinite linear;
 }
+
+/* ---------- The board: this month's important acts as sticky notes ---------- */
+.olg-board {
+  position: relative;
+  border-radius: 1.5rem;
+  padding: 1.75rem 1.25rem 1.5rem;
+  background:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(122, 162, 255, 0.08), transparent 60%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 0 80px rgba(0, 0, 0, 0.25);
+}
+@media (min-width: 640px) {
+  .olg-board {
+    padding: 2.25rem 2rem 2rem;
+  }
+}
+.olg-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.olg-note {
+  --accent: var(--color-azure);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 11.5rem;
+  border-radius: 1rem;
+  padding: 1.2rem 1.15rem 1rem;
+  text-align: left;
+  color: var(--foreground);
+  cursor: pointer;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  transition: transform 0.35s cubic-bezier(0.21, 0.8, 0.32, 1), border-color 0.35s, box-shadow 0.35s, opacity 0.3s;
+  box-shadow:
+    0 18px 40px -22px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+.olg-note::before {
+  /* the section's colour, as a thin line along the top */
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 35%, transparent) 70%, transparent);
+}
+.olg-note::after {
+  /* a faint glow of the same colour in the corner */
+  content: "";
+  position: absolute;
+  top: -3rem;
+  left: -2rem;
+  width: 12rem;
+  height: 8rem;
+  pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+}
+.olg-note:hover,
+.olg-note:focus-visible {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow:
+    0 26px 50px -20px rgba(18, 40, 90, 0.8),
+    0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent) inset;
+  z-index: 2;
+}
+.olg-note:focus-visible {
+  outline: 2px solid rgba(122, 162, 255, 0.9);
+  outline-offset: 3px;
+}
+.olg-note-court {
+  --accent: #b9cbff;
+}
+.olg-note-decrees {
+  --accent: #7aa2ff;
+}
+.olg-note-decisions {
+  --accent: #99a1ae;
+}
+.olg-note-bills {
+  --accent: #5f85df;
+}
+.olg-note-swatch {
+  background: var(--accent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.olg-note-dim {
+  opacity: 0.55;
+}
+.olg-note-dim:hover,
+.olg-note-dim:focus-visible {
+  opacity: 1;
+}
+.olg-note-label {
+  font-size: 0.64rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+.olg-note-date {
+  font-size: 0.7rem;
+  color: var(--color-silver);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.olg-note-body {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(237, 241, 248, 0.88);
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.olg-note-tag {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-silver);
+}
+.olg-note-read {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: var(--color-azure-soft);
+  white-space: nowrap;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+.olg-note:hover .olg-note-read,
+.olg-note:focus-visible .olg-note-read {
+  opacity: 1;
+}
+
+@keyframes olg-sheet {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.olg-sheet {
+  animation: olg-sheet 0.32s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .olg-note:hover,
+  .olg-note:focus-visible {
+    transform: none;
+  }
+  .olg-sheet,
+  .olg-rise {
+    animation: none;
+  }
+}
+
+/* ---------- Ratings ---------- */
+.olg-note-stars {
+  font-size: 0.7rem;
+  color: var(--color-azure-soft);
+  font-variant-numeric: tabular-nums;
+}
+.olg-star {
+  font-size: 1.55rem;
+  line-height: 1;
+  padding: 0.1rem 0.15rem;
+  color: rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: color 0.15s, transform 0.15s;
+}
+.olg-star:hover {
+  transform: scale(1.12);
+}
+.olg-star:disabled {
+  cursor: progress;
+}
+.olg-star-lit {
+  color: var(--color-azure-soft);
+  text-shadow: 0 0 12px rgba(122, 162, 255, 0.55);
+}
+.olg-star:focus-visible {
+  outline: 2px solid rgba(122, 162, 255, 0.9);
+  outline-offset: 1px;
+  border-radius: 4px;
+}

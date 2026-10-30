@@ -177,6 +177,32 @@ Run it by hand the same way: `npm run gazette:collect -- --from 2026-10-26
 week is published late with its own period and the Monday after it as its
 date; the PDF says when it was actually written.
 
+**The board.** The landing page shows up to twelve of the last 30 days'
+acts as notes under the latest issue. An act is eligible when it is
+important: every Constitutional Court ruling, and every act touching
+corporate, banking, tax, civil, criminal or administrative law (the rules
+are keyword lists in `lib/gazette/acts.ts`; labour and diplomatic acts are
+recognised and left off). A note opens a panel with the act's sentence,
+its source link, the issue it was printed in and a five-star vote on how
+much the act matters; `#act=<id>` in the address opens that note on
+arrival. The twelve picks are the eligible acts with the best average
+rating (an unrated act counts as 3.0), the newest first among equals.
+Two or more readers averaging under 3.0 take an act off the board. Votes
+need no account: the browser keeps a random reader token and its own
+votes, and voting again replaces the vote. They go through the
+`rate_act()` function, which keeps the running count and sum on the act
+row (`supabase/migrations/20261031150000_gazette_act_ratings.sql`,
+applied on 31 October 2026); admins can read and delete the votes table
+from the SQL editor. "Show every act" lists the whole window, the
+non-picks dimmed, with the panel saying why each one is off. The acts come from the `gazette_acts` table, one row per
+act (`supabase/migrations/20261031120000_gazette_acts.sql`, applied on 31
+October 2026): `gazette:publish` fills it right after the issue row, and
+`npm run gazette:acts -- <draft.json>` fills it for an issue published
+without (`--dry-run` prints each act's topics and whether it goes on the
+board). A draft can override the rule for one act with `"important":
+true` or `false`. Issues uploaded by hand from the admin desk have no acts
+stored, so they have no notes; issues 1–12 are in that position.
+
 **Books.** The gazette's second shelf, at `/books`: legal texts and
 reference books as PDFs, read in the same viewer as the issues or
 downloaded. Add, edit and delete them in the admin desk's **Books** tab; the

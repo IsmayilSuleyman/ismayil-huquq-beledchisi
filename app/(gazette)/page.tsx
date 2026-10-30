@@ -4,6 +4,8 @@ import Link from "next/link";
 import DownloadButton from "@/components/gazette/DownloadButton";
 import LibraryExplorer from "@/components/gazette/LibraryExplorer";
 import type { IssueWithUrls } from "@/components/gazette/IssueCard";
+import UpdatesBoard from "@/components/gazette/UpdatesBoard";
+import { BOARD_LIMIT, sortForBoard, windowStart, type GazetteAct } from "@/lib/gazette/acts";
 import { formatDate, weekOf } from "@/lib/gazette/format";
 import { getServerSupabase, publicUrl } from "@/lib/gazette/supabase";
 import type { Issue } from "@/lib/gazette/types";
@@ -32,8 +34,25 @@ async function getIssues(): Promise<IssueWithUrls[]> {
   }));
 }
 
+/** The board looks this many days back. */
+const BOARD_DAYS = 30;
+
+async function getBoardActs(): Promise<GazetteAct[]> {
+  const supabase = getServerSupabase();
+  const { data, error } = await supabase
+    .from("gazette_acts")
+    .select("*")
+    .gte("date", windowStart(new Date(), BOARD_DAYS))
+    .order("date", { ascending: false });
+  if (error) {
+    console.error(`Failed to load the board: ${error.message}`);
+    return [];
+  }
+  return sortForBoard(data as GazetteAct[]);
+}
+
 export default async function LibraryPage() {
-  const issues = await getIssues();
+  const [issues, boardActs] = await Promise.all([getIssues(), getBoardActs()]);
   const latest = issues[0];
   const totalReads = issues.reduce((sum, i) => sum + i.read_count, 0);
   const totalDownloads = issues.reduce((sum, i) => sum + i.download_count, 0);
@@ -154,6 +173,26 @@ export default async function LibraryPage() {
               to publish the first weekly issue — it will appear here instantly.
             </p>
           </div>
+        </section>
+      )}
+
+      {/* ---------- The board: this month's important acts ---------- */}
+      {boardActs.length > 0 && (
+        <section className="mt-16 olg-rise" style={{ animationDelay: "200ms" }} aria-labelledby="board-heading">
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
+            <div>
+              <p className="olg-eyebrow mb-2">This month</p>
+              <h2 id="board-heading" className="font-serif text-3xl sm:text-4xl">
+                On the board
+              </h2>
+            </div>
+            <p className="text-sm text-foreground/60 leading-relaxed sm:max-w-md sm:text-right">
+              Up to {BOARD_LIMIT} picks from the last {BOARD_DAYS} days: the Constitutional Court, and anything touching
+              corporate, banking, tax, civil, criminal or administrative law. Tap a note to read it, and rate how much it
+              matters.
+            </p>
+          </div>
+          <UpdatesBoard acts={boardActs} days={BOARD_DAYS} />
         </section>
       )}
 

@@ -156,6 +156,14 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
 - Bills: `stage` is the lead's `stage` ("I", "II" or "III"). A bill read
   again in a later week is reported again there, at its new stage.
 - Order within a section: by date, then number.
+- `important` (optional, any act): the landing page's board shows the
+  week's important acts as notes, and decides by rule which are
+  important (every Constitutional Court ruling; acts touching corporate,
+  banking, tax, civil, criminal or administrative law). Leave the field
+  out. Set `"important": true` or `false` only when the rule would plainly
+  get an act wrong — a tax act the keywords miss, or a diplomatic act the
+  keywords catch. The dry run's `gazette:acts` output (step 5) shows the
+  rule's verdict.
 
 ## 5. Check, look, publish
 
@@ -170,6 +178,16 @@ whether anything repeats), and renders `issue-<n>.pdf` and its cover
 without uploading anything. Fix every error it lists and run it again.
 "… already appears in No. N" means that issue printed the act: remove it,
 unless it is a bill at a new reading.
+
+```bash
+npm run gazette:acts -- /tmp/gazette/draft.json --dry-run
+```
+
+This lists every act with its topics and a ★ for the ones the board will
+show (the issue must be published for it to find the number; before that
+it only says so). Read the ★ list once: if an act plainly belongs on the
+board and is missing, or is there and plainly should not be, set
+`important` on that act in the draft (step 4) and run the dry run again.
 
 Then look at the result:
 
@@ -197,7 +215,10 @@ don't force it.
 End the run with a short message (it reaches the owner as the routine's
 notification):
 
-- published: issue number, link, period, number of acts per section, and
+- published: issue number, link, period, number of acts per section, how
+  many went on the board (the publisher prints "Stored N act(s), M on the
+  board"; if it warned that the acts were not stored, run `npm run
+  gazette:acts -- /tmp/gazette/draft.json` once and say so), and
   how many subscribers were notified (or the warning, if notifying failed:
   the issue stays published; the owner can press Notify in the admin desk);
 - any source that failed or was incomplete, acts added by hand, numbering

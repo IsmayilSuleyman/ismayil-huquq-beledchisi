@@ -41,3 +41,10 @@ done
 Publishing needs `GAZETTE_PUBLISHER_EMAIL` and `GAZETTE_PUBLISHER_PASSWORD`.
 A file whose period is already published is skipped, so the loop can be
 run again after an interruption.
+
+## The board
+
+The acts of these six issues were loaded into `gazette_acts` on 31 October
+2026, so they appear on the landing page's board. For an issue published
+later from one of these files, `npm run gazette:acts -- <file>` does the
+same (it skips an issue that already has acts).

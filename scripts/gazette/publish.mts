@@ -17,7 +17,8 @@
  * supabase/migrations/20261030120000_gazette_publisher.sql) with
  * GAZETTE_PUBLISHER_EMAIL and GAZETTE_PUBLISHER_PASSWORD.
  *
- * Once the issue is live it notifies the browsers subscribed to new issues
+ * Once the issue is live it stores its acts one by one in `gazette_acts`
+ * (scripts/gazette/acts.ts; the landing page's board reads them) and notifies the browsers subscribed to new issues
  * (lib/gazette/push.ts); a failed notice is a warning, not a failure.
  *
  * Before rendering it compares the draft with the last three issues and
@@ -34,6 +35,7 @@ import { parseArgs } from "node:util";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { notifyNewIssue } from "@/lib/gazette/push";
 import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gazette/supabase";
+import { insertActs } from "@/scripts/gazette/acts";
 import { analyzePdfBuffer } from "@/scripts/gazette/cover";
 import { allEntries, checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
 import { renderIssuePdf } from "@/scripts/gazette/issue-pdf";
@@ -211,7 +213,18 @@ async function main() {
     fail((e as Error).message);
   }
 
-  // The issue is live whatever happens here; a failed notice is only a warning.
+  // The issue is live whatever happens from here on. Its acts feed the
+  // board on the landing page; if saving them fails, `npm run gazette:acts
+  // -- <draft.json>` adds them later, so this is a warning too.
+  try {
+    const acts = await insertActs(db, draft, issueNumber);
+    if (acts.status === "inserted") console.log(`   Stored ${acts.count} act(s), ${acts.important} on the board`);
+    else console.log(`   No. ${issueNumber} already has ${acts.count} act(s) stored`);
+  } catch (e) {
+    console.warn(`  ! The acts were not stored (run gazette:acts for this draft): ${(e as Error).message}`);
+  }
+
+  // A failed notice is only a warning as well.
   try {
     const sent = await notifyNewIssue(db, { issue_number: issueNumber, title });
     if (sent.status === "sent") {
