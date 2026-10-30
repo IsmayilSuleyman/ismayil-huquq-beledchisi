@@ -4,410 +4,198 @@
     "to": "2026-10-18"
   },
   "published_at": "2026-10-19",
-  "headline": "Quba Xəzəryanı üzrə hasilatın pay bölgüsü sazişi təsdiq edilib, Dövlət Qulluğu Məcəlləsinin layihəsi üçüncü oxunuşdadır",
-  "summary": "Prezidentin rəsmi saytında Quba Xəzəryanı üzrə hasilatın pay bölgüsü sazişini və dörd beynəlxalq müqaviləni təsdiq edən qanunlar dərc olunub, Dövlət Qulluğu Məcəlləsinin layihəsi üçüncü oxunuşdadır. Prezident “Rəqəmsal rabitə” informasiya sistemini yaradıb, Nazirlər Kabineti sudan ödənişli istifadə Qaydalarını yeni redaksiyada verib.",
-  "tags": [
-    "Dövlət qulluğu",
-    "Pensiya təminatı",
-    "Neft və qaz",
-    "Beynəlxalq sazişlər",
-    "Rabitə",
-    "Su ehtiyatları",
-    "Cinayət hüququ",
-    "Sahibkarlıq"
-  ],
-  "overview": "Həftənin əsas sənədi Prezidentin rəsmi saytında 12 oktyabrda dərc olunmuş 482-VIIQ nömrəli Qanundur. O, Quba, Qusar, Şabran, Siyəzən və Xızı rayonlarının bəzi hissələrini əhatə edən Quba Xəzəryanı ərazisi üzrə ARDNŞ, “Gran Tierra Energy (Azerbaijan) GmbH” və “SOCAR Quba-Xəzəryanı” MMC arasında hasilatın pay bölgüsü sazişini təsdiq edir: qanun qüvvəyə mindikdən sonra saziş, Hökumət təminatı və sazişin əlavələri qanun qüvvəsi alır və onlara uyğun gəlməyən qanun, fərman və inzibati sərəncamlardan üstün tutulur. Həmin gün Slovakiya, Monqolustan və İordaniya ilə sazişləri, Ukrayna ilə sazişə dəyişiklik edən protokolu təsdiq edən dörd qanun da dərc olunub.\n\nMilli Məclisin saytında Dövlət Qulluğu Məcəlləsinin 16 oktyabr tarixli üçüncü oxunuş mətni yerləşdirilib: Məcəllə qüvvəyə mindiyi gündən 2000-ci il “Dövlət qulluğu haqqında” Qanun və daha beş qanun ləğv edilir, dövlət qulluğunda olmanın yaş həddi 65 müəyyən olunur. Üçüncü oxunuşda olan pensiya layihəsi sabiq yüksək vəzifəli şəxslər, dövlət qulluqçuları, deputatlar və diplomatlar üçün dövlət büdcəsindən ödənilən aylıq pensiya əlavəsi nəzərdə tutur. Birinci oxunuşdakı layihələr arasında sekyuritizasiya, tələbin borclunun qiymətli kağızlarına yönəldilməsi və Mərkəzi Bankın əmlakın leqallaşdırılmasına qarşı nəzarət funksiyaları var. Bunlar layihədir, qanun deyil.\n\nPrezidentin 802 nömrəli Fərmanı rabitə sahəsində uçot, lisenziya, icazə, radiotezlik və nömrə daşınması prosedurlarını rəqəmsallaşdıran “Rəqəmsal rabitə” informasiya sistemini yaradır, 803 nömrəli Fərman publik hüquqi şəxslərin yenidən təşkili ilə bağlı 28 fərman və sərəncama dəyişiklik edir. Nazirlər Kabineti sudan ödənişli istifadə Qaydalarını yeni redaksiyada verib. Konstitusiya Məhkəməsi cəzaçəkmənin təxirə salınmasına dair qadağanı Konstitusiyaya uyğun sayıb, su nəzarəti orqanının sahibkarın obyektinə gəlməklə apardığı tədbirlərin sahibkarlıqda yoxlamalar haqqında qanunun mənasında yoxlama olduğunu bildirib.",
-  "highlights": [
-    "482-VIIQ: Quba Xəzəryanı üzrə hasilatın pay bölgüsü sazişi təsdiq edilir; saziş qanun qüvvəsi alır və ona uyğun gəlməyən normalardan üstün tutulur.",
-    "Dövlət Qulluğu Məcəlləsinin layihəsi üçüncü oxunuşdadır: 2000-ci il “Dövlət qulluğu haqqında” Qanun ləğv olunur, qulluqda olmanın yaş həddi 65 müəyyən edilir.",
-    "802 nömrəli Fərman: rabitə sahəsində lisenziya və icazələr, radiotezliklərin ayrılması və mobil nömrə daşınması üzrə prosedurlar “Rəqəmsal rabitə” sistemində rəqəmsal qaydada aparılır.",
-    "332 nömrəli Qərar: sudan ödənişli istifadə Qaydaları yeni redaksiyada verilib; sayğac olmadıqda götürülən suyun həcmi elektrik sərfiyyatına və ya qurğunun gücünə görə hesablanır.",
-    "Konstitusiya Məhkəməsi: su nəzarəti orqanının sahibkarın obyektinə gəlməklə apardığı tədbir sahibkarlıqda yoxlamalar haqqında qanunun mənasında yoxlamadır."
-  ],
-  "sections": [
-    {
-      "institution": "Milli Məclis",
-      "subtitle": "Qanunlar və qanun layihələri",
-      "intro": "Prezidentin rəsmi saytında 12 oktyabrda Milli Məclisin 30 sentyabrda qəbul etdiyi beş qanun dərc olunub. Milli Məclisin saytında 13 və 16 oktyabr tarixli oxunuş mətnləri yerləşdirilmiş 14 qanun layihəsindən üçü üçüncü, ikisi ikinci, doqquzu birinci oxunuşdadır.",
+  "sections": {
+    "decrees": {
       "entries": [
         {
-          "kind": "law",
-          "number": "482-VIIQ",
-          "date": "2026-09-30",
-          "title": "Quba Xəzəryanı ərazisi üzrə kəşfiyyat, işlənmə və hasilatın pay bölgüsü haqqında Sazişin təsdiqi",
-          "summary": "2026-cı il fevralın 18-də Bakıda ARDNŞ, “Gran Tierra Energy (Azerbaijan) GmbH” şirkəti və “SOCAR Quba-Xəzəryanı” MMC arasında imzalanmış Saziş və onun 10 əlavəsi təsdiq edilir, Nazirlər Kabinetinin Podratçı tərəflərə verdiyi Hökumət təminatı qəbul edilir, onların həyata keçirilməsinə icazə verilir. Qanun qüvvəyə mindikdən sonra onlar qanun qüvvəsi alır və Sazişdə başqa hal nəzərdə tutulmayıbsa, ona uyğun gəlməyən qanun, fərman və inzibati sərəncamlardan üstün tutulur; pay iştirakçılarına kontrakt sahəsində neft-qaz əməliyyatları aparmaq üçün müstəsna hüquq verilir, Podratçı tərəflərin hüquqları onların razılığı olmadan dəyişdirilə və ya azaldıla bilməz.",
-          "url": "https://president.az/az/articles/view/73880"
-        },
-        {
-          "kind": "law",
-          "number": "481-VIIQ",
-          "date": "2026-09-30",
-          "title": "Məxfi məlumatın mübadiləsi və qarşılıqlı mühafizəsi haqqında Azərbaycan–Slovakiya Sazişinin təsdiqi",
-          "summary": "2026-cı il iyulun 8-də Bakıda imzalanmış Azərbaycan Respublikası Hökuməti ilə Slovakiya Respublikası Hökuməti arasında məxfi məlumatın mübadiləsi və qarşılıqlı mühafizəsi haqqında Saziş təsdiq edilir.",
-          "url": "https://president.az/az/articles/view/73873"
-        },
-        {
-          "kind": "law",
-          "number": "480-VIIQ",
-          "date": "2026-09-30",
-          "title": "Hökumət rabitəsi sahəsində əməkdaşlıq haqqında Azərbaycan–Ukrayna Sazişinə dəyişiklik edən Protokolun təsdiqi",
-          "summary": "2025-ci il dekabrın 16-da Kiyevdə və 2026-cı il aprelin 23-də Bakıda imzalanmış, Azərbaycan Respublikası Hökuməti ilə Ukraynanın Nazirlər Kabineti arasında hökumət rabitəsi sahəsində əməkdaşlıq haqqında Sazişə dəyişiklik edən Protokol təsdiq edilir.",
-          "url": "https://president.az/az/articles/view/73874"
-        },
-        {
-          "kind": "law",
-          "number": "479-VIIQ",
-          "date": "2026-09-30",
-          "title": "Hava əlaqəsi haqqında Azərbaycan–Monqolustan Sazişinin təsdiqi",
-          "summary": "2026-cı il mayın 6-da Leypsiqdə imzalanmış Azərbaycan Respublikası Hökuməti ilə Monqolustan Hökuməti arasında hava əlaqəsi haqqında Saziş təsdiq edilir.",
-          "url": "https://president.az/az/articles/view/73872"
-        },
-        {
-          "kind": "law",
-          "number": "477-VIIQ",
-          "date": "2026-09-30",
-          "title": "Ümumvətəndaş pasport sahiblərinin viza tələbindən qarşılıqlı azad edilməsi haqqında Azərbaycan–İordaniya Sazişinin təsdiqi",
-          "summary": "2026-cı il iyulun 8-də Bakıda imzalanmış Azərbaycan Respublikası Hökuməti ilə İordaniya Haşimilər Krallığı Hökuməti arasında ümumvətəndaş pasport sahiblərinin viza tələbindən qarşılıqlı azad edilməsi haqqında Saziş təsdiq edilir.",
-          "url": "https://president.az/az/articles/view/73871"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "Dövlət Qulluğu Məcəlləsinin təsdiqi və qüvvəyə minməsi",
-          "summary": "Layihə üçüncü oxunuşdadır (16 oktyabr), qanun deyil. Məcəllə dövlət orqanlarının və vəzifələrin təsnifatını, inzibati vəzifələrin müsabiqə və ya daxili müsahibə yolu ilə tutulmasını, xidməti fəaliyyətin qiymətləndirilməsini, əməyin ödənilməsi sistemini və etik davranış qaydalarını tənzimləyir; dövlət qulluğunda olmanın yaş həddi 65-dir, orqan rəhbəri bu müddəti hər dəfə bir ilədək uzada bilər, ali–üçüncü təsnifat vəzifələri istisna olmaqla uzadılma ümumilikdə beş ildən çox ola bilməz. Məcəllə qüvvəyə mindiyi gündən “Dövlət qulluğu haqqında” 2000-ci il Qanunu, “Dövlət qulluqçularının etik davranış qaydaları haqqında” 2007-ci il Qanunu və daha dörd qanun ləğv edilir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2702&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Əmək pensiyaları haqqında”, “Diplomatik xidmət haqqında” və digər qanunlara dəyişikliklər (aylıq pensiya əlavəsi)",
-          "summary": "Layihə üçüncü oxunuşdadır (16 oktyabr), qanun deyil. “Əmək pensiyaları haqqında” Qanuna “Aylıq pensiya əlavəsi” fəsli əlavə edilir: əlavə əmək pensiyası yaşına çatmış və ya 81–100 faiz əlilliyi müəyyən edilmiş sabiq yüksək vəzifəli şəxslərə, dövlət qulluqçularına və diplomatlara (azı 15 il qulluq stajı ilə), sabiq deputatlara, Hesablama Palatasının və Mərkəzi Seçki Komissiyasının sabiq üzvlərinə, sabiq ombudsmanlara, ayrıca qaydada isə müvafiq icra hakimiyyəti orqanının müəyyən etdiyi qurumun sistemində xidmət etmiş hərbi qulluqçulara təyin edilir və dövlət büdcəsindən ödənilir; o təyin edildikdə qulluq stajına görə pensiya əlavəsinin ödənilməsi dayandırılır. Ayrı-ayrı müddəaların 1 oktyabr 2026-cı ildən tətbiqi, 1 yanvar 2027-ci ildən qüvvəyə minməsi nəzərdə tutulur.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2698&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "Vergi Məcəlləsinə, “Hərbi qulluqçuların statusu haqqında” Qanuna və hüquq mühafizə orqanlarında xidmətə dair qanunlara dəyişikliklər",
-          "summary": "Layihə üçüncü oxunuşdadır (16 oktyabr), qanun deyil. Müvafiq icra hakimiyyəti orqanının müəyyən etdiyi qurumun hərbi qulluqçularının pul təminatı rütbə maaşından, ondan hesablanan əlavələrdən və mütləq rəqəmlərlə müəyyən edilən əlavələrdən ibarət olur, ödəniş sistemini həmin qurum müəyyən edir; polis, gömrük, prokurorluq, ədliyyə, miqrasiya və fövqəladə hallar orqanlarında xidmətə dair aktlarda birdəfəlik kompensasiya əvəzinə yeni xidmət yerinə köçmə ilə bağlı xərclərin ödənilməsi nəzərdə tutulur. Layihəyə görə qanun 1 oktyabr 2026-cı ildən tətbiq edilir, pul təminatı azalan hərbi qulluqçulara fərq sonrakı artımlarla aradan qalxanadək ödənilir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2696&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "Cinayət Məcəlləsinə və Cinayət-Prosessual Məcəlləsinə dəyişikliklər (hüquqi şəxslərə cinayət-hüquqi tədbirlər)",
-          "summary": "Layihə ikinci oxunuşdadır (16 oktyabr), qanun deyil. Hüquqi şəxs maliyyə əməliyyatları üzrə nəzarəti qanunvericiliklə müəyyən edilmiş qaydada təşkil etmədiyinə görə onun vəzifəli şəxsləri xidməti vəzifələrinin icrası ilə əlaqədar Cinayət Məcəlləsinin 214-1-ci maddəsində nəzərdə tutulmuş cinayəti törətdikdə, cinayətin hüquqi şəxsin xeyrinə törədilib-törədilmədiyindən asılı olmayaraq ona cinayət-hüquqi tədbirlər tətbiq edilir; Cinayət-Prosessual Məcəlləyə buna uyğun dəyişikliklər edilir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2704&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Dövlət satınalmaları haqqında” Qanuna dəyişiklik",
-          "summary": "Layihə ikinci oxunuşdadır (16 oktyabr), qanun deyil. Qanunun 3-cü maddəsinə müvafiq icra hakimiyyəti orqanının müəyyən etdiyi qurumun, onun idarəetməsinə verilən dövlət müəssisələrinin, dövlət payı olan təsərrüfat cəmiyyətlərinin və publik hüquqi şəxslərin, habelə onların iştirak etdiyi hüquqi şəxslərin büdcə vəsaiti, büdcə ssudaları, subsidiyalar, dövlət zəmanəti ilə alınmış kreditlər, dövlət qrantları, yardımları və büdcədənkənar fondların vəsaiti istisna olmaqla, digər vəsait hesabına satınalmalarına dair 3.2.8-1-ci maddə əlavə olunur; bu satınalmaların qaydasını həmin qurum təsdiq edir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2693&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Mərkəzi Bank haqqında” Qanuna dəyişiklik (əmlakın leqallaşdırılmasına qarşı nəzarət)",
-          "summary": "Layihə birinci oxunuşdadır (16 oktyabr), qanun deyil. Qanunun 48-1-ci maddəsi yeni redaksiyada verilir: Mərkəzi Bank maliyyə institutları və maliyyə qrupları üzərində cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına, terrorçuluğun maliyyələşdirilməsinə qarşı mübarizə və hədəfli maliyyə sanksiyaları üzrə nəzarət orqanının funksiyalarını həyata keçirir, onların risk profilini dövri olaraq, əhəmiyyətli dəyişikliklərdə (o cümlədən əməliyyatların həcmi əvvəlki illə müqayisədə 40 faiz və daha çox artdıqda) isə təkrar qiymətləndirir. Nəzarətin dövriliyi və intensivliyi riskə görə müəyyən edilir, maliyyə qruplarına nəzarət konsolidasiya olunmuş formada aparılır.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2720&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Banklar haqqında” və “Qiymətli kağızlar bazarı haqqında” qanunlara dəyişikliklər (sekyuritizasiya)",
-          "summary": "Layihə birinci oxunuşdadır (16 oktyabr), qanun deyil. “Qiymətli kağızlar bazarı haqqında” Qanuna sekyuritizasiyaya dair fəsil əlavə edilir: kredit, maliyyə icarəsi və faktorinq müqavilələrindən, habelə fond birjasında listinqdə olmayan korporativ istiqrazlardan yaranan pul tələbləri müstəsna fəaliyyəti sekyuritizasiya olan şirkətə satıla, onların əsasında sekyuritizasiya istiqrazları buraxıla bilər, bu istiqrazları qanunda göstərilən hallar nəzərə alınmaqla yalnız institusional investorlar əldə edir; aktivlər reyestrə daxil edildiyi andan istiqraz mülkiyyətçilərinin xeyrinə qanun üzrə girov qoyulmuş hesab olunur. “Banklar haqqında” Qanunun 41.2-ci maddəsinə sekyuritizasiya zamanı sekyuritizasiya şirkətinə dair bənd əlavə edilir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2722&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Ətraf mühitin mühafizəsi haqqında” və “Ətraf mühitə təsirin qiymətləndirilməsi haqqında” qanunlara dəyişikliklər",
-          "summary": "Layihə birinci oxunuşdadır (16 oktyabr), qanun deyil. Ətraf mühitə təsirin qiymətləndirilməsi tələb olunan fəaliyyətlə məşğul olan hüquqi şəxslər ətraf mühitin istehsalat monitorinqini aparmalı, istifadə etdikləri ölçmə vasitələrinin tipi təsdiq edilməli və onlar yoxlamadan keçməli, monitorinqin nəticələri barədə illik hesabat növbəti ilin 1 fevralınadək müvafiq quruma təqdim edilməlidir; ƏMTQ sənədinin həmin qurumun rəsmi internet informasiya ehtiyatında yerləşdirilməsi üçün ona təqdim edilməsi nəzərdə tutulur.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2716&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "Əmək Məcəlləsinə dəyişiklik (küləkli havada açıq iş yerlərində işin dayandırılması)",
-          "summary": "Layihə birinci oxunuşdadır (16 oktyabr), qanun deyil. Soyuq və isti havalarda işin dayandırılması və işçilərə fasilələrin verilməsi şərtləri küləkli havada açıq iş yerlərinə də şamil edilir; küləyin gücü 6 baldan 8 baladək olduqda quruda istismar olunan kranlarla işlərə yalnız onların texniki pasportunda nəzərdə tutulmuş hallarda yol verilir, 8 baldan artıq olduqda bu kranlarla bütün işlər dayandırılır.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2721&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-16",
-          "title": "“Ədliyyə orqanlarında qulluq keçmə haqqında” Qanuna dəyişikliklər (penitensiar xidmətdə tibb xidmətinin hərbi qulluqçuları)",
-          "summary": "Layihə birinci oxunuşdadır (16 oktyabr), qanun deyil. Tibb xidmətinin hərbi qulluqçuları penitensiar xidmətin müalicə müəssisələrində, penitensiar müəssisələrin tibb-sanitar hissələrində və xüsusi bölmələrində xidmət keçir; onların xidməti hərbi vəzifə və hərbi xidmət, hərbi qulluqçuların statusu haqqında qanunlar, “Hərbi xidmətkeçmə haqqında” Əsasnamə və Silahlı Qüvvələrin İntizam Nizamnaməsi ilə tənzimlənir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2723&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-13",
-          "title": "“İcra haqqında” və “Qiymətli kağızlar bazarı haqqında” qanunlara dəyişikliklər (tələbin borclunun qiymətli kağızlarına yönəldilməsi)",
-          "summary": "Layihə birinci oxunuşdadır (13 oktyabr), qanun deyil. İcra məmuru borclunun qiymətli kağızları üzərinə həbs qoyur, tədbirlər “Elektron icra” informasiya sistemi vasitəsilə görülür; qiymətli kağız tələbkara əvvəlki ticarət gününün sonuna olan qiymətdən (belə qiymət olmadıqda nominal dəyərdən) aşağı olmayan qiymətə təklif edilir, tələbkar 7 iş günü ərzində qəbul etmədikdə investisiya şirkəti vasitəsilə tənzimlənən bazarda satılır, iki ay ərzində satılmadıqda yenidən tələbkara nominal dəyərlə təklif olunur. Qaydalar ipoteka kağızına şamil edilmir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2709&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-13",
-          "title": "Əmək Məcəlləsinə və “Aviasiya haqqında” Qanuna dəyişikliklər (hava gəmisi heyətinin iş və istirahət vaxtı)",
-          "summary": "Layihə birinci oxunuşdadır (13 oktyabr), qanun deyil. Kommersiya hava daşımaları həyata keçirən təyyarələrin heyətinin iş və istirahət vaxtı, o cümlədən uçuş vaxtı və uçuş iş vaxtı “Aviasiya haqqında” Qanuna, Beynəlxalq Mülki Aviasiya Təşkilatının standartlarına və müvafiq qurumun qaydalarına uyğun tənzimlənir: iş saatlarının həddi istənilən 7, 14 və 28 ardıcıl gün və təqvim ili üzrə, uçuş saatlarının həddi 28 ardıcıl gün, təqvim ili və 12 ardıcıl ay üzrə müəyyən edilir. Tənzimlənməyən məsələlərə Əmək Məcəlləsi tətbiq olunur.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2707&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-13",
-          "title": "“Texniki tənzimləmə haqqında” Qanuna dəyişiklik (təhlükəli malların geri çağırılması)",
-          "summary": "Layihə birinci oxunuşdadır (13 oktyabr), qanun deyil. İnsanların həyatı və sağlamlığı üçün təhlükəli hesab edilən, texniki tənzimləmənin şamil olunduğu malların bazardan geri çağırılması, dövriyyədən çıxarılması, götürülməsi, daşınması, saxlanması, zərərsizləşdirilməsi və ya məhv edilməsi müvafiq icra hakimiyyəti orqanının müəyyən etdiyi qurumun qaydaları ilə həyata keçirilir.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2708&lang=az&par=0"
-        },
-        {
-          "kind": "bill",
-          "date": "2026-10-13",
-          "title": "Mülki və Gömrük məcəllələrinə, silah, polis, ovçuluq, ixrac nəzarəti, telekommunikasiya və digər qanunlara dəyişikliklər (“xüsusi icazə” ifadəsi)",
-          "summary": "Layihə birinci oxunuşdadır (13 oktyabr), qanun deyil. Mülki Məcəllənin, Gömrük Məcəlləsinin, “Xidməti və mülki silah haqqında”, “Polis haqqında”, “Əməliyyat-axtarış fəaliyyəti haqqında”, “Ovçuluq haqqında”, “İxrac nəzarəti haqqında”, “Telekommunikasiya haqqında” qanunların və mülki dövriyyəsi məhdudlaşdırılmış əşyaların siyahısı haqqında qanunun müvafiq maddələrindən “xüsusi” sözü çıxarılır, “xüsusi icazə” ifadəsi “icazə” ilə əvəz olunur.",
-          "url": "https://meclis.gov.az/news-layihe.php?id=2713&lang=az&par=0"
-        }
-      ]
-    },
-    {
-      "institution": "Azərbaycan Respublikasının Prezidenti",
-      "subtitle": "Fərmanlar və sərəncamlar",
-      "intro": "Prezident həmçinin 2 təltif sərəncamı imzalayıb.",
-      "entries": [
-        {
-          "kind": "decree",
           "number": "802",
           "date": "2026-10-15",
-          "title": "“Rəqəmsal rabitə” informasiya sisteminin yaradılması",
-          "summary": "Telekommunikasiya və poçt rabitəsi sahələrində inzibatçılığı və istifadəçi məmnunluğunu artırmaq, xidmətləri rəqəmsallaşdırmaq məqsədilə “Rəqəmsal rabitə” informasiya sistemi yaradılır və onun Əsasnaməsi təsdiq edilir; sistemin sahibi Rəqəmsal İnkişaf və Nəqliyyat Nazirliyi, operatoru nazirliyin tabeliyindəki İnformasiya Kommunikasiya Texnologiyaları Agentliyidir. Əsasnaməyə görə internet xidməti göstərən operator və provayderlərin uçotu, sahə üzrə lisenziya və icazələrin verilməsi, radiotezliklərin ayrılması, mobil nömrə daşınması üçün müraciətlər, vətəndaş müraciətləri və operatorlardan məlumat toplanması sistem vasitəsilə rəqəmsal qaydada aparılır. Nazirliyə dövlət orqanlarından alınacaq məlumatların altı ay ərzində Elektron Hökumət İnformasiya Sistemi vasitəsilə əldə olunmasını təmin etmək tapşırılır.",
+          "text": "Telekommunikasiya və poçt rabitəsi sahələri üzrə “Rəqəmsal rabitə” informasiya sistemi yaradılıb və onun Əsasnaməsi təsdiq edilib.",
           "url": "https://e-qanun.az/framework/62749"
         },
         {
-          "kind": "decree",
           "number": "803",
           "date": "2026-10-16",
-          "title": "Publik hüquqi şəxslərin yenidən təşkili ilə bağlı fərman və sərəncamlara dəyişikliklər (700 nömrəli Fərmanın icrası)",
-          "summary": "2026-cı il 25 iyun tarixli 700 nömrəli Fərmanın icrası ilə əlaqədar AZƏRTAC, Minatəmizləmə Agentliyi, Azərbaycan Elm Fondu, Kino Agentliyi, Hüquqi Ekspertiza və Qanunvericilik Təşəbbüsləri Mərkəzi, Dövlət Ehtiyatları Agentliyi, işğaldan azad edilmiş rayonlardakı Bərpa, Tikinti və İdarəetmə xidmətləri və digər qurumlarla bağlı 28 fərman və sərəncama dəyişiklik edilir, AZƏRTAC-ın Əsasnaməsinə dair 2001-ci il 516 nömrəli Fərman və həmin Mərkəzin Müşahidə Şurasına dair 2022-ci il 3268 nömrəli Sərəncam ləğv olunur. Dövlət büdcəsindən ayrılmış vəsait hesabına iş və xidmətlərə görə ƏDV-dən azad olunan publik hüquqi şəxslərin siyahısının 12 hissəsi ləğv edilir. Fərman yeni qurumların əsasnamələri (nizamnamələri), strukturu və əməyin ödənilməsi sistemi müəyyən edildiyi, məhdud məsuliyyətli cəmiyyətlərə münasibətdə isə onların dövlət qeydiyyatına alındığı gündən tətbiq edilir.",
+          "text": "700 nömrəli Fərmanın icrası ilə əlaqədar publik hüquqi şəxslərin yenidən təşkili ilə bağlı 28 fərman və sərəncamda dəyişiklik edilib; AZƏRTAC-ın Əsasnaməsinə dair 2001-ci il 516 nömrəli Fərman və Hüquqi Ekspertiza və Qanunvericilik Təşəbbüsləri Mərkəzinin Müşahidə Şurasına dair 2022-ci il 3268 nömrəli Sərəncam ləğv edilib.",
           "url": "https://e-qanun.az/framework/62762"
-        },
-        {
-          "kind": "order",
-          "number": "1261",
-          "date": "2026-10-12",
-          "title": "2026–2027-ci tədris ilində ali təhsil müəssisələrinə daxil olmuş tələbələrə Prezident təqaüdü",
-          "summary": "Prezidentin 2001-ci il 3 sentyabr tarixli 564 nömrəli Fərmanına uyğun olaraq tələbə qəbulu imtahanlarında ixtisas qrupları üzrə ən yüksək nəticə göstərib ali təhsil müəssisələrinə daxil olmuş 102 tələbəyə Prezident təqaüdü verilir; Sərəncamdan irəli gələn məsələlərin həlli Nazirlər Kabinetinə tapşırılır.",
-          "url": "https://e-qanun.az/framework/62734"
-        },
-        {
-          "kind": "order",
-          "number": "1266",
-          "date": "2026-10-16",
-          "title": "Əlilliyi olan şəxslərin və şəhid ailələrinin sosial müdafiəsi tədbirlərinin icbari şəxsi sığorta vəsaiti hesabına maliyyələşdirilməsinə dair sərəncama dəyişiklik",
-          "summary": "Prezidentin “Əlilliyi olan şəxslərin və şəhid ailələrinin sosial müdafiəsi və sosial təminatı ilə bağlı tədbirlərin dövlət icbari şəxsi sığorta vəsaiti hesabına maliyyələşdirilməsi haqqında” 2022-ci il 29 sentyabr tarixli 3493 nömrəli Sərəncamının 1-ci hissəsində “2026-cı” sözləri “2029-cu” sözləri ilə əvəz edilir.",
-          "url": "https://e-qanun.az/framework/62757"
         }
       ]
     },
-    {
-      "institution": "Nazirlər Kabineti",
-      "subtitle": "Qərarlar və sərəncamlar",
+    "decisions": {
       "entries": [
         {
-          "kind": "decision",
           "number": "331",
           "date": "2026-10-12",
-          "title": "Tullantıların İdarə Edilməsi üzrə Dövlət Agentliyinin təsnifatlara daxil edilməsi",
-          "summary": "Prezidentin 2026-cı il 14 may tarixli 665 nömrəli Fərmanının icrası ilə əlaqədar Ekologiya və Təbii Sərvətlər Nazirliyi yanında Tullantıların İdarə Edilməsi üzrə Dövlət Agentliyi inzibati orqanların təsnifatına, dövlət orqanlarının aparatlarının adlarına və büdcə xərclərinin inzibati təsnifatına (1932 kodu ilə) əlavə edilir.",
+          "text": "665 nömrəli Fərmanın icrası ilə əlaqədar Ekologiya və Təbii Sərvətlər Nazirliyi yanında Tullantıların İdarə Edilməsi üzrə Dövlət Agentliyi inzibati orqanların təsnifatına, dövlət orqanlarının aparatlarının adlarına və büdcə xərclərinin inzibati təsnifatına daxil edilib.",
           "url": "https://e-qanun.az/framework/62747"
         },
         {
-          "kind": "decision",
           "number": "332",
           "date": "2026-10-12",
-          "title": "Sudan ödənişli istifadə Qaydalarının yeni redaksiyası",
-          "summary": "Su ehtiyatlarından səmərəli istifadəyə dair Milli Strategiyanın Tədbirlər Planının icrası üçün 2022-ci il 17 mart tarixli 95 nömrəli Qərarla təsdiq edilmiş Qaydalar yeni redaksiyada verilir, qərarın 2–5-ci hissələri ləğv olunur. Texniki qurğu ilə götürülən suya görə ödəniş sayğacın göstəricisi ilə, sayğac olmadıqda elektrik enerjisi sərfiyyatına və ya qurğunun illik maksimum sugötürmə imkanının müəyyən faizinə (sənaye məqsədli yerüstü su üçün 50, digər məqsədli yerüstü və yeraltı su üçün 10 faiz) görə hesablanır və Su Ehtiyatları Agentliyinin xəzinə hesabına köçürülür; tarifləri və onların yuxarı həddini Tarif (qiymət) Şurası müəyyən edir, Sudan İstifadəedənlər Birlikləri suvarma suyuna bu həddən yüksək olmayan sərbəst qiymət qoyur, xam suyun dəyəri növbəti ayın 10-dək ödənilir. Nümunəvi müqavilə və akt formaları da təsdiq olunur.",
+          "text": "2022-ci il 95 nömrəli Qərarla təsdiq edilmiş sudan ödənişli istifadə Qaydaları yeni redaksiyada verilib; nümunəvi müqavilə və akt formaları da təsdiq edilib.",
           "url": "https://e-qanun.az/framework/62752"
         },
         {
-          "kind": "decision",
           "number": "333",
           "date": "2026-10-12",
-          "title": "Vergi və gömrük güzəştləri reyestrinə raritet avtomobillərin və incəsənət əsərlərinin idxalı üzrə azadolmaların daxil edilməsi",
-          "summary": "Prezidentin 2026-cı il 23 fevral tarixli 606 nömrəli Fərmanına əsasən vergi və gömrük güzəştlərinin büdcə gəlirlərinə təsirinin qiymətləndirilməsi metodologiyasının 1 nömrəli əlavəsinə dörd azadolma daxil edilir: Mədəniyyət Nazirliyinin təsdiqedici sənədi əsasında raritet avtonəqliyyat vasitələrinin idxalına görə ƏDV, aksiz və gömrük rüsumu üzrə (şəxs üçün təqvim ili ərzində 1, ölkə üzrə 10 ədədədək), habelə incəsənət əsərlərinin, kolleksiya və əntiq əşyaların idxalına görə ƏDV üzrə. Sonuncu bənd 1 yanvar 2026-cı ildən tətbiq edilir.",
+          "text": "Vergi və gömrük güzəştlərinin büdcə gəlirlərinə təsirinin qiymətləndirilməsi metodologiyasının 1 nömrəli əlavəsinə raritet avtonəqliyyat vasitələrinin idxalına görə ƏDV, aksiz və gömrük rüsumu, incəsənət əsərlərinin, kolleksiya və əntiq əşyaların idxalına görə isə ƏDV üzrə azadolmalar daxil edilib.",
           "url": "https://e-qanun.az/framework/62750"
         },
         {
-          "kind": "decision",
           "number": "334",
           "date": "2026-10-12",
-          "title": "Gömrük orqanlarına təqdim edilmiş malların məhv edilməsi Qaydasına dəyişiklik",
-          "summary": "Qaydanın 4.3-cü bəndi dəqiqləşdirilir: 4.3.4–4.3.10-cu yarımbəndlərdə nəzərdə tutulan sənədlər yalnız mövcud olduğu hallarda tələb olunur.",
+          "text": "Gömrük orqanlarına təqdim edilmiş malların məhv edilməsi Qaydasında dəyişiklik edilib; 4.3.4–4.3.10-cu yarımbəndlərdə nəzərdə tutulan sənədlərin yalnız mövcud olduğu hallarda tələb olunması müəyyən edilib.",
           "url": "https://e-qanun.az/framework/62748"
         },
         {
-          "kind": "decision",
           "number": "337",
           "date": "2026-10-14",
-          "title": "Cəbrayıl rayonunda günəş elektrik stansiyalarının tikintisinə icazə alınması müddətinin uzadılması",
-          "summary": "Nazirlər Kabinetinin 2024-cü il 29 oktyabr tarixli 466 nömrəli Qərarı ilə Cəbrayıl rayonunda bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilmiş torpaq sahəsində günəş elektrik stansiyalarının tikintisinə icazə alınması müddəti “Elektrik enerjisi istehsalında bərpa olunan enerji mənbələrindən istifadə haqqında” Qanunun 6.7-ci maddəsinə uyğun olaraq bir il uzadılır; Dövlət Şəhərsalma və Arxitektura Komitəsi icazə verildikdə və ya müddət başa çatdıqda üç gün ərzində Nazirlər Kabinetinə məlumat verir.",
+          "text": "2024-cü il 466 nömrəli Qərarla Cəbrayıl rayonunda bərpa olunan enerji mənbələrinin ərazisi kimi müəyyən edilmiş torpaq sahəsində günəş elektrik stansiyalarının tikintisinə icazə alınması müddəti bir il uzadılıb.",
           "url": "https://e-qanun.az/framework/62754"
         },
         {
-          "kind": "decision",
           "number": "338",
           "date": "2026-10-15",
-          "title": "COVID-19 xəstələrinə yardım göstərən tibb işçilərinin əməkhaqqı əlavəsinə dair qərara dəyişiklik",
-          "summary": "Bakı şəhər Baş Səhiyyə İdarəsinin tabeliyindəki xüsusi ambulator tibb məntəqələrində COVID-19 infeksiyasına yoluxmuş xəstələrə ambulator-poliklinik yardım göstərən tibb işçilərinin əməkhaqlarına müddətli əlavə haqqında 2020-ci il 23 iyul tarixli 262 nömrəli Qərarın 2-ci hissəsində “2026-cı il oktyabrın 1-dək” sözləri “2027-ci il yanvarın 2-dək” sözləri ilə əvəz edilir.",
+          "text": "Bakı şəhər Baş Səhiyyə İdarəsinin tabeliyindəki xüsusi ambulator tibb məntəqələrində COVID-19 xəstələrinə yardım göstərən tibb işçilərinin əməkhaqlarına müddətli əlavə haqqında 2020-ci il 262 nömrəli Qərarda “2026-cı il oktyabrın 1-dək” sözləri “2027-ci il yanvarın 2-dək” sözləri ilə əvəz edilib.",
           "url": "https://e-qanun.az/framework/62751"
         },
         {
-          "kind": "decision",
           "number": "339",
           "date": "2026-10-15",
-          "title": "“Elektron kredit və zəmanət” informasiya sisteminin Əsasnaməsinin yeni redaksiyası",
-          "summary": "Əsasnamə yeni redaksiyada təsdiq edilir: sistem Azərbaycan Biznesinin İnkişafı Fondunun sahibkarlara verdiyi güzəştli kreditlər, zəmanət və faiz subsidiyası üzrə prosedurların elektron qaydada aparılmasını təmin edir, sahibkarlar üçün elektron kabinet yaradılır, sistemdən istifadə ödənişsizdir. Sistemin sahibi İqtisadiyyat Nazirliyi, operatoru Fond, iştirakçıları Dövlət Vergi Xidməti və Əmlak Məsələləri Dövlət Xidmətidir.",
+          "text": "Azərbaycan Biznesinin İnkişafı Fondunun güzəştli kredit, zəmanət və faiz subsidiyası üzrə prosedurlarının elektron qaydada aparılmasını təmin edən “Elektron kredit və zəmanət” informasiya sisteminin Əsasnaməsi yeni redaksiyada təsdiq edilib.",
           "url": "https://e-qanun.az/framework/62758"
         },
         {
-          "kind": "decision",
           "number": "340",
           "date": "2026-10-15",
-          "title": "Örüş, otlaq və biçənək sahələrinin istifadəyə və icarəyə verilməsi Qaydalarına dəyişiklik",
-          "summary": "Prezidentin 2026-cı il 8 aprel tarixli 640 nömrəli Fərmanının icrası ilə əlaqədar Qaydaların 2-ci hissəsində Nazirlər Kabineti ilə yanaşı, Naxçıvan Muxtar Respublikasındakı torpaqlara münasibətdə Naxçıvan Muxtar Respublikasının Nazirlər Kabineti göstərilir.",
+          "text": "640 nömrəli Fərmanın icrası ilə əlaqədar örüş, otlaq və biçənək sahələrinin istifadəyə və icarəyə verilməsi Qaydalarında dəyişiklik edilib; Qaydaların 2-ci hissəsində Nazirlər Kabineti ilə yanaşı, Naxçıvan Muxtar Respublikasındakı torpaqlara münasibətdə Naxçıvan Muxtar Respublikasının Nazirlər Kabineti göstərilib.",
           "url": "https://e-qanun.az/framework/62755"
         },
         {
-          "kind": "decision",
           "number": "341",
           "date": "2026-10-15",
-          "title": "İri dövlət şirkətlərinin gəlir və xərc smetalarına dair qərarın ləğvi və əlaqəli dəyişikliklər",
-          "summary": "Prezidentin 2025-ci il 29 dekabr tarixli 570 nömrəli Fərmanının 3.2-ci bəndinin icrası üçün Nazirlər Kabinetinin “İri dövlət şirkətlərinin gəlirlər və xərclər smetaları haqqında” 2016-cı il 30 dekabr tarixli 534 nömrəli Qərarı (7-ci hissəsi istisna olmaqla) ləğv edilir. Elektroenergetika və qaz təchizatı sahəsində dövlətə məxsus şirkətlər arasında qarşılıqlı ödənişlər Qaydasında həmin qərarla yaradılmış Komissiya Nazirlər Kabineti ilə əvəz olunur, büdcə təşkilatlarında kommunal xidmətlər üzrə limitlərə dair 2019-cu il 164 nömrəli Qərarın 6-cı hissəsi ləğv edilir.",
+          "text": "“İri dövlət şirkətlərinin gəlirlər və xərclər smetaları haqqında” 2016-cı il 534 nömrəli Qərar (7-ci hissəsi istisna olmaqla) ləğv edilib; elektroenergetika və qaz təchizatı sahəsində dövlətə məxsus şirkətlər arasında qarşılıqlı ödənişlər Qaydasında həmin qərarla yaradılmış Komissiya Nazirlər Kabineti ilə əvəz olunub.",
           "url": "https://e-qanun.az/framework/62770"
         },
         {
-          "kind": "decision",
           "number": "342",
           "date": "2026-10-15",
-          "title": "Quba rayonunda ərazi vahidlərinin adlarının dəyişdirilməsi ilə bağlı dəyişikliklər",
-          "summary": "404-VIIQ nömrəli Qanunla əlaqədar ölkə əhəmiyyətli tarix və mədəniyyət abidələrinin, yerli əhəmiyyətli avtomobil yollarının və Mədəniyyət Nazirliyinin tabeliyindəki qurumların siyahılarında “Alekseyevka” adı “Çinarlı”, “Vladimirovka” adı “Elbir” ilə əvəz edilir.",
+          "text": "404-VIIQ nömrəli Qanunla əlaqədar ölkə əhəmiyyətli tarix və mədəniyyət abidələrinin, yerli əhəmiyyətli avtomobil yollarının və Mədəniyyət Nazirliyinin tabeliyindəki qurumların siyahılarında Quba rayonundakı “Alekseyevka” adı “Çinarlı”, “Vladimirovka” adı “Elbir” ilə əvəz edilib.",
           "url": "https://e-qanun.az/framework/62763"
         },
         {
-          "kind": "decision",
           "number": "343",
           "date": "2026-10-16",
-          "title": "Vergi güzəştləri reyestrinə həlak olmuş minatəmizləyənlərin ailə üzvlərinin daxil edilməsi",
-          "summary": "2026-cı il 27 aprel tarixli 396-VIIQD nömrəli Qanunun icrası üçün vergi və gömrük güzəştlərinin qiymətləndirilməsi metodologiyasının 1 nömrəli əlavəsinin 1.60-cı bəndinə minatəmizləmə zamanı partlayıcı sursatın işə düşməsi nəticəsində həlak olmuş və ya aldığı xəsarətdən dünyasını dəyişmiş minatəmizləyənlərin valideynləri, dul arvadları (ərləri) və övladları əlavə edilir.",
+          "text": "396-VIIQD nömrəli Qanunun icrası üçün vergi və gömrük güzəştlərinin qiymətləndirilməsi metodologiyasının 1 nömrəli əlavəsinin 1.60-cı bəndinə minatəmizləmə zamanı partlayıcı sursatın işə düşməsi nəticəsində həlak olmuş və ya aldığı xəsarətdən dünyasını dəyişmiş minatəmizləyənlərin valideynləri, dul arvadları (ərləri) və övladları əlavə edilib.",
           "url": "https://e-qanun.az/framework/62761"
-        },
-        {
-          "kind": "order",
-          "number": "758s",
-          "date": "2026-10-12",
-          "title": "Övladlığa götürmə Qaydasına dəyişikliklərə dair 798 nömrəli Fərmanın icrası",
-          "summary": "Ədliyyə Nazirliyinə Əmək və Əhalinin Sosial Müdafiəsi Nazirliyi, Xarici İşlər Nazirliyi, Ailə, Qadın və Uşaq Problemləri üzrə Dövlət Komitəsi, Bakı Şəhər İcra Hakimiyyəti və digər orqanlarla razılaşdırmaqla Kabinetin aktlarının Prezidentin 2026-cı il 5 oktyabr tarixli 798 nömrəli Fərmanına uyğunlaşdırılması üzrə təkliflərini beş ay müddətində təqdim etmək tapşırılır; mərkəzi icra hakimiyyəti orqanları dörd ay ərzində öz aktları üzrə tədbir görməli, Ədliyyə Nazirliyi altı ay ərzində məlumat verməlidir. Sərəncam imzalandığı gündən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62777"
         }
       ]
     },
-    {
-      "institution": "Konstitusiya Məhkəməsi",
-      "subtitle": "Qərar və qərardad",
+    "bills": {
+      "note": "Milli Məclisin saytında on dörd qanun layihəsinin 13 və 16 oktyabr 2026-cı il tarixli oxunuş mətnləri yerləşdirilib.",
+      "source": "https://meclis.gov.az/cat-layihe.php?cat=83&lang=az",
       "entries": [
         {
-          "kind": "court",
+          "date": "2026-10-13",
+          "stage": "I",
+          "text": "“İcra haqqında” və “Qiymətli kağızlar bazarı haqqında” qanunlarda dəyişiklik (tələbin borclunun qiymətli kağızlarına yönəldilməsi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2709&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "I",
+          "text": "Əmək Məcəlləsində və “Aviasiya haqqında” Qanunda dəyişiklik (hava gəmisi heyətinin iş və istirahət vaxtı).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2707&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "I",
+          "text": "“Texniki tənzimləmə haqqında” Qanunda dəyişiklik (təhlükəli malların bazardan geri çağırılması).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2708&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-13",
+          "stage": "I",
+          "text": "Mülki Məcəllədə, Gömrük Məcəlləsində və silah, polis, əməliyyat-axtarış fəaliyyəti, ovçuluq, ixrac nəzarəti, telekommunikasiya və mülki dövriyyəsi məhdudlaşdırılmış əşyalar qanunvericiliyində dəyişiklik (“xüsusi icazə” ifadəsinin “icazə” ilə əvəz edilməsi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2713&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "III",
+          "text": "Dövlət Qulluğu Məcəlləsinin təsdiq edilməsi və qüvvəyə minməsi haqqında Qanun layihəsi.",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2702&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "III",
+          "text": "“Əmək pensiyaları haqqında”, “Diplomatik xidmət haqqında” və digər qanunlarda dəyişiklik (aylıq pensiya əlavəsi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2698&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "III",
+          "text": "Vergi Məcəlləsində, “Hərbi qulluqçuların statusu haqqında” Qanunda və hüquq mühafizə orqanlarında xidmətə dair qanunlarda dəyişiklik.",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2696&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "II",
+          "text": "Cinayət Məcəlləsində və Cinayət-Prosessual Məcəllədə dəyişiklik (hüquqi şəxslərə cinayət-hüquqi tədbirlərin tətbiqi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2704&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "II",
+          "text": "“Dövlət satınalmaları haqqında” Qanunda dəyişiklik.",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2693&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "I",
+          "text": "“Mərkəzi Bank haqqında” Qanunda dəyişiklik (cinayət yolu ilə əldə edilmiş əmlakın leqallaşdırılmasına qarşı mübarizə üzrə nəzarət).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2720&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "I",
+          "text": "“Banklar haqqında” və “Qiymətli kağızlar bazarı haqqında” qanunlarda dəyişiklik (sekyuritizasiya).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2722&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "I",
+          "text": "“Ətraf mühitin mühafizəsi haqqında” və “Ətraf mühitə təsirin qiymətləndirilməsi haqqında” qanunlarda dəyişiklik (ətraf mühitin istehsalat monitorinqi).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2716&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "I",
+          "text": "Əmək Məcəlləsində dəyişiklik (küləkli havada açıq iş yerlərində işin dayandırılması).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2721&lang=az&par=0"
+        },
+        {
+          "date": "2026-10-16",
+          "stage": "I",
+          "text": "“Ədliyyə orqanlarında qulluq keçmə haqqında” Qanunda dəyişiklik (penitensiar xidmətdə tibb xidmətinin hərbi qulluqçuları).",
+          "url": "https://meclis.gov.az/news-layihe.php?id=2723&lang=az&par=0"
+        }
+      ]
+    },
+    "court": {
+      "entries": [
+        {
           "date": "2026-10-12",
-          "title": "Cinayət Məcəlləsinin 79.1-ci maddəsinin Konstitusiyaya uyğunluğu (cəzaçəkmənin təxirə salınması)",
-          "summary": "Plenumun Qərarı ombudsmanın sorğusu üzrə qəbul edilib: şəxsiyyət əleyhinə ağır və ya xüsusilə ağır cinayətə görə beş ildən artıq azadlıqdan məhrumetməyə məhkum edilmiş hamilə qadınlara, on dörd yaşınadək uşağı olan qadınlara və belə uşağı təkbaşına böyüdən kişilərə cəzaçəkmənin təxirə salınmasının qadağan edilməsi Konstitusiyaya uyğun sayılıb, hakimlər təxirə salma məsələsinə baxarkən formal meyarlarla kifayətlənməməli, əməlin xarakterini, ictimai təhlükəlilik dərəcəsini və məhkumun şəxsiyyətini qiymətləndirməlidirlər. Plenum terrorçuluq, insan alveri, narkotik vasitələrin qanunsuz dövriyyəsi və yetkinlik yaşına çatmayanlar əleyhinə cinayətlər kimi digər cinayətlərə görə məhkum edilənlərin də 79.1-ci maddənin tətbiq dairəsindən çıxarılmasını məqsədəmüvafiq hesab edib. Qərar dərc edildiyi gündən qüvvəyə minir.",
+          "ruling": "qərar",
+          "text": "Cinayət Məcəlləsinin 79.1-ci maddəsində şəxsiyyət əleyhinə ağır və ya xüsusilə ağır cinayətə görə beş ildən artıq azadlıqdan məhrumetməyə məhkum edilmiş hamilə qadınlara, on dörd yaşınadək uşağı olan qadınlara və belə uşağı təkbaşına böyüdən kişilərə cəzaçəkmənin təxirə salınmasının qadağan edilməsi Konstitusiyaya uyğun hesab edilib.",
           "url": "https://e-qanun.az/framework/62759"
         },
         {
-          "kind": "court",
           "date": "2026-10-13",
-          "title": "Sahibkarlıq subyektlərində su qanunvericiliyinə əməl olunmasına nəzarət (İXM-in 262 və 264-cü maddələrinin şərhi)",
-          "summary": "Cəbrayıl Rayon Məhkəməsinin müraciəti üzrə Plenumun Qərardadıdır: ayrıca qərar qəbul edilməsinə ehtiyac olmadığından icraata xitam verilib, hüquqi mövqelərin nəzərə alınması göstərilib. Plenuma görə Suların İstifadəsinə və Mühafizəsinə Dövlət Nəzarəti Xidmətinin sahibkarın fəaliyyət göstərdiyi yerə gəlməklə apardığı tədbirlər sahibkarlıq sahəsində yoxlamalar haqqında qanunun mənasında yoxlamadır və həmin qanunun qaydalarına riayət edilməlidir, obyektə daxil olmadan aşkar edilən hüquqpozmalar isə bu qanunun tənzimləmə sferasına aid deyil. Yoxlamaların dayandırıldığı dövrdə insanların həyatı, sağlamlığı, dövlətin iqtisadi maraqları və ətraf mühit üçün mühüm təhlükə yaradan təxirəsalınmaz hallarda belə tədbirlər Prezidentin 660 nömrəli Fərmanı ilə təsdiq edilmiş Siyahının 2-ci hissəsinə əsasən görülə bilər.",
+          "ruling": "qərardad",
+          "text": "İnzibati Xətalar Məcəlləsinin 262 və 264-cü maddələrinin şərhinə dair işdə Suların İstifadəsinə və Mühafizəsinə Dövlət Nəzarəti Xidmətinin sahibkarın fəaliyyət göstərdiyi yerə gəlməklə apardığı tədbirlərin sahibkarlıq sahəsində yoxlamalar haqqında qanunun mənasında yoxlama olduğu göstərilib və icraata xitam verilib.",
           "url": "https://constcourt.gov.az/az/decision/1629"
         }
       ]
-    },
-    {
-      "institution": "Elm və Təhsil Nazirliyi",
-      "subtitle": "Normativ akt",
-      "entries": [
-        {
-          "kind": "other",
-          "number": "KQ-10",
-          "date": "2026-10-13",
-          "title": "Nazirlik yanında agentliklərin strukturuna daxil olmayan tabeli təhsil müəssisələrinin siyahılarına dəyişiklik",
-          "summary": "Elm və Təhsil Nazirliyi Kollegiyasının 2023-cü il 24 oktyabr tarixli KQ-06 nömrəli Qərarı ilə təsdiq edilmiş, Nazirlik yanında dövlət agentliklərinin strukturuna daxil olmayan tabeli orta ixtisas, peşə, məktəbəqədər, ümumi və məktəbdənkənar təhsil müəssisələrinin və digər qurumların siyahılarına dəyişiklik edilir. Hüquqi aktların dövlət reyestrinə görə, 30 oktyabr 2026-cı ildən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62824"
-        }
-      ]
-    },
-    {
-      "institution": "Əmək və Əhalinin Sosial Müdafiəsi Nazirliyi",
-      "subtitle": "Normativ akt",
-      "entries": [
-        {
-          "kind": "other",
-          "number": "3-17/3-5-21/2026",
-          "date": "2026-10-14",
-          "title": "Dövlət geoloji informasiya sahəsi üzrə Vahid Tarif-İxtisas Sorğu Kitabçasına dair kollegiya qərarının ləğvi",
-          "summary": "Nazirliyin Kollegiyasının “Dövlət Geoloji İnformasiya sahəsinə aid olan qulluqçu vəzifələrinin Vahid Tarif-İxtisas Sorğu Kitabçası”nı təsdiq edən 2025-ci il 23 sentyabr tarixli 3-17/3-5-20/2025 nömrəli Qərarı ləğv edilir. e-qanun.az reyestrinə görə akt 27 oktyabr 2026-cı ildən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62813"
-        }
-      ]
     }
-  ],
-  "sources": [
-    "https://e-qanun.az",
-    "https://president.az/az/documents/category/laws",
-    "https://president.az/az/documents/category/decrees",
-    "https://president.az/az/documents/category/orders",
-    "https://nk.gov.az/az/senedler/hamisi",
-    "https://meclis.gov.az/cat-qanun.php?cat=72&lang=az",
-    "https://meclis.gov.az/cat-layihe.php?cat=83&lang=az",
-    "https://constcourt.gov.az/az/decisions",
-    "https://president.az/az/articles/view/73880",
-    "https://president.az/az/articles/view/73873",
-    "https://president.az/az/articles/view/73874",
-    "https://president.az/az/articles/view/73872",
-    "https://president.az/az/articles/view/73871",
-    "https://president.az/az/articles/view/74052",
-    "https://president.az/az/articles/view/74053",
-    "https://president.az/az/articles/view/74103",
-    "https://president.az/az/articles/view/73881",
-    "https://president.az/az/articles/view/74136",
-    "https://nk.gov.az/az/senedler/qerarlar/tullantilarin-idare-edilmesinin-tekmillesdirilmesi-9820",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinda-sudan-odenisli-istifade-9821",
-    "https://nk.gov.az/uploads/doc/docs/6acdf0dc3cc6f.pdf",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2020-9822",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2013-9823",
-    "https://nk.gov.az/az/senedler/serencamlar/azerbaycan-respublikasi-prezidentinin-2020-ci-il-2-9824",
-    "https://nk.gov.az/az/senedler/qerarlar/berpa-olunan-enerji-menbelerinin-erazisinde-gunes-9825",
-    "https://nk.gov.az/az/senedler/qerarlar/baki-seher-bas-sehiyye-idaresinin-tabeliyinde-yara-9826",
-    "https://nk.gov.az/az/senedler/qerarlar/elektron-kredit-ve-zemanet-informasiya-sisteminin-9827",
-    "https://nk.gov.az/uploads/doc/docs/6ad0d7b14ad3c.pdf",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2000-9828",
-    "https://nk.gov.az/az/senedler/qerarlar/dovlet-mulkiyyetinde-olan-ve-paylarinin-sehmlerini-9829",
-    "https://nk.gov.az/az/senedler/qerarlar/quba-rayonunun-bezi-erazi-vahidlerinin-adlarinin-d-9830",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2020-9831",
-    "https://constcourt.gov.az/az/decision/1631",
-    "https://constcourt.gov.az/az/decision/1629",
-    "https://meclis.gov.az/news-layihe.php?id=2702&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2698&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2696&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2704&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2693&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2720&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2722&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2716&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2721&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2723&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2709&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2707&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2708&lang=az&par=0",
-    "https://meclis.gov.az/news-layihe.php?id=2713&lang=az&par=0"
-  ]
+  }
 }

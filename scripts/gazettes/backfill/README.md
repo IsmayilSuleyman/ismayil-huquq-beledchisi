@@ -28,7 +28,7 @@ that only for the issues a person has read and approved.
 ## Publishing
 
 Oldest first, one at a time, so they take numbers 13–18 in order. Each
-publish compares the draft with the issue before it and warns about
+publish compares the draft with the last three issues and warns about
 repeated act numbers; stop and look if it does.
 
 ```bash

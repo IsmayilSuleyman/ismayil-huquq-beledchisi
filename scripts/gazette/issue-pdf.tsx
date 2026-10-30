@@ -1,4 +1,5 @@
 import path from "node:path";
+import { openSync, type Font as FontFile } from "fontkit";
 import React from "react";
 import { Document, Font, Link, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
 import {
@@ -37,12 +38,59 @@ const A4_WIDTH = 595.28;
 const A4_HEIGHT = 841.89;
 const LEFT = 60;
 const RIGHT = 37;
+const NUMERAL_WIDTH = 42;
+const BODY_GAP = 3;
+/** Width of the text column: the page less its margins. */
+const CONTENT_WIDTH = A4_WIDTH - LEFT - RIGHT;
+/** Width of an item's sentence, beside its numeral. */
+const ITEM_WIDTH = CONTENT_WIDTH - NUMERAL_WIDTH - BODY_GAP;
+/** Room for the issue line between its start and the "law gazette" block. */
+const ISSUE_LINE_LEFT = 376;
+const ISSUE_LINE_ROOM = A4_WIDTH - 63 - ISSUE_LINE_LEFT - 6;
 const ROOT = process.cwd();
+const FONT_DIR = path.join(ROOT, "scripts", "gazette", "fonts");
+
+// ── Measuring ───────────────────────────────────────────────────────────────
+//
+// react-pdf lets a line run up to a third of its spaces wider than its box
+// and then pulls it back in; such a line is drawn out of order, and PDF
+// readers then copy and search it as jumbled or run-together words. So the
+// sentences are broken into lines here, with the same font files and a
+// small margin, and handed over with hard line breaks: no line ever needs
+// pulling in.
+
+const fonts = new Map<string, FontFile>();
+
+function textWidth(file: string, text: string, size: number): number {
+  let font = fonts.get(file);
+  if (!font) {
+    font = openSync(path.join(FONT_DIR, file));
+    fonts.set(file, font);
+  }
+  return (font.layout(text).advanceWidth * size) / font.unitsPerEm;
+}
+
+/** The text with a line break wherever the next word would pass `width` (less 1.5pt to spare). */
+function wrap(text: string, file: string, size: number, width: number): string {
+  const lines: string[] = [];
+  let line = "";
+  for (const word of text.split(" ")) {
+    const candidate = line ? `${line} ${word}` : word;
+    if (line && textWidth(file, candidate, size) > width - 1.5) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = candidate;
+    }
+  }
+  if (line) lines.push(line);
+  return lines.join("\n");
+}
 
 let fontsRegistered = false;
 function registerFonts() {
   if (fontsRegistered) return;
-  const dir = path.join(ROOT, "scripts", "gazette", "fonts");
+  const dir = FONT_DIR;
   Font.register({
     family: "Arimo",
     fonts: [{ src: path.join(dir, "Arimo-Regular.ttf") }, { src: path.join(dir, "Arimo-Bold.ttf"), fontWeight: 700 }],
@@ -112,12 +160,11 @@ const styles = StyleSheet.create({
   issueLine: {
     position: "absolute",
     top: 38,
-    left: 376,
+    left: ISSUE_LINE_LEFT,
+    width: ISSUE_LINE_ROOM,
     fontFamily: "Arimo",
-    fontSize: 9.6,
     lineHeight: 1.08,
     color: "#000000",
-    letterSpacing: 0.2,
   },
 
   heading: { fontFamily: "Arimo", fontWeight: 700, fontSize: 14.5, lineHeight: 1.2, color: NAVY, marginTop: 9, marginBottom: 7 },
@@ -126,14 +173,15 @@ const styles = StyleSheet.create({
 
   item: {
     flexDirection: "row",
+    width: CONTENT_WIDTH,
     paddingTop: 2,
     paddingBottom: 3.5,
     borderBottomWidth: 0.6,
     borderBottomColor: RULE,
     marginBottom: 2.5,
   },
-  numeral: { width: 42, paddingTop: 4.5, fontFamily: "Serif", fontSize: 21, lineHeight: 1, color: NUMERAL, textAlign: "right" },
-  body: { flex: 1, marginLeft: 3 },
+  numeral: { width: NUMERAL_WIDTH, paddingTop: 4.5, fontFamily: "Serif", fontSize: 21, lineHeight: 1, color: NUMERAL, textAlign: "right" },
+  body: { width: ITEM_WIDTH, marginLeft: BODY_GAP },
   labelRow: { flexDirection: "row", alignItems: "center", marginBottom: 1.5 },
   label: {
     backgroundColor: NAVY,
@@ -201,12 +249,22 @@ function label(section: SectionKey, entry: GazetteEntry): string {
   }
 }
 
-/** "(Fərman № 779)", "(Qərar № 264)": how the old issues end each act's sentence. */
+/**
+ * "(Fərman № 779)", "(Qərar № 264)": how the old issues end each act's
+ * sentence. No-break spaces keep the tag on one line.
+ */
 function numberTag(section: SectionKey, entry: GazetteEntry): string {
   if (!entry.number) return "";
-  if (section === "decrees") return ` (Fərman № ${entry.number})`;
-  if (section === "decisions") return ` (Qərar № ${entry.number})`;
-  return ` (№ ${entry.number})`;
+  const nb = "\u00a0";
+  if (section === "decrees") return ` (Fərman${nb}№${nb}${entry.number})`;
+  if (section === "decisions") return ` (Qərar${nb}№${nb}${entry.number})`;
+  return ` (№${nb}${entry.number})`;
+}
+
+/** 9.6pt as in the old issues, smaller when a period spanning two months would run under the block. */
+function issueLineSize(period: string): number {
+  const width = textWidth("Arimo-Regular.ttf", period, 9.6);
+  return width <= ISSUE_LINE_ROOM ? 9.6 : Math.max(7.5, (9.6 * ISSUE_LINE_ROOM) / width);
 }
 
 function Header({ issueNumber, period }: { issueNumber: number; period: string }) {
@@ -218,7 +276,7 @@ function Header({ issueNumber, period }: { issueNumber: number; period: string }
       <Text style={styles.kicker} fixed>
         {"BU HƏFTƏNİN İCMALI\nAZƏRBAYCAN QANUNVERİCİLİYİ"}
       </Text>
-      <Text style={styles.issueLine} fixed>
+      <Text style={[styles.issueLine, { fontSize: issueLineSize(upper(period)) }]} fixed>
         {`BURAXILIŞ №. ${issueNumber}  ·\n${upper(period)}`}
       </Text>
       <View style={styles.lawBlock} fixed>
@@ -238,7 +296,9 @@ function Item({ section, entry, n }: { section: SectionKey; entry: GazetteEntry;
           <Text style={styles.label}>{label(section, entry)}</Text>
           <Text style={styles.date}>{`${labelDate(entry.date)}${stage}`}</Text>
         </View>
-        <Text style={styles.text}>{`${entry.text.replace(/\.$/, "")}.${numberTag(section, entry)}`}</Text>
+        <Text style={styles.text}>
+          {wrap(`${entry.text.replace(/\.$/, "")}.${numberTag(section, entry)}`, "SourceSerif4-BoldItalic.ttf", 10, ITEM_WIDTH)}
+        </Text>
         <Text style={styles.source}>
           {"Mənbə: "}
           <Link src={entry.url} style={styles.sourceLink}>
@@ -259,7 +319,7 @@ function Section({ section, draft, first }: { section: SectionKey; draft: Gazett
           left alone at the foot of a page. */}
       <View wrap={false}>
         <Text style={styles.heading}>{SECTION_TITLE[section]}</Text>
-        {note ? <Text style={styles.note}>{note}</Text> : null}
+        {note ? <Text style={styles.note}>{wrap(note, "SourceSerif4-Italic.ttf", 8, CONTENT_WIDTH)}</Text> : null}
         {/* As in the old issues: an empty section says so before its source. */}
         {lead ? null : <Text style={styles.empty}>(bu həftəlik heçnə yoxdur)</Text>}
         {source ? (
@@ -292,8 +352,7 @@ function Closing({ draft, preparedOn }: { draft: GazetteDraft; preparedOn: strin
     : "Bu buraxılış rəsmi mənbələr əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc edilməzdən əvvəl redaktə olunmayıb.";
   return (
     <Text style={styles.closing} wrap={false}>
-      {who}
-      {late ? ` Gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}
+      {wrap(`${who}${late ? ` Gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}`, "Arimo-Regular.ttf", 6.8, CONTENT_WIDTH)}
     </Text>
   );
 }

@@ -4,276 +4,117 @@
     "to": "2026-09-27"
   },
   "published_at": "2026-09-28",
-  "headline": "Dövlət məktəblərində adambaşına maliyyələşdirmə, dağ-mədən və metallurgiya sənayesi üzrə 2027–2030-cu illər Dövlət Proqramı",
-  "summary": "Prezident dövlət ümumi təhsil müəssisələrində adambaşına maliyyələşdirmənin mərhələli tətbiqi haqqında fərman imzalayıb, dağ-mədən və metallurgiya sənayesinin inkişafına dair 2027–2030-cu illər üçün Dövlət Proqramını təsdiq edib. Nazirlər Kabineti 2027-ci il büdcə layihələrini bəyənib, Konstitusiya Məhkəməsi iki qərar və bir qərardad qəbul edib.",
-  "tags": [
-    "Təhsil",
-    "Büdcə",
-    "Sənaye",
-    "Sosial sığorta",
-    "Cinayət hüququ",
-    "Mülki hüquq",
-    "Gömrük"
-  ],
-  "overview": "Prezidentin 793 nömrəli Fərmanına əsasən dövlət ümumi təhsil müəssisələri 2026–2027-ci tədris ilindən mərhələli şəkildə adambaşına maliyyələşdirmə prinsipi ilə maliyyələşdirilir; hər təhsilalana düşən illik təhsil xərclərinin miqdarını və maliyyələşdirmə qaydalarını Nazirlər Kabineti bir ay müddətində təsdiq etməlidir. Prezident həmçinin dağ-mədən (metal filizləri) və metallurgiya sənayesinin inkişafına dair 2027–2030-cu illər üçün Dövlət Proqramını təsdiq edib və 20 məhkumu cəzanın çəkilməmiş hissəsindən azad edən əfv sərəncamı imzalayıb.\n\nNazirlər Kabineti 2027-ci il üzrə dövlət büdcəsinin və icmal büdcənin layihələrini bəyənib, büdcə xərclərinin funksional və inzibati təsnifatını yeni redaksiyada verib (1 yanvar 2028-ci ildən qüvvəyə minir). Kabinetin dörd aktında sosial sığorta nömrəsi çıxarılır və ya fərdi identifikasiya nömrəsi (FİN) ilə əvəz edilir; məktəbli geyim formasının təsvirlərinə isə ümumi təhsilin dünyəvilik prinsipinə uyğun olmayan geyim elementlərindən istifadəyə yol verilmədiyi barədə müddəa əlavə olunub.\n\nKonstitusiya Məhkəməsi Cinayət Məcəlləsinin 288.2-ci maddəsindəki “müdafiəçi” anlayışının hüdudlarını müəyyən edib və 133.1-ci maddədə nəzərdə tutulan “mütəmadilik” əlamətini şərh edib. Plenumun qərardadında rəsmi reyestrdə qeydiyyata alınan daşınar əşyaların (məsələn, nəqliyyat vasitələrinin) vicdanlı əldə edilməsinə Mülki Məcəllənin 182-ci maddəsinin tətbiq olunduğu göstərilib.",
-  "highlights": [
-    "793 nömrəli Fərman: dövlət ümumi təhsil müəssisələri 2026–2027-ci tədris ilindən mərhələli şəkildə adambaşına maliyyələşdirilir; qaydaları Nazirlər Kabineti bir ay müddətində təsdiq etməlidir.",
-    "Konstitusiya Məhkəməsi: Cinayət Məcəlləsinin 288.2-ci maddəsindəki “müdafiəçi” cinayət və inzibati xəta işləri üzrə vəkili əhatə edir; Milli Məclisə digər vəkillər üçün təminatlar müəyyən etmək tövsiyə olunub.",
-    "Konstitusiya Məhkəməsinin qərardadı: qeydiyyata alınan daşınar əşyaların vicdanlı əldə edilməsi Mülki Məcəllənin 182-ci maddəsi ilə tənzimlənir; daşınmaz əmlak reyestrinin qaydaları analogiya ilə tətbiq edilmir.",
-    "307 nömrəli Qərar: xəstəlik vərəqələri, müavinətlər və işsizlikdən sığorta qaydalarında sosial sığorta nömrəsi çıxarılır və ya FİN ilə əvəz edilir; 1 iyul 2026-cı ildən tətbiq edilir.",
-    "1226 nömrəli Sərəncam: dağ-mədən və metallurgiya üzrə Dövlət Proqramının hədəfi 2030-cu ilədək sahənin illik ixrac potensialını (2025-ci il qiymətləri ilə) təqribən 2 milyard ABŞ dollarına çatdırmaqdır."
-  ],
-  "sections": [
-    {
-      "institution": "Milli Məclis",
-      "subtitle": "Qanunlar və qanun layihələri",
-      "notice": "Hesabat dövründə Prezidentin rəsmi saytında yeni qanun dərc edilməyib, Milli Məclisin saytında da qanun layihəsi müzakirəyə çıxarılmayıb.",
-      "entries": []
-    },
-    {
-      "institution": "Azərbaycan Respublikasının Prezidenti",
-      "subtitle": "Fərmanlar və sərəncamlar",
-      "intro": "Prezident həmçinin 1 vəzifədən azadetmə, 1 təltif və 1 ali hərbi rütbə verilməsi sərəncamı imzalayıb; daha bir sərəncamla “AzerGold” QSC-nin Müşahidə Şurasının tərkibində bir üzv əvəz edilib.",
+  "sections": {
+    "decrees": {
       "entries": [
         {
-          "kind": "decree",
           "number": "792",
           "date": "2026-09-23",
-          "title": "AZCON holdinqinin idarəetməsinə veriləcək qurumların siyahısına dəyişiklik",
-          "summary": "Prezidentin 2024-cü il 7 noyabr tarixli 226 nömrəli Fərmanı ilə təsdiq edilmiş, “Azərbaycan Nəqliyyat və Kommunikasiya Holdinqi (AZCON)” publik hüquqi şəxsin idarəetməsinə veriləcək qurumların siyahısına 8.7-ci bənd kimi “Hərbiləşdirilmiş Mühafizə İdarəsi” MMC əlavə edilir. Fərmandan irəli gələn məsələlərin həlli Nazirlər Kabinetinə tapşırılır.",
+          "text": "2024-cü il 7 noyabr tarixli 226 nömrəli Fərmanla təsdiq edilmiş, “Azərbaycan Nəqliyyat və Kommunikasiya Holdinqi (AZCON)” publik hüquqi şəxsin idarəetməsinə veriləcək qurumların siyahısında dəyişiklik edilib; siyahıya “Hərbiləşdirilmiş Mühafizə İdarəsi” MMC əlavə olunub.",
           "url": "https://e-qanun.az/framework/62644"
         },
         {
-          "kind": "decree",
           "number": "793",
           "date": "2026-09-24",
-          "title": "Dövlət ümumi təhsil müəssisələrində yeni maliyyələşmə mexanizminin tətbiqi",
-          "summary": "Dövlət ümumi təhsil müəssisələrinin dövlət büdcəsi hesabına maliyyələşdirilməsi 2026–2027-ci tədris ilindən mərhələli şəkildə adambaşına maliyyələşdirmə prinsipi əsasında həyata keçirilir; hər təhsilalana düşən illik təhsil xərclərinə ümumi təhsilin səviyyələri üzrə artım əmsalı tətbiq olunur. Nazirlər Kabineti bu xərclərin miqdarını və maliyyələşdirmə qaydalarını bir ay müddətində təsdiq etməli, Elm və Təhsil Nazirliyi isə Maliyyə Nazirliyi ilə razılaşdırmaqla hər təqvim ili üçün belə maliyyələşdirilən məktəblərin siyahısını və təhsilalanların sayını müəyyən etməlidir.",
+          "text": "Dövlət ümumi təhsil müəssisələrində yeni maliyyələşmə mexanizmi tətbiq edilib; 2026–2027-ci tədris ilindən həmin müəssisələr dövlət büdcəsi hesabına mərhələli şəkildə adambaşına maliyyələşdirmə prinsipi əsasında maliyyələşdirilir.",
           "url": "https://e-qanun.az/framework/62648"
-        },
-        {
-          "kind": "order",
-          "number": "1224",
-          "date": "2026-09-21",
-          "title": "Futbol üzrə 15 yaşınadək oğlanlar arasında dünya çempionatı ilə əlaqədar viza prosedurlarının sadələşdirilməsi",
-          "summary": "15 yaşınadək oğlanlar arasında futbol üzrə ilk dünya çempionatı və festivalı ilə əlaqədar gələn əcnəbilər və vətəndaşlığı olmayan şəxslər AFFA-nın rəsmi dəvət məktubunu və ya FIFA-nın elektron qeydiyyat sistemi vasitəsilə akkreditasiyadan keçməni təsdiq edən sənədi təqdim etməklə 2026-cı il sentyabrın 22-dən noyabrın 5-dək beynəlxalq hava limanlarında viza ala bilərlər. Xarici İşlər Nazirliyi və Dövlət Miqrasiya Xidməti FIFA-nı, Beynəlxalq Hava Nəqliyyatı Assosiasiyasını, xarici dövlətlərin müvafiq orqanlarını və aviaşirkətləri bu barədə məlumatlandırmalıdır.",
-          "url": "https://e-qanun.az/framework/62621"
-        },
-        {
-          "kind": "order",
-          "number": "1226",
-          "date": "2026-09-23",
-          "title": "Dağ-mədən (metal filizləri) və metallurgiya sənayesinin inkişafına dair 2027–2030-cu illər üçün Dövlət Proqramı",
-          "summary": "Prezidentin 2026-cı il 1 aprel tarixli 986 nömrəli Sərəncamının icrası ilə əlaqədar Dövlət Proqramı təsdiq edilir. Proqramda 2030-cu ilədək geoloji kəşfiyyat işlərinin əhatə dairəsinin 15 000 km²-ə, “Azəralüminium” MMC-nin elektroliz zavodunun illik istehsal gücünün 100 min tona çatdırılması, Qərb Sənaye Parkında illik 2 milyon ton isti briketlənmiş dəmir istehsal gücünün yaradılması və sahənin illik ixrac potensialının 2025-ci ilin orta dünya qiymətləri əsasında təqribən 2 milyard ABŞ dollarına çatdırılması hədəf kimi göstərilib. Tədbirlərin əlaqələndirilməsi Nazirlər Kabinetinə, monitorinq və qiymətləndirmə İqtisadi İslahatların Təhlili və Kommunikasiya Mərkəzinə həvalə olunur; maliyyə vəsaiti hər il dövlət büdcəsində və dövlət investisiya proqramlarında nəzərdə tutulmalıdır.",
-          "url": "https://e-qanun.az/framework/62647"
-        },
-        {
-          "kind": "order",
-          "number": "1227",
-          "date": "2026-09-23",
-          "title": "Bir sıra məhkumların əfv edilməsi",
-          "summary": "Azadlıqdan məhrum etmə cəzasına məhkum edilmiş 19 nəfər (onlardan 5-i xarici dövlətlərin vətəndaşıdır) və azadlığın məhdudlaşdırılması cəzasına məhkum edilmiş 1 nəfər cəzanın çəkilməmiş hissəsindən azad edilir. Sərəncam imzalandığı gündən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62642"
         }
       ]
     },
-    {
-      "institution": "Nazirlər Kabineti",
-      "subtitle": "Qərarlar və sərəncamlar",
+    "decisions": {
       "entries": [
         {
-          "kind": "decision",
           "number": "304",
           "date": "2026-09-21",
-          "title": "Naxçıvan Dövlət Universitetinin yenidən təşkili",
-          "summary": "Naxçıvan Dövlət Universiteti Naxçıvan Müəllimlər İnstitutunun ona qoşulması yolu ilə yenidən təşkil edilir; institutun bütün hüquq və öhdəlikləri, habelə əmlakı universitetə keçir və o, Kabinetin müvafiq siyahılarından çıxarılır.",
+          "text": "Naxçıvan Dövlət Universiteti Naxçıvan Müəllimlər İnstitutunun ona qoşulması yolu ilə yenidən təşkil edilib.",
           "url": "https://e-qanun.az/framework/62623"
         },
         {
-          "kind": "decision",
           "number": "305",
           "date": "2026-09-21",
-          "title": "“Bakı Biznes Mərkəzi” MMC-nin Mədəniyyət Nazirliyinin tabeliyinə verilməsi",
-          "summary": "İqtisadiyyat Nazirliyinin tabeliyində olan “Bakı Biznes Mərkəzi” MMC Mədəniyyət Nazirliyinin tabeliyinə verilir və hər iki nazirliyin tabeliyindəki qurumların siyahılarına müvafiq dəyişikliklər edilir.",
+          "text": "İqtisadiyyat Nazirliyinin tabeliyində olan “Bakı Biznes Mərkəzi” MMC Mədəniyyət Nazirliyinin tabeliyinə verilib.",
           "url": "https://e-qanun.az/framework/62631"
         },
         {
-          "kind": "decision",
           "number": "306",
           "date": "2026-09-21",
-          "title": "Vergi və gömrük güzəştlərinin qiymətləndirilməsi metodologiyasına dəyişiklik",
-          "summary": "“Minatəmizləmə fəaliyyəti haqqında” Qanunun icrası ilə əlaqədar qəbul edilmiş 327-VIIQD nömrəli Qanunun icrası üçün vergi və gömrük güzəşt və azadolmalarının meyarlar üzrə təsnifatının 2.25-ci bəndinin qısa məzmunu dəqiqləşdirilir: “ərazilərin” sözündən əvvəl “təhlükəli” sözü əlavə edilir, partlamamış hərbi sursata və partlayıcı qalıqlara dair ifadə “digər partlayıcı sursatlar” ifadəsi ilə əvəz olunur.",
+          "text": "“Minatəmizləmə fəaliyyəti haqqında” Qanunla bağlı 327-VIIQD nömrəli Qanunun icrası ilə əlaqədar vergi və gömrük güzəştlərinin qiymətləndirilməsi metodologiyasında dəyişiklik edilib; güzəşt və azadolmaların meyarlar üzrə təsnifatının 2.25-ci bəndinin qısa məzmunu dəqiqləşdirilib.",
           "url": "https://e-qanun.az/framework/62633"
         },
         {
-          "kind": "decision",
           "number": "307",
           "date": "2026-09-21",
-          "title": "Sosial sığorta aktlarında SSN-in FİN ilə əvəzlənməsi (367-VIIQD nömrəli Qanunun icrası)",
-          "summary": "Əmək Məcəlləsinə, fərdi uçot və əmək pensiyaları haqqında qanunlara dəyişikliklər edən 367-VIIQD nömrəli Qanunun icrası üçün Kabinetin dörd qərarı dəyişdirilir: elektron xəstəlik vərəqələrinə dair təlimatdan və müavinətlərin ödənilməsi qaydasının əlavəsindən sosial sığorta nömrəsi (SSN) çıxarılır, işsizlikdən sığorta üzrə qeydiyyat qaydasında və məlumatları məxfiləşdirilən şəxslərin fərdi uçotu qaydasında SSN fərdi identifikasiya nömrəsi (FİN) ilə əvəz edilir. Qərar 1 iyul 2026-cı ildən tətbiq edilir.",
+          "text": "Əmək Məcəlləsində, fərdi uçot və əmək pensiyaları haqqında qanunlarda dəyişiklik barədə 367-VIIQD nömrəli Qanunun icrası ilə əlaqədar dörd qərarda dəyişiklik edilib; həmin qərarlarda sosial sığorta nömrəsi (SSN) çıxarılıb və ya fərdi identifikasiya nömrəsi (FİN) ilə əvəz olunub.",
           "url": "https://e-qanun.az/framework/62632"
         },
         {
-          "kind": "decision",
           "number": "308",
           "date": "2026-09-21",
-          "title": "Büdcə xərclərinin funksional və inzibati təsnifatı yeni redaksiyada",
-          "summary": "Vahid büdcə təsnifatının tərkibində büdcə xərclərinin funksional və inzibati təsnifatı yeni redaksiyada verilir; bu hissə 1 yanvar 2028-ci ildən qüvvəyə minir. Dövlət büdcəsindən maliyyələşən və maliyyə yardımı alan təşkilatlar, icmal büdcə ilə əhatə olunan qurumlar 2028-ci ilin büdcə layihələri üzrə sifarişlərini yeni təsnifata uyğun tərtib etməli, Maliyyə Nazirliyi isə 2027-ci il üzrə sifarişlər əsasında yeni təsnifatın test rejimində tətbiqi üçün tədbirlər görməlidir.",
+          "text": "Vahid büdcə təsnifatının tərkibində büdcə xərclərinin funksional və inzibati təsnifatı 2028-ci il yanvarın 1-dən qüvvəyə minməklə yeni redaksiyada verilib.",
           "url": "https://e-qanun.az/framework/62630"
         },
         {
-          "kind": "decision",
           "number": "309",
           "date": "2026-09-21",
-          "title": "Dövlət ümumi təhsil müəssisələrində geyim formasına dair tələblər",
-          "summary": "Geyim formasının vahidliyini pozan, habelə ümumi təhsilin dünyəvilik prinsipinə uyğun olmayan geyim elementlərindən istifadəyə yol verilmir; xalqın tarixi, mədəniyyəti və milli-mənəvi dəyərləri ilə bağlı tədbirlərdə Pedaqoji Şuranın qərarı ilə milli geyimdən istifadə oluna bilər. Tələblərə riayəti valideynlər və digər qanuni nümayəndələr təmin etməli, bununla bağlı məsələləri məktəbin Pedaqoji Şurası həll edir. Qərar “Ümumi təhsil haqqında” Qanuna dəyişiklik edən 434-VIIQD nömrəli Qanunun tətbiqinə dair Prezidentin 729 nömrəli Fərmanının icrası üçün qəbul edilib.",
+          "text": "Dövlət ümumi təhsil müəssisələrində geyim formasına dair tələblər müəyyən edilib; geyim formasının vahidliyini pozan, habelə ümumi təhsilin dünyəvilik prinsipinə uyğun olmayan geyim elementlərindən istifadəyə yol verilmir.",
           "url": "https://e-qanun.az/framework/62635"
         },
         {
-          "kind": "decision",
           "number": "310",
           "date": "2026-09-22",
-          "title": "Mərkəzi Nəbatat Bağının və Dendrologiya Bağının məhdud məsuliyyətli cəmiyyətə çevrilməsi",
-          "summary": "Bakı Şəhər İcra Hakimiyyəti başçısının tabeliyindəki “Mərkəzi Nəbatat Bağı” və “Dendrologiya Bağı” publik hüquqi şəxsləri “Mərkəzi Nəbatat və Dendrologiya Bağı” MMC-yə çevrilmə yolu ilə yenidən təşkil edilir; cəmiyyətin işçilərinin say həddi 230 ştat vahidi müəyyən olunur, ümumi yığıncağın səlahiyyətləri Nazirlər Kabineti, İqtisadiyyat Nazirliyi və Bakı Şəhər İcra Hakimiyyəti arasında bölüşdürülür.",
+          "text": "Bakı Şəhər İcra Hakimiyyəti başçısının tabeliyindəki “Mərkəzi Nəbatat Bağı” və “Dendrologiya Bağı” publik hüquqi şəxsləri “Mərkəzi Nəbatat və Dendrologiya Bağı” MMC-yə çevrilmə yolu ilə yenidən təşkil edilib.",
           "url": "https://e-qanun.az/framework/62645"
         },
         {
-          "kind": "decision",
           "number": "311",
           "date": "2026-09-22",
-          "title": "İdxal gömrük rüsumunun dərəcəsində dəyişiklik (7415 33 000 0 alt yarımmövqeyi)",
-          "summary": "Xarici iqtisadi fəaliyyətin mal nomenklaturasının 7415 33 000 0 alt yarımmövqeyi üzrə tarif dərəcəsi “15 (1000 kq – 15 ABŞ dolları)” əvəzinə “15 (1000 kq – 15 ABŞ dolları, 31.12.2029-cu il tarixinədək 1000 kq – 300 ABŞ dolları)” kimi müəyyən edilir. Qərar dərc edildiyi gündən 30 gün sonra qüvvəyə minir.",
+          "text": "Xarici iqtisadi fəaliyyətin mal nomenklaturasının 7415 33 000 0 alt yarımmövqeyi üzrə idxal gömrük rüsumunun dərəcəsində dəyişiklik edilib; 1000 kq üçün məbləğ 2029-cu il dekabrın 31-dək 15 ABŞ dolları əvəzinə 300 ABŞ dolları müəyyən edilib.",
           "url": "https://e-qanun.az/framework/62646"
         },
         {
-          "kind": "decision",
           "number": "312",
           "date": "2026-09-24",
-          "title": "2027-ci il dövlət büdcəsinin və icmal büdcənin layihələrinin bəyənilməsi",
-          "summary": "2027-ci il üzrə dövlət büdcəsinin və icmal büdcənin layihələri, sonrakı üç il üçün icmal büdcənin göstəriciləri, habelə 2027-ci il və sonrakı üç il üzrə iqtisadi və sosial inkişaf konsepsiyası və proqnoz göstəriciləri bəyənilir. Layihələr “Büdcə sistemi haqqında” Qanunun 12-ci maddəsində nəzərdə tutulmuş digər sənədlərlə birlikdə Prezidentə təqdim edilməlidir.",
+          "text": "2027-ci il üzrə dövlət büdcəsinin və icmal büdcənin layihələri, sonrakı üç il üçün icmal büdcənin göstəriciləri, habelə iqtisadi və sosial inkişaf konsepsiyası və proqnoz göstəriciləri bəyənilib.",
           "url": "https://e-qanun.az/framework/62661"
         },
         {
-          "kind": "decision",
           "number": "313",
           "date": "2026-09-25",
-          "title": "Dövlət vəsaiti hesabına tikinti üçün smeta-normativ və qiymətqoyma sisteminə dair qərarda dəyişiklik",
-          "summary": "Dövlət vəsaitləri hesabına maliyyələşdirilən tikinti obyektləri üçün smeta-normativ və qiymətqoyma sisteminin təkmilləşdirilməsinə dair Kabinetin 2021-ci il 9 yanvar tarixli 4 nömrəli Qərarının 2.11-ci bəndi ləğv edilir.",
+          "text": "Dövlət vəsaitləri hesabına maliyyələşdirilən tikinti obyektləri üçün smeta-normativ və qiymətqoyma sisteminin təkmilləşdirilməsinə dair 2021-ci il 9 yanvar tarixli 4 nömrəli Qərarda dəyişiklik edilib; Qərarın 2.11-ci bəndi ləğv edilib.",
           "url": "https://e-qanun.az/framework/62664"
         },
         {
-          "kind": "decision",
           "number": "314",
           "date": "2026-09-25",
-          "title": "“ASAN müraciət” informasiya sistemində iştirak edən qurumların siyahısında dəyişiklik",
-          "summary": "Prezidentin 2026-cı il 20 fevral tarixli 600 nömrəli Fərmanının icrası üçün siyahıda “İri Şəhərlərin Birləşmiş Su Təchizatı Xidməti” və “Regional Su Meliorasiya Xidməti” publik hüquqi şəxsləri müvafiq olaraq “İri Şəhərlərin Su Təchizatı” və “Regional Su Meliorasiya” qapalı səhmdar cəmiyyətləri ilə əvəz edilir. Qərar həmin cəmiyyətlər dövlət qeydiyyatına alındığı gündən qüvvəyə minir.",
+          "text": "“ASAN müraciət” informasiya sistemində iştirak edən qurumların siyahısında dəyişiklik edilib; “İri Şəhərlərin Birləşmiş Su Təchizatı Xidməti” və “Regional Su Meliorasiya Xidməti” publik hüquqi şəxsləri müvafiq olaraq “İri Şəhərlərin Su Təchizatı” və “Regional Su Meliorasiya” qapalı səhmdar cəmiyyətləri ilə əvəz edilib.",
           "url": "https://e-qanun.az/framework/62665"
-        },
-        {
-          "kind": "order",
-          "number": "709s",
-          "date": "2026-09-25",
-          "title": "Naxçıvanın sosial-iqtisadi inkişafına dair Dövlət Proqramının Təfsilatlı Tədbirlər Planında dəyişikliklər",
-          "summary": "Prezidentin 2026-cı il 2 sentyabr tarixli 1192 nömrəli Sərəncamının icrası üçün 2023–2027-ci illər Dövlət Proqramının 2025–2027-ci illər üzrə Təfsilatlı Tədbirlər Planında bir sıra tədbirlər ləğv edilir, icra müddətləri dəyişdirilir və yeni tədbirlər, o cümlədən Naxçıvan Muxtar Respublikasında heyvan xəstəliklərindən azad zonanın yaradılması əlavə olunur. Sərəncam imzalandığı gündən qüvvəyə minir.",
-          "url": "https://e-qanun.az/framework/62722"
-        },
-        {
-          "kind": "order",
-          "number": "715s",
-          "date": "2026-09-25",
-          "title": "Beynəlxalq Münasibətlərin Təhlili və Multikulturalizm Mərkəzinin Nizamnaməsinə dair 791 nömrəli Fərmanın icrası",
-          "summary": "Prezidentin 2026-cı il 11 sentyabr tarixli 791 nömrəli Fərmanının icrası üçün Ədliyyə Nazirliyinə aidiyyəti qurumlarla razılaşdırmaqla Kabinetin normativ hüquqi aktlarının Fərmana uyğunlaşdırılması üzrə təkliflərini beş ay müddətində təqdim etmək və mərkəzi icra hakimiyyəti orqanlarının aktlarının uyğunlaşdırılması barədə altı ay müddətində məlumat vermək, mərkəzi icra hakimiyyəti orqanlarına isə öz normativ hüquqi aktlarını və ya təkliflərinin olmadığı barədə məlumatı dörd aydan gec olmayaraq Ədliyyə Nazirliyinə təqdim etmək tapşırılır. Sərəncam imzalandığı gündən qüvvəyə minir.",
-          "url": "https://nk.gov.az/az/senedler/serencamlar/azerbaycan-respublikasi-prezidentinin-2026-ci-il-2-9797"
         }
       ]
     },
-    {
-      "institution": "Konstitusiya Məhkəməsi",
-      "subtitle": "Qərarlar və qərardadlar",
-      "intro": "Konstitusiya Məhkəməsinin Plenumu iki qərar və bir qərardad qəbul edib.",
+    "bills": {
+      "entries": []
+    },
+    "court": {
       "entries": [
         {
-          "kind": "court",
           "date": "2026-09-21",
-          "title": "Cinayət Məcəlləsinin 288.2-ci maddəsində “müdafiəçi” ifadəsinin şərhi",
-          "summary": "Qərar (Şəki Rayon Məhkəməsinin müraciəti əsasında): prokuror, müstəntiq, təhqiqatçı, müdafiəçi, ekspert və icra məmurunu hədələməyə görə məsuliyyət nəzərdə tutan 288.2-ci maddədəki “müdafiəçi” ifadəsi cinayət prosesində şübhəli və ya təqsirləndirilən şəxsi müdafiə edən, habelə inzibati xəta haqqında iş üzrə hüquqi yardım göstərən vəkili ehtiva edir. Plenumun mövqeyinə görə, bu anlayışın mülki mühakimə icraatında nümayəndə qismində iştirak edən vəkilə şamil edilməsi normanın mətnindən irəli gələn hüdudların genişləndirilməsi kimi qiymətləndirilə bilər; Plenum Milli Məclisə digər vəkillərin peşə fəaliyyəti ilə əlaqədar hədə-qorxudan cinayət-hüquqi müdafiəsinə dair xüsusi təminatlar müəyyən etməyi tövsiyə edib. Qərar dərc edildiyi gündən qüvvəyə minir.",
+          "ruling": "qərar",
+          "text": "Cinayət Məcəlləsinin 288.2-ci maddəsindəki “müdafiəçi” ifadəsi şərh edilib; Plenuma görə, bu ifadə cinayət prosesində şübhəli və ya təqsirləndirilən şəxsi müdafiə edən, habelə inzibati xəta haqqında iş üzrə hüquqi yardım göstərən vəkili ehtiva edir.",
           "url": "https://e-qanun.az/framework/62704"
         },
         {
-          "kind": "court",
           "date": "2026-09-22",
-          "title": "Cinayət Məcəlləsinin 133.1-ci maddəsinin (əzab vermə) Konstitusiyaya uyğunluğu",
-          "summary": "Qərar (İnsan hüquqları üzrə müvəkkilin sorğusu əsasında): mütəmadi olaraq döyməklə və ya sair zorakı hərəkətlərlə güclü fiziki ağrı və ya psixi iztirab verməyə görə məsuliyyət nəzərdə tutan 133.1-ci maddə Konstitusiyanın 24, 26, 28, 32, 60 və 71-ci maddələrinin müvafiq hissələri ilə ziddiyyət təşkil etmir. Döymə əməlinin zəruri əlaməti olan “mütəmadilik” təqsirkarın vahid niyyəti ilə əhatə olunan, müəyyən zaman kəsiyində üç dəfə və ya daha çox həyata keçirilən və güclü fiziki ağrı ilə nəticələnən, bir-biri ilə daxilən bağlı hərəkətləri nəzərdə tutur. Qərar dərc edildiyi gündən qüvvəyə minir.",
+          "ruling": "qərar",
+          "text": "Cinayət Məcəlləsinin 133.1-ci maddəsinin (əzab vermə) Konstitusiyanın müvafiq maddələrinə zidd olmadığı müəyyən edilib; döymə əməlinin “mütəmadilik” əlaməti təqsirkarın vahid niyyəti ilə əhatə olunan, müəyyən zaman kəsiyində üç dəfə və ya daha çox həyata keçirilən və güclü fiziki ağrı ilə nəticələnən, bir-biri ilə daxilən bağlı hərəkətlər kimi şərh edilib.",
           "url": "https://e-qanun.az/framework/62705"
         },
         {
-          "kind": "court",
           "date": "2026-09-25",
-          "title": "Qeydiyyata alınan daşınar əşyaların vicdanlı əldə edilməsi (Mülki Məcəllənin 140, 181, 182, 314 və 650-ci maddələri)",
-          "summary": "Qərardad (Bakı Apellyasiya Məhkəməsinin müraciəti əsasında): Plenum daşınar əmlakın rəsmi reyestrlərinin hüquqtəsdiqedici funksiya daşıdığını, rəsmi reyestrdə qeydiyyata alınan daşınar əşyaların vicdanlı əldə edilməsinin Mülki Məcəllənin 182-ci maddəsi ilə tənzimləndiyini və daşınmaz əmlakın dövlət reyestrinə etimad qaydalarının bu əşyalara analogiya ilə tətbiqinə əsas olmadığını göstərib; reyestrdəki qeyd digər sübutlarla birlikdə vicdanlı əldəetmənin tutarlı sübutu ola bilər. Ayrıca qərar qəbul edilməsinə ehtiyac olmadığından icraata xitam verilib.",
+          "ruling": "qərardad",
+          "text": "Rəsmi reyestrdə qeydiyyata alınan daşınar əşyaların vicdanlı əldə edilməsinin Mülki Məcəllənin 182-ci maddəsi ilə tənzimləndiyi, daşınmaz əmlakın dövlət reyestrinə etimad qaydalarının bu əşyalara analogiya ilə tətbiqinə isə əsas olmadığı göstərilib; ayrıca qərar qəbul edilməsinə ehtiyac olmadığından icraata xitam verilib.",
           "url": "https://constcourt.gov.az/az/decision/1630"
         }
       ]
-    },
-    {
-      "institution": "Maliyyə Monitorinqi Xidməti",
-      "subtitle": "Qərarlar",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "3-21-28/3-6-17/2026",
-          "date": "2026-09-25",
-          "title": "Xidmətin 2026-cı il 21 aprel tarixli qərarında dəyişiklik (məlumat təqdimetmə Qaydası və əməliyyatların minimum məbləğ hədləri)",
-          "summary": "Xidmətin 2026-cı il 21 aprel tarixli 3-21-28/3-6-7/2026 nömrəli Qərarına dəyişiklik edilir. Həmin Qərar öhdəlik daşıyan şəxslərin və auditor xidməti göstərən şəxslərin Xidmətə məlumat və sənədlər təqdim etməsi Qaydasını, habelə maliyyə institutlarının məlumat verməli olduqları nağd və elektron köçürmə əməliyyatlarının, eləcə də icra etmədən məlumat verməli olduqları əməliyyatların minimum məbləğ hədlərini təsdiq edən 2023-cü il 27 aprel tarixli 3-21-28/3-6-8/2023 nömrəli Qərara dəyişiklik edir.",
-          "url": "https://e-qanun.az/framework/62702"
-        }
-      ]
-    },
-    {
-      "institution": "Bələdiyyələr",
-      "subtitle": "Qərarlar",
-      "entries": [
-        {
-          "kind": "decision",
-          "number": "14/2",
-          "date": "2026-09-25",
-          "title": "Quba rayonunun İkinci Nügədi bələdiyyəsinin ərazisində turizm xidmətlərinə görə yerli ödəniş",
-          "summary": "Quba rayonunun İkinci Nügədi bələdiyyəsinin ərazisində mehmanxana, sanatoriya-kurort və turizm xidmətləri göstərən şəxslərə həmin xidmətlərə görə yerli ödəniş müəyyən edilir.",
-          "url": "https://e-qanun.az/framework/62753"
-        }
-      ]
     }
-  ],
-  "sources": [
-    "https://e-qanun.az",
-    "https://president.az/az/documents/category/decrees",
-    "https://president.az/az/documents/category/orders",
-    "https://president.az/az/documents/category/laws",
-    "https://nk.gov.az/az/senedler/hamisi",
-    "https://meclis.gov.az/cat-layihe.php?cat=83&lang=az",
-    "https://constcourt.gov.az/az/decisions",
-    "https://president.az/az/articles/view/73546",
-    "https://president.az/az/articles/view/73557",
-    "https://president.az/az/articles/view/73550",
-    "https://president.az/az/articles/view/73551",
-    "https://president.az/az/articles/view/73554",
-    "https://president.az/az/articles/view/73558",
-    "https://president.az/az/articles/view/73568",
-    "https://nk.gov.az/az/senedler/qerarlar/naxcivan-dovlet-universitetinin-yeniden-teskili-ve-9785",
-    "https://nk.gov.az/az/senedler/qerarlar/baki-biznes-merkezi-mehdud-mesuliyyetli-cemiyyetin-9787",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2020-9786",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinin-emek-mecellesinde-dovle-9788",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinin-vahid-budce-tesnifatini-9790",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2022-9789",
-    "https://nk.gov.az/az/senedler/qerarlar/baki-seher-icra-hakimiyyeti-bascisinin-tabeliyinde-9791",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasi-nazirler-kabinetinin-2017-9792",
-    "https://nk.gov.az/az/senedler/qerarlar/azerbaycan-respublikasinin-2027-ci-il-uzre-dovlet-9794",
-    "https://nk.gov.az/az/senedler/qerarlar/dovlet-vesaitleri-hesabina-maliyyelesdirilen-tikin-9795",
-    "https://nk.gov.az/az/senedler/qerarlar/asan-muraciet-informasiya-sistemi-haqqinda-esasnam-9796",
-    "https://nk.gov.az/az/senedler/serencamlar/azerbaycan-respublikasi-nazirler-kabinetinin-2024-9798",
-    "https://nk.gov.az/az/senedler/serencamlar/azerbaycan-respublikasi-prezidentinin-2026-ci-il-2-9797",
-    "https://constcourt.gov.az/az/decision/1622",
-    "https://constcourt.gov.az/az/decision/1620",
-    "https://constcourt.gov.az/az/decision/1630"
-  ]
+  }
 }
