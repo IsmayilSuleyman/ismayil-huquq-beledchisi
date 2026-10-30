@@ -24,7 +24,31 @@ export type Lead = {
   /** Where its full text can be read. */
   textUrl?: string;
   source: string;
+  /** Issue that already printed this act (found by number or register id). */
+  printedIn?: number;
+  /** A register-only act dated before the period but registered since: report it now unless printed. */
+  late?: boolean;
+  /** A bill's reading in the period: "I oxunuş", "II oxunuş", "III oxunuş". */
+  stage?: string;
 };
+
+export type BillReading = { stage: string; date: string | null };
+
+/**
+ * A meclis.gov.az bill page has one tab per reading ("I OXUNUŞ", …) and one
+ * pane per tab, each starting with its date. Returns the readings in order;
+ * the page's list entry only shows the latest one.
+ */
+export function parseBillReadings(html: string): BillReading[] {
+  const labels = [...(/<div class="tabs-list">([\s\S]*?)<\/ul>/.exec(html)?.[1] ?? "").matchAll(/<li class="tab[^"]*">([\s\S]*?)<\/li>/g)]
+    .map((m) => cleanHtml(m[1]))
+    .filter((l) => /OXUNUŞ/i.test(l));
+  const panes = html.split(/<div class="tab-item"/).slice(1);
+  return labels.map((label, i) => ({
+    stage: label.replace(/\s*OXUNUŞ\s*/i, " oxunuş").trim(),
+    date: azDate(cleanHtml(/<p[^>]*>([\s\S]*?)<\/p>/.exec(panes[i] ?? "")?.[1] ?? "")),
+  }));
+}
 
 export const PRESIDENT = "Azərbaycan Respublikasının Prezidenti";
 export const CABINET = "Nazirlər Kabineti";
@@ -148,25 +172,59 @@ export function similarTitle(a: string, b: string): boolean {
   return shared / (x.size + y.size - shared) >= 0.75;
 }
 
-/** president.az posts a decree's annex as its own article: "… ƏSASNAMƏ … Fərmanı ilə təsdiq edilmişdir". */
-export function isAnnex(title: string): boolean {
-  return /tarixli (Fərmanı|Sərəncamı|Qanunu) ilə təsdiq edilmiş(dir)?\.?\s*$/u.test(title.trim());
+/**
+ * An act's own title on president.az ends with the act's name ("…
+ * Prezidentinin Sərəncamı", "… Qanunu"). Anything else in those lists is
+ * material attached to an act and posted on its own: an approved charter
+ * ("… ƏSASNAMƏ … Fərmanı ilə təsdiq edilmişdir") or programme ("… Dövlət
+ * Proqramı").
+ */
+export function isActTitle(title: string): boolean {
+  return /(Prezidentinin (Fərmanı|Sərəncamı)|Respublikasının (Konstitusiya )?Qanunu)\s*$/u.test(title.trim());
 }
 
+/** The numbers a title cites (articles, parts): "61 və 71-ci maddələri … 288.2-ci" → 61, 71, 288.2. */
+function citedNumbers(title: string): Set<string> {
+  return new Set(title.match(/\d+(?:\.\d+)*/g) ?? []);
+}
+
+/**
+ * Court rulings are listed with heavy abbreviations on the court's site
+ * ("AR CM-in 288.2-ci mad."); the articles they cite still identify them.
+ */
+function sameCitations(a: string, b: string): boolean {
+  const [x, y] = [citedNumbers(a), citedNumbers(b)];
+  const [small, large] = x.size <= y.size ? [x, y] : [y, x];
+  if (small.size < 2) return false;
+  for (const n of small) if (!large.has(n)) return false;
+  return true;
+}
+
+/** "№ 728s" → "728": lists sometimes drop the s of a Cabinet order's number. */
 function normNumber(n: string): string {
-  return n.replace(/^№\s*/, "").replace(/\s+/g, "").toLowerCase();
+  return n.replace(/^№\s*/, "").replace(/\s+/g, "").toLowerCase().replace(/s$/, "");
 }
 
 type Comparable = Pick<Lead, "kind" | "number" | "title" | "date">;
 
 /**
  * Same act: same kind, and the same number when both have one. Otherwise
- * the same title, or a similar one on the same date.
+ * the same title, or on the same date a similar one (for court rulings,
+ * the same cited articles).
  */
 export function sameAct(a: Comparable, b: Comparable): boolean {
   if (a.kind !== b.kind) return false;
   if (a.number && b.number) return normNumber(a.number) === normNumber(b.number);
-  return sameTitle(a.title, b.title) || (a.date === b.date && similarTitle(a.title, b.title));
+  if (sameTitle(a.title, b.title)) return true;
+  if (a.date !== b.date) return false;
+  return similarTitle(a.title, b.title) || (a.kind === "court" && sameCitations(a.title, b.title));
+}
+
+/** Same act regardless of date: number, or the same title. For listings dated differently. */
+export function sameActAnyDate(a: Comparable, b: Comparable): boolean {
+  if (a.kind !== b.kind) return false;
+  if (a.number && b.number) return normNumber(a.number) === normNumber(b.number);
+  return sameTitle(a.title, b.title);
 }
 
 /**

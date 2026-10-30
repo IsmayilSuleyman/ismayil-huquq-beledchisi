@@ -72,8 +72,10 @@ export type GazetteDraft = {
   /** "Həftənin əsas məqamları": three to five one-line points. */
   highlights: string[];
   sections: GazetteSection[];
-  /** Every page consulted, printed at the end of the issue. */
+  /** The list pages used and the act pages read, printed at the end of the issue. */
   sources: string[];
+  /** Set only when a person read and approved the issue before publication; the disclaimer says so. */
+  reviewed?: boolean;
 };
 
 export type DraftCheck =
@@ -171,7 +173,7 @@ export function checkDraft(raw: unknown): DraftCheck {
 
   unknownKeys(
     raw,
-    ["period", "published_at", "headline", "summary", "tags", "overview", "highlights", "sections", "sources"],
+    ["period", "published_at", "headline", "summary", "tags", "overview", "highlights", "sections", "sources", "reviewed"],
     "draft"
   );
 
@@ -293,8 +295,8 @@ export function checkDraft(raw: unknown): DraftCheck {
       });
     }
 
-    if (entries.length === 0 && !notice) {
-      errors.push(`${where} (${institution || "unnamed"}) has no entries and no notice explaining why`);
+    if (entries.length === 0 && !notice && !intro) {
+      errors.push(`${where} (${institution || "unnamed"}) has no entries and no notice or intro explaining why`);
     }
 
     sections.push({
@@ -305,6 +307,9 @@ export function checkDraft(raw: unknown): DraftCheck {
       entries,
     });
   }
+
+  if (raw.reviewed !== undefined && typeof raw.reviewed !== "boolean") errors.push("draft.reviewed must be true or false");
+  const reviewed = raw.reviewed === true;
 
   const total = sections.reduce((n, s) => n + s.entries.length, 0);
   if (rawSections.length > 0 && total === 0) warnings.push("The issue lists no acts at all");
@@ -324,6 +329,7 @@ export function checkDraft(raw: unknown): DraftCheck {
       highlights,
       sections,
       sources,
+      ...(reviewed ? { reviewed } : {}),
     },
   };
 }

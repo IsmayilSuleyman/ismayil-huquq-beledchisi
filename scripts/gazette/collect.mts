@@ -10,11 +10,18 @@
  *      (decrees, orders, signed laws), nk.gov.az (Cabinet), meclis.gov.az
  *      (bills put to discussion) and constcourt.gov.az.
  *
- * The same act listed by two sources becomes one lead. Laws are placed in
- * the week president.az published them as signed; the register and the
- * Majlis list of adopted laws only supply their numbers and adoption dates
- * (see enrichLaws in leads.ts). Each source reports whether it looked far
- * enough back to cover the whole period.
+ * Each act belongs to the week it was first published. Where president.az
+ * or nk.gov.az lists an act, that listing's date decides its week, so an
+ * act dated on a Friday but posted on the Monday after belongs to the next
+ * issue, in a weekly run and in a catch-up run alike. Laws follow the same
+ * rule; the register and the Majlis list date them by adoption and only
+ * lend them numbers. Acts only the register has (ministries, the Central
+ * Bank) count from their own date; in a weekly run, those registered late
+ * are picked up for three more weeks.
+ *
+ * The same act from two sources becomes one lead. Each source reports
+ * whether it looked back far enough to cover the whole period, and leads
+ * that one of the last three issues already printed are marked.
  *
  * Usage:
  *   npm run gazette:collect -- --from 2026-10-26 --to 2026-11-01 [--out leads.json]
@@ -23,6 +30,10 @@
 
 import { writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
+import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_KEY, SUPABASE_URL } from "@/lib/gazette/supabase";
+import type { EntryKind } from "@/scripts/gazette/draft";
+import { getText, retryCount } from "@/scripts/gazette/http";
 import {
   CABINET,
   CONST_COURT,
@@ -33,15 +44,16 @@ import {
   cleanHtml,
   dottedDate,
   enrichLaws,
-  isAnnex,
+  isActTitle,
   mergeLeads,
+  parseBillReadings,
   registerKind,
+  sameActAnyDate,
   sortLeads,
   stripActName,
   type Lead,
 } from "@/scripts/gazette/leads";
-import type { EntryKind } from "@/scripts/gazette/draft";
-import { getText, retryCount } from "@/scripts/gazette/http";
+import { printedIn, recentIssues } from "@/scripts/gazette/previous";
 
 // ── Period ────────────────────────────────────────────────────────────────────
 
@@ -49,9 +61,10 @@ const { values } = parseArgs({
   options: { from: { type: "string" }, to: { type: "string" }, out: { type: "string" } },
 });
 
+// Baku is UTC+4 all year; the routine runs on Monday morning there.
+const today = new Date(Date.now() + 4 * 3_600_000).toISOString().slice(0, 10);
+
 function lastWeek(): { from: string; to: string } {
-  // Baku is UTC+4 all year; the routine runs on Monday morning there.
-  const today = new Date(Date.now() + 4 * 3_600_000).toISOString().slice(0, 10);
   const sinceMonday = (new Date(`${today}T00:00:00Z`).getUTCDay() + 6) % 7;
   const monday = addDays(today, -(sinceMonday + 7));
   return { from: monday, to: addDays(monday, 6) };
@@ -59,17 +72,21 @@ function lastWeek(): { from: string; to: string } {
 
 const period = values.from && values.to ? { from: values.from, to: values.to } : lastWeek();
 const inPeriod = (date: string) => date >= period.from && date <= period.to;
-
-// ── Fetching ──────────────────────────────────────────────────────────────────
+/** A weekly run (the period just ended), as opposed to a catch-up run for an old week. */
+const live = addDays(period.to, 8) >= today;
+/** How far back the register is read: late registrations, and laws' adoption dates. */
+const lateFrom = addDays(period.from, -21);
+const lawsFrom = addDays(period.from, -75);
 
 const get = getText;
 
 /**
- * What a source found: the leads in the period, and the oldest date it saw.
- * Lists run newest first, so seeing a date before the period means the
- * whole period was covered.
+ * What a source found: everything it listed from the start of the period on
+ * (later postings decide whether a register act belongs to a later week),
+ * and the oldest date it saw. Lists run newest first, so seeing a date
+ * before the period means the whole period was covered.
  */
-type Found = { leads: Lead[]; oldest: string | null };
+type Found = { listed: Lead[]; oldest: string | null };
 
 function older(a: string | null, b: string | null): string | null {
   if (!a) return b;
@@ -82,42 +99,37 @@ function older(a: string | null, b: string | null): string | null {
 type RegisterRow = { id: number; title: string; typeName: string; acceptDate: string; citation: string | null };
 
 /**
- * The register, newest first. Its laws come back separately: they are
- * dated by adoption, so they only lend numbers to the laws signed this
- * week, and the lookup reaches two months further back for them.
+ * The register, newest first, from today back to the laws' window, all
+ * statuses (an act repealed soon after adoption still happened). Pages
+ * overlap and rows are de-duplicated by id: rows sharing a date can swap
+ * places between requests.
  */
-async function eQanun(): Promise<Found & { laws: Lead[] }> {
-  const leads: Lead[] = [];
-  const laws: Lead[] = [];
-  const lawsFrom = addDays(period.from, -75);
+async function eQanun(): Promise<Found> {
+  const byId = new Map<number, Lead>();
   let oldest: string | null = null;
   const pageSize = 100;
-  for (let start = 0; start < 2000; start += pageSize) {
+  for (let start = 0; start < 3000; start += pageSize - 20) {
     const url =
       `https://api.e-qanun.az/getDetailSearch?start=${start}&length=${pageSize}` +
-      "&orderColumn=8&orderDirection=desc&title=true&codeType=1&dateType=1&statusId=1&secondType=2&specialDate=false&array=";
+      "&orderColumn=8&orderDirection=desc&title=true&codeType=1&dateType=1&secondType=2&specialDate=false&array=";
     const body = JSON.parse(await get(url, "application/json")) as { data: RegisterRow[] };
     for (const row of body.data) {
       const date = dottedDate(row.acceptDate);
       if (!date) continue;
       oldest = older(oldest, date);
-      const lead: Lead = {
+      if (date < lawsFrom || byId.has(row.id)) continue;
+      byId.set(row.id, {
         ...registerKind(row.typeName),
         ...(row.citation?.trim() ? { number: row.citation.trim() } : {}),
         date,
         title: row.title.trim(),
         url: `https://e-qanun.az/framework/${row.id}`,
         source: "e-qanun.az",
-      };
-      if (lead.kind === "law") {
-        if (date >= lawsFrom && date <= period.to) laws.push(lead);
-      } else if (inPeriod(date)) {
-        leads.push(lead);
-      }
+      });
     }
     if ((oldest && oldest < lawsFrom) || body.data.length < pageSize) break;
   }
-  return { leads, laws, oldest };
+  return { listed: [...byId.values()], oldest };
 }
 
 async function presidentAz(): Promise<Found> {
@@ -126,7 +138,7 @@ async function presidentAz(): Promise<Found> {
     { path: "orders", kind: "order", institution: PRESIDENT },
     { path: "laws", kind: "law", institution: MAJLIS }, // dated by their publication as signed
   ];
-  const leads: Lead[] = [];
+  const listed: Lead[] = [];
   let covered: string | null = null; // the least far back any category reached
   for (const [i, cat] of categories.entries()) {
     let oldest: string | null = null;
@@ -142,10 +154,13 @@ async function presidentAz(): Promise<Found> {
         if (!href || !date || !title) continue;
         found++;
         oldest = older(oldest, date);
-        if (!inPeriod(date) || isAnnex(title)) continue;
+        // Skip what came before the period, and material posted alongside an act (charters, programmes).
+        if (date < period.from || !isActTitle(title)) continue;
         const url = `https://president.az${href}`;
-        leads.push({
-          kind: cat.kind,
+        // The act's own name decides its kind: a decree filed under orders is still a decree.
+        const kind: EntryKind = /Fərmanı\s*$/u.test(title) ? "decree" : /Sərəncamı\s*$/u.test(title) ? "order" : cat.kind;
+        listed.push({
+          kind,
           institution: cat.institution,
           date,
           title: stripActName(title),
@@ -160,11 +175,11 @@ async function presidentAz(): Promise<Found> {
     if (i === 0) covered = oldest;
     else if (oldest === null || (covered !== null && oldest > covered)) covered = oldest;
   }
-  return { leads, oldest: covered };
+  return { listed, oldest: covered };
 }
 
 async function nkGovAz(): Promise<Found> {
-  const leads: Lead[] = [];
+  const listed: Lead[] = [];
   let oldest: string | null = null;
   for (let page = 0; page <= 8; page++) {
     const html = await get(`https://nk.gov.az/az/senedler/hamisi${page > 0 ? `?page=${page}` : ""}`);
@@ -179,16 +194,16 @@ async function nkGovAz(): Promise<Found> {
       if (!href || !title || !date) continue;
       found++;
       oldest = older(oldest, date);
-      if (!inPeriod(date)) continue;
+      if (date < period.from) continue;
       // Letters (Məktublar) are correspondence, not acts.
       const kind: EntryKind | null = /qərar/i.test(type) ? "decision" : /sərəncam/i.test(type) ? "order" : null;
       if (!kind) continue;
       const url = new URL(href, "https://nk.gov.az").toString();
-      leads.push({ kind, institution: CABINET, ...(number ? { number } : {}), date, title, url, textUrl: url, source: "nk.gov.az" });
+      listed.push({ kind, institution: CABINET, ...(number ? { number } : {}), date, title, url, textUrl: url, source: "nk.gov.az" });
     }
     if (found === 0 || (oldest && oldest < period.from)) break;
   }
-  return { leads, oldest };
+  return { listed, oldest };
 }
 
 /** One page of a meclis.gov.az list (p is zero-based). */
@@ -196,10 +211,9 @@ function meclisPage(script: string, cat: number, page: number): Promise<string> 
   return get(`https://meclis.gov.az/${script}?${page > 0 ? `p=${page}&` : ""}cat=${cat}&lang=az`);
 }
 
-/** Adopted laws, by adoption date: numbers and text links for the laws signed this week. */
+/** Adopted laws, by adoption date: numbers and text links for the laws published this week. */
 async function meclisLaws(): Promise<Lead[]> {
   const laws: Lead[] = [];
-  const from = addDays(period.from, -75);
   for (let page = 0; page <= 6; page++) {
     const html = await meclisPage("cat-qanun.php", 72, page);
     let oldest: string | null = null;
@@ -212,7 +226,7 @@ async function meclisLaws(): Promise<Lead[]> {
       if (!date || !link) continue;
       found++;
       oldest = older(oldest, date);
-      if (date < from || date > period.to) continue;
+      if (date < lawsFrom || date > period.to) continue;
       const url = link[1].replace("meclis.gov.az//", "meclis.gov.az/");
       laws.push({
         kind: "law",
@@ -225,34 +239,56 @@ async function meclisLaws(): Promise<Lead[]> {
         source: "meclis.gov.az",
       });
     }
-    if (found === 0 || (oldest && oldest < from)) break;
+    if (found === 0 || (oldest && oldest < lawsFrom)) break;
   }
   return laws;
 }
 
-async function meclisBills(): Promise<Found> {
-  const leads: Lead[] = [];
+/**
+ * Bills read in the period. The list dates each bill by its latest reading,
+ * so a bill read this week and again since shows a later date: for those,
+ * and for this week's, the bill's page gives every reading and its stage.
+ * Undated ones are returned separately so none vanishes unseen.
+ */
+async function meclisBills(): Promise<Found & { undated: string[] }> {
+  const listed: Lead[] = [];
+  const undated: string[] = [];
   let oldest: string | null = null;
   for (let page = 0; page <= 6; page++) {
     const html = await meclisPage("cat-layihe.php", 83, page);
     let found = 0;
     for (const m of html.matchAll(/<article class="post post-tp-24"[\s\S]*?<\/article>/g)) {
-      const date = azDate(cleanHtml(/<div[^>]*>([\s\S]*?)<\/div>/.exec(m[0])?.[1] ?? ""));
       const link = /<a href="(news-layihe\.php\?id=\d+[^"]*par=0)">([\s\S]*?)<\/a>/.exec(m[0]);
-      if (!date || !link) continue;
+      if (!link) continue;
+      const date = azDate(cleanHtml(/<div[^>]*>([\s\S]*?)<\/div>/.exec(m[0])?.[1] ?? ""));
+      const url = `https://meclis.gov.az/${link[1].replace(/&amp;/g, "&")}`;
+      if (!date) {
+        if (page === 0) undated.push(`${cleanHtml(link[2])} (${url})`);
+        continue;
+      }
       found++;
       oldest = older(oldest, date);
-      if (!inPeriod(date)) continue;
-      const url = `https://meclis.gov.az/${link[1].replace(/&amp;/g, "&")}`;
-      leads.push({ kind: "bill", institution: MAJLIS, date, title: cleanHtml(link[2]), url, textUrl: url, source: "meclis.gov.az" });
+      if (date < period.from) continue;
+      const reading = parseBillReadings(await get(url)).filter((r) => r.date && inPeriod(r.date)).pop();
+      if (!reading?.date) continue;
+      listed.push({
+        kind: "bill",
+        institution: MAJLIS,
+        date: reading.date,
+        stage: reading.stage,
+        title: cleanHtml(link[2]),
+        url,
+        textUrl: url,
+        source: "meclis.gov.az",
+      });
     }
     if (found === 0 || (oldest && oldest < period.from)) break;
   }
-  return { leads, oldest };
+  return { listed, oldest, undated };
 }
 
 async function constCourt(): Promise<Found> {
-  const leads: Lead[] = [];
+  const listed: Lead[] = [];
   let oldest: string | null = null;
   for (let page = 1; page <= 5; page++) {
     const html = await get(`https://constcourt.gov.az/az/decisions${page > 1 ? `?key=&page=${page}` : ""}`);
@@ -264,12 +300,50 @@ async function constCourt(): Promise<Found> {
       found++;
       oldest = older(oldest, date);
       if (!inPeriod(date)) continue;
-      const title = text.replace(/^\s*\d{1,2}\.\d{1,2}\.\d{2,4}\s*/, "");
-      leads.push({ kind: "court", institution: CONST_COURT, date, title, url: m[1], textUrl: m[1], source: "constcourt.gov.az" });
+      const title = text.replace(/^\s*\.?\s*\d{1,2}\.\d{1,2}\.\d{2,4}\s*/, "").replace(/^\.\s*/, "");
+      listed.push({ kind: "court", institution: CONST_COURT, date, title, url: m[1], textUrl: m[1], source: "constcourt.gov.az" });
     }
     if (found === 0 || (oldest && oldest < period.from)) break;
   }
-  return { leads, oldest };
+  return { listed, oldest };
+}
+
+// ── Placing acts in weeks ─────────────────────────────────────────────────────
+
+/** Bodies whose acts only the register lists. */
+const SAME_DAY_BODIES = [PRESIDENT, CABINET, MAJLIS, CONST_COURT];
+
+/**
+ * The register's acts that belong to this period: dated in it and not
+ * posted after it by president.az or nk.gov.az (that posting's week owns
+ * them). In a weekly run, register-only acts dated in the three weeks
+ * before are added too, marked late: they were registered after their
+ * week's issue went out.
+ */
+function registerLeads(register: Lead[], sameDay: Lead[]): Lead[] {
+  return register.filter((r) => {
+    if (r.kind === "law") return false; // laws come through president.az
+    const postedLater = sameDay.some((s) => s.date > period.to && sameActAnyDate(s, r));
+    if (inPeriod(r.date)) return !postedLater;
+    if (live && r.date >= lateFrom && r.date < period.from && !SAME_DAY_BODIES.includes(r.institution)) {
+      r.late = true;
+      return true;
+    }
+    return false;
+  });
+}
+
+/** A same-day listing takes the register's link, number and own date when the register has the act. */
+function withRegisterDetails(lead: Lead, register: Lead[]): Lead {
+  if (lead.source === "e-qanun.az") return lead;
+  const twin = register.find((r) => sameActAnyDate(r, lead));
+  if (!twin) return lead;
+  return {
+    ...lead,
+    url: twin.url,
+    number: lead.number ?? twin.number,
+    actDate: lead.actDate ?? (twin.date !== lead.date ? twin.date : undefined),
+  };
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -277,16 +351,17 @@ async function constCourt(): Promise<Found> {
 type SourceReport = { source: string; ok: boolean; found: number; complete: boolean; error?: string };
 
 async function main() {
-  console.log(`\n📰 Omni Law Gazette collector — ${period.from} → ${period.to}\n`);
+  console.log(`\n📰 Omni Law Gazette collector — ${period.from} → ${period.to}${live ? "" : " (catch-up)"}\n`);
   const reports: SourceReport[] = [];
 
-  async function run<T extends Found>(source: string, fn: () => Promise<T>): Promise<T | null> {
+  async function run<T extends Found>(source: string, fn: () => Promise<T>, inWeek: (l: Lead) => boolean = (l) => inPeriod(l.date)) {
     try {
       const result = await fn();
       const complete = result.oldest !== null && result.oldest < period.from;
-      reports.push({ source, ok: true, found: result.leads.length, complete });
+      const found = result.listed.filter(inWeek).length;
+      reports.push({ source, ok: true, found, complete });
       const note = complete ? "" : "  (did not reach the start of the period)";
-      console.log(`   ${complete ? "✓" : "!"} ${source.padEnd(26)} ${result.leads.length}${note}`);
+      console.log(`   ${complete ? "✓" : "!"} ${source.padEnd(26)} ${found}${note}`);
       return result;
     } catch (e) {
       const error = e instanceof Error ? e.message : String(e);
@@ -296,7 +371,7 @@ async function main() {
     }
   }
 
-  const register = await run("e-qanun.az", eQanun);
+  const register = await run("e-qanun.az", eQanun, (l) => l.kind !== "law" && inPeriod(l.date));
   const president = await run("president.az", presidentAz);
   const cabinet = await run("nk.gov.az", nkGovAz);
   const bills = await run("meclis.gov.az (layihələr)", meclisBills);
@@ -309,36 +384,56 @@ async function main() {
     console.log(`   ✗ ${"meclis.gov.az (qanunlar)".padEnd(26)} ${error} (law numbers may be missing)`);
   }
 
+  const registerAll = register?.listed ?? [];
+  const presidentAll = president?.listed ?? [];
+  const sameDay = [...presidentAll.filter((l) => l.kind !== "law"), ...(cabinet?.listed ?? [])];
+
   // Laws: published as signed this week (president.az), numbered from the register and the Majlis list.
-  const presidentLeads = president?.leads ?? [];
-  const signedLaws = enrichLaws(
-    presidentLeads.filter((l) => l.kind === "law"),
-    [...adopted, ...(register?.laws ?? [])]
+  const laws = enrichLaws(
+    presidentAll.filter((l) => l.kind === "law" && inPeriod(l.date)),
+    [...adopted, ...registerAll.filter((l) => l.kind === "law")]
   );
 
-  let leads = register?.leads ?? [];
-  leads = mergeLeads(leads, presidentLeads.filter((l) => l.kind !== "law"));
-  leads = mergeLeads(leads, signedLaws);
-  leads = mergeLeads(leads, cabinet?.leads ?? []);
-  leads = mergeLeads(leads, bills?.leads ?? []);
-  leads = mergeLeads(leads, court?.leads ?? []);
-  leads = sortLeads(leads);
+  let leads = registerLeads(registerAll, sameDay);
+  leads = mergeLeads(leads, sameDay.filter((l) => inPeriod(l.date)));
+  leads = mergeLeads(leads, laws);
+  leads = mergeLeads(leads, bills?.listed ?? []);
+  leads = mergeLeads(leads, court?.listed ?? []);
+  leads = sortLeads(leads.map((l) => withRegisterDetails(l, registerAll)));
+
+  // Mark what the last issues already printed.
+  try {
+    const db = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } });
+    const issues = await recentIssues(db, 3);
+    for (const lead of leads) {
+      const n = printedIn(lead, issues);
+      if (n !== null) lead.printedIn = n;
+    }
+  } catch (e) {
+    console.log(`   ! Could not compare with the last issues: ${e instanceof Error ? e.message : String(e)}`);
+  }
+  // A late act that was already printed is not news.
+  leads = leads.filter((l) => !(l.late && l.printedIn));
 
   const warnings: string[] = [];
   for (const r of reports) {
     if (!r.ok) warnings.push(`${r.source} failed: ${r.error}`);
     else if (!r.complete) warnings.push(`${r.source} did not reach the start of the period; acts from its first days may be missing`);
   }
-  if (!president) warnings.push("Without president.az this week's signed laws cannot be determined");
-  for (const law of signedLaws) {
-    if (!law.number) warnings.push(`No number found for the signed law "${law.title.slice(0, 80)}…"; take it from its text`);
+  if (!president) warnings.push("Without president.az this week's laws cannot be determined");
+  for (const law of laws) {
+    if (!law.number) warnings.push(`No number found for the law "${law.title.slice(0, 80)}…"; take it from its text`);
+  }
+  for (const bill of bills?.undated ?? []) warnings.push(`Undated bill on meclis.gov.az, check whether it belongs here: ${bill}`);
+  for (const lead of leads) {
+    if (lead.printedIn) warnings.push(`Already printed in No. ${lead.printedIn}: ${lead.kind} ${lead.number ?? ""} "${lead.title.slice(0, 60)}…"`);
   }
 
   const retries = retryCount();
   const out = values.out ?? `gazette-leads-${period.to}.json`;
   writeFileSync(
     out,
-    JSON.stringify({ period, generated_at: new Date().toISOString(), retries, sources: reports, warnings, leads }, null, 2)
+    JSON.stringify({ period, live, generated_at: new Date().toISOString(), retries, sources: reports, warnings, leads }, null, 2)
   );
 
   const byInstitution = new Map<string, number>();

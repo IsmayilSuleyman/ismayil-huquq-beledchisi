@@ -17,8 +17,8 @@
  * supabase/migrations/20261030120000_gazette_publisher.sql) with
  * GAZETTE_PUBLISHER_EMAIL and GAZETTE_PUBLISHER_PASSWORD.
  *
- * Before rendering it compares the draft with the latest issue's PDF and
- * warns about any act number that issue already printed.
+ * Before rendering it compares the draft with the last three issues and
+ * warns about any act they already printed (by number or register id).
  *
  * Exit codes: 0 published (or this period already was), 1 failed,
  * 2 bad draft.
@@ -33,7 +33,7 @@ import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gaz
 import { analyzePdfBuffer } from "@/scripts/gazette/cover";
 import { checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
 import { renderIssuePdf } from "@/scripts/gazette/issue-pdf";
-import { pdfText } from "@/scripts/gazette/pdf-text";
+import { printedIn, recentIssues } from "@/scripts/gazette/previous";
 
 const SITE = "https://ismayilhuquqbeledchisi.vercel.app";
 const MAX_PDF_BYTES = 50 * 1024 * 1024;
@@ -78,26 +78,6 @@ async function lookUp(db: SupabaseClient, draft: GazetteDraft, title: string) {
   };
 }
 
-/**
- * Act numbers of this draft that the given issue already printed ("№ 261",
- * or "No. 261" in the early English issues). A week's acts should not
- * reappear the next week; the routine decides what to do about a hit.
- */
-async function repeatedActs(draft: GazetteDraft, previous: Existing): Promise<string[]> {
-  const res = await fetch(publicUrl(previous.pdf_path), { signal: AbortSignal.timeout(45_000) });
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const text = await pdfText(new Uint8Array(await res.arrayBuffer()));
-  const hits: string[] = [];
-  for (const section of draft.sections) {
-    for (const entry of section.entries) {
-      if (!entry.number) continue;
-      const n = entry.number.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      if (new RegExp(`(№|No\\.?)\\s*${n}(?![\\w-])`, "iu").test(text)) hits.push(`${entry.kind} № ${entry.number}`);
-    }
-  }
-  return hits;
-}
-
 async function main() {
   const draftPath = positionals[0];
   if (!draftPath) fail("Usage: npm run gazette:publish -- <draft.json> [--dry-run] [--out <dir>]", 2);
@@ -138,10 +118,20 @@ async function main() {
     }
     if (latest) {
       try {
-        const repeats = await repeatedActs(draft, latest);
-        for (const r of repeats) console.warn(`  ! ${r} already appears in No. ${latest.issue_number}`);
+        const issues = await recentIssues(db, 3);
+        let repeats = 0;
+        for (const section of draft.sections) {
+          for (const entry of section.entries) {
+            const n = printedIn(entry, issues);
+            if (n === null) continue;
+            repeats++;
+            console.warn(`  ! ${entry.kind} ${entry.number ? `№ ${entry.number}` : `"${entry.title.slice(0, 50)}…"`} already appears in No. ${n}`);
+          }
+        }
+        const compared = issues.map((i) => `No. ${i.issueNumber}`).join(", ");
+        if (repeats === 0) console.log(`   Compared with ${compared || "no readable issue"}: no act repeated`);
       } catch (e) {
-        console.warn(`  ! Could not compare with No. ${latest.issue_number}: ${(e as Error).message}`);
+        console.warn(`  ! Could not compare with the last issues: ${(e as Error).message}`);
       }
     }
     issueNumber = next;
