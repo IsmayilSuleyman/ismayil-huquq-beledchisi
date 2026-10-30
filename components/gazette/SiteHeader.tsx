@@ -27,13 +27,10 @@ export default function SiteHeader() {
             href={GUIDE_URL}
             title="İsmayıl Hüquq Bələdçisi"
             aria-label="İsmayıl Hüquq Bələdçisinə keç"
-            className="inline-flex items-center gap-2 px-3 py-2 mr-1 sm:mr-2 rounded-lg border border-white/[0.12] bg-white/5 hover:bg-white/10 hover:border-azure/40 transition-colors shrink-0"
+            className="inline-flex items-center justify-center w-9 h-9 mr-1 sm:mr-2 rounded-lg border border-white/[0.12] bg-white/5 hover:bg-white/10 hover:border-azure/40 transition-colors shrink-0"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/ihb-mark.svg" alt="" width={18} height={18} />
-            <span className="hidden sm:inline text-[0.62rem] uppercase tracking-[0.2em] text-silver">
-              Bələdçiyə keç
-            </span>
           </a>
           <NotifyButton />
           <Link
