@@ -466,9 +466,11 @@ function Closing({ draft, preparedOn }: { draft: GazetteDraft; preparedOn: strin
         ))}
       </Text>
       <Text style={styles.disclaimer}>
-        Bu buraxılış rəsmi dövlət mənbələri əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc
-        edilməzdən əvvəl redaktə olunmayıb. İcmal məlumat xarakterlidir və hüquqi məsləhət deyil; aktların
-        rəsmi mətni üçün e-qanun.az və müvafiq dövlət orqanlarının saytlarına müraciət edin.
+        {draft.reviewed
+          ? "Bu buraxılış rəsmi dövlət mənbələri əsasında süni intellekt tərəfindən hazırlanıb və dərc edilməzdən əvvəl redaksiya tərəfindən yoxlanılıb."
+          : "Bu buraxılış rəsmi dövlət mənbələri əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc edilməzdən əvvəl redaktə olunmayıb."}{" "}
+        İcmal məlumat xarakterlidir və hüquqi məsləhət deyil; aktların rəsmi mətni üçün e-qanun.az və müvafiq
+        dövlət orqanlarının saytlarına müraciət edin.
         {late ? ` Bu buraxılış gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}
       </Text>
     </View>

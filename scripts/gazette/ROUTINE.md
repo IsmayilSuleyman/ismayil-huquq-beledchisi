@@ -107,13 +107,15 @@ Read every lead's title. Then, per institution:
   sentence each;
 - pardon orders: one sentence, with how many people they cover;
 - municipal decisions: one sentence each, in a last section "Bələdiyyələr";
-- bills dated in the period: say plainly that it is a draft and give the
-  reading stage that `gazette:read` prints (I, II or III oxunuş).
+- bills with a reading in the period (the lead's `stage`): say plainly that
+  it is a draft, and which reading (I, II or III oxunuş). A bill read again
+  in a later week is reported again there, at its new stage.
 
 **Count, don't list**, in one sentence of the section's `intro`:
-appointments, dismissals, awards, honorary titles, medals, military and
-special ranks, changes to a board's members, and purely procedural acts
-(approving minutes or an agenda). For example: "Prezident həmçinin 3
+appointments, dismissals, awards, scholarships and prizes to named
+people, honorary titles, medals, military and special ranks, changes to a
+board's members, and purely procedural acts (approving minutes or an
+agenda). For example: "Prezident həmçinin 3
 təyinat, 2 vəzifədən azadetmə və 2 təltif sərəncamı imzalayıb." Letters are
 not collected; leave them out.
 
@@ -135,9 +137,11 @@ is the authority for its number and date):
 npm run gazette:read -- '<textUrl>'
 ```
 
-It prints the act's text from the page, or from the PDF the page embeds
-(nk.gov.az acts and some laws on president.az are PDFs only), and a bill's
-reading stage. Long texts are cut at 15 000 characters; add `--max 40000`
+It prints the act's text from the page, or from every PDF the page embeds
+(nk.gov.az acts and their annexes, some laws on president.az). For a bill
+it lists every reading with its date and prints the latest text; add
+`--reading 2` for the second reading's text. The lead's `stage` is the
+reading that falls in the period: report that one. Long texts are cut at 15 000 characters; add `--max 40000`
 when the part you need comes later. For an e-qanun.az link it prints the
 register's details (status, publication, effective date) instead, since
 the register's texts are not public: find the text on the issuing body's
@@ -184,7 +188,7 @@ acts, for example). Leave out other bodies when they published nothing.
 Per entry:
 
 - `kind`: law, bill, decree, order, decision (also for a ministry's or
-  committee's *qərar*), court or other;
+  committee's *qərar*), court, or other when the text doesn't say;
 - `number` exactly as printed on the act ("1281", "798s", "494-VIIQD").
   Lists sometimes shorten it (nk.gov.az can drop the s of a Cabinet
   order); leave it out when unknown;

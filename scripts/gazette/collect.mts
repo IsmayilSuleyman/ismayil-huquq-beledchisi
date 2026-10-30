@@ -46,6 +46,7 @@ import {
   enrichLaws,
   isActTitle,
   mergeLeads,
+  parseBillReadings,
   registerKind,
   sameActAnyDate,
   sortLeads,
@@ -156,8 +157,10 @@ async function presidentAz(): Promise<Found> {
         // Skip what came before the period, and material posted alongside an act (charters, programmes).
         if (date < period.from || !isActTitle(title)) continue;
         const url = `https://president.az${href}`;
+        // The act's own name decides its kind: a decree filed under orders is still a decree.
+        const kind: EntryKind = /Fərmanı\s*$/u.test(title) ? "decree" : /Sərəncamı\s*$/u.test(title) ? "order" : cat.kind;
         listed.push({
-          kind: cat.kind,
+          kind,
           institution: cat.institution,
           date,
           title: stripActName(title),
@@ -241,7 +244,12 @@ async function meclisLaws(): Promise<Lead[]> {
   return laws;
 }
 
-/** Bills by the date of their reading; undated ones are returned separately so none vanishes unseen. */
+/**
+ * Bills read in the period. The list dates each bill by its latest reading,
+ * so a bill read this week and again since shows a later date: for those,
+ * and for this week's, the bill's page gives every reading and its stage.
+ * Undated ones are returned separately so none vanishes unseen.
+ */
 async function meclisBills(): Promise<Found & { undated: string[] }> {
   const listed: Lead[] = [];
   const undated: string[] = [];
@@ -260,8 +268,19 @@ async function meclisBills(): Promise<Found & { undated: string[] }> {
       }
       found++;
       oldest = older(oldest, date);
-      if (!inPeriod(date)) continue;
-      listed.push({ kind: "bill", institution: MAJLIS, date, title: cleanHtml(link[2]), url, textUrl: url, source: "meclis.gov.az" });
+      if (date < period.from) continue;
+      const reading = parseBillReadings(await get(url)).filter((r) => r.date && inPeriod(r.date)).pop();
+      if (!reading?.date) continue;
+      listed.push({
+        kind: "bill",
+        institution: MAJLIS,
+        date: reading.date,
+        stage: reading.stage,
+        title: cleanHtml(link[2]),
+        url,
+        textUrl: url,
+        source: "meclis.gov.az",
+      });
     }
     if (found === 0 || (oldest && oldest < period.from)) break;
   }

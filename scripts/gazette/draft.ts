@@ -74,6 +74,8 @@ export type GazetteDraft = {
   sections: GazetteSection[];
   /** The list pages used and the act pages read, printed at the end of the issue. */
   sources: string[];
+  /** Set only when a person read and approved the issue before publication; the disclaimer says so. */
+  reviewed?: boolean;
 };
 
 export type DraftCheck =
@@ -171,7 +173,7 @@ export function checkDraft(raw: unknown): DraftCheck {
 
   unknownKeys(
     raw,
-    ["period", "published_at", "headline", "summary", "tags", "overview", "highlights", "sections", "sources"],
+    ["period", "published_at", "headline", "summary", "tags", "overview", "highlights", "sections", "sources", "reviewed"],
     "draft"
   );
 
@@ -306,6 +308,9 @@ export function checkDraft(raw: unknown): DraftCheck {
     });
   }
 
+  if (raw.reviewed !== undefined && typeof raw.reviewed !== "boolean") errors.push("draft.reviewed must be true or false");
+  const reviewed = raw.reviewed === true;
+
   const total = sections.reduce((n, s) => n + s.entries.length, 0);
   if (rawSections.length > 0 && total === 0) warnings.push("The issue lists no acts at all");
   if (highlights.length === 0 && total > 0) warnings.push("No highlights: the at-a-glance box will show counts only");
@@ -324,6 +329,7 @@ export function checkDraft(raw: unknown): DraftCheck {
       highlights,
       sections,
       sources,
+      ...(reviewed ? { reviewed } : {}),
     },
   };
 }

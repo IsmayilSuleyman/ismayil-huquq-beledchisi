@@ -14,17 +14,19 @@
  *                      not public); read the issuing body's page instead
  *
  * Usage:
- *   npm run gazette:read -- <url> [--max 15000]
+ *   npm run gazette:read -- <url> [--max 15000] [--reading 2]
+ *
+ * --reading picks a bill's reading (1 = first); by default the latest.
  */
 
 import { parseArgs } from "node:util";
 import { fetchWithRetry, getText } from "@/scripts/gazette/http";
-import { cleanHtml } from "@/scripts/gazette/leads";
+import { cleanHtml, parseBillReadings } from "@/scripts/gazette/leads";
 import { pdfText } from "@/scripts/gazette/pdf-text";
 
 const { values, positionals } = parseArgs({
   allowPositionals: true,
-  options: { max: { type: "string", default: "15000" } },
+  options: { max: { type: "string", default: "15000" }, reading: { type: "string" } },
 });
 
 /** Paragraph-aware text of an HTML fragment. */
@@ -56,6 +58,16 @@ function elementByClass(html: string, cls: string): string | null {
 async function fromPdf(url: string): Promise<string> {
   const res = await fetchWithRetry(url, "application/pdf");
   return pdfText(new Uint8Array(await res.arrayBuffer()));
+}
+
+/** Every PDF a page embeds or links, in page order, without repeats. */
+function allPdfLinks(html: string, base: string): string[] {
+  const found: string[] = [];
+  for (const m of html.matchAll(/<(?:iframe|embed)\b[^>]*\bsrc="([^"]+\.pdf[^"]*)"|<a\b[^>]*\bhref="([^"]+\.pdf[^"]*)"/gi)) {
+    const url = new URL((m[1] ?? m[2]).replace(/&amp;/g, "&"), base).toString();
+    if (!found.includes(url)) found.push(url);
+  }
+  return found;
 }
 
 function firstPdfLink(html: string, base: string): string | null {
@@ -103,17 +115,31 @@ async function read(url: string): Promise<Read> {
   }
 
   if (host === "nk.gov.az") {
-    const pdf = firstPdfLink(html, url);
-    if (!pdf) throw new Error("No PDF found on the nk.gov.az page");
-    return { from: `PDF embedded in the page (${pdf})`, text: await fromPdf(pdf) };
+    // The act first, then any annex (rules, a regulation) in further PDFs.
+    const pdfs = allPdfLinks(html, url).filter((u) => u.includes("/uploads/"));
+    if (pdfs.length === 0) throw new Error("No PDF found on the nk.gov.az page");
+    const parts: string[] = [];
+    for (const [i, pdf] of pdfs.entries()) {
+      parts.push(`${i === 0 ? "" : `\n\n=== Annex ${i} (${pdf}) ===\n\n`}${await fromPdf(pdf)}`);
+    }
+    return { from: `${pdfs.length} PDF(s) on the page (${pdfs[0]}${pdfs.length > 1 ? " and annexes" : ""})`, text: parts.join("") };
   }
 
   if (host === "meclis.gov.az") {
-    const stage = cleanHtml(/<li class="tab active">([\s\S]*?)<\/li>/i.exec(html)?.[1] ?? "");
-    const body = elementByClass(html, "tab-content") ?? "";
-    // The discussion form shares the tab container; the bill comes first.
-    const text = blockText(body.split(/<form\b/i)[0]);
-    return { from: `bill text${stage ? `, stage: ${stage}` : ""}`, text };
+    // One pane per reading, in order; the list of readings says which is which.
+    const readings = parseBillReadings(html);
+    const body = (elementByClass(html, "tab-content") ?? "").split(/<form\b/i)[0];
+    const panes = body.split(/<div class="tab-item"/).slice(1);
+    const wanted = values.reading ? Number(values.reading) - 1 : readings.length - 1;
+    if (values.reading && !(wanted >= 0 && wanted < panes.length)) {
+      throw new Error(`This bill has ${readings.length} reading(s); --reading ${values.reading} is not one of them`);
+    }
+    const text = blockText(panes[wanted] !== undefined ? `<div ${panes[wanted]}` : body);
+    const list = readings.map((r) => `${r.stage}: ${r.date ?? "date not shown"}`).join("; ");
+    return {
+      from: `bill page. Readings: ${list || "none listed"}. Text of the ${values.reading ? "chosen" : "latest"} (${readings[wanted]?.stage ?? "?"}); use the stage whose date is in your period (--reading N for another)`,
+      text,
+    };
   }
 
   // constcourt.gov.az and anything else: the page's paragraphs, or an embedded PDF.
@@ -122,7 +148,10 @@ async function read(url: string): Promise<Read> {
   if (text.length >= 400) return { from: "page paragraphs", text };
   const pdf = firstPdfLink(html, url);
   if (pdf) return { from: `PDF linked on the page (${pdf})`, text: await fromPdf(pdf) };
-  return { from: "page text", text: blockText(html) };
+  return {
+    from: "page text (if this is only menus, the page builds its content with JavaScript: find the text elsewhere)",
+    text: blockText(html),
+  };
 }
 
 async function main() {

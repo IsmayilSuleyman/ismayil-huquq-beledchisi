@@ -5,6 +5,7 @@ import {
   enrichLaws,
   isActTitle,
   mergeLeads,
+  parseBillReadings,
   sameAct,
   sameActAnyDate,
   sameTitle,
@@ -141,6 +142,25 @@ describe("enrichLaws", () => {
     expect(enrichLaws(signed, adopted).map((l) => [l.date, l.actDate, l.number])).toEqual([
       ["2026-10-21", "2026-10-13", "485-VIIQ"],
       ["2026-10-21", "2026-10-13", "486-VIIQ"],
+    ]);
+  });
+});
+
+describe("parseBillReadings", () => {
+  it("lists each reading with its date, in order", () => {
+    const html = `
+      <div class="tabs-list"><ul class="clearfix">
+        <li class="tab active">I OXUNUŞ </li><li class="tab ">II OXUNUŞ </li><li class="tab ">III OXUNUŞ </li>
+        <li class="tab "><strong>Müzakirədə iştirak edin</strong></li></ul></div>
+      <div class="tab-content">
+        <div class="tab-item" style="display:block; "><p style="text-align:right;">30 sentyabr 2026</p><div>Layihə …</div></div>
+        <div class="tab-item" style="display:none; "><p style="text-align:right;">16 oktyabr 2026</p><div>Layihə …</div></div>
+        <div class="tab-item" style="display:none; "><p style="text-align:right;">23 oktyabr 2026</p><div>Layihə …</div></div>
+      </div>`;
+    expect(parseBillReadings(html)).toEqual([
+      { stage: "I oxunuş", date: "2026-09-30" },
+      { stage: "II oxunuş", date: "2026-10-16" },
+      { stage: "III oxunuş", date: "2026-10-23" },
     ]);
   });
 });

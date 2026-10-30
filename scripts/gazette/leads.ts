@@ -28,7 +28,27 @@ export type Lead = {
   printedIn?: number;
   /** A register-only act dated before the period but registered since: report it now unless printed. */
   late?: boolean;
+  /** A bill's reading in the period: "I oxunuş", "II oxunuş", "III oxunuş". */
+  stage?: string;
 };
+
+export type BillReading = { stage: string; date: string | null };
+
+/**
+ * A meclis.gov.az bill page has one tab per reading ("I OXUNUŞ", …) and one
+ * pane per tab, each starting with its date. Returns the readings in order;
+ * the page's list entry only shows the latest one.
+ */
+export function parseBillReadings(html: string): BillReading[] {
+  const labels = [...(/<div class="tabs-list">([\s\S]*?)<\/ul>/.exec(html)?.[1] ?? "").matchAll(/<li class="tab[^"]*">([\s\S]*?)<\/li>/g)]
+    .map((m) => cleanHtml(m[1]))
+    .filter((l) => /OXUNUŞ/i.test(l));
+  const panes = html.split(/<div class="tab-item"/).slice(1);
+  return labels.map((label, i) => ({
+    stage: label.replace(/\s*OXUNUŞ\s*/i, " oxunuş").trim(),
+    date: azDate(cleanHtml(/<p[^>]*>([\s\S]*?)<\/p>/.exec(panes[i] ?? "")?.[1] ?? "")),
+  }));
+}
 
 export const PRESIDENT = "Azərbaycan Respublikasının Prezidenti";
 export const CABINET = "Nazirlər Kabineti";

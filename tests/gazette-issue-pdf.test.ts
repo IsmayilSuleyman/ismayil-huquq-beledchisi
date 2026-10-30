@@ -35,4 +35,14 @@ describe("issue PDF", () => {
     expect(onTime).not.toContain("gecikmə ilə");
     expect(late).toContain("Bu buraxılış gecikmə ilə, 30 oktyabr 2026 tarixində hazırlanıb.");
   }, 30_000);
+
+  it("says in the disclaimer whether a person reviewed the issue", async () => {
+    const result = checkDraft(JSON.parse(readFileSync(FIXTURE, "utf8")));
+    if (!result.ok) throw new Error(result.errors.join("\n"));
+    const unreviewed = await pdfText(await renderIssuePdf(result.draft, 3, "2026-10-26"));
+    const reviewed = await pdfText(await renderIssuePdf({ ...result.draft, reviewed: true }, 3, "2026-10-26"));
+    expect(unreviewed).toContain("redaktə olunmayıb");
+    expect(reviewed).toContain("redaksiya tərəfindən yoxlanılıb");
+    expect(reviewed).not.toContain("redaktə olunmayıb");
+  }, 30_000);
 });
