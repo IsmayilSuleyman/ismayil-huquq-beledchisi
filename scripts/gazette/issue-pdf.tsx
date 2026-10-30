@@ -1,7 +1,17 @@
 import path from "node:path";
 import { openSync, type Font as FontFile } from "fontkit";
 import React from "react";
-import { Document, Font, Link, Page, StyleSheet, Text, View, renderToBuffer } from "@react-pdf/renderer";
+import {
+  Document,
+  Font,
+  Image as PdfImage,
+  Link,
+  Page,
+  StyleSheet,
+  Text,
+  View,
+  renderToBuffer,
+} from "@react-pdf/renderer";
 import {
   SECTION_KEYS,
   SECTION_TITLE,
@@ -21,13 +31,13 @@ import { formatDate, formatPeriod } from "@/lib/gazette-format";
  *
  * Word's fonts are replaced by open ones drawn to the same proportions:
  * Arimo for Arial and Microsoft Sans Serif, Source Serif 4 for Cambria
- * (Cambria's open twin, Caladea, has no ə). Inter Light draws the thin
- * "omni" logotype. All of them carry the Azerbaijani letters.
+ * (Cambria's open twin, Caladea, has no ə). Both carry the Azerbaijani
+ * letters. The "omni" and "law gazette" blocks are the logo artwork itself,
+ * the images issues 5–12 print (scripts/gazette/images/).
  */
 
 // Colours measured from issue 12.
 const NAVY = "#1f3863"; // headings, labels, item text
-const BAND = "#043b74"; // header blocks
 const NUMERAL = "#8496b0";
 const GOLD = "#bf8f00"; // "Mənbə:"
 const LINK = "#0563c1";
@@ -44,11 +54,17 @@ const BODY_GAP = 3;
 const CONTENT_WIDTH = A4_WIDTH - LEFT - RIGHT;
 /** Width of an item's sentence, beside its numeral. */
 const ITEM_WIDTH = CONTENT_WIDTH - NUMERAL_WIDTH - BODY_GAP;
+/** The closing note runs along the foot of the page, stopping short of the page number. */
+const CLOSING_WIDTH = A4_WIDTH - 46 - 12 - LEFT;
+/** The header's logo artwork, where issues 5–12 place it. */
+const OMNI_ART = { left: 0, top: 9.15, width: 190.96, height: 50.05 };
+const LAW_ART = { left: A4_WIDTH - 63.14, top: 9.85, width: 63.14, height: 49.15 };
 /** Room for the issue line between its start and the "law gazette" block. */
 const ISSUE_LINE_LEFT = 376;
-const ISSUE_LINE_ROOM = A4_WIDTH - 63 - ISSUE_LINE_LEFT - 6;
+const ISSUE_LINE_ROOM = LAW_ART.left - ISSUE_LINE_LEFT - 6;
 const ROOT = process.cwd();
 const FONT_DIR = path.join(ROOT, "scripts", "gazette", "fonts");
+const IMAGE_DIR = path.join(ROOT, "scripts", "gazette", "images");
 
 // ── Measuring ───────────────────────────────────────────────────────────────
 //
@@ -103,7 +119,6 @@ function registerFonts() {
       { src: path.join(dir, "SourceSerif4-BoldItalic.ttf"), fontStyle: "italic", fontWeight: 700 },
     ],
   });
-  Font.register({ family: "Logo", src: path.join(dir, "Inter-Light.ttf") });
   // Azerbaijani words are left whole (the default hyphenator knows English).
   Font.registerHyphenationCallback((word) => [word]);
   fontsRegistered = true;
@@ -125,27 +140,8 @@ const styles = StyleSheet.create({
   },
 
   // Header band, repeated on every page.
-  omniBlock: { position: "absolute", top: 10, left: 0, width: 190, height: 49, backgroundColor: BAND },
-  omniText: {
-    position: "absolute",
-    top: 4,
-    left: 74,
-    fontFamily: "Logo",
-    fontSize: 45,
-    lineHeight: 1,
-    color: "#ffffff",
-    letterSpacing: 0.5,
-  },
-  lawBlock: { position: "absolute", top: 10, left: A4_WIDTH - 63, width: 63, height: 49, backgroundColor: BAND },
-  lawText: {
-    position: "absolute",
-    top: 15,
-    left: 7,
-    fontFamily: "Arimo",
-    fontSize: 12.5,
-    lineHeight: 0.98,
-    color: "#ffffff",
-  },
+  omniArt: { position: "absolute", ...OMNI_ART },
+  lawArt: { position: "absolute", ...LAW_ART },
   kicker: {
     position: "absolute",
     top: 37.5,
@@ -167,18 +163,18 @@ const styles = StyleSheet.create({
     color: "#000000",
   },
 
-  heading: { fontFamily: "Arimo", fontWeight: 700, fontSize: 14.5, lineHeight: 1.2, color: NAVY, marginTop: 9, marginBottom: 7 },
+  heading: { fontFamily: "Arimo", fontWeight: 700, fontSize: 14.5, lineHeight: 1.2, color: NAVY, marginTop: 16, marginBottom: 3 },
   note: { fontFamily: "Serif", fontStyle: "italic", fontSize: 8, lineHeight: 1.35, color: GREY, marginBottom: 4 },
   empty: { fontFamily: "Serif", fontStyle: "italic", fontSize: 8, lineHeight: 1.35, color: GREY, marginBottom: 6 },
 
+  // More room between acts than issues 3–12 had, as İsmayıl asked.
   item: {
     flexDirection: "row",
     width: CONTENT_WIDTH,
-    paddingTop: 2,
-    paddingBottom: 3.5,
+    paddingTop: 8,
+    paddingBottom: 8,
     borderBottomWidth: 0.6,
     borderBottomColor: RULE,
-    marginBottom: 2.5,
   },
   numeral: { width: NUMERAL_WIDTH, paddingTop: 4.5, fontFamily: "Serif", fontSize: 21, lineHeight: 1, color: NUMERAL, textAlign: "right" },
   body: { width: ITEM_WIDTH, marginLeft: BODY_GAP },
@@ -198,7 +194,16 @@ const styles = StyleSheet.create({
   source: { fontFamily: "Serif", fontStyle: "italic", fontSize: 8.6, lineHeight: 1.25, color: GOLD, marginTop: 1 },
   sourceLink: { color: LINK, textDecoration: "underline" },
 
-  closing: { marginTop: 14, fontFamily: "Arimo", fontSize: 6.8, lineHeight: 1.4, color: GREY },
+  // One line of the closing note; Closing sets each line's top.
+  closing: {
+    position: "absolute",
+    left: LEFT,
+    width: CLOSING_WIDTH,
+    fontFamily: "Arimo",
+    fontSize: 6.8,
+    lineHeight: 1.4,
+    color: GREY,
+  },
 
   // Anchored from the top: a `bottom`-anchored fixed element lands on the
   // wrong pages in react-pdf 4 once text sets a lineHeight.
@@ -270,18 +275,14 @@ function issueLineSize(period: string): number {
 function Header({ issueNumber, period }: { issueNumber: number; period: string }) {
   return (
     <>
-      <View style={styles.omniBlock} fixed>
-        <Text style={styles.omniText}>omni</Text>
-      </View>
+      <PdfImage src={path.join(IMAGE_DIR, "header-omni.jpg")} style={styles.omniArt} fixed />
       <Text style={styles.kicker} fixed>
         {"BU HƏFTƏNİN İCMALI\nAZƏRBAYCAN QANUNVERİCİLİYİ"}
       </Text>
       <Text style={[styles.issueLine, { fontSize: issueLineSize(upper(period)) }]} fixed>
         {`BURAXILIŞ №. ${issueNumber}  ·\n${upper(period)}`}
       </Text>
-      <View style={styles.lawBlock} fixed>
-        <Text style={styles.lawText}>{"law\ngazette"}</Text>
-      </View>
+      <PdfImage src={path.join(IMAGE_DIR, "header-law-gazette.png")} style={styles.lawArt} fixed />
     </>
   );
 }
@@ -344,16 +345,34 @@ function daysBetween(fromIso: string, toIso: string): number {
   return Math.round((Date.parse(`${toIso}T00:00:00Z`) - Date.parse(`${fromIso}T00:00:00Z`)) / 86_400_000);
 }
 
-/** One small line after the last section: who prepared the issue, and when, if late. */
+/**
+ * One small line at the foot of the last page: who prepared the issue, and
+ * when, if late. In the footer it never needs a page of its own.
+ */
 function Closing({ draft, preparedOn }: { draft: GazetteDraft; preparedOn: string }) {
   const late = daysBetween(draft.published_at, preparedOn) > 2;
   const who = draft.reviewed
     ? "Bu buraxılış rəsmi mənbələr əsasında süni intellekt tərəfindən hazırlanıb və dərc edilməzdən əvvəl redaksiya tərəfindən yoxlanılıb."
     : "Bu buraxılış rəsmi mənbələr əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc edilməzdən əvvəl redaktə olunmayıb.";
+  const lines = wrap(
+    `${who}${late ? ` Gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}`,
+    "Arimo-Regular.ttf",
+    6.8,
+    CLOSING_WIDTH
+  ).split("\n");
+  // Text filled in once the last page is known keeps only its first line in
+  // react-pdf, so each line of the note is a text of its own.
   return (
-    <Text style={styles.closing} wrap={false}>
-      {wrap(`${who}${late ? ` Gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}`, "Arimo-Regular.ttf", 6.8, CONTENT_WIDTH)}
-    </Text>
+    <>
+      {lines.map((line, i) => (
+        <Text
+          key={i}
+          style={[styles.closing, { top: A4_HEIGHT - 54 + i * 6.8 * 1.4 }]}
+          fixed
+          render={({ pageNumber, totalPages }) => (pageNumber === totalPages ? line : "")}
+        />
+      ))}
+    </>
   );
 }
 
