@@ -22,3 +22,20 @@ export type IssueComment = {
   body: string;
   created_at: string;
 };
+
+export type Book = {
+  id: string;
+  title: string;
+  author: string | null;
+  description: string | null;
+  year: number | null;
+  tags: string[];
+  pdf_path: string;
+  cover_path: string | null;
+  page_count: number | null;
+  file_size_bytes: number | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type BookWithUrls = Book & { coverUrl: string | null; pdfUrl: string };

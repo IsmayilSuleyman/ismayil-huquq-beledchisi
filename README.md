@@ -177,6 +177,14 @@ Run it by hand the same way: `npm run gazette:collect -- --from 2026-10-26
 week is published late with its own period and the Monday after it as its
 date; the PDF says when it was actually written.
 
+**Books.** The gazette's second shelf, at `/books`: legal texts and
+reference books as PDFs, read in the same viewer as the issues or
+downloaded. Add, edit and delete them in the admin desk's **Books** tab; the
+first page becomes the cover. The header's **Library** menu switches
+between Gazette and Books. Table and policies:
+`supabase/migrations/20261030200000_books.sql` (applied on 30 October
+2026); files go to the `gazette` bucket under `books/`.
+
 **Notifications.** Readers tap the bell in the gazette header to get a
 browser notification for every new issue; no account needed. On iPhone and
 iPad, Apple allows this only once the site is added to the home screen
@@ -397,7 +405,8 @@ app/
   (guide)/learn/                  "Öyrən": flashcard decks with spaced repetition; [deck]/ a session
   (guide)/resources/              "Mənbələr": laws and acts with study materials; [slug]/ one act
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
-  (gazette)/                      Library (the site's landing page), issues/[number] viewer, admin
+  (gazette)/                      Library (the site's landing page), issues/[number] viewer,
+                                  books/ and books/[id], admin
   api/gazette/notify/route.ts     Admin desk's "Notify subscribers" (push)
   manifest.ts                     Home-screen manifest (needed for push on iPhone)
 lib/
@@ -423,7 +432,8 @@ components/
   PageBackground, Wordmark, LessonBody (MDX render), LessonAnnotator
   (highlights and notes), CompleteToggle, ProgressBar, Skeleton, StatTile,
   LessonQuiz, FlashcardSession, gazette/OmniLogo
-components/gazette/               Gazette UI: SiteHeader (pill to /beledci), NotifyButton, IssueCard,
+components/gazette/               Gazette UI: SiteHeader (Library menu, Admin + /beledci switch),
+                                  NotifyButton, BookShelf, IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
@@ -432,7 +442,7 @@ scripts/                          pdf.js worker copy; gazettes/ early hand-made 
 scripts/gazette/                  Automated gazette: collect, draft format, issue PDF + cover, publish,
                                   ROUTINE.md (the weekly routine's playbook)
 supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights,
-                                  gazette publisher + policies, gazette push notifications
+                                  gazette publisher + policies, gazette push notifications, books
 tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF,
                                   gazette drafts, issue PDF and push signing
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
