@@ -29,6 +29,11 @@ as $$
   );
 $$;
 
+-- The policies below run it as the signed-in caller; anonymous visitors
+-- have no reason to call it.
+revoke execute on function public.is_publisher() from public, anon;
+grant execute on function public.is_publisher() to authenticated;
+
 drop policy if exists "issues insert publisher" on public.issues;
 create policy "issues insert publisher"
   on public.issues for insert

@@ -435,7 +435,14 @@ function Section({ section }: { section: GazetteSection }) {
   );
 }
 
-function Closing({ draft }: { draft: GazetteDraft }) {
+/** Days from one ISO date to another. */
+function daysBetween(fromIso: string, toIso: string): number {
+  return Math.round((Date.parse(`${toIso}T00:00:00Z`) - Date.parse(`${fromIso}T00:00:00Z`)) / 86_400_000);
+}
+
+function Closing({ draft, preparedOn }: { draft: GazetteDraft; preparedOn: string }) {
+  // A catch-up issue carries its week's date; say when it was really written.
+  const late = daysBetween(draft.published_at, preparedOn) > 2;
   return (
     <View style={styles.closing} minPresenceAhead={60}>
       <Text style={styles.boxLabel}>{upper("Mənbələr")}</Text>
@@ -450,12 +457,22 @@ function Closing({ draft }: { draft: GazetteDraft }) {
         Bu buraxılış rəsmi dövlət mənbələri əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc
         edilməzdən əvvəl redaktə olunmayıb. İcmal məlumat xarakterlidir və hüquqi məsləhət deyil; aktların
         rəsmi mətni üçün e-qanun.az və müvafiq dövlət orqanlarının saytlarına müraciət edin.
+        {late ? ` Bu buraxılış gecikmə ilə, ${formatDate(preparedOn)} tarixində hazırlanıb.` : ""}
       </Text>
     </View>
   );
 }
 
-export function IssueDocument({ draft, issueNumber }: { draft: GazetteDraft; issueNumber: number }) {
+export function IssueDocument({
+  draft,
+  issueNumber,
+  preparedOn,
+}: {
+  draft: GazetteDraft;
+  issueNumber: number;
+  /** Date the issue is rendered, YYYY-MM-DD. */
+  preparedOn: string;
+}) {
   const period = formatPeriod(draft.period.from, draft.period.to);
   return (
     <Document
@@ -474,7 +491,7 @@ export function IssueDocument({ draft, issueNumber }: { draft: GazetteDraft; iss
         {draft.sections.map((section, i) => (
           <Section key={i} section={section} />
         ))}
-        <Closing draft={draft} />
+        <Closing draft={draft} preparedOn={preparedOn} />
         {/* Kept last so react-pdf repeats it on every page. */}
         <View style={styles.footer} fixed>
           {/* The brand stays out of Azerbaijani casing, which would dot its i. */}
@@ -487,7 +504,16 @@ export function IssueDocument({ draft, issueNumber }: { draft: GazetteDraft; iss
 }
 
 /** The finished issue as PDF bytes. */
-export async function renderIssuePdf(draft: GazetteDraft, issueNumber: number): Promise<Buffer> {
+export async function renderIssuePdf(
+  draft: GazetteDraft,
+  issueNumber: number,
+  preparedOn = bakuToday()
+): Promise<Buffer> {
   registerFonts();
-  return renderToBuffer(<IssueDocument draft={draft} issueNumber={issueNumber} />);
+  return renderToBuffer(<IssueDocument draft={draft} issueNumber={issueNumber} preparedOn={preparedOn} />);
+}
+
+/** Today's date in Baku (UTC+4, no daylight saving). */
+function bakuToday(): string {
+  return new Date(Date.now() + 4 * 3_600_000).toISOString().slice(0, 10);
 }

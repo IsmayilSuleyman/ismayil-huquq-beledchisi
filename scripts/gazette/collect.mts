@@ -195,7 +195,8 @@ async function presidentAz(): Promise<Lead[]> {
   ];
   const leads: Lead[] = [];
   for (const cat of categories) {
-    for (let page = 1; page <= 4; page++) {
+    // Newest first, about a dozen per page; enough pages to reach back a couple of months.
+    for (let page = 1; page <= 12; page++) {
       const html = await get(`https://president.az/az/documents/category/${cat.path}${page > 1 ? `/${page}` : ""}`);
       let older = false;
       let found = 0;
@@ -227,7 +228,7 @@ async function presidentAz(): Promise<Lead[]> {
 
 async function nkGovAz(): Promise<Lead[]> {
   const leads: Lead[] = [];
-  for (let page = 0; page <= 4; page++) {
+  for (let page = 0; page <= 8; page++) {
     const html = await get(`https://nk.gov.az/az/senedler/hamisi${page > 0 ? `?page=${page}` : ""}`);
     let older = false;
     let found = 0;

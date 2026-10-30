@@ -41,7 +41,8 @@ The site shares one Supabase project with the gazette (the
   — the gazette's data, managed from `/gazette/admin`;
 - `publisher_emails` and the `is_publisher()` policies — the account the
   automated gazette publishes as (section 4;
-  `supabase/migrations/20261030120000_gazette_publisher.sql`).
+  `supabase/migrations/20261030120000_gazette_publisher.sql`, already
+  applied).
 
 Steps for a fresh project would be: create it, run the migration in
 **SQL Editor**, then configure Google sign-in below.
@@ -147,7 +148,8 @@ these files as CommonJS. Next never imports this folder.
 
 **One-time setup**
 
-1. Apply `supabase/migrations/20261030120000_gazette_publisher.sql`.
+1. Apply `supabase/migrations/20261030120000_gazette_publisher.sql`
+   (done on 30 October 2026).
 2. **Authentication → Users → Add user**: create the publisher (an email
    such as `gazette-bot@…`, a long random password, *Auto Confirm User*).
 3. In the SQL editor: `insert into public.publisher_emails (email) values
