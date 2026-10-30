@@ -191,7 +191,9 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                       <span className="olg-note-label">{actLabel(act)}</span>
                       <span className="olg-note-date">{shortDate(act.date)}</span>
                     </span>
-                    <span className="olg-note-body mt-2.5 grow">{act.text}</span>
+                    <span className="olg-note-body mt-2.5 grow" lang="az">
+                      {act.text}
+                    </span>
                     <span className="mt-3 flex items-end justify-between gap-2">
                       <span className="flex flex-wrap gap-1">
                         {act.topics.slice(0, 2).map((t) => (

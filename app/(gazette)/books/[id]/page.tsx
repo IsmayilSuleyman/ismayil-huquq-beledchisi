@@ -35,12 +35,18 @@ export default async function BookPage({ params }: { params: Promise<Params> }) 
         <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-5">
           <div className="max-w-3xl">
             {(book.author || book.year) && (
-              <p className="text-xs tracking-[0.18em] uppercase text-silver">
+              <p className="text-xs tracking-[0.18em] uppercase text-silver" lang="az">
                 {[book.author, book.year].filter(Boolean).join(" · ")}
               </p>
             )}
-            <h1 className="mt-2 font-serif text-3xl sm:text-4xl leading-tight">{book.title}</h1>
-            {book.description && <p className="mt-3 text-foreground/65 leading-relaxed">{book.description}</p>}
+            <h1 className="mt-2 font-serif text-3xl sm:text-4xl leading-tight" lang="az">
+              {book.title}
+            </h1>
+            {book.description && (
+              <p className="mt-3 text-foreground/65 leading-relaxed" lang="az">
+                {book.description}
+              </p>
+            )}
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-silver">
               {book.page_count && <span>{book.page_count} pages</span>}
               {book.file_size_bytes && <span>· {formatBytes(book.file_size_bytes)}</span>}
