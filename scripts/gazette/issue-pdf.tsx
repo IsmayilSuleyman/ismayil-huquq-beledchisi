@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     marginBottom: 8,
   },
-  counts: { flexDirection: "row", justifyContent: "space-around", marginBottom: 4 },
-  count: { alignItems: "center", paddingHorizontal: 6 },
+  counts: { flexDirection: "row", flexWrap: "wrap", justifyContent: "center", marginBottom: 4 },
+  count: { alignItems: "center", paddingHorizontal: 4, marginBottom: 6 },
   countNum: { fontFamily: "Serif", fontWeight: 700, fontSize: 24, lineHeight: 1, color: INK },
   countLabel: { fontFamily: "Inter", fontSize: 7, lineHeight: 1.3, color: MUTED, marginTop: 3, textAlign: "center" },
   points: { marginTop: 8, borderTopWidth: 0.75, borderTopColor: "#e0e0e0", paddingTop: 7 },
@@ -344,6 +344,8 @@ function Masthead({ draft, issueNumber }: { draft: GazetteDraft; issueNumber: nu
 function AtAGlance({ draft }: { draft: GazetteDraft }) {
   const counts = countByKind(draft);
   const total = counts.reduce((n, c) => n + c.count, 0);
+  const tiles = counts.length + (counts.length > 1 ? 1 : 0);
+  const tileWidth = `${100 / Math.min(Math.max(tiles, 1), 7)}%`;
   return (
     <View style={styles.glance} wrap={false}>
       <Text style={styles.boxLabel}>{upper("Həftə bir baxışda")}</Text>
@@ -354,15 +356,16 @@ function AtAGlance({ draft }: { draft: GazetteDraft }) {
             <Text style={styles.countLabel}>Yeni sənəd</Text>
           </View>
         ) : (
-          counts.slice(0, 5).map((c) => (
-            <View key={c.kind} style={styles.count}>
+          // Every kind, so the tiles always add up to the total; seven fit on a row.
+          counts.map((c) => (
+            <View key={c.kind} style={[styles.count, { width: tileWidth }]}>
               <Text style={styles.countNum}>{c.count}</Text>
               <Text style={styles.countLabel}>{KIND_PLURAL[c.kind]}</Text>
             </View>
           ))
         )}
         {counts.length > 1 ? (
-          <View style={styles.count}>
+          <View style={[styles.count, { width: tileWidth }]}>
             <Text style={styles.countNum}>{total}</Text>
             <Text style={styles.countLabel}>Cəmi sənəd</Text>
           </View>
@@ -444,15 +447,20 @@ function Closing({ draft, preparedOn }: { draft: GazetteDraft; preparedOn: strin
   // A catch-up issue carries its week's date; say when it was really written.
   const late = daysBetween(draft.published_at, preparedOn) > 2;
   return (
-    <View style={styles.closing} minPresenceAhead={60}>
+    // Moves to the next page as a whole rather than leave its heading behind.
+    <View style={styles.closing} wrap={false}>
       <Text style={styles.boxLabel}>{upper("Mənbələr")}</Text>
-      {draft.sources.map((url) => (
-        <Text key={url} style={styles.sourceLine}>
-          <Link src={url} style={styles.sourceLink}>
-            {shortUrl(url)}
-          </Link>
-        </Text>
-      ))}
+      {/* One running paragraph: a long source list would otherwise fill a page. */}
+      <Text style={styles.sourceLine}>
+        {draft.sources.map((url, i) => (
+          <React.Fragment key={url}>
+            {i > 0 ? "  ·  " : ""}
+            <Link src={url} style={styles.sourceLink}>
+              {shortUrl(url)}
+            </Link>
+          </React.Fragment>
+        ))}
+      </Text>
       <Text style={styles.disclaimer}>
         Bu buraxılış rəsmi dövlət mənbələri əsasında süni intellekt tərəfindən avtomatik hazırlanıb və dərc
         edilməzdən əvvəl redaktə olunmayıb. İcmal məlumat xarakterlidir və hüquqi məsləhət deyil; aktların

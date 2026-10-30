@@ -20,11 +20,17 @@ describe("checkDraft", () => {
     const result = checkDraft(sample());
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.draft.sections).toHaveLength(2);
+    expect(result.draft.sections).toHaveLength(5);
     expect(countByKind(result.draft)).toEqual([
-      { kind: "order", count: 5 },
+      { kind: "law", count: 2 },
+      { kind: "bill", count: 1 },
+      { kind: "decree", count: 2 },
+      { kind: "order", count: 2 },
       { kind: "decision", count: 2 },
+      { kind: "court", count: 1 },
     ]);
+    // Laws carry their adoption date, before the week they were signed in.
+    expect(result.warnings.filter((w) => w.includes("before the period starts"))).toHaveLength(2);
   });
 
   it("trims strings and drops duplicate tags", () => {
@@ -46,7 +52,7 @@ describe("checkDraft", () => {
     const raw = sample();
     (raw.period as Record<string, string>).from = "2026-02-30";
     const sections = raw.sections as { entries: Record<string, string>[] }[];
-    sections[1].entries[0].date = "2026-09-20";
+    sections[1].entries[0].date = "2026-11-20";
     const errors = errorsOf(raw);
     expect(errors.some((e) => e.startsWith("period.from must be a real date"))).toBe(true);
     expect(errors.some((e) => e.includes("is after the end of the period"))).toBe(true);
@@ -71,7 +77,7 @@ describe("checkDraft", () => {
   it("needs a notice when a section has no entries", () => {
     const raw = sample();
     const sections = raw.sections as Record<string, unknown>[];
-    delete sections[0].notice;
+    delete sections[4].notice;
     expect(errorsOf(raw).some((e) => e.includes("no entries and no notice"))).toBe(true);
   });
 

@@ -60,7 +60,7 @@ export type GazetteSection = {
 
 export type GazetteDraft = {
   period: { from: string; to: string };
-  /** Issue date, YYYY-MM-DD; usually the Saturday after the period. */
+  /** Issue date, YYYY-MM-DD: the Monday after the period, also for a late (catch-up) issue. */
   published_at: string;
   /** The week's lead headline, printed above the overview. */
   headline: string;

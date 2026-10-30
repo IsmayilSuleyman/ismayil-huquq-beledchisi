@@ -10,7 +10,8 @@
     "test": "vitest run",
     "postinstall": "node scripts/copy-pdf-worker.mjs",
     "gazette:publish": "tsx scripts/gazette/publish.mts",
-    "gazette:collect": "tsx scripts/gazette/collect.mts"
+    "gazette:collect": "tsx scripts/gazette/collect.mts",
+    "gazette:read": "tsx scripts/gazette/read-act.mts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",

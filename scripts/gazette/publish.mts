@@ -17,7 +17,11 @@
  * supabase/migrations/20261030120000_gazette_publisher.sql) with
  * GAZETTE_PUBLISHER_EMAIL and GAZETTE_PUBLISHER_PASSWORD.
  *
- * Exit codes: 0 published (or already published), 1 failed, 2 bad draft.
+ * Before rendering it compares the draft with the latest issue's PDF and
+ * warns about any act number that issue already printed.
+ *
+ * Exit codes: 0 published (or this period already was), 1 failed,
+ * 2 bad draft.
  */
 
 import { randomUUID } from "node:crypto";
@@ -29,6 +33,7 @@ import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gaz
 import { analyzePdfBuffer } from "@/scripts/gazette/cover";
 import { checkDraft, issueTitle, type GazetteDraft } from "@/scripts/gazette/draft";
 import { renderIssuePdf } from "@/scripts/gazette/issue-pdf";
+import { pdfText } from "@/scripts/gazette/pdf-text";
 
 const SITE = "https://ismayilhuquqbeledchisi.vercel.app";
 const MAX_PDF_BYTES = 50 * 1024 * 1024;
@@ -46,27 +51,51 @@ function fail(message: string, code = 1): never {
   process.exit(code);
 }
 
-type Existing = { issue_number: number; title: string; published_at: string };
+type Existing = { issue_number: number; title: string; published_at: string; pdf_path: string };
 
-/** Latest issue number, and any issue already covering this period or date. */
+/** The latest issue, and any issue that already has this period's title or this date. */
 async function lookUp(db: SupabaseClient, draft: GazetteDraft, title: string) {
   const latest = await db
     .from("issues")
-    .select("issue_number")
+    .select("issue_number,title,published_at,pdf_path")
     .order("issue_number", { ascending: false })
     .limit(1)
-    .maybeSingle();
+    .maybeSingle<Existing>();
   if (latest.error) throw new Error(`Could not read the latest issue: ${latest.error.message}`);
 
-  const clash = await db
+  const clashes = await db
     .from("issues")
-    .select("issue_number,title,published_at")
+    .select("issue_number,title,published_at,pdf_path")
     .or(`title.eq."${title.replace(/"/g, '\\"')}",published_at.eq.${draft.published_at}`)
-    .limit(1)
-    .maybeSingle<Existing>();
-  if (clash.error) throw new Error(`Could not check for an existing issue: ${clash.error.message}`);
+    .returns<Existing[]>();
+  if (clashes.error) throw new Error(`Could not check for an existing issue: ${clashes.error.message}`);
 
-  return { next: ((latest.data?.issue_number as number | undefined) ?? 0) + 1, clash: clash.data };
+  return {
+    latest: latest.data,
+    next: (latest.data?.issue_number ?? 0) + 1,
+    samePeriod: clashes.data.find((c) => c.title === title) ?? null,
+    sameDate: clashes.data.find((c) => c.title !== title) ?? null,
+  };
+}
+
+/**
+ * Act numbers of this draft that the given issue already printed ("№ 261",
+ * or "No. 261" in the early English issues). A week's acts should not
+ * reappear the next week; the routine decides what to do about a hit.
+ */
+async function repeatedActs(draft: GazetteDraft, previous: Existing): Promise<string[]> {
+  const res = await fetch(publicUrl(previous.pdf_path), { signal: AbortSignal.timeout(45_000) });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const text = await pdfText(new Uint8Array(await res.arrayBuffer()));
+  const hits: string[] = [];
+  for (const section of draft.sections) {
+    for (const entry of section.entries) {
+      if (!entry.number) continue;
+      const n = entry.number.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      if (new RegExp(`(№|No\\.?)\\s*${n}(?![\\w-])`, "iu").test(text)) hits.push(`${entry.kind} № ${entry.number}`);
+    }
+  }
+  return hits;
 }
 
 async function main() {
@@ -96,12 +125,24 @@ async function main() {
 
   let issueNumber: number;
   try {
-    const { next, clash } = await lookUp(db, draft, title);
-    if (clash) {
-      console.log(
-        `\n✓ Already published as No. ${clash.issue_number} ("${clash.title}", ${clash.published_at}). Nothing to do.\n`
-      );
+    const { latest, next, samePeriod, sameDate } = await lookUp(db, draft, title);
+    if (samePeriod) {
+      console.log(`\n✓ This period is already published as No. ${samePeriod.issue_number} (${samePeriod.published_at}). Nothing to do.\n`);
       return;
+    }
+    if (sameDate) {
+      fail(
+        `No. ${sameDate.issue_number} ("${sameDate.title}") already carries the date ${draft.published_at}. ` +
+          "Each issue needs its own date: the Monday after its period."
+      );
+    }
+    if (latest) {
+      try {
+        const repeats = await repeatedActs(draft, latest);
+        for (const r of repeats) console.warn(`  ! ${r} already appears in No. ${latest.issue_number}`);
+      } catch (e) {
+        console.warn(`  ! Could not compare with No. ${latest.issue_number}: ${(e as Error).message}`);
+      }
     }
     issueNumber = next;
   } catch (e) {
