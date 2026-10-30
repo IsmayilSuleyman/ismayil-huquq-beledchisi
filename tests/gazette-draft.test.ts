@@ -20,7 +20,7 @@ describe("checkDraft", () => {
     const result = checkDraft(sample());
     expect(result.ok).toBe(true);
     if (!result.ok) return;
-    expect(result.draft.sections).toHaveLength(5);
+    expect(result.draft.sections).toHaveLength(4);
     expect(countByKind(result.draft)).toEqual([
       { kind: "law", count: 2 },
       { kind: "bill", count: 1 },
@@ -77,8 +77,10 @@ describe("checkDraft", () => {
   it("needs a notice when a section has no entries", () => {
     const raw = sample();
     const sections = raw.sections as Record<string, unknown>[];
-    delete sections[4].notice;
-    expect(errorsOf(raw).some((e) => e.includes("no entries and no notice"))).toBe(true);
+    sections.push({ institution: "Mərkəzi Bank", entries: [] });
+    expect(errorsOf(raw).some((e) => e.includes("no entries and no notice or intro"))).toBe(true);
+    sections[sections.length - 1].intro = "Hesabat dövründə Mərkəzi Bankın yeni normativ aktı qeydə alınmayıb.";
+    expect(errorsOf(raw)).toEqual([]);
   });
 
   it("rejects unknown kinds, bad URLs and an empty source list", () => {

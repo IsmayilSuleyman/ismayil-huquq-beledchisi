@@ -3,9 +3,10 @@ import {
   azDate,
   dottedDate,
   enrichLaws,
-  isAnnex,
+  isActTitle,
   mergeLeads,
   sameAct,
+  sameActAnyDate,
   sameTitle,
   stripActName,
   type Lead,
@@ -75,13 +76,39 @@ describe("titles", () => {
     expect(sameAct(lead({ number: "485-VIIQ" }), lead({ number: "486-VIIQ" }))).toBe(false);
   });
 
-  it("spots a decree's annex posted as its own article", () => {
+  it("tells acts from the charters and programmes posted beside them", () => {
+    expect(isActTitle("Səhiyyə sahəsində tədbirlər haqqında Azərbaycan Respublikası Prezidentinin Fərmanı")).toBe(true);
+    expect(isActTitle("“Bələdiyyələrin əraziləri və torpaqları haqqında” … dəyişiklik edilməsi barədə  Azərbaycan Respublikasının Qanunu")).toBe(true);
     expect(
-      isAnnex(
+      isActTitle(
         "“Daşınmaz Əmlakın Elektron Reyestri və Kadastrı” informasiya sistemi haqqında ƏSASNAMƏ Azərbaycan Respublikası Prezidentinin 2026-cı il 28 oktyabr tarixli Fərmanı ilə təsdiq edilmişdir"
       )
-    ).toBe(true);
-    expect(isAnnex("Səhiyyə sahəsində idarəetmənin təkmilləşdirilməsi ilə bağlı bir sıra tədbirlər haqqında")).toBe(false);
+    ).toBe(false);
+    expect(
+      isActTitle("Azərbaycan Respublikasında dağ-mədən (metal filizləri) və metallurgiya sənayesinin inkişafına dair 2027−2030-cu illər üçün Dövlət Proqramı")
+    ).toBe(false);
+  });
+
+  it("matches an abbreviated court listing by the articles it cites, on the same date", () => {
+    const register = lead({
+      kind: "court",
+      source: "e-qanun.az",
+      date: "2026-09-21",
+      title:
+        "Azərbaycan Respublikası Konstitusiyasının 61 və 71-ci maddələri, habelə hüquqi müəyyənlik prinsipi baxımından Azərbaycan Respublikası Cinayət Məcəlləsinin 288.2-ci maddəsində nəzərdə tutulan “müdafiəçi” ifadəsinin şərh edilməsinə dair",
+    });
+    const court = lead({
+      kind: "court",
+      source: "constcourt.gov.az",
+      date: "2026-09-21",
+      title: "AR Konstitusiyasının 61 və 71-ci mad., habelə hüquqi müəyyənlik prinsipi baxımından AR CM-in 288.2-ci mad. nəzərdə tutulan “müdafiəçi” ifadəsinin şərhi",
+    });
+    expect(sameAct(register, court)).toBe(true);
+    expect(sameAct(register, { ...court, title: court.title.replace("288.2", "133.1") })).toBe(false);
+  });
+
+  it("reads a Cabinet order's number with or without its s", () => {
+    expect(sameActAnyDate(lead({ kind: "order", number: "728s" }), lead({ kind: "order", number: "728", date: "2026-10-02" }))).toBe(true);
   });
 });
 

@@ -419,21 +419,25 @@ function Entry({ entry, last }: { entry: GazetteEntry; last: boolean }) {
 }
 
 function Section({ section }: { section: GazetteSection }) {
+  const [first, ...rest] = section.entries;
   return (
     <View>
-      {/* Keeps the header with at least the start of its first entry. */}
-      <View style={styles.sectionHead} minPresenceAhead={70}>
-        <Text style={styles.sectionTitle}>{section.institution}</Text>
-        {section.subtitle ? <Text style={styles.sectionSub}>{section.subtitle}</Text> : null}
+      {/* The heading travels with its intro or notice and the first entry, so
+          it is never left alone at the foot of a page. (minPresenceAhead
+          cannot do this: react-pdf ignores it on a container's first child.) */}
+      <View wrap={false}>
+        <View style={styles.sectionHead}>
+          <Text style={styles.sectionTitle}>{section.institution}</Text>
+          {section.subtitle ? <Text style={styles.sectionSub}>{section.subtitle}</Text> : null}
+        </View>
+        {section.intro ? <Text style={styles.intro}>{section.intro}</Text> : null}
+        {!first && section.notice ? <Text style={styles.notice}>{section.notice}</Text> : null}
+        {first ? <Entry entry={first} last={rest.length === 0} /> : null}
       </View>
-      {section.intro ? <Text style={styles.intro}>{section.intro}</Text> : null}
-      {section.entries.length === 0 && section.notice ? <Text style={styles.notice}>{section.notice}</Text> : null}
-      {section.entries.map((entry, i) => (
-        <Entry key={i} entry={entry} last={i === section.entries.length - 1} />
+      {rest.map((entry, i) => (
+        <Entry key={i} entry={entry} last={i === rest.length - 1} />
       ))}
-      {section.entries.length > 0 && section.notice ? (
-        <Text style={[styles.notice, { marginTop: 6 }]}>{section.notice}</Text>
-      ) : null}
+      {first && section.notice ? <Text style={[styles.notice, { marginTop: 6 }]}>{section.notice}</Text> : null}
     </View>
   );
 }

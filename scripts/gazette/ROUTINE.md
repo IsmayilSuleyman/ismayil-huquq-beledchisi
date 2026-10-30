@@ -59,15 +59,26 @@ lists every act the sources show: `kind`, `institution`, `number`, `date`,
 answered, whether each one reached back to the start of the period
 (`complete`), and lists `warnings`.
 
-How the collector places acts:
+**Each act belongs to the week it was first published.** The collector
+applies this, so follow its placement rather than an act's own date:
 
-- **Laws** belong to the week they appear, signed, on **president.az**, not
-  the week the Milli Məclis adopted them. `date` is that publication date,
-  `actDate` the date printed on the law (its adoption date). This keeps
-  each law in exactly one issue.
-- **Everything else** belongs to the week of its own date.
-- **Bills** come from meclis.gov.az, dated by the reading or publication
-  for discussion.
+- An act president.az or nk.gov.az lists belongs to the week of that
+  listing. A Cabinet order dated Friday but posted Monday goes in the next
+  issue. **Laws** likewise belong to the week they appear, signed, on
+  president.az, not the week the Milli Məclis adopted them.
+- An act only the register lists (ministries, committees, the Central Bank,
+  the Election Commission) belongs to the week of its own date. In a weekly
+  run, those registered late come with `late: true`: they are dated in the
+  three weeks before and no earlier issue printed them; include them.
+- Bills belong to the week of the reading or publication for discussion
+  shown on meclis.gov.az.
+- `date` is the placement date; `actDate` the act's own date when the
+  register gives a different one. Neither replaces the text: take the
+  entry's date and number from the act itself (step 5).
+- `printedIn: N` means issue No. N already printed this act. Leave it out,
+  unless it is a new stage of the act (a bill now published as law).
+- Warnings about undated bills: open the bill and include it if its page
+  shows it belongs to this period.
 
 **If e-qanun.az or president.az failed**, run the collector once more after
 five minutes. If either still fails, **stop without publishing** (step 7):
@@ -83,7 +94,8 @@ Read every lead's title. Then, per institution:
 **List individually**, each with its own entry:
 
 - laws, decrees, Constitutional Court rulings (a decision, *qərar*, and a
-  procedural ruling, *qərardad*; say which), Central Bank and ministry acts;
+  procedural ruling, *qərardad*; say which), Central Bank, ministry,
+  committee and Election Commission acts;
 - Cabinet decisions, including organisational ones (a board's
   composition, a body's structure or staff numbers): one sentence is enough
   for those;
@@ -93,13 +105,17 @@ Read every lead's title. Then, per institution:
   which act, what is assigned to whom, and the deadline;
 - international agreements (ratification laws, approval decrees): one
   sentence each;
+- pardon orders: one sentence, with how many people they cover;
+- municipal decisions: one sentence each, in a last section "Bələdiyyələr";
 - bills dated in the period: say plainly that it is a draft and give the
   reading stage that `gazette:read` prints (I, II or III oxunuş).
 
 **Count, don't list**, in one sentence of the section's `intro`:
-appointments, dismissals, awards, honorary titles and medals, condolence
-and congratulation letters. For example: "Prezident həmçinin 3 təyinat,
-2 vəzifədən azadetmə və 2 təltif sərəncamı imzalayıb."
+appointments, dismissals, awards, honorary titles, medals, military and
+special ranks, changes to a board's members, and purely procedural acts
+(approving minutes or an agenda). For example: "Prezident həmçinin 3
+təyinat, 2 vəzifədən azadetmə və 2 təltif sərəncamı imzalayıb." Letters are
+not collected; leave them out.
 
 **Check the list is complete:**
 
@@ -112,7 +128,8 @@ and congratulation letters. For example: "Prezident həmçinin 3 təyinat,
 
 ## 4. Read before you summarise
 
-For every act you list, read its text:
+For every act you list, read its text (an act's own text, not its listing,
+is the authority for its number and date):
 
 ```bash
 npm run gazette:read -- '<textUrl>'
@@ -121,16 +138,22 @@ npm run gazette:read -- '<textUrl>'
 It prints the act's text from the page, or from the PDF the page embeds
 (nk.gov.az acts and some laws on president.az are PDFs only), and a bill's
 reading stage. Long texts are cut at 15 000 characters; add `--max 40000`
-when the part you need comes later. For an act with no `textUrl`, find its
-text on the issuing body's site. Read the operative part, then write:
+when the part you need comes later. For an e-qanun.az link it prints the
+register's details (status, publication, effective date) instead, since
+the register's texts are not public: find the text on the issuing body's
+site (cbar.az, msk.gov.az, the ministry's site). Read the operative part,
+then write:
 
 1. what the act does (approves, amends, creates, abolishes, sets…),
 2. who it affects or what changes in practice,
 3. when it takes effect, **only if the text says so**.
 
 If you could not read an act's text, you may still list it, but the
-summary only restates its title in plain words. Don't explain an act from
-its title alone.
+summary only restates its title in plain words, plus the effective date
+from the register if it gives one. The issuing body's official press
+release about the act may stand in for the text; say so in the summary
+("Mərkəzi Bankın məlumatına görə, …"). Don't explain an act from its title
+alone. When two official sources disagree on a date, leave the date out.
 
 ## 5. Write the draft
 
@@ -147,28 +170,32 @@ these rules: use it as the model. Field by field:
 | `tags` | 3–8 topic tags in Azerbaijani: "Vergi", "Əmək hüququ", "Səhiyyə" |
 | `overview` | 2–3 short paragraphs (blank line between): what the week changes for practitioners |
 | `highlights` | 3–5 one-line points: the acts that matter most to lawyers and businesses |
-| `sections` | in this order: Milli Məclis, Azərbaycan Respublikasının Prezidenti, Nazirlər Kabineti, Konstitusiya Məhkəməsi, then any other body (Mərkəzi Bank, ministries) |
+| `sections` | in this order: Milli Məclis, Azərbaycan Respublikasının Prezidenti, Nazirlər Kabineti, Konstitusiya Məhkəməsi, Mərkəzi Bank, ministries and committees (alphabetically), Mərkəzi Seçki Komissiyası, Bələdiyyələr |
 | `sources` | the list pages you used and the act pages you read; not every e-qanun link (each entry carries its own) |
 
 Per section: `institution`, a short `subtitle` ("Qanunlar və qanun
 layihələri", "Fərmanlar və sərəncamlar", "Qərarlar və sərəncamlar",
 "Qərarlar"), an optional `intro`, and `entries`. Always include the first
 four sections; when one of them published nothing, give it no entries and
-a one-sentence `notice` saying so ("Hesabat dövründə yeni qanun
-imzalanmayıb."). Leave out other bodies when they published nothing.
+a one-sentence `notice` saying so ("Hesabat dövründə yeni qanun dərc
+edilməyib."), or let its `intro` say what it did publish (only counted
+acts, for example). Leave out other bodies when they published nothing.
 
 Per entry:
 
-- `kind`: law, bill, decree, order, decision, court or other;
-- `number` exactly as published ("1281", "798s", "494-VIIQD"); leave it out
-  when unknown;
-- `date`: the date printed on the act. For a law that is its adoption date
-  (`actDate` in the leads); say in the section intro or the summary when it
-  was published on president.az ("Qanun 22 oktyabrda Prezidentin rəsmi
-  saytında dərc olunub"). Don't write that the President signed it on that
-  day: the sources don't give the signing date;
-- `title`, `summary` (1–3 sentences), and `url`: the lead's `url`, the
-  register's page when there is one.
+- `kind`: law, bill, decree, order, decision (also for a ministry's or
+  committee's *qərar*), court or other;
+- `number` exactly as printed on the act ("1281", "798s", "494-VIIQD").
+  Lists sometimes shorten it (nk.gov.az can drop the s of a Cabinet
+  order); leave it out when unknown;
+- `date`: the date printed on the act; nk.gov.az lists can be a day later.
+  For a law that is its adoption date; say in the section intro or the
+  summary when it was published on president.az ("Qanun 22 oktyabrda
+  Prezidentin rəsmi saytında dərc olunub"). Don't write that the President
+  signed it on that day: the sources don't give the signing date;
+- `title`, `summary` (1–3 sentences; an implementing order may take a
+  second sentence for its effective date), and `url`: the lead's `url`,
+  the register's page when there is one.
 
 ### Writing in Azerbaijani
 
@@ -194,15 +221,16 @@ npm run gazette:publish -- /tmp/gazette/draft.json --dry-run --out /tmp/gazette
 ```
 
 The dry run validates the draft, numbers it after the latest issue,
-compares it with that issue, and renders `issue-<n>.pdf` and its cover
-without uploading anything. Fix every error it lists and run it again.
-Its warnings:
+compares it with the last three issues (it says which, and whether
+anything repeats), and renders `issue-<n>.pdf` and its cover without
+uploading anything. Fix every error it lists and run it again. Its
+warnings:
 
 - "… is before the period starts": expected for laws (adoption date) and
   for acts registered late; otherwise check the act really belongs here.
-- "… already appears in No. N": the previous issue printed this number.
-  Remove the entry, unless it is a new stage of the same act (a bill now
-  signed as law) or a correction; then say so in its summary.
+- "… already appears in No. N": that issue printed this act. Remove the
+  entry, unless it is a new stage of the same act (a bill now published as
+  law) or a correction; then say so in its summary.
 
 Then look at the result:
 

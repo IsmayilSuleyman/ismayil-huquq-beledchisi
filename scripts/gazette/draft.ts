@@ -72,7 +72,7 @@ export type GazetteDraft = {
   /** "Həftənin əsas məqamları": three to five one-line points. */
   highlights: string[];
   sections: GazetteSection[];
-  /** Every page consulted, printed at the end of the issue. */
+  /** The list pages used and the act pages read, printed at the end of the issue. */
   sources: string[];
 };
 
@@ -293,8 +293,8 @@ export function checkDraft(raw: unknown): DraftCheck {
       });
     }
 
-    if (entries.length === 0 && !notice) {
-      errors.push(`${where} (${institution || "unnamed"}) has no entries and no notice explaining why`);
+    if (entries.length === 0 && !notice && !intro) {
+      errors.push(`${where} (${institution || "unnamed"}) has no entries and no notice or intro explaining why`);
     }
 
     sections.push({
