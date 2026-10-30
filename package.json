@@ -11,7 +11,8 @@
     "postinstall": "node scripts/copy-pdf-worker.mjs",
     "gazette:publish": "tsx scripts/gazette/publish.mts",
     "gazette:collect": "tsx scripts/gazette/collect.mts",
-    "gazette:read": "tsx scripts/gazette/read-act.mts"
+    "gazette:read": "tsx scripts/gazette/read-act.mts",
+    "gazette:acts": "tsx scripts/gazette/store-acts.mts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
