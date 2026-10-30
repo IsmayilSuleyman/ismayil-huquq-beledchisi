@@ -9,7 +9,7 @@ export default function NotFound() {
         <p className="text-sm text-foreground/60 mb-7">
           The issue you are looking for doesn’t exist or hasn’t been published yet.
         </p>
-        <Link href="/gazette" className="olg-btn olg-btn-primary">
+        <Link href="/" className="olg-btn olg-btn-primary">
           Back to the library
         </Link>
       </div>

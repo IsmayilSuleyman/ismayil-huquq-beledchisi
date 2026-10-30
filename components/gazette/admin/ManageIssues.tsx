@@ -133,7 +133,7 @@ export default function ManageIssues() {
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <Link
-                href={`/gazette/issues/${issue.issue_number}`}
+                href={`/issues/${issue.issue_number}`}
                 className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs"
               >
                 View

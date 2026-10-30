@@ -3,7 +3,7 @@ import Logo from "@/components/gazette/Logo";
 
 // The guide's home page; the pill next to the masthead switches over, like
 // the İRF ↔ İsmayılBank switch on the fund portal.
-const GUIDE_URL = "/";
+const GUIDE_URL = "/beledci";
 
 export default function SiteHeader() {
   return (
@@ -12,7 +12,7 @@ export default function SiteHeader() {
         <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
           <Logo size="sm" />
           <span aria-hidden className="h-8 w-px bg-white/[0.12] hidden sm:block" />
-          <Link href="/gazette" className="min-w-0 group">
+          <Link href="/" className="min-w-0 group">
             <span className="block font-serif text-base sm:text-[1.35rem] leading-tight tracking-tight text-foreground group-hover:text-azure-soft transition-colors truncate">
               Law&nbsp;Gazette
             </span>
@@ -35,13 +35,13 @@ export default function SiteHeader() {
             </span>
           </a>
           <Link
-            href="/gazette"
+            href="/"
             className="px-3.5 py-2 rounded-lg text-foreground/85 hover:text-white hover:bg-white/[0.08] transition-colors"
           >
             Library
           </Link>
           <Link
-            href="/gazette/admin"
+            href="/admin"
             className="hidden sm:inline-flex px-3.5 py-2 rounded-lg text-silver hover:text-white hover:bg-white/[0.08] transition-colors items-center gap-1.5"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>

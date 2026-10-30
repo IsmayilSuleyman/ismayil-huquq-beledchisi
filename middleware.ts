@@ -16,7 +16,7 @@ export async function middleware(request: NextRequest) {
   if (!config) {
     if (isProtected) {
       const url = request.nextUrl.clone();
-      url.pathname = "/";
+      url.pathname = "/beledci";
       url.search = "";
       url.searchParams.set("setup", "supabase");
       return NextResponse.redirect(url);
@@ -97,10 +97,10 @@ export async function middleware(request: NextRequest) {
 }
 
 // Run only where a session decision is actually needed: the gated app
-// pages, /login (for the signed-in bounce-back) and the landing page whose
+// pages, /login (for the signed-in bounce-back) and the guide's home page (/beledci) whose
 // call-to-action changes with auth state. Keeping /api, /auth/callback,
 // icons and prefetches out of the matcher avoids the refresh-token stampede
 // that used to log everyone out after each deploy.
 export const config = {
-  matcher: ["/courses/:path*", "/account/:path*", "/learn/:path*", "/resources/:path*", "/login", "/"],
+  matcher: ["/courses/:path*", "/account/:path*", "/learn/:path*", "/resources/:path*", "/login", "/beledci"],
 };

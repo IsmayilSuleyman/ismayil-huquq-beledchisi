@@ -5,15 +5,16 @@ account, read courses built from lessons, and their progress is saved on the
 account. Same glass-and-gradient design language as the İRF portal, in a
 cream and dark-wood palette.
 
-**Omni Law Gazette** — the weekly legislation digest — lives in this repo as
-its own section under `/gazette`. It keeps its original dark design: the
-route group `app/(gazette)` has its own layout and stylesheet
-(`gazette.css`, every class prefixed `olg-`), so the two designs never mix.
-Both sections share one Supabase project. The guide's header pill, phone tab
-and landing page link to `/gazette`; the gazette's header pill links back to
-`/`. The landing page shows the gazette's latest issue from the shared table.
-The gazette pages are public; `/gazette/admin` signs in with the gazette's
-own email/password flow (admins listed in `admin_emails`).
+**Omni Law Gazette** — the weekly legislation digest — lives in this repo too,
+and it is the site's landing page: `/` is the gazette's library, issues are at
+`/issues/<n>`. The guide's home page is `/beledci`. The gazette keeps its
+original dark design: the route group `app/(gazette)` has its own layout and
+stylesheet (`gazette.css`, every class prefixed `olg-`), so the two designs
+never mix. Both sections share one Supabase project. The guide's header pill,
+phone tab and home page link to `/`; the gazette's header pill links to
+`/beledci`. The guide's home page shows the gazette's latest issue from the
+shared table. The gazette pages are public; `/admin` signs in with the
+gazette's own email/password flow (admins listed in `admin_emails`).
 
 - **Stack:** Next.js 15 (App Router) + TypeScript + Tailwind + Supabase Auth
   (Google) + MDX content in the repo
@@ -38,7 +39,7 @@ The site shares one Supabase project with the gazette (the
   (`supabase/migrations/20260914120000_lesson_highlights.sql`, already
   applied);
 - `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
-  — the gazette's data, managed from `/gazette/admin`;
+  — the gazette's data, managed from `/admin`;
 - `publisher_emails` and the `is_publisher()` policies — the account the
   automated gazette publishes as (section 4;
   `supabase/migrations/20261030120000_gazette_publisher.sql`, already
@@ -81,7 +82,8 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Open <http://localhost:3000>. The landing page is public; `/courses` and
+Open <http://localhost:3000>. The gazette (`/`) and the guide's home page
+(`/beledci`) are public; `/courses` and
 `/account` require sign-in. Without the two env vars the site still builds and
 runs, but shows a "setup pending" notice instead of the Google button.
 
@@ -100,7 +102,7 @@ Checks: `npm test`, `npm run lint`, `npm run build`.
 ## 3. Deploy to Vercel
 
 One Vercel project serves both sections: the existing **omnilawgazette**
-project, with `ismayilhuquqbeledchisi.vercel.app` as its main hostname. Its
+project, with `omnilawgazette.vercel.app` as its main hostname. Its
 Git connection points at this repository, so every merge into `main` builds
 and deploys on its own; nothing needs to be pushed anywhere else. The old
 `IsmayilSuleyman/omnilawgazette` repository is no longer part of the deploy
@@ -108,9 +110,10 @@ path and only keeps the gazette's earlier history.
 
 `.env.production` carries the public Supabase values, so no dashboard
 variables are needed; dashboard variables override the file if you add them.
-On `omnilawgazette.vercel.app`, point the redirect rule at
-`https://ismayilhuquqbeledchisi.vercel.app/gazette` so old gazette links keep
-working. Then add the production hostname to the Supabase **Redirect URLs**
+`ismayilhuquqbeledchisi.vercel.app` stays attached without a domain
+redirect: `next.config.ts` sends its `/` to `/beledci`, so the guide's old
+links still open the guide, and old `/gazette/...` links go to the same pages
+at the root. Add the production hostname to the Supabase **Redirect URLs**
 (`https://<host>/auth/callback`) and to the Google client's **Authorized
 JavaScript origins**.
 

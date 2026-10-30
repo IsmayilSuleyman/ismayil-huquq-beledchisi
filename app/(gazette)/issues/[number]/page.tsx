@@ -79,7 +79,7 @@ export default async function IssuePage({ params }: { params: Promise<Params> })
       {/* Breadcrumb */}
       <nav className="mb-6 text-sm">
         <Link
-          href="/gazette"
+          href="/"
           className="inline-flex items-center gap-1.5 text-silver hover:text-white transition-colors"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -159,7 +159,7 @@ export default async function IssuePage({ params }: { params: Promise<Params> })
         <nav className="grid sm:grid-cols-2 gap-4 mt-10">
           {prev ? (
             <Link
-              href={`/gazette/issues/${prev.issue_number}`}
+              href={`/issues/${prev.issue_number}`}
               className="olg-glass olg-glass-hover rounded-xl p-[1.125rem] flex items-center gap-3 group"
             >
               <span className="text-silver group-hover:text-azure transition-colors">←</span>
@@ -175,7 +175,7 @@ export default async function IssuePage({ params }: { params: Promise<Params> })
           )}
           {next && (
             <Link
-              href={`/gazette/issues/${next.issue_number}`}
+              href={`/issues/${next.issue_number}`}
               className="olg-glass olg-glass-hover rounded-xl p-[1.125rem] flex items-center justify-end gap-3 text-right group sm:col-start-2"
             >
               <span className="min-w-0">

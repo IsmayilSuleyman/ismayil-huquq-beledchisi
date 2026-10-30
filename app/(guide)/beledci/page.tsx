@@ -47,7 +47,7 @@ export default async function HomePage({
     <main className="mx-auto w-full max-w-6xl px-6 pb-16">
       {/* Top bar */}
       <header className="flex items-center justify-between gap-4 py-6">
-        <Link href="/" aria-label="Ana səhifə">
+        <Link href="/beledci" aria-label="Ana səhifə">
           <Wordmark size="sm" />
         </Link>
         <nav className="flex items-center gap-3 sm:gap-6" aria-label="Əsas keçidlər">
