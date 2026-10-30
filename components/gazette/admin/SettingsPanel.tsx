@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import NotificationsPanel from "@/components/gazette/admin/NotificationsPanel";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
 
 export default function SettingsPanel({ currentEmail }: { currentEmail: string }) {
@@ -142,6 +143,8 @@ export default function SettingsPanel({ currentEmail }: { currentEmail: string }
         </form>
         {adminMsg && <p className="text-sm text-red-300 mt-3">{adminMsg}</p>}
       </section>
+
+      <NotificationsPanel />
     </div>
   );
 }

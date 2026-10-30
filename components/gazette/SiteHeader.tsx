@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Logo from "@/components/gazette/Logo";
+import NotifyButton from "@/components/gazette/NotifyButton";
 
 // The guide's home page; the pill next to the masthead switches over, like
 // the İRF ↔ İsmayılBank switch on the fund portal.
@@ -34,6 +35,7 @@ export default function SiteHeader() {
               Bələdçiyə keç
             </span>
           </a>
+          <NotifyButton />
           <Link
             href="/"
             className="px-3.5 py-2 rounded-lg text-foreground/85 hover:text-white hover:bg-white/[0.08] transition-colors"

@@ -160,7 +160,9 @@ export default function PublishForm() {
         <p className="text-4xl mb-3">🎉</p>
         <h2 className="font-serif text-2xl mb-2">Issue No. {publishedNumber} is published.</h2>
         <p className="text-sm text-silver mb-7">
-          It is live for everyone now (the library page refreshes within a minute).
+          It is live for everyone now (the library page refreshes within a minute). To send
+          subscribers a notification, press <span className="text-foreground">Notify</span> next
+          to it under Manage issues.
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <Link href={`/issues/${publishedNumber}`} className="olg-btn olg-btn-primary">
