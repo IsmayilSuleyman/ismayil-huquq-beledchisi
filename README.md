@@ -38,7 +38,10 @@ The site shares one Supabase project with the gazette (the
   (`supabase/migrations/20260914120000_lesson_highlights.sql`, already
   applied);
 - `issues`, `comments`, `admin_emails` and the public `gazette` storage bucket
-  — the gazette's data, managed from `/gazette/admin`.
+  — the gazette's data, managed from `/gazette/admin`;
+- `publisher_emails` and the `is_publisher()` policies — the account the
+  automated gazette publishes as (section 4;
+  `supabase/migrations/20261030120000_gazette_publisher.sql`).
 
 Steps for a fresh project would be: create it, run the migration in
 **SQL Editor**, then configure Google sign-in below.
@@ -82,14 +85,14 @@ Open <http://localhost:3000>. The landing page is public; `/courses` and
 runs, but shows a "setup pending" notice instead of the Google button.
 
 `npm install` also copies the pdf.js worker into `public/` (`postinstall`);
-the gazette's issue viewer needs it. `scripts/scrape-gazette.mjs` and
-`scripts/EQANUN-EXTRACTION.md` are the gazette's issue-drafting tools;
-drafts land in `scripts/gazettes/`.
+the gazette's issue viewer needs it. The gazette's weekly tooling lives in
+`scripts/gazette/` (section 4); `scripts/gazettes/` keeps the hand-made
+drafts of the early issues.
 
 `.npmrc` sets `legacy-peer-deps=true`: the Tailwind 3 / Vitest 4 dependency
 graph trips npm's strict peer resolver otherwise. Vercel reads the same file.
 
-Checks: `npm test` (loader and date tests), `npm run lint`, `npm run build`.
+Checks: `npm test`, `npm run lint`, `npm run build`.
 
 ---
 
@@ -110,7 +113,54 @@ working. Then add the production hostname to the Supabase **Redirect URLs**
 (`https://<host>/auth/callback`) and to the Google client's **Authorized
 JavaScript origins**.
 
-## 4. Adding a course
+## 4. The automated gazette
+
+A Claude Routine writes and publishes the gazette every Monday, with no
+review step. The issue covers the previous Monday–Sunday and is written in
+Azerbaijani. Each run:
+
+1. `npm run gazette:collect` lists the week's acts: the official register
+   (e-qanun.az's search API) for everything with numbers, plus the same-day
+   lists on president.az, nk.gov.az, meclis.gov.az (laws and bills) and
+   constcourt.gov.az. Duplicates are merged; each act keeps a link for
+   readers and a page with its full text.
+2. Claude reads the acts and writes the issue as JSON
+   (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`):
+   headline, overview, highlights, one section per institution.
+3. `npm run gazette:publish -- draft.json --dry-run` checks the draft
+   (unknown fields, impossible dates, duplicates, length limits), lays it out
+   as an A4 newspaper PDF (`scripts/gazette/issue-pdf.tsx`, Source Serif 4 +
+   Inter) and renders the WebP cover from page 1, without uploading.
+4. Without `--dry-run` it signs in as the publisher account, uploads the
+   PDF and cover to the `gazette` bucket and inserts the `issues` row with
+   the next number and the title "Həftəlik qanunvericilik icmalı, <period>".
+   It refuses a period or date that is already published, and removes its
+   uploads if the insert fails.
+
+The routine follows `scripts/gazette/ROUTINE.md`: what goes in, how to write
+it, what to check before publishing and when to stop instead. Change the
+editorial rules there; the next run picks them up from `main`.
+
+`scripts/gazette/` has its own `package.json` with `"type": "module"`:
+`@react-pdf/renderer` only ships ES modules, and `tsx` would otherwise load
+these files as CommonJS. Next never imports this folder.
+
+**One-time setup**
+
+1. Apply `supabase/migrations/20261030120000_gazette_publisher.sql`.
+2. **Authentication → Users → Add user**: create the publisher (an email
+   such as `gazette-bot@…`, a long random password, *Auto Confirm User*).
+3. In the SQL editor: `insert into public.publisher_emails (email) values
+   ('gazette-bot@…');`. The account can add issues and upload files, and
+   delete only its own uploads from the last hour. It can't edit or delete
+   issues or manage admins.
+4. In the Claude Code cloud environment's settings, add the environment
+   variables `GAZETTE_PUBLISHER_EMAIL` and `GAZETTE_PUBLISHER_PASSWORD`.
+
+Run it by hand the same way: `npm run gazette:collect -- --from 2026-10-26
+--to 2026-11-01`, write a draft, then `npm run gazette:publish`.
+
+## 5. Adding a course
 
 ### Flashcard decks ("Öyrən")
 
@@ -342,9 +392,13 @@ components/gazette/               Gazette UI: SiteHeader (pill back to /), Issue
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
 content/decks/                    Flashcard decks (JSON)
-scripts/                          pdf.js worker copy, gazette scraper and drafts
-supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights + policies
-tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF
+scripts/                          pdf.js worker copy; gazettes/ early hand-made issue drafts
+scripts/gazette/                  Automated gazette: collect, draft format, issue PDF + cover, publish,
+                                  ROUTINE.md (the weekly routine's playbook)
+supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights,
+                                  gazette publisher + policies
+tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF,
+                                  gazette drafts and issue PDF
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
 
@@ -357,6 +411,7 @@ middleware.ts                     Auth gate for /courses, /account, /learn, /res
    ✅ "Öyrən": flashcards with Anki-style spaced repetition
    ✅ Constitution textbook: 26 lessons, tests and flashcard decks
    ✅ Highlights and notes inside lessons; lesson PDF export with the logo
+   ✅ Gazette written and published every week by a Claude Routine
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

@@ -25,6 +25,24 @@ export function formatDate(iso: string): string {
   return formatParts(new Date(`${iso.slice(0, 10)}T00:00:00`));
 }
 
+/**
+ * A reporting period, shortest form that stays unambiguous:
+ * "5–11 sentyabr 2026", "29 avqust – 4 sentyabr 2026",
+ * "28 dekabr 2026 – 3 yanvar 2027".
+ */
+export function formatPeriod(fromIso: string, toIso: string): string {
+  const from = new Date(`${fromIso.slice(0, 10)}T00:00:00`);
+  const to = new Date(`${toIso.slice(0, 10)}T00:00:00`);
+  if (from.getFullYear() !== to.getFullYear()) {
+    return `${formatParts(from)} – ${formatParts(to)}`;
+  }
+  if (from.getMonth() !== to.getMonth()) {
+    return `${from.getDate()} ${MONTHS[from.getMonth()]} – ${formatParts(to)}`;
+  }
+  if (from.getDate() === to.getDate()) return formatParts(to);
+  return `${from.getDate()}–${formatParts(to)}`;
+}
+
 export function formatBytes(bytes: number | null | undefined): string {
   if (!bytes || bytes <= 0) return "—";
   const units = ["B", "KB", "MB", "GB"];
