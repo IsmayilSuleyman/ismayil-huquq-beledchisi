@@ -5,7 +5,7 @@ import DownloadButton from "@/components/gazette/DownloadButton";
 import LibraryExplorer from "@/components/gazette/LibraryExplorer";
 import type { IssueWithUrls } from "@/components/gazette/IssueCard";
 import UpdatesBoard from "@/components/gazette/UpdatesBoard";
-import { BOARD_LIMIT, sortForBoard, windowStart, type GazetteAct } from "@/lib/gazette/acts";
+import { sortForBoard, windowStart, type GazetteAct } from "@/lib/gazette/acts";
 import { formatDate, weekOf } from "@/lib/gazette/format";
 import { getServerSupabase, publicUrl } from "@/lib/gazette/supabase";
 import type { Issue } from "@/lib/gazette/types";
@@ -62,30 +62,18 @@ export default async function LibraryPage() {
 
   return (
     <div className="py-12 sm:py-16">
-      {/* ---------- Masthead ---------- */}
-      <section className="text-center max-w-3xl mx-auto olg-rise">
-        <p className="olg-eyebrow mb-5">Omni Law Firm · Internal Library</p>
-        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.04] tracking-tight">
-          The Law <span className="italic text-azure-soft">Gazette</span>
-        </h1>
-        <p className="mt-5 text-foreground/65 text-base sm:text-lg leading-relaxed">
-          Your weekly digest of legislative developments — curated by the legal desk, archived
-          here like a library. New issue every week.
-        </p>
-        {issues.length > 0 && (
-          <div className="mt-7 flex items-center justify-center gap-2.5 flex-wrap">
-            <span className="olg-chip">
-              {issues.length} issue{issues.length === 1 ? "" : "s"} archived
-            </span>
-            <span className="olg-chip">Since {firstYear}</span>
-            {latest && <span className="olg-chip">Latest · {formatDate(latest.published_at)}</span>}
-            {totalReads > 0 && (
-              <span className="olg-chip">{totalReads.toLocaleString()} reads</span>
-            )}
-            {totalDownloads > 0 && <span className="olg-chip">{totalDownloads} downloads</span>}
+      {/* ---------- The board: this month's important acts ---------- */}
+      {boardActs.length > 0 && (
+        <section className="olg-rise" aria-labelledby="board-heading">
+          <div className="mb-7">
+            <p className="olg-eyebrow mb-2">This month</p>
+            <h2 id="board-heading" className="font-serif text-3xl sm:text-4xl">
+              On the board
+            </h2>
           </div>
-        )}
-      </section>
+          <UpdatesBoard acts={boardActs} days={BOARD_DAYS} />
+        </section>
+      )}
 
       {/* ---------- Featured latest issue ---------- */}
       {latest ? (
@@ -176,26 +164,6 @@ export default async function LibraryPage() {
         </section>
       )}
 
-      {/* ---------- The board: this month's important acts ---------- */}
-      {boardActs.length > 0 && (
-        <section className="mt-16 olg-rise" style={{ animationDelay: "200ms" }} aria-labelledby="board-heading">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7">
-            <div>
-              <p className="olg-eyebrow mb-2">This month</p>
-              <h2 id="board-heading" className="font-serif text-3xl sm:text-4xl">
-                On the board
-              </h2>
-            </div>
-            <p className="text-sm text-foreground/60 leading-relaxed sm:max-w-md sm:text-right">
-              Up to {BOARD_LIMIT} picks from the last {BOARD_DAYS} days: the Constitutional Court, and anything touching
-              corporate, banking, tax, civil, criminal or administrative law. Tap a note to read it, and rate how much it
-              matters.
-            </p>
-          </div>
-          <UpdatesBoard acts={boardActs} days={BOARD_DAYS} />
-        </section>
-      )}
-
       {/* ---------- Library grid ---------- */}
       {issues.length > 0 && (
         <section className="mt-16">
@@ -208,6 +176,31 @@ export default async function LibraryPage() {
           <LibraryExplorer issues={issues} />
         </section>
       )}
+
+      {/* ---------- Masthead ---------- */}
+      <section className="mt-20 text-center max-w-3xl mx-auto">
+        <p className="olg-eyebrow mb-5">Omni Law Firm · Internal Library</p>
+        <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.04] tracking-tight">
+          The Law <span className="italic text-azure-soft">Gazette</span>
+        </h1>
+        <p className="mt-5 text-foreground/65 text-base sm:text-lg leading-relaxed">
+          Your weekly digest of legislative developments — curated by the legal desk, archived
+          here like a library. New issue every week.
+        </p>
+        {issues.length > 0 && (
+          <div className="mt-7 flex items-center justify-center gap-2.5 flex-wrap">
+            <span className="olg-chip">
+              {issues.length} issue{issues.length === 1 ? "" : "s"} archived
+            </span>
+            <span className="olg-chip">Since {firstYear}</span>
+            {latest && <span className="olg-chip">Latest · {formatDate(latest.published_at)}</span>}
+            {totalReads > 0 && (
+              <span className="olg-chip">{totalReads.toLocaleString()} reads</span>
+            )}
+            {totalDownloads > 0 && <span className="olg-chip">{totalDownloads} downloads</span>}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
