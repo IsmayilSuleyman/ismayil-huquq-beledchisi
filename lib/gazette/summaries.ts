@@ -43,6 +43,11 @@ export function summaryHeading(summary: Pick<CourtSummary, "kind" | "decision_da
   return `${kindLabel(summary.kind)} of ${formatDate(summary.decision_date)}`;
 }
 
+/** "Elgun Jafarov" or "Claude for Omni Law Firm": the credit line. */
+export function authorCredit(summary: Pick<CourtSummary, "author" | "ai_generated">): string {
+  return summary.ai_generated ? `${summary.author} for Omni Law Firm` : summary.author;
+}
+
 /** "25.09.2026", the form the Court itself uses. */
 export function dottedDate(iso: string): string {
   const [y, m, d] = iso.slice(0, 10).split("-");
