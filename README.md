@@ -243,7 +243,14 @@ until then.
 clients, with the Court's positions quoted verbatim in Azerbaijani under an
 English topic line, the summariser's underline and bold kept, and a Word
 file to download (the firm's header band, the decision named and linked,
-an "AI-generated" notice, no email frame). A second Claude Routine writes
+a credit box, no email frame). The shelf sorts by the decision's date
+(newest or oldest first) and filters by area of law (`tags`, from the
+list in `lib/gazette/summary-tags.ts`) and year. The 31 summaries Elgun
+Jafarov circulated by email from June 2023 to June 2026 are on the shelf
+credited to him (`author`, `ai_generated` false, `circulated_at` the email's
+date; migration `20261031230000_court_summaries_authors_tags.sql`, applied
+on 31 October 2026; the drafts are kept in `scripts/summaries/elgun/`);
+the routine's own carry an "AI-generated" notice. A second Claude Routine writes
 them every morning at 08:55 Baku time, with no review step, following
 `scripts/summaries/ROUTINE.md` (when and how to run) and
 `scripts/summaries/STYLE.md` (the method: which decisions pass, which

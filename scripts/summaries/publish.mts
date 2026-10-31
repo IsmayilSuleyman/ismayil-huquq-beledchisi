@@ -33,7 +33,7 @@ import { createClient } from "@supabase/supabase-js";
 import { describeSend, notifyNewSummary } from "@/lib/gazette/push";
 import { summaryFilename } from "@/lib/gazette/summaries";
 import { GAZETTE_BUCKET, SUPABASE_KEY, SUPABASE_URL, publicUrl } from "@/lib/gazette/supabase";
-import { allBullets, checkDraft, quotedWords } from "@/scripts/summaries/draft";
+import { ROUTINE_AUTHOR, allBullets, checkDraft, quotedWords } from "@/scripts/summaries/draft";
 import { renderSummaryDocx } from "@/scripts/summaries/docx";
 
 const SITE = "https://omnilawgazette.vercel.app";
@@ -73,6 +73,8 @@ async function main() {
   const draft = checked.draft;
   console.log(`\n⚖  ${draft.kind === "qərar" ? "Qərar" : "Qərardad"} ${draft.decision_date} · decision ${draft.decision_id}`);
   console.log(`   Topic: ${draft.topic}`);
+  if (draft.author) console.log(`   By ${draft.author}${draft.circulated_at ? `, circulated ${draft.circulated_at}` : ""}`);
+  console.log(`   Tags: ${draft.tags.join(", ")}`);
   console.log(`   ${allBullets(draft.blocks).length} bullet(s), ${quotedWords(draft.blocks)} words quoted`);
 
   const db = createClient(SUPABASE_URL, SUPABASE_KEY, {
@@ -107,6 +109,10 @@ async function main() {
     topic: draft.topic,
     url: draft.url,
     body: draft.blocks,
+    author: draft.author ?? ROUTINE_AUTHOR,
+    ai_generated: !draft.author,
+    circulated_at: draft.circulated_at ?? null,
+    tags: draft.tags,
     file_size_bytes: docx.byteLength,
   };
 

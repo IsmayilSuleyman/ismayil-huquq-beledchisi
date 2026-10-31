@@ -103,6 +103,7 @@ add the emphasis. Then write `/tmp/summaries/<id>.json`:
   "title": "<the decision's own title, as the Court's site lists it>",
   "topic": "<the question the Court answered, in English>",
   "url": "https://constcourt.gov.az/az/decision/1630",
+  "tags": ["civil", "property"],
   "blocks": [
     {
       "bullets": [
@@ -122,6 +123,9 @@ Qərardad of 25 September 2026). Rules:
   title from the listing, without the leading date.
 - `topic` is the only English text, written as STYLE.md step 2 says: the
   question the Court answered, not a thesis it rejected, no evaluation.
+- `tags`: one to four areas of law from this list, for the shelf's
+  filters: civil, commercial, corporate, property, labour, tax, banking,
+  administrative, criminal, procedure, enforcement, constitutional.
 - Two to eight bullets (up to ten with headings), in the decision's order,
   each one findable in the text by a six-word search; "..." marks every
   internal cut; every transitional rule and temporal-application rule is
