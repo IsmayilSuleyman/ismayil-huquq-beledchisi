@@ -28,7 +28,7 @@ function BookCard({ book, index }: { book: BookWithUrls; index: number }) {
             <span className="font-serif text-2xl text-white/40 line-clamp-4">{book.title}</span>
           </div>
         )}
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#05080f] via-[#05080f]/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-background via-background/45 to-transparent" />
       </div>
 
       <div className="p-4 flex flex-col gap-2 grow">
@@ -106,7 +106,7 @@ export default function BookShelf({ books }: { books: BookWithUrls[] }) {
                 key={t ?? "all"}
                 onClick={() => setTag(t)}
                 className={`olg-chip transition-colors cursor-pointer ${
-                  tag === t ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"
+                  tag === t ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-veil/10"
                 }`}
               >
                 {t ?? "All topics"}

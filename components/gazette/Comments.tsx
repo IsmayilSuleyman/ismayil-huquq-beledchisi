@@ -119,7 +119,7 @@ export default function Comments({ issueId }: { issueId: string }) {
             <li key={c.id} className="flex gap-3.5 group">
               <span
                 aria-hidden
-                className="shrink-0 w-9 h-9 rounded-full grid place-items-center text-[0.72rem] font-semibold text-white/95 border border-white/15"
+                className="shrink-0 w-9 h-9 rounded-full grid place-items-center text-[0.72rem] font-semibold text-white/95 border border-veil/15"
                 style={{ background: `hsl(${hueOf(c.author_name)} 45% 34% / 0.95)` }}
               >
                 {initials(c.author_name)}

@@ -34,12 +34,18 @@ const config: Config = {
         ink: "#1c1410",
         // Omni Law Gazette section (/gazette) — its own palette, kept as in
         // the standalone app (renamed where names would clash with the guide).
+        // The colours that change with the theme are channels set in
+        // app/(gazette)/gazette.css (light by default, dark under .dark).
         omni: { DEFAULT: "#1d4287", bright: "#2e62c9" },
-        azure: { DEFAULT: "#7aa2ff", soft: "#b9cbff" },
-        silver: "#99a1ae",
+        azure: { DEFAULT: "rgb(var(--olg-azure) / <alpha-value>)", soft: "rgb(var(--olg-azure-soft) / <alpha-value>)" },
+        silver: "rgb(var(--olg-silver) / <alpha-value>)",
         "omni-ink": "#0a101d",
-        background: "#05080f",
-        foreground: "#edf1f8",
+        background: "rgb(var(--olg-bg) / <alpha-value>)",
+        foreground: "rgb(var(--olg-fg) / <alpha-value>)",
+        // Tints over the page: white on the dark theme, ink on the light one.
+        veil: "rgb(var(--olg-veil) / <alpha-value>)",
+        // Solid panel backing (sticky sheet headers).
+        surface: "rgb(var(--olg-surface) / <alpha-value>)",
       },
       borderRadius: {
         card: "1.25rem", // standard tiles & inner panels

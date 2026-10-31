@@ -41,7 +41,7 @@ export default function BookDownloadButton({
         href={href}
         title="Download PDF"
         aria-label={`Download “${book.title}” as PDF`}
-        className={`inline-flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.06] border border-white/[0.12] text-foreground/85 hover:text-white hover:bg-white/[0.12] hover:border-azure/40 transition-colors ${className}`}
+        className={`inline-flex items-center justify-center w-9 h-9 rounded-lg bg-veil/[0.06] border border-veil/[0.12] text-foreground/85 hover:text-foreground hover:bg-veil/[0.12] hover:border-azure/40 transition-colors ${className}`}
       >
         {icon}
       </a>

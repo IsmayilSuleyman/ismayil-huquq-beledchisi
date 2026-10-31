@@ -112,7 +112,7 @@ export default function SettingsPanel({ currentEmail }: { currentEmail: string }
             {admins.map((email) => (
               <li
                 key={email}
-                className="flex items-center justify-between gap-3 text-sm bg-white/[0.04] border border-white/10 rounded-lg px-3.5 py-2.5"
+                className="flex items-center justify-between gap-3 text-sm bg-veil/[0.04] border border-veil/10 rounded-lg px-3.5 py-2.5"
               >
                 <span className="truncate">{email}</span>
                 {email.toLowerCase() === currentEmail.toLowerCase() ? (

@@ -23,7 +23,7 @@ export default async function BookPage({ params }: { params: Promise<Params> }) 
   return (
     <div className="py-8 sm:py-10">
       <nav className="mb-6 text-sm">
-        <Link href="/books" className="inline-flex items-center gap-1.5 text-silver hover:text-white transition-colors">
+        <Link href="/books" className="inline-flex items-center gap-1.5 text-silver hover:text-foreground transition-colors">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path d="m14 6-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

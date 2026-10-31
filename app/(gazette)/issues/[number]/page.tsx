@@ -80,7 +80,7 @@ export default async function IssuePage({ params }: { params: Promise<Params> })
       <nav className="mb-6 text-sm">
         <Link
           href="/"
-          className="inline-flex items-center gap-1.5 text-silver hover:text-white transition-colors"
+          className="inline-flex items-center gap-1.5 text-silver hover:text-foreground transition-colors"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
             <path

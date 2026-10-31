@@ -48,7 +48,7 @@ function ToolButton({
       className={`inline-flex items-center justify-center w-[2.125rem] h-[2.125rem] min-w-8 rounded-lg border text-foreground/85 transition-colors disabled:opacity-35 disabled:cursor-not-allowed ${
         active
           ? "bg-omni/70 border-azure/50 text-white"
-          : "bg-white/5 border-white/10 hover:bg-white/[0.12] hover:text-white"
+          : "bg-veil/5 border-veil/10 hover:bg-veil/[0.12] hover:text-foreground"
       }`}
     >
       {children}
@@ -379,7 +379,7 @@ export default function PdfViewer({ fileUrl, download }: Props) {
       className="olg-pdf-shell olg-glass-deep rounded-2xl overflow-hidden flex flex-col h-[82vh] min-h-[480px] outline-none focus-visible:ring-2 focus-visible:ring-azure/40"
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap px-2.5 sm:px-3 py-2 sm:py-2.5 border-b olg-hairline bg-white/[0.04] backdrop-blur-xl z-10">
+      <div className="flex items-center justify-center sm:justify-start gap-1.5 flex-wrap px-2.5 sm:px-3 py-2 sm:py-2.5 border-b olg-hairline bg-veil/[0.04] backdrop-blur-xl z-10">
         <ToolButton
           title={thumbsOpen ? "Hide thumbnails" : "Show thumbnails"}
           onClick={() => setThumbsOpen((v) => !v)}
@@ -406,7 +406,7 @@ export default function PdfViewer({ fileUrl, download }: Props) {
           <span className="text-silver text-xs whitespace-nowrap">/ {numPages || "–"}</span>
         </div>
 
-        <span className="w-px h-5 bg-white/[0.12] mx-1 hidden sm:block" aria-hidden />
+        <span className="w-px h-5 bg-veil/[0.12] mx-1 hidden sm:block" aria-hidden />
 
         <ToolButton title="Zoom out (-)" onClick={() => zoomBy(1 / 1.2)} disabled={!numPages}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -495,7 +495,7 @@ export default function PdfViewer({ fileUrl, download }: Props) {
             </svg>
           </ToolButton>
 
-          <span className="w-px h-5 bg-white/[0.12] mx-0.5 hidden sm:block" aria-hidden />
+          <span className="w-px h-5 bg-veil/[0.12] mx-0.5 hidden sm:block" aria-hidden />
 
           <a
             href={fileUrl}
@@ -503,7 +503,7 @@ export default function PdfViewer({ fileUrl, download }: Props) {
             rel="noreferrer"
             title="Open raw PDF in new tab"
             aria-label="Open raw PDF in new tab"
-            className="hidden sm:inline-flex items-center justify-center w-[2.125rem] h-[2.125rem] rounded-lg border bg-white/5 border-white/10 text-foreground/85 hover:bg-white/[0.12] hover:text-white transition-colors"
+            className="hidden sm:inline-flex items-center justify-center w-[2.125rem] h-[2.125rem] rounded-lg border bg-veil/5 border-veil/10 text-foreground/85 hover:bg-veil/[0.12] hover:text-foreground transition-colors"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
               <path d="M14 4h6v6M20 4l-9 9M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -562,7 +562,7 @@ export default function PdfViewer({ fileUrl, download }: Props) {
               <div
                 key={`thumb-${n}`}
                 className={`olg-pdf-thumb relative cursor-pointer rounded-md overflow-hidden ring-offset-0 transition-shadow ${
-                  currentPage === n ? "ring-2 ring-azure" : "ring-1 ring-white/10 hover:ring-azure/50"
+                  currentPage === n ? "ring-2 ring-azure" : "ring-1 ring-veil/10 hover:ring-azure/50"
                 }`}
               >
                 <Thumbnail
