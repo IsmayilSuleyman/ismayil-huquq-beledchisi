@@ -1,21 +1,40 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+import IssueCalendar from "@/components/gazette/IssueCalendar";
 import IssueCard, { type IssueWithUrls } from "@/components/gazette/IssueCard";
+import { useFlip } from "@/components/gazette/useFlip";
+
+// The archive grid. Unsearched it shows only the two newest rows (how many
+// cards that is depends on the columns); the calendar finds any older
+// issue by date, and a search looks through all of them.
+
+/** Cards per row at each breakpoint of the grid below: 1, sm 2, lg 3, xl 4. */
+const ROWS_SHOWN = 2;
+const MAX_COLUMNS = 4;
+
+/** Hides a card past the second row at the widths where it would fall there. */
+function rowClass(index: number): string {
+  if (index < ROWS_SHOWN * 1) return "flex";
+  if (index < ROWS_SHOWN * 2) return "hidden sm:flex";
+  if (index < ROWS_SHOWN * 3) return "hidden lg:flex";
+  return "hidden xl:flex";
+}
+
+const calendarIcon = (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+    <path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+);
 
 export default function LibraryExplorer({ issues }: { issues: IssueWithUrls[] }) {
   const [query, setQuery] = useState("");
-  const [year, setYear] = useState<"all" | number>("all");
-
-  const years = useMemo(() => {
-    const set = new Set(issues.map((i) => Number(i.published_at.slice(0, 4))));
-    return [...set].sort((a, b) => b - a);
-  }, [issues]);
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return issues.filter((i) => {
-      if (year !== "all" && Number(i.published_at.slice(0, 4)) !== year) return false;
       if (!q) return true;
       const haystack = [
         `issue ${i.issue_number}`,
@@ -30,7 +49,15 @@ export default function LibraryExplorer({ issues }: { issues: IssueWithUrls[] })
         .toLowerCase();
       return q.split(/\s+/).every((part) => haystack.includes(part));
     });
-  }, [issues, query, year]);
+  }, [issues, query]);
+
+  const searching = query.trim() !== "";
+  const shown = searching ? filtered : filtered.slice(0, ROWS_SHOWN * MAX_COLUMNS);
+
+  // As a search narrows or widens, the cards that stay glide into their new
+  // places; new cards already rise in on their own (IssueCard).
+  const grid = useRef<HTMLDivElement>(null);
+  useFlip(grid, `${searching}|${shown.map((i) => i.id).join(",")}`, { enter: false });
 
   return (
     <div>
@@ -57,47 +84,42 @@ export default function LibraryExplorer({ issues }: { issues: IssueWithUrls[] })
           />
         </div>
 
-        {years.length > 1 && (
-          <div className="flex items-center gap-1.5 flex-wrap">
-            <button
-              onClick={() => setYear("all")}
-              className={`olg-chip transition-colors cursor-pointer ${
-                year === "all" ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"
-              }`}
-            >
-              All years
-            </button>
-            {years.map((y) => (
-              <button
-                key={y}
-                onClick={() => setYear(y)}
-                className={`olg-chip transition-colors cursor-pointer ${
-                  year === y ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"
-                }`}
-              >
-                {y}
-              </button>
-            ))}
-          </div>
-        )}
+        <button type="button" onClick={() => setCalendarOpen(true)} className="olg-btn olg-btn-ghost shrink-0">
+          {calendarIcon}
+          Find by date
+        </button>
 
         <p className="text-xs text-silver md:ml-auto" aria-live="polite">
-          {filtered.length} issue{filtered.length === 1 ? "" : "s"}
+          {searching ? `${filtered.length} match${filtered.length === 1 ? "" : "es"}` : `${issues.length} issues · the newest shown`}
         </p>
       </div>
 
       {filtered.length === 0 ? (
         <div className="olg-glass rounded-2xl p-12 text-center text-foreground/65">
           <p className="font-serif text-xl mb-1.5">No issues match that search.</p>
-          <p className="text-sm text-silver">Try a different keyword, tag or year.</p>
+          <p className="text-sm text-silver">Try a different keyword or tag, or find the issue by date.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {filtered.map((issue, idx) => (
-            <IssueCard key={issue.id} issue={issue} index={idx} />
+        <div ref={grid} className="grid content-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {shown.map((issue, idx) => (
+            <div key={issue.id} data-flip={issue.id} className={`${searching ? "flex" : rowClass(idx)} [&>*]:w-full`}>
+              <IssueCard issue={issue} index={idx} />
+            </div>
           ))}
         </div>
       )}
+
+      {!searching && issues.length > ROWS_SHOWN && (
+        <div className="mt-8 flex flex-col items-center gap-2 text-center">
+          <button type="button" onClick={() => setCalendarOpen(true)} className="olg-btn olg-btn-primary">
+            {calendarIcon}
+            Find an older issue in the calendar
+          </button>
+          <p className="text-xs text-silver">Every issue since the first, by the day it came out.</p>
+        </div>
+      )}
+
+      {calendarOpen && <IssueCalendar issues={issues} onClose={() => setCalendarOpen(false)} />}
     </div>
   );
 }

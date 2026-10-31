@@ -22,6 +22,7 @@ import {
 } from "@/lib/gazette/acts";
 import { formatDate } from "@/lib/gazette/format";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
+import { useClosing, useFlip } from "@/components/gazette/useFlip";
 
 // The board on the landing page: the last month's acts as notes, up to
 // twelve picks (lib/gazette/acts.ts decides: important by rule, best rated
@@ -121,8 +122,32 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
     [current, pickIds, suggestedIds, mySuggestion],
   );
 
+  const view = useCallback(
+    (f: Filter, all: boolean) => {
+      const from = all ? current : board;
+      return f === "all" ? from : from.filter((a) => a.section === f);
+    },
+    [current, board],
+  );
   const pool = showAll ? current : board;
-  const shown = useMemo(() => (filter === "all" ? pool : pool.filter((a) => a.section === filter)), [pool, filter]);
+  const shown = useMemo(() => view(filter, showAll), [view, filter, showAll]);
+
+  // Changing the view: the notes that are leaving fade out first, then the
+  // rest glide to their new places and the newcomers fade up (useFlip).
+  const grid = useRef<HTMLUListElement>(null);
+  const flipKey = `${shown.map((a) => a.id).join(",")}|${candidates.length > 0}`;
+  const exit = useFlip(grid, flipKey);
+  const viewChange = useRef(0);
+  const changeView = useCallback(
+    async (f: Filter, all: boolean) => {
+      const turn = ++viewChange.current;
+      await exit(new Set([...view(f, all).map((a) => a.id), "add"]));
+      if (turn !== viewChange.current) return;
+      setFilter(f);
+      setShowAll(all);
+    },
+    [exit, view],
+  );
 
   const counts = useMemo(() => {
     const c: Record<Filter, number> = { all: pool.length, decrees: 0, decisions: 0, bills: 0, court: 0 };
@@ -185,7 +210,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
             <button
               key={key}
               type="button"
-              onClick={() => setFilter(key)}
+              onClick={() => void changeView(key, showAll)}
               aria-pressed={filter === key}
               className={`olg-chip transition-colors cursor-pointer ${
                 filter === key ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"
@@ -201,7 +226,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
             <input
               type="checkbox"
               checked={showAll}
-              onChange={(e) => setShowAll(e.target.checked)}
+              onChange={(e) => void changeView(filter, e.target.checked)}
               className="accent-[#2e62c9] w-3.5 h-3.5"
             />
             Show every act of the last {days} days ({acts.length})
@@ -213,11 +238,11 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
         {shown.length === 0 && candidates.length === 0 ? (
           <p className="relative text-center text-sm text-silver py-10">Nothing on the board for this filter.</p>
         ) : (
-          <ul className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <ul ref={grid} className="relative grid content-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {shown.map((act) => {
               const average = averageStars(act);
               return (
-                <li key={act.id} className="flex">
+                <li key={act.id} data-flip={act.id} className="flex">
                   <button
                     type="button"
                     onClick={(e) => open(act.id, e.currentTarget)}
@@ -266,7 +291,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
               );
             })}
             {candidates.length > 0 && (
-              <li className="flex">
+              <li data-flip="add" className="flex">
                 <button
                   type="button"
                   onClick={(e) => {
@@ -361,6 +386,7 @@ function ActPanel({
   onRate: (id: string, stars: number) => Promise<void>;
 }) {
   const panel = useRef<HTMLDivElement>(null);
+  const [closing, close] = useClosing(onClose);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -369,13 +395,13 @@ function ActPanel({
     // sheet keeps its own scrolling to itself (overscroll-contain).
     panel.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") close();
       else if (e.key === "ArrowLeft" && onPrev) onPrev();
       else if (e.key === "ArrowRight" && onNext) onNext();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose, onPrev, onNext]);
+  }, [close, onPrev, onNext]);
 
   useEffect(() => {
     setCopied(false);
@@ -396,14 +422,14 @@ function ActPanel({
 
   return (
     <div className="fixed inset-0 z-50" role="presentation">
-      <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default" />
+      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
       <div
         ref={panel}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="olg-sheet olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none"
+        className={`${closing ? "olg-sheet-out" : "olg-sheet"} olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none`}
       >
         <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b olg-hairline bg-[#0a1120]/80 backdrop-blur">
           <span className={`olg-note-label olg-note-${act.section} inline-flex items-center gap-2`}>
@@ -431,7 +457,7 @@ function ActPanel({
             >
               →
             </button>
-            <button type="button" onClick={onClose} aria-label="Close" title="Close (Esc)" className="olg-btn olg-btn-ghost !px-2.5 !py-2 ml-1">
+            <button type="button" onClick={close} aria-label="Close" title="Close (Esc)" className="olg-btn olg-btn-ghost !px-2.5 !py-2 ml-1">
               ✕
             </button>
           </div>
@@ -572,6 +598,7 @@ function SuggestPanel({
   onClose: () => void;
 }) {
   const panel = useRef<HTMLDivElement>(null);
+  const [closing, close] = useClosing(onClose);
   const [query, setQuery] = useState("");
   const [busy, setBusy] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -579,11 +606,11 @@ function SuggestPanel({
   useEffect(() => {
     panel.current?.focus({ preventScroll: true });
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") close();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [close]);
 
   // Your own suggestion first, then the board's usual order.
   const list = useMemo(() => {
@@ -609,21 +636,21 @@ function SuggestPanel({
 
   return (
     <div className="fixed inset-0 z-50" role="presentation">
-      <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default" />
+      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
       <div
         ref={panel}
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby="suggest-title"
-        className="olg-sheet olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none"
+        className={`${closing ? "olg-sheet-out" : "olg-sheet"} olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none`}
       >
         <div className="sticky top-0 z-10 px-5 sm:px-7 pt-4 pb-3.5 border-b olg-hairline bg-[#0a1120]/80 backdrop-blur">
           <div className="flex items-center justify-between gap-3">
             <h3 id="suggest-title" className="font-serif text-xl">
               Suggest a note
             </h3>
-            <button type="button" onClick={onClose} aria-label="Close" title="Close (Esc)" className="olg-btn olg-btn-ghost !px-2.5 !py-2">
+            <button type="button" onClick={close} aria-label="Close" title="Close (Esc)" className="olg-btn olg-btn-ghost !px-2.5 !py-2">
               ✕
             </button>
           </div>

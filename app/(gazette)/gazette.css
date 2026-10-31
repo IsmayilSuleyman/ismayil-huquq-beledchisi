@@ -454,6 +454,50 @@
 .olg-sheet {
   animation: olg-sheet 0.32s cubic-bezier(0.21, 0.8, 0.32, 1) both;
 }
+@keyframes olg-sheet-out {
+  to {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+.olg-sheet-out {
+  animation: olg-sheet-out 0.22s cubic-bezier(0.4, 0, 1, 1) both;
+}
+@keyframes olg-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.olg-fade-in {
+  animation: olg-fade-in 0.3s ease-out both;
+}
+@keyframes olg-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+.olg-fade-out {
+  animation: olg-fade-out 0.22s ease-in both;
+}
+/* The calendar's month slides in from the side it was asked for. */
+@keyframes olg-month-next {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+@keyframes olg-month-prev {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+.olg-month-next {
+  animation: olg-month-next 0.34s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+}
+.olg-month-prev {
+  animation: olg-month-prev 0.34s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .olg-note:hover,
@@ -461,6 +505,11 @@
     transform: none;
   }
   .olg-sheet,
+  .olg-sheet-out,
+  .olg-fade-in,
+  .olg-fade-out,
+  .olg-month-next,
+  .olg-month-prev,
   .olg-rise {
     animation: none;
   }
