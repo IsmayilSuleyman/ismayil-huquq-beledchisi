@@ -39,3 +39,41 @@ export type Book = {
 };
 
 export type BookWithUrls = Book & { coverUrl: string | null; pdfUrl: string };
+
+/** One quoted passage of a Constitutional Court summary; `sub` holds the decision's own sub-list, if any. */
+export type SummaryBullet = {
+  /** Verbatim text of the Court, with **bold**, __underline__ and *italic* marks (lib/gazette/marks.ts). */
+  text: string;
+  sub?: string[];
+};
+
+/** A group of bullets; a decision with two or three distinct questions gets one block per question, each with its heading. */
+export type SummaryBlock = {
+  /** The summariser's own few words naming the issue, in Azerbaijani: "(A) İlkin müqavilə üzrə ödəniş". */
+  heading?: string;
+  bullets: SummaryBullet[];
+};
+
+export const SUMMARY_KINDS = ["qərar", "qərardad"] as const;
+export type SummaryKind = (typeof SUMMARY_KINDS)[number];
+
+export type CourtSummary = {
+  id: string;
+  /** The number in https://constcourt.gov.az/az/decision/<id>. */
+  decision_id: number;
+  decision_date: string; // ISO date
+  kind: SummaryKind;
+  /** The decision's own title, as the Court's site lists it (Azerbaijani). */
+  title: string;
+  /** The English topic line: the question the Court answered. */
+  topic: string;
+  url: string;
+  body: SummaryBlock[];
+  docx_path: string;
+  file_size_bytes: number | null;
+  published_at: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CourtSummaryWithUrls = CourtSummary & { docxUrl: string };

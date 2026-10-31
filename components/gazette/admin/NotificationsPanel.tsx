@@ -63,9 +63,10 @@ export default function NotificationsPanel() {
     <section className="olg-glass rounded-2xl p-6 sm:p-7">
       <h2 className="font-serif text-xl mb-1.5">Notifications</h2>
       <p className="text-xs text-silver mb-5 leading-relaxed">
-        Readers tap the bell in the header to get a browser notification for each new issue. The
-        weekly publisher sends it automatically; for an issue you upload here, press Notify under
-        Manage issues.
+        Readers tap the bell in the header to get a browser notification for what is new, and choose
+        which of the three they hear about: gazette issues, court summaries, books. The weekly and
+        daily publishers send theirs automatically; for an issue or a book you add here, press Notify
+        beside it.
       </p>
       {ready === null ? (
         <div className="olg-skeleton h-10 rounded-lg" />

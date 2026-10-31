@@ -5,15 +5,17 @@ import type { Session } from "@supabase/supabase-js";
 import BooksDesk from "@/components/gazette/admin/BooksDesk";
 import ManageIssues from "@/components/gazette/admin/ManageIssues";
 import PublishForm from "@/components/gazette/admin/PublishForm";
+import SummariesDesk from "@/components/gazette/admin/SummariesDesk";
 import SettingsPanel from "@/components/gazette/admin/SettingsPanel";
 import SignInCard from "@/components/gazette/admin/SignInCard";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
 
-type Tab = "publish" | "manage" | "books" | "settings";
+type Tab = "publish" | "manage" | "summaries" | "books" | "settings";
 
 const TABS: { id: Tab; label: string }[] = [
   { id: "publish", label: "Publish issue" },
   { id: "manage", label: "Manage issues" },
+  { id: "summaries", label: "Summaries" },
   { id: "books", label: "Books" },
   { id: "settings", label: "Settings" },
 ];
@@ -71,6 +73,7 @@ export default function AdminPage() {
 
       {tab === "publish" && <PublishForm />}
       {tab === "manage" && <ManageIssues />}
+      {tab === "summaries" && <SummariesDesk />}
       {tab === "books" && <BooksDesk />}
       {tab === "settings" && <SettingsPanel currentEmail={email} />}
     </div>

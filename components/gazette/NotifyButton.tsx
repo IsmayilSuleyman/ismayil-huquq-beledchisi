@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { PUSH_TOPICS, TOPIC_LABEL, type PushTopic } from "@/lib/gazette/push-topics";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
 
 // The bell in the gazette header: subscribes this browser to a push notice
-// for every new issue (sent by lib/gazette/push.ts), or turns it off again.
-// No account needed; the subscription is stored through the push_subscribe
-// function (see the gazette_push migration). The bell stays hidden until an
+// for what is new in the library (sent by lib/gazette/push.ts), and lets
+// the reader choose which of the three shelves to hear about: gazette
+// issues, court summaries, books. No account needed; the subscription and
+// its topics are stored through the push_subscribe function (see the
+// gazette_push and push_topics migrations). The bell stays hidden until an
 // admin has set notifications up (Settings → Notifications in /admin).
 // Once on, the bell "docks": its label folds away, then it glides past the
-// Admin pill to the far right of the header as just the icon.
+// Admin pill to the far right of the header as just the icon; tapping it
+// there opens the topic menu.
 
 type State = "hidden" | "off" | "on" | "busy" | "denied" | "install";
 
@@ -34,23 +38,41 @@ function needsHomeScreen() {
 
 /** How long the lit-up "Notifications on" pill stays put before it docks. */
 const DOCK_DELAY_MS = 1600;
-/** The label folds away (and the note fades) for this long before the bell moves. */
+/** The label folds away (and the panel fades) for this long before the bell moves. */
 const FOLD_MS = 450;
 /** The glide across the header. */
 const SLIDE_MS = 900;
 const EASE = "cubic-bezier(0.45, 0, 0.15, 1)";
+
+const ALL_TOPICS: PushTopic[] = [...PUSH_TOPICS];
 
 async function currentSubscription() {
   const reg = await navigator.serviceWorker.getRegistration("/");
   return reg ? reg.pushManager.getSubscription() : null;
 }
 
+/** Stores (or updates) the subscription with its topics. */
+async function save(sub: PushSubscription, topics: PushTopic[]) {
+  const json = sub.toJSON();
+  const { error } = await getBrowserSupabase().rpc("push_subscribe", {
+    endpoint: sub.endpoint,
+    p256dh: json.keys?.p256dh,
+    auth: json.keys?.auth,
+    topics,
+  });
+  if (error) throw new Error(error.message);
+}
+
 export default function NotifyButton() {
   const [state, setState] = useState<State>("hidden");
   const [note, setNote] = useState<string | null>(null);
   const [vapidKey, setVapidKey] = useState<string | null>(null);
+  const [topics, setTopics] = useState<PushTopic[]>(ALL_TOPICS);
+  const [saving, setSaving] = useState(false);
+  // The topic menu, shown right after subscribing and whenever the docked bell is tapped.
+  const [menu, setMenu] = useState(false);
   const [docked, setDocked] = useState(false);
-  // While docking: the label folds, the note fades, then the bell glides.
+  // While docking: the label folds, the panel fades, then the bell glides.
   const [moving, setMoving] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   // Where the header's items sat just before a dock/undock, for the slide.
@@ -104,10 +126,28 @@ export default function NotifyButton() {
 
   useEffect(() => clearTimers, []);
 
+  // The menu closes on a tap outside or Escape, like the Library menu.
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setMenu(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenu(false);
+    };
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menu]);
+
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      const { data } = await getBrowserSupabase().rpc("push_public_key");
+      const supabase = getBrowserSupabase();
+      const { data } = await supabase.rpc("push_public_key");
       if (cancelled || typeof data !== "string" || !data) return;
       setVapidKey(data);
       if (!pushSupported()) {
@@ -120,6 +160,13 @@ export default function NotifyButton() {
       const on = !!sub && Notification.permission === "granted";
       setState(on ? "on" : "off");
       setDocked(on);
+      if (sub && on) {
+        // This browser's own choice, if the subscription is still on file.
+        const chosen = await supabase.rpc("push_topics", { endpoint: sub.endpoint });
+        if (!cancelled && Array.isArray(chosen.data) && chosen.data.length > 0) {
+          setTopics(ALL_TOPICS.filter((t) => chosen.data.includes(t)));
+        }
+      }
     })();
     return () => {
       cancelled = true;
@@ -140,18 +187,15 @@ export default function NotifyButton() {
       const sub =
         (await reg.pushManager.getSubscription()) ??
         (await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes(vapidKey!) }));
-      const json = sub.toJSON();
-      const { error } = await getBrowserSupabase().rpc("push_subscribe", {
-        endpoint: sub.endpoint,
-        p256dh: json.keys?.p256dh,
-        auth: json.keys?.auth,
-      });
-      if (error) {
+      try {
+        await save(sub, ALL_TOPICS);
+      } catch (e) {
         await sub.unsubscribe();
-        throw new Error(error.message);
+        throw e;
       }
+      setTopics(ALL_TOPICS);
       setState("on");
-      setNote("Thank you for enabling notifications, which you’ll receive once the newer issue is available.");
+      setMenu(true);
       later(() => dock(true), DOCK_DELAY_MS);
     } catch (e) {
       setState("off");
@@ -161,6 +205,7 @@ export default function NotifyButton() {
 
   async function unsubscribe() {
     clearTimers();
+    setMenu(false);
     setState("busy");
     setNote(null);
     try {
@@ -178,9 +223,31 @@ export default function NotifyButton() {
     }
   }
 
+  /** Toggles one topic; the last one on cannot be turned off (turn notifications off instead). */
+  async function toggle(topic: PushTopic) {
+    const next = topics.includes(topic) ? topics.filter((t) => t !== topic) : ALL_TOPICS.filter((t) => t === topic || topics.includes(t));
+    if (next.length === 0) return;
+    const prev = topics;
+    setTopics(next);
+    setSaving(true);
+    try {
+      const sub = await currentSubscription();
+      if (!sub) throw new Error("this browser is no longer subscribed");
+      await save(sub, next);
+    } catch (e) {
+      setTopics(prev);
+      setNote(`Couldn’t save that: ${(e as Error).message}`);
+    } finally {
+      setSaving(false);
+    }
+  }
+
   function onClick() {
     if (state === "off") return void subscribe();
-    if (state === "on") return void unsubscribe();
+    if (state === "on") {
+      setNote(null);
+      return setMenu((m) => !m);
+    }
     if (state === "denied") {
       return setNote(note ? null : "Notifications are blocked for this site. Allow them in your browser’s site settings, then tap the bell again.");
     }
@@ -195,7 +262,8 @@ export default function NotifyButton() {
   // The label is folded while docked and during the moves in and out.
   const folded = docked || moving;
   const label = on ? "Notifications on" : "Notify me";
-  const title = on ? "You’ll be notified of new issues. Tap to turn off." : "Get a notification when a new issue is out";
+  const title = on ? "Notifications are on. Tap to choose what you hear about." : "Get a notification when something new is in the library";
+  const panelClass = `absolute right-0 top-full mt-2 z-50 transition-opacity duration-300 ${moving ? "opacity-0" : "opacity-100"}`;
 
   return (
     <div ref={rootRef} className={`relative shrink-0 ${docked ? "order-last" : ""}`}>
@@ -206,6 +274,8 @@ export default function NotifyButton() {
         title={title}
         aria-label={title}
         aria-pressed={on}
+        aria-expanded={on ? menu : undefined}
+        aria-haspopup={on ? "menu" : undefined}
         className={`inline-flex items-center py-2 rounded-lg transition-all duration-[450ms] ease-in-out disabled:opacity-60 ${
           folded ? "px-2.5" : "px-3"
         } ${
@@ -230,20 +300,56 @@ export default function NotifyButton() {
           {state === "busy" ? "…" : label}
         </span>
       </button>
+
+      {on && menu && (
+        // The topic menu fades while the bell moves (the outer box) and rises in when it opens (the inner one).
+        <div className={`${panelClass} w-72 max-w-[calc(100vw-2rem)]`}>
+          <div role="menu" className="olg-rise olg-glass-deep rounded-xl p-2 text-sm">
+            <p className="px-2.5 pt-1.5 pb-2 text-[0.7rem] tracking-[0.18em] uppercase text-silver">Notify me about</p>
+            {ALL_TOPICS.map((topic) => {
+              const checked = topics.includes(topic);
+              const last = checked && topics.length === 1;
+              return (
+                <label
+                  key={topic}
+                  role="menuitemcheckbox"
+                  aria-checked={checked}
+                  className={`flex items-start gap-3 rounded-lg px-2.5 py-2 transition-colors ${
+                    last ? "cursor-default" : "cursor-pointer hover:bg-veil/[0.07]"
+                  }`}
+                  title={last ? "To hear about nothing, turn notifications off below" : undefined}
+                >
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    disabled={saving || last}
+                    onChange={() => void toggle(topic)}
+                    className="mt-[3px] h-4 w-4 shrink-0 accent-[#2e62c9]"
+                  />
+                  <span>
+                    <span className="block text-foreground">{TOPIC_LABEL[topic].label}</span>
+                    <span className="block text-[0.7rem] text-silver mt-0.5">{TOPIC_LABEL[topic].hint}</span>
+                  </span>
+                </label>
+              );
+            })}
+            <div className="mt-1.5 pt-2 px-2.5 pb-1 border-t olg-hairline flex items-center justify-between gap-3 text-xs">
+              <span className="text-silver" aria-live="polite">
+                {saving ? "Saving…" : "Saved for this browser"}
+              </span>
+              <button type="button" onClick={() => void unsubscribe()} className="text-azure hover:underline">
+                Turn off
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {note && (
-        // The note fades while the bell moves (the outer box), and rises in when it first shows (the inner one).
-        <div
-          className={`absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] z-50 transition-opacity duration-300 ${
-            moving ? "opacity-0" : "opacity-100"
-          }`}
-        >
+        <div className={`${panelClass} w-72 max-w-[calc(100vw-2rem)]`}>
           <div role="status" className="olg-rise olg-glass-deep rounded-xl p-3.5 text-xs leading-relaxed text-foreground/85">
             {note}
-            <button
-              type="button"
-              onClick={() => setNote(null)}
-              className="block mt-2 text-azure hover:underline"
-            >
+            <button type="button" onClick={() => setNote(null)} className="block mt-2 text-azure hover:underline">
               Close
             </button>
           </div>

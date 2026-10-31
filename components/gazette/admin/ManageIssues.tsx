@@ -29,7 +29,7 @@ export default function ManageIssues() {
       .order("issue_number", { ascending: false });
     if (err) setError(err.message);
     setIssues((data as Issue[]) ?? []);
-    const sends = await supabase.from("push_sends").select("issue_number,sent_at");
+    const sends = await supabase.from("push_sends").select("issue_number,sent_at").eq("kind", "issue");
     setSent(Object.fromEntries((sends.data ?? []).map((r) => [r.issue_number as number, r.sent_at as string])));
   }
 
@@ -50,7 +50,7 @@ export default function ManageIssues() {
     const res = await fetch("/api/gazette/notify", {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.session?.access_token ?? ""}` },
-      body: JSON.stringify({ issue_number: issue.issue_number, force: again }),
+      body: JSON.stringify({ kind: "issue", ref: String(issue.issue_number), force: again }),
     });
     const body = await res.json().catch(() => ({}));
     setBusy(null);

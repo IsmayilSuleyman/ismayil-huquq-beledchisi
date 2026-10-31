@@ -12,12 +12,15 @@
     "gazette:publish": "tsx scripts/gazette/publish.mts",
     "gazette:collect": "tsx scripts/gazette/collect.mts",
     "gazette:read": "tsx scripts/gazette/read-act.mts",
-    "gazette:acts": "tsx scripts/gazette/store-acts.mts"
+    "gazette:acts": "tsx scripts/gazette/store-acts.mts",
+    "summaries:collect": "tsx scripts/summaries/collect.mts",
+    "summaries:publish": "tsx scripts/summaries/publish.mts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.116.0",
+    "docx": "^9.15.0",
     "framer-motion": "^12.38.0",
     "gray-matter": "^4.0.3",
     "next": "^15.5.0",
@@ -42,6 +45,7 @@
     "eslint": "^9.0.0",
     "eslint-config-next": "^15.5.0",
     "fontkit": "^2.0.4",
+    "jszip": "^3.10.1",
     "pdfjs-dist": "^5.4.296",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.14",
