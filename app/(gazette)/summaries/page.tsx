@@ -18,8 +18,8 @@ export default async function SummariesPage() {
         </h1>
         <p className="mt-5 text-foreground/65 text-base sm:text-lg leading-relaxed">
           The Constitutional Court&rsquo;s positions, decision by decision: the passages a colleague would
-          cite, quoted verbatim, with a Word file to download. Summarised automatically each morning in
-          the firm&rsquo;s usual way; check the original before citing.
+          cite, quoted verbatim, with a Word file to download. The summaries Elgun Jafarov circulated
+          since 2023, and new ones each morning in his way; check the original before citing.
         </p>
       </section>
 

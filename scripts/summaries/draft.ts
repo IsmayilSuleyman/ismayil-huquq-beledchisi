@@ -10,6 +10,7 @@
  */
 
 import { unbalancedMarks, plainText } from "@/lib/gazette/marks";
+import { SUMMARY_TAGS, isSummaryTag, type SummaryTag } from "@/lib/gazette/summary-tags";
 import { SUMMARY_KINDS, type SummaryBlock, type SummaryBullet, type SummaryKind } from "@/lib/gazette/types";
 
 export type SummaryDraft = {
@@ -24,9 +25,21 @@ export type SummaryDraft = {
   topic: string;
   /** The decision's page, usually https://constcourt.gov.az/az/decision/<id>; e-qanun.az when the Court has not posted the text. */
   url: string;
+  /** Areas of law, one to four from lib/gazette/summary-tags.ts. */
+  tags: SummaryTag[];
+  /**
+   * Who chose and marked the passages. Left out, the summary is the
+   * routine's: author "Claude", ai_generated true. Named ("Elgun Jafarov"),
+   * the summary is credited to that person and ai_generated is false.
+   */
+  author?: string;
+  /** The day a colleague's summary was circulated by email, YYYY-MM-DD; only with `author`. */
+  circulated_at?: string;
   /** One block, or one per distinct question with a heading each. */
   blocks: SummaryBlock[];
 };
+
+export const ROUTINE_AUTHOR = "Claude";
 
 export type DraftCheck =
   | { ok: true; draft: SummaryDraft; warnings: string[] }
@@ -130,7 +143,7 @@ export function checkDraft(raw: unknown): DraftCheck {
     }
     const clean = tidyQuote(value);
     if (clean.length < 15) errors.push(`${where} is too short to be a passage of the decision`);
-    if (clean.length > 2500) errors.push(`${where} is longer than 2500 characters; split it or cut it`);
+    if (clean.length > 3000) errors.push(`${where} is longer than 3000 characters; split it or cut it`);
     const marks = unbalancedMarks(clean);
     if (marks) errors.push(`${where}: ${marks}`);
     if (EMAIL_FRAME.test(clean)) errors.push(`${where} carries a trace of the email frame`);
@@ -141,7 +154,32 @@ export function checkDraft(raw: unknown): DraftCheck {
   }
 
   if (!isRecord(raw)) return { ok: false, errors: ["the draft must be a JSON object"], warnings };
-  unknownKeys(raw, ["decision_id", "decision_date", "kind", "title", "topic", "url", "blocks"], "draft");
+  unknownKeys(raw, ["decision_id", "decision_date", "kind", "title", "topic", "url", "tags", "author", "circulated_at", "blocks"], "draft");
+
+  const tags: SummaryTag[] = [];
+  if (!Array.isArray(raw.tags) || raw.tags.length === 0) errors.push(`draft.tags must name one to four areas of law: ${SUMMARY_TAGS.join(", ")}`);
+  else {
+    for (const t of raw.tags) {
+      if (!isSummaryTag(t)) errors.push(`draft.tags: "${String(t)}" is not one of ${SUMMARY_TAGS.join(", ")}`);
+      else if (!tags.includes(t)) tags.push(t);
+    }
+    if (tags.length > 4) errors.push("draft.tags: at most four");
+  }
+
+  let author: string | undefined;
+  let circulatedAt: string | undefined;
+  if (raw.author !== undefined) {
+    author = text(raw, "author", "draft", 120);
+    if (author.toLowerCase() === ROUTINE_AUTHOR.toLowerCase()) {
+      warnings.push("draft.author: the routine's own summaries carry no author field");
+      author = undefined;
+    }
+  }
+  if (raw.circulated_at !== undefined) {
+    if (!author) errors.push("draft.circulated_at only goes with an author");
+    circulatedAt = typeof raw.circulated_at === "string" ? raw.circulated_at : "";
+    if (!isIsoDate(circulatedAt)) errors.push("draft.circulated_at must be a real date, YYYY-MM-DD");
+  }
 
   const decisionId = raw.decision_id;
   if (!(typeof decisionId === "number" && Number.isInteger(decisionId) && decisionId > 0)) {
@@ -153,8 +191,11 @@ export function checkDraft(raw: unknown): DraftCheck {
   else {
     const today = new Date().toISOString().slice(0, 10);
     if (decisionDate > today) errors.push(`draft.decision_date ${decisionDate} is in the future`);
-    else if (decisionDate < new Date(Date.now() - 400 * 86_400_000).toISOString().slice(0, 10)) {
+    else if (raw.author === undefined && decisionDate < new Date(Date.now() - 400 * 86_400_000).toISOString().slice(0, 10)) {
       warnings.push(`draft.decision_date ${decisionDate} is more than a year ago`);
+    }
+    if (circulatedAt && isIsoDate(circulatedAt) && circulatedAt < decisionDate) {
+      errors.push(`draft.circulated_at ${circulatedAt} is before the decision`);
     }
   }
 
@@ -243,6 +284,9 @@ export function checkDraft(raw: unknown): DraftCheck {
       title,
       topic,
       url,
+      tags,
+      ...(author ? { author } : {}),
+      ...(circulatedAt ? { circulated_at: circulatedAt } : {}),
       blocks,
     },
   };

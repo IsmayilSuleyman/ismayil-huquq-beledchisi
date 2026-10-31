@@ -29,7 +29,8 @@ import {
 } from "docx";
 import { parseMarks } from "@/lib/gazette/marks";
 import { dottedDate, kindLabel } from "@/lib/gazette/summaries";
-import type { SummaryDraft } from "@/scripts/summaries/draft";
+import { TAG_LABEL } from "@/lib/gazette/summary-tags";
+import { ROUTINE_AUTHOR, type SummaryDraft } from "@/scripts/summaries/draft";
 
 const here = dirname(fileURLToPath(import.meta.url));
 /** The header band of the gazette issues (scripts/gazette/images), 838×224. */
@@ -76,6 +77,10 @@ export async function renderSummaryDocx(draft: SummaryDraft, options: DocxOption
   const kind = kindLabel(draft.kind);
   const heading = `${kind} of ${longDate(draft.decision_date)}`;
   const link = `${site}/summaries/${draft.decision_id}`;
+  const author = draft.author ?? ROUTINE_AUTHOR;
+  const generated = !draft.author;
+  const credit = generated ? `AI-generated summary · Omni Law Firm · ${madeOn}` : `Summary by ${author} · Omni Law Firm`;
+  const tags = draft.tags.map((t) => TAG_LABEL[t]).join(" · ");
 
   const header = new Header({
     children: [
@@ -110,7 +115,7 @@ export async function renderSummaryDocx(draft: SummaryDraft, options: DocxOption
         tabStops: [{ type: TabStopType.RIGHT, position: 17 * CM }],
         border: { top: { style: BorderStyle.SINGLE, size: 4, color: "D1D5DB", space: 6 } },
         children: [
-          new TextRun({ text: `AI-generated summary · Omni Law Firm · ${madeOn}`, font: FONT, size: 15, color: GREY }),
+          new TextRun({ text: credit, font: FONT, size: 15, color: GREY }),
           new TextRun({ text: "\tPage ", font: FONT, size: 15, color: GREY }),
           new TextRun({ children: [PageNumber.CURRENT], font: FONT, size: 15, color: GREY }),
           new TextRun({ text: " of ", font: FONT, size: 15, color: GREY }),
@@ -152,27 +157,46 @@ export async function renderSummaryDocx(draft: SummaryDraft, options: DocxOption
         }),
       ],
     }),
-    // The AI notice: a shaded box with a navy rule on the left.
+    // The credit: a shaded box with a navy rule on the left. The routine's
+    // summaries say they were generated; a colleague's say who wrote it.
     new Paragraph({
       shading: { type: ShadingType.CLEAR, fill: "EEF2F8", color: "auto" },
       border: { left: { style: BorderStyle.SINGLE, size: 24, color: NAVY, space: 10 } },
       indent: { left: 0 },
       spacing: { before: 60, after: 60, line: 276 },
-      children: [
-        new TextRun({ text: "AI-generated summary. ", font: FONT, size: 18, bold: true, color: NAVY }),
-        new TextRun({
-          text:
-            `Prepared automatically by Claude for Omni Law Firm on ${madeOn} from the full text of the decision ` +
-            "published on constcourt.gov.az, following the firm's method for summarising Constitutional Court " +
-            "decisions. The passages below are quoted verbatim from the decision, in Azerbaijani; the selection " +
-            "and the emphasis are the summariser's, and the only words that are not the Court's stand in square " +
-            "brackets and come from the statute. It is not legal advice and has not been reviewed by a lawyer: " +
-            "check the original before citing it.",
-          font: FONT,
-          size: 18,
-          color: INK,
-        }),
-      ],
+      children: generated
+        ? [
+            new TextRun({ text: "AI-generated summary. ", font: FONT, size: 18, bold: true, color: NAVY }),
+            new TextRun({
+              text:
+                `Prepared automatically by Claude for Omni Law Firm on ${madeOn} from the full text of the decision ` +
+                "published on constcourt.gov.az, following the firm's method for summarising Constitutional Court " +
+                "decisions. The passages below are quoted verbatim from the decision, in Azerbaijani; the selection " +
+                "and the emphasis are the summariser's, and the only words that are not the Court's stand in square " +
+                "brackets and come from the statute. It is not legal advice and has not been reviewed by a lawyer: " +
+                "check the original before citing it.",
+              font: FONT,
+              size: 18,
+              color: INK,
+            }),
+          ]
+        : [
+            new TextRun({ text: `Summary by ${author}. `, font: FONT, size: 18, bold: true, color: NAVY }),
+            new TextRun({
+              text:
+                (draft.circulated_at ? `Circulated to the firm by email on ${longDate(draft.circulated_at)}. ` : "") +
+                "The passages below are quoted verbatim from the decision, in Azerbaijani; the selection and the " +
+                "emphasis are the author's. Laid out for the firm's library" +
+                ` on ${madeOn}. Check the original before citing it.`,
+              font: FONT,
+              size: 18,
+              color: INK,
+            }),
+          ],
+    }),
+    new Paragraph({
+      spacing: { before: 120, after: 0 },
+      children: [new TextRun({ text: tags, font: FONT, size: 16, color: GREY, allCaps: true, characterSpacing: 30 })],
     }),
     new Paragraph({
       spacing: { before: 320, after: 200, line: 300 },
@@ -246,9 +270,9 @@ export async function renderSummaryDocx(draft: SummaryDraft, options: DocxOption
   );
 
   const doc = new Document({
-    creator: "Claude for Omni Law Firm",
+    creator: generated ? "Claude for Omni Law Firm" : `${author}, Omni Law Firm`,
     title: `${kind} ${dottedDate(draft.decision_date)} — ${draft.topic}`,
-    description: "AI-generated summary of a Constitutional Court decision",
+    description: generated ? "AI-generated summary of a Constitutional Court decision" : `Summary of a Constitutional Court decision by ${author}`,
     styles: {
       default: { document: { run: { font: FONT, size: 22, color: INK } } },
       paragraphStyles: [],

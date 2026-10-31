@@ -103,7 +103,8 @@ export default function SummariesDesk() {
               <li key={s.id} className="py-3.5 flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
                 <div className="min-w-0 max-w-2xl">
                   <p className="text-xs text-silver">
-                    <span lang="az">{kindLabel(s.kind)}</span> · {formatDate(s.decision_date)} · No. {s.decision_id}
+                    <span lang="az">{kindLabel(s.kind)}</span> · {formatDate(s.decision_date)} · No. {s.decision_id} ·{" "}
+                    {s.ai_generated ? "AI-generated" : `by ${s.author}`}
                     {sent[ref] && <span className="text-emerald-300"> · notified {formatDate(sent[ref])}</span>}
                   </p>
                   <Link href={`/summaries/${s.decision_id}`} className="block mt-0.5 font-medium hover:text-azure-soft transition-colors">

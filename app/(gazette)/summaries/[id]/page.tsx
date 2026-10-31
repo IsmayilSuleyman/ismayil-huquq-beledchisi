@@ -5,6 +5,7 @@ import SummaryBody from "@/components/gazette/SummaryBody";
 import SummaryDownloadButton from "@/components/gazette/SummaryDownloadButton";
 import { formatBytes, formatDate } from "@/lib/gazette/format";
 import { getSummary, kindLabel, summaryHeading } from "@/lib/gazette/summaries";
+import { TAG_LABEL, isSummaryTag } from "@/lib/gazette/summary-tags";
 
 export const revalidate = 60;
 
@@ -49,6 +50,11 @@ export default async function SummaryPage({ params }: { params: Promise<Params> 
                 {bullets} position{bullets === 1 ? "" : "s"}
               </span>
               {summary.file_size_bytes && <span>· Word {formatBytes(summary.file_size_bytes)}</span>}
+              {summary.tags.map((t) => (
+                <span key={t} className="olg-chip !py-0.5">
+                  {isSummaryTag(t) ? TAG_LABEL[t] : t}
+                </span>
+              ))}
               <a href={summary.url} target="_blank" rel="noopener noreferrer" className="text-azure hover:underline">
                 Full text on {new URL(summary.url).hostname.replace(/^www\./, "")} ↗
               </a>
@@ -78,15 +84,29 @@ export default async function SummaryPage({ params }: { params: Promise<Params> 
         </article>
 
         <aside className="olg-glass-deep rounded-2xl p-5 text-sm leading-relaxed lg:sticky lg:top-24">
-          <p className="olg-chip !bg-omni/60 !border-azure/45 !text-white font-medium mb-3">✦ AI-generated</p>
-          <p className="text-foreground/75">
-            Prepared automatically by Claude for Omni Law Firm on {formatDate(summary.published_at)} from the full text of
-            the decision, following the firm&rsquo;s method for summarising Constitutional Court decisions.
-          </p>
-          <p className="mt-3 text-foreground/75">
-            The passages are the Court&rsquo;s own words; the selection and the emphasis are the summariser&rsquo;s. It is not
-            legal advice and has not been reviewed by a lawyer: check the original before citing it.
-          </p>
+          {summary.ai_generated ? (
+            <>
+              <p className="olg-chip !bg-omni/60 !border-azure/45 !text-white font-medium mb-3">✦ AI-generated</p>
+              <p className="text-foreground/75">
+                Prepared automatically by Claude for Omni Law Firm on {formatDate(summary.published_at)} from the full
+                text of the decision, following the firm&rsquo;s method for summarising Constitutional Court decisions.
+              </p>
+              <p className="mt-3 text-foreground/75">
+                The passages are the Court&rsquo;s own words; the selection and the emphasis are the summariser&rsquo;s. It
+                is not legal advice and has not been reviewed by a lawyer: check the original before citing it.
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="olg-chip !bg-omni/60 !border-azure/45 !text-white font-medium mb-3">By {summary.author}</p>
+              <p className="text-foreground/75">
+                Summarised by {summary.author}
+                {summary.circulated_at ? ` and circulated to the firm by email on ${formatDate(summary.circulated_at)}` : ""}.
+                The passages are the Court&rsquo;s own words; the selection and the emphasis are the author&rsquo;s.
+              </p>
+              <p className="mt-3 text-foreground/75">Check the original before citing it.</p>
+            </>
+          )}
         </aside>
       </div>
     </div>

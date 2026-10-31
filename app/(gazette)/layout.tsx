@@ -27,7 +27,10 @@ export default function GazetteLayout({ children }: { children: React.ReactNode 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">{children}</main>
       <footer className="mt-20 border-t olg-hairline">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row gap-3 items-center justify-between text-xs text-silver">
-          <p>© {new Date().getFullYear()} Omni Law Firm — Law Gazette.</p>
+          <p>
+            © {new Date().getFullYear()} Omni Law Firm — Law Gazette.{" "}
+            <span className="text-foreground/70">By İsmayıl Süleyman.</span>
+          </p>
           <p className="font-jost tracking-[0.3em] uppercase text-[0.65rem]">omni · law firm</p>
         </div>
       </footer>

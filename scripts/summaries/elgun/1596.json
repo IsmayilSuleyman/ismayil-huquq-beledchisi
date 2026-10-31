@@ -1,0 +1,40 @@
+{
+  "decision_id": 1596,
+  "decision_date": "2023-04-26",
+  "kind": "qərar",
+  "title": "M.Şükürovun şikayəti üzrə AR Ali Məhkəməsinin Mülki Kollegiyasının 18 iyul 2022-ci il tarixli qərarının AR Konstitusiyasına və qanunlarına uyğunluğunun yoxlanılmasına dair",
+  "topic": "Estoppel: when a party that confirmed a voidable transaction loses the right to challenge it; validity of a lease concluded before the object belonged to the lessor",
+  "url": "https://constcourt.gov.az/az/decision/1596",
+  "author": "Elgun Jafarov",
+  "circulated_at": "2023-06-07",
+  "tags": [
+    "civil",
+    "property",
+    "procedure"
+  ],
+  "blocks": [
+    {
+      "bullets": [
+        {
+          "text": "*\"Burada vicdanlıq prezumpsiyası ilə sıx bağlı olan **__estoppel prinsipinə__** də aydınlıq gətirmək vacib hesab edilir. ...Tərəf aşağıdakı hallarda müqaviləni mübahisələndirmək hüququna malik deyildir:*",
+          "sub": [
+            "*həmin tərəfin davranışı müqavilə bağlamaq iradəsini təsdiq etdiyini, əqdin etibarlığını faktiki etiraf etdiyini, əqdin şərtlərini qəbul etdiyi və onun mahiyyətilə razılaşdığını nümayiş etdirdiyi halda. Bu, müqavilə üzrə öhdəliklərin yerinə yetirilməsinə dair hərəkətlər, bununla bağlı yazılı sübutlar və s. ilə təsdiqlənə bilər;*",
+            "*müqavilə bağlanan zaman tərəf onun mübahisələndirilməsi üçün əsasların olduğunu bildiyi halda.\"*"
+          ]
+        },
+        {
+          "text": "\"əqd onu mübahisələndirmək hüququna malik olan şəxs tərəfindən təsdiq edildiyi təqdirdə, o, özünün mübahisə etmək hüququndan məhrum olur və əqd bağlandığı andan etibarlı olaraq qəbul edilir.\""
+        },
+        {
+          "text": "\"... haqdan (subyektiv hüquqdan) bu cür, onun məqsədi və təyinatı ilə bağlı olmayan şəkildə istifadə edilməsi (əgər həqiqətən müqavilələrin etibarsızlığı müəyyən olunarsa) haqdan sui-istifadə və estoppel prinsipinin pozulması kimi qiymətləndirilə bilər.\""
+        },
+        {
+          "text": "\"Beləliklə, işə baxan məhkəmələr __iddiaçının öz öhdəliyini yerinə yetirməməsi__, bununla da tərəflər arasındakı mübahisənin bu əsasla yaranması və məntiqi davamı olaraq əqdin etibarsız hesab edilməsindən sui-istifadə edilməsinə düzgün hüquqi qiymət verməmişdir.\""
+        },
+        {
+          "text": "\"mülki qanunvericilikdə icarə müqaviləsinin etibarlı olması üçün müqavilə bağlanarkən icarə obyektinin mövcudluğu, icarəyə verənin mülkiyyətində olması kimi şərtlər nəzərdə tutulmamışdır.\""
+        }
+      ]
+    }
+  ]
+}

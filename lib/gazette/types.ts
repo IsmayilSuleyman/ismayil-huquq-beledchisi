@@ -69,6 +69,13 @@ export type CourtSummary = {
   topic: string;
   url: string;
   body: SummaryBlock[];
+  /** Who chose and marked the passages: "Claude" for the routine, "Elgun Jafarov" for his emails. */
+  author: string;
+  ai_generated: boolean;
+  /** The day a colleague's summary was circulated by email; null for the routine's. */
+  circulated_at: string | null;
+  /** Areas of law (lib/gazette/summary-tags.ts). */
+  tags: string[];
   docx_path: string;
   file_size_bytes: number | null;
   published_at: string;
