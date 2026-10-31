@@ -26,7 +26,9 @@ export default function Logo({
   }, []);
   const scale = { sm: "text-[15px]", md: "text-[19px]", lg: "text-[30px]" }[size];
 
-  const mark = missing ? (
+  // The drawn mark. The PNG has a black ground baked in, so it only suits the
+  // dark theme; the light theme always gets this one (and so does a missing PNG).
+  const drawn = (
     <span className={`inline-flex flex-col items-stretch leading-none select-none ${scale}`}>
       <span className="bg-omni text-white rounded-[3px] px-[0.55em] pt-[0.06em] pb-[0.3em] font-jost font-extralight lowercase text-[1.85em] leading-[1.05] tracking-[0.03em] shadow-[0_4px_18px_-6px_rgba(29,66,135,0.9),inset_0_1px_0_rgba(255,255,255,0.18)]">
         omni<span className="sr-only"> law firm</span>
@@ -38,16 +40,23 @@ export default function Logo({
         Law Firm
       </span>
     </span>
+  );
+
+  const mark = missing ? (
+    drawn
   ) : (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      ref={imgRef}
-      src="/images/omni-logo.png"
-      alt="Omni Law Firm"
-      style={{ height: heights[size], width: "auto" }}
-      className="select-none object-contain"
-      onError={() => setMissing(true)}
-    />
+    <>
+      <span className="dark:hidden">{drawn}</span>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        ref={imgRef}
+        src="/images/omni-logo.png"
+        alt="Omni Law Firm"
+        style={{ height: heights[size], width: "auto" }}
+        className="hidden dark:block select-none object-contain"
+        onError={() => setMissing(true)}
+      />
+    </>
   );
 
   if (!href) return mark;

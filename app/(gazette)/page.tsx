@@ -98,7 +98,7 @@ export default async function LibraryPage() {
                   <span className="font-serif text-7xl text-white/25">№{latest.issue_number}</span>
                 </div>
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#05080f]/70 via-transparent to-transparent md:bg-gradient-to-r" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent md:bg-gradient-to-r" />
             </Link>
 
             <div className="p-7 sm:p-10 flex flex-col justify-center">

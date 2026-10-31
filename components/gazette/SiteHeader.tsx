@@ -2,6 +2,7 @@ import Link from "next/link";
 import LibraryMenu from "@/components/gazette/LibraryMenu";
 import Logo from "@/components/gazette/Logo";
 import NotifyButton from "@/components/gazette/NotifyButton";
+import ThemeSwitch from "@/components/gazette/ThemeSwitch";
 
 // The guide's home page; the icon beside Admin switches over, like
 // the İRF ↔ İsmayılBank switch on the fund portal.
@@ -13,7 +14,7 @@ export default function SiteHeader() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between gap-4">
         <div className="flex items-center gap-2.5 sm:gap-4 min-w-0">
           <Logo size="sm" />
-          <span aria-hidden className="h-8 w-px bg-white/[0.12] hidden sm:block" />
+          <span aria-hidden className="h-8 w-px bg-veil/[0.12] hidden sm:block" />
           <Link href="/" className="min-w-0 group">
             <span className="block font-serif text-base sm:text-[1.35rem] leading-tight tracking-tight text-foreground group-hover:text-azure-soft transition-colors truncate">
               Law&nbsp;Gazette
@@ -25,12 +26,13 @@ export default function SiteHeader() {
         </div>
         <nav className="flex items-center gap-1.5 sm:gap-2 text-sm">
           <NotifyButton />
+          <ThemeSwitch />
           <LibraryMenu />
           {/* Admin and the switch to the guide share one pill; phones show only the switch. */}
-          <div className="inline-flex items-center rounded-lg border border-white/[0.12] bg-white/5 shrink-0 overflow-hidden">
+          <div className="inline-flex items-center rounded-lg border border-veil/[0.12] bg-veil/5 shrink-0 overflow-hidden">
             <Link
               href="/admin"
-              className="hidden sm:inline-flex h-9 px-3.5 text-silver hover:text-white hover:bg-white/[0.08] transition-colors items-center gap-1.5"
+              className="hidden sm:inline-flex h-9 px-3.5 text-silver hover:text-foreground hover:bg-veil/[0.08] transition-colors items-center gap-1.5"
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path
@@ -43,12 +45,12 @@ export default function SiteHeader() {
               </svg>
               Admin
             </Link>
-            <span aria-hidden className="hidden sm:block w-px h-5 bg-white/[0.12]" />
+            <span aria-hidden className="hidden sm:block w-px h-5 bg-veil/[0.12]" />
             <a
               href={GUIDE_URL}
               title="İsmayıl Hüquq Bələdçisi"
               aria-label="İsmayıl Hüquq Bələdçisinə keç"
-              className="inline-flex items-center justify-center w-9 h-9 hover:bg-white/10 transition-colors"
+              className="inline-flex items-center justify-center w-9 h-9 hover:bg-veil/10 transition-colors"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/images/ihb-mark.svg" alt="" width={18} height={18} />

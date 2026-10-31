@@ -3,17 +3,45 @@
    theme tokens in the standalone app live in tailwind.config.ts (omni, azure,
    silver, omni-ink, background, foreground; font-serif = Fraunces, font-jost). */
 
+/* ---------- Theme ----------
+   Light by default; dark under the `dark` class the root layout puts on
+   <html> (the reader's choice, saved as "theme", or the system's). The
+   guide uses the same switch, so the two halves of the site agree. The
+   values are RGB channels so Tailwind can add alpha (tailwind.config.ts). */
+:root {
+  --olg-bg: 244 246 251;
+  --olg-fg: 18 26 43;
+  --olg-silver: 92 101 117;
+  --olg-azure: 46 98 201;
+  --olg-azure-soft: 29 66 135;
+  --olg-veil: 18 26 43;
+  --olg-surface: 255 255 255;
+}
+:root.dark {
+  --olg-bg: 5 8 15;
+  --olg-fg: 237 241 248;
+  --olg-silver: 153 161 174;
+  --olg-azure: 122 162 255;
+  --olg-azure-soft: 185 203 255;
+  --olg-veil: 255 255 255;
+  --olg-surface: 10 17 32;
+}
+
 .olg-root {
-  --background: #05080f;
-  --foreground: #edf1f8;
-  --color-azure: #7aa2ff;
-  --color-azure-soft: #b9cbff;
-  --color-silver: #99a1ae;
+  --background: rgb(var(--olg-bg));
+  --foreground: rgb(var(--olg-fg));
+  --color-azure: rgb(var(--olg-azure));
+  --color-azure-soft: rgb(var(--olg-azure-soft));
+  --color-silver: rgb(var(--olg-silver));
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   overflow-x: hidden;
+  color-scheme: light;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+:root.dark .olg-root {
   color-scheme: dark;
 }
 
@@ -34,21 +62,21 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(var(--olg-veil) / 0.045) 1px, transparent 1px);
   background-size: 26px 26px;
   mask-image: radial-gradient(80rem 60rem at 50% 0%, black, transparent 75%);
 }
 
 /* ---------- Glass surfaces ---------- */
 .olg-glass {
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.028));
-  border: 1px solid rgba(255, 255, 255, 0.105);
+  background: linear-gradient(160deg, rgb(var(--olg-veil) / 0.075), rgb(var(--olg-veil) / 0.028));
+  border: 1px solid rgb(var(--olg-veil) / 0.105);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
 }
 .olg-glass-deep {
   background: linear-gradient(165deg, rgba(13, 22, 41, 0.72), rgba(8, 13, 26, 0.62));
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  border: 1px solid rgb(var(--olg-veil) / 0.09);
   backdrop-filter: blur(22px) saturate(150%);
   -webkit-backdrop-filter: blur(22px) saturate(150%);
 }
@@ -65,7 +93,7 @@
 }
 
 .olg-hairline {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgb(var(--olg-veil) / 0.1);
 }
 
 /* ---------- Controls ---------- */
@@ -99,12 +127,12 @@
   box-shadow: 0 10px 30px -10px rgba(46, 98, 201, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 .olg-btn-ghost {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgb(var(--olg-veil) / 0.05);
+  border: 1px solid rgb(var(--olg-veil) / 0.13);
   color: var(--foreground);
 }
 .olg-btn-ghost:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(var(--olg-veil) / 0.1);
   border-color: rgba(122, 162, 255, 0.4);
 }
 .olg-btn-danger {
@@ -120,7 +148,7 @@
   width: 100%;
   border-radius: 0.8rem;
   background: rgba(5, 9, 18, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgb(var(--olg-veil) / 0.12);
   padding: 0.7rem 0.95rem;
   font-size: 0.92rem;
   color: var(--foreground);
@@ -143,8 +171,8 @@
   letter-spacing: 0.04em;
   padding: 0.3rem 0.7rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgb(var(--olg-veil) / 0.13);
+  background: rgb(var(--olg-veil) / 0.05);
   color: var(--color-azure-soft);
 }
 
@@ -187,7 +215,7 @@
 }
 .react-pdf__Page__canvas {
   border-radius: 6px;
-  box-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.07);
+  box-shadow: 0 14px 48px -16px rgba(0, 0, 0, 0.85), 0 0 0 1px rgb(var(--olg-veil) / 0.07);
 }
 .react-pdf__Page__textContent mark {
   background: rgba(255, 214, 107, 0.85);
@@ -204,7 +232,7 @@
 
 /* Fullscreen reader gets a solid backdrop */
 .olg-pdf-shell:fullscreen {
-  background: #05080f;
+  background: var(--background);
   padding: 0.75rem;
 }
 
@@ -218,8 +246,10 @@
     transform: translateY(0);
   }
 }
+/* Fills backwards only: a transform left on after the rise would trap the
+   fixed panels inside (the board's act panel opened below the header). */
 .olg-rise {
-  animation: olg-rise 0.6s cubic-bezier(0.21, 0.8, 0.32, 1) both;
+  animation: olg-rise 0.6s cubic-bezier(0.21, 0.8, 0.32, 1) backwards;
 }
 @keyframes olg-shimmer {
   0% {
@@ -232,9 +262,9 @@
 .olg-skeleton {
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.09) 37%,
-    rgba(255, 255, 255, 0.04) 63%
+    rgb(var(--olg-veil) / 0.04) 25%,
+    rgb(var(--olg-veil) / 0.09) 37%,
+    rgb(var(--olg-veil) / 0.04) 63%
   );
   background-size: 450px 100%;
   animation: olg-shimmer 1.5s infinite linear;
@@ -247,9 +277,9 @@
   padding: 1.75rem 1.25rem 1.5rem;
   background:
     radial-gradient(60rem 30rem at 50% -10%, rgba(122, 162, 255, 0.08), transparent 60%),
-    linear-gradient(165deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), inset 0 0 80px rgba(0, 0, 0, 0.25);
+    linear-gradient(165deg, rgb(var(--olg-veil) / 0.055), rgb(var(--olg-veil) / 0.02));
+  border: 1px solid rgb(var(--olg-veil) / 0.1);
+  box-shadow: inset 0 1px 0 rgb(var(--olg-veil) / 0.06), inset 0 0 80px rgba(0, 0, 0, 0.25);
 }
 @media (min-width: 640px) {
   .olg-board {
@@ -262,7 +292,7 @@
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-image: radial-gradient(rgb(var(--olg-veil) / 0.06) 1px, transparent 1px);
   background-size: 22px 22px;
 }
 
@@ -278,14 +308,14 @@
   text-align: left;
   color: var(--foreground);
   cursor: pointer;
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.03));
-  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: linear-gradient(160deg, rgb(var(--olg-veil) / 0.085), rgb(var(--olg-veil) / 0.03));
+  border: 1px solid rgb(var(--olg-veil) / 0.11);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   transition: transform 0.35s cubic-bezier(0.21, 0.8, 0.32, 1), border-color 0.35s, box-shadow 0.35s, opacity 0.3s;
   box-shadow:
     0 18px 40px -22px rgba(0, 0, 0, 0.8),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    inset 0 1px 0 rgb(var(--olg-veil) / 0.08);
   overflow: hidden;
 }
 .olg-note::before {
@@ -361,7 +391,7 @@
 .olg-note-body {
   font-size: 0.9rem;
   line-height: 1.5;
-  color: rgba(237, 241, 248, 0.88);
+  color: rgb(var(--olg-fg) / 0.88);
   display: -webkit-box;
   -webkit-line-clamp: 6;
   -webkit-box-orient: vertical;
@@ -373,8 +403,8 @@
   text-transform: uppercase;
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgb(var(--olg-veil) / 0.1);
+  background: rgb(var(--olg-veil) / 0.05);
   color: var(--color-silver);
 }
 .olg-note-read {
@@ -397,7 +427,7 @@
   gap: 0.6rem;
   text-align: center;
   background: transparent;
-  border: 1.5px dashed rgba(255, 255, 255, 0.18);
+  border: 1.5px dashed rgb(var(--olg-veil) / 0.18);
   box-shadow: none;
   color: var(--color-silver);
 }
@@ -525,7 +555,7 @@
   font-size: 1.55rem;
   line-height: 1;
   padding: 0.1rem 0.15rem;
-  color: rgba(255, 255, 255, 0.18);
+  color: rgb(var(--olg-veil) / 0.18);
   cursor: pointer;
   transition: color 0.15s, transform 0.15s;
 }
@@ -543,4 +573,111 @@
   outline: 2px solid rgba(122, 162, 255, 0.9);
   outline-offset: 1px;
   border-radius: 4px;
+}
+
+/* ---------- Light theme ----------
+   Most colours follow the channels above on their own. These are the
+   surfaces that need a different recipe on paper rather than at night:
+   white glass with soft shadows instead of tinted glass with deep ones. */
+:root:not(.dark) .olg-aurora {
+  background:
+    radial-gradient(42rem 30rem at 12% -8%, rgba(46, 98, 201, 0.14), transparent 60%),
+    radial-gradient(50rem 34rem at 95% 5%, rgba(29, 66, 135, 0.12), transparent 65%),
+    radial-gradient(40rem 32rem at 70% 105%, rgba(64, 90, 255, 0.07), transparent 60%),
+    radial-gradient(30rem 24rem at -5% 75%, rgba(122, 162, 255, 0.1), transparent 60%);
+}
+:root:not(.dark) .olg-glass {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72));
+  border-color: rgb(var(--olg-veil) / 0.09);
+  box-shadow: 0 10px 30px -18px rgba(18, 40, 90, 0.25);
+}
+:root:not(.dark) .olg-glass-deep {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.86), rgba(248, 250, 254, 0.78));
+  border-color: rgb(var(--olg-veil) / 0.09);
+}
+:root:not(.dark) .olg-glass-hover:hover {
+  border-color: rgba(46, 98, 201, 0.35);
+  box-shadow:
+    0 18px 44px -20px rgba(18, 40, 90, 0.35),
+    0 0 0 1px rgba(46, 98, 201, 0.1) inset;
+}
+:root:not(.dark) .olg-field {
+  background: rgba(255, 255, 255, 0.85);
+}
+:root:not(.dark) .olg-field::placeholder {
+  color: rgb(var(--olg-silver) / 0.75);
+}
+:root:not(.dark) .olg-btn-ghost {
+  background: rgba(255, 255, 255, 0.75);
+}
+:root:not(.dark) .olg-btn-ghost:hover:not(:disabled) {
+  background: #fff;
+  border-color: rgba(46, 98, 201, 0.4);
+}
+:root:not(.dark) .olg-btn-danger {
+  color: #b42318;
+}
+:root:not(.dark) .olg-chip {
+  background: rgba(255, 255, 255, 0.7);
+}
+:root:not(.dark) .olg-board {
+  background:
+    radial-gradient(60rem 30rem at 50% -10%, rgba(46, 98, 201, 0.06), transparent 60%),
+    linear-gradient(165deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.4));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 20px 50px -30px rgba(18, 40, 90, 0.25);
+}
+:root:not(.dark) .olg-note {
+  background: linear-gradient(160deg, #fff, rgba(255, 255, 255, 0.86));
+  box-shadow:
+    0 14px 30px -22px rgba(18, 40, 90, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+:root:not(.dark) .olg-note:hover,
+:root:not(.dark) .olg-note:focus-visible {
+  box-shadow:
+    0 24px 44px -24px rgba(18, 40, 90, 0.45),
+    0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent) inset;
+}
+:root:not(.dark) .olg-note-add {
+  background: transparent;
+  box-shadow: none;
+}
+:root:not(.dark) .olg-note-add:hover,
+:root:not(.dark) .olg-note-add:focus-visible {
+  background: rgba(46, 98, 201, 0.05);
+}
+/* The section colours, deepened so they read on white. */
+:root:not(.dark) .olg-note-court {
+  --accent: #1d4287;
+}
+:root:not(.dark) .olg-note-decrees {
+  --accent: #2e62c9;
+}
+:root:not(.dark) .olg-note-decisions {
+  --accent: #5c6575;
+}
+:root:not(.dark) .olg-note-bills {
+  --accent: #4a72d4;
+}
+:root:not(.dark) .olg-note-plus,
+:root:not(.dark) .olg-note-suggested {
+  background: rgba(46, 98, 201, 0.08);
+  border-color: rgba(46, 98, 201, 0.3);
+}
+:root:not(.dark) .olg-star-lit {
+  text-shadow: none;
+}
+:root:not(.dark) .olg-root ::selection {
+  background: rgba(46, 98, 201, 0.25);
+  color: inherit;
+}
+:root:not(.dark) .react-pdf__Page__canvas {
+  box-shadow: 0 14px 40px -18px rgba(18, 40, 90, 0.45), 0 0 0 1px rgba(18, 26, 43, 0.08);
+}
+
+/* The theme switch cross-fades the whole page (components/gazette/ThemeSwitch.tsx). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: cubic-bezier(0.45, 0, 0.15, 1);
 }

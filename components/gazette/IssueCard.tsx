@@ -36,7 +36,7 @@ export default function IssueCard({ issue, index = 0 }: { issue: IssueWithUrls; 
             </span>
           </div>
         )}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#05080f] via-[#05080f]/55 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background via-background/55 to-transparent" />
         <div className="absolute left-3 bottom-3 flex items-center gap-2">
           <span className="olg-chip !bg-omni/70 !border-azure/40 !text-white font-medium backdrop-blur-md">
             Issue No. {issue.issue_number}

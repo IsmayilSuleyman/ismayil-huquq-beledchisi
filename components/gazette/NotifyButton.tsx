@@ -209,7 +209,7 @@ export default function NotifyButton() {
         className={`inline-flex items-center py-2 rounded-lg transition-all duration-[450ms] ease-in-out disabled:opacity-60 ${
           folded ? "px-2.5" : "px-3"
         } ${
-          on ? "text-azure-soft bg-omni/40 hover:bg-omni/60" : "text-silver hover:text-white hover:bg-white/[0.08]"
+          on ? "text-azure-soft bg-omni/40 hover:bg-omni/60" : "text-silver hover:text-foreground hover:bg-veil/[0.08]"
         }`}
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill={on ? "currentColor" : "none"} aria-hidden>

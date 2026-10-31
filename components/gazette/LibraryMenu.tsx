@@ -41,7 +41,7 @@ export default function LibraryMenu() {
         aria-expanded={open}
         aria-haspopup="menu"
         className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg transition-colors ${
-          open ? "text-white bg-white/[0.08]" : "text-foreground/85 hover:text-white hover:bg-white/[0.08]"
+          open ? "text-foreground bg-veil/[0.08]" : "text-foreground/85 hover:text-foreground hover:bg-veil/[0.08]"
         }`}
       >
         Library
@@ -70,7 +70,7 @@ export default function LibraryMenu() {
                 role="menuitem"
                 aria-current={current ? "page" : undefined}
                 className={`block rounded-lg px-3.5 py-2.5 transition-colors ${
-                  current ? "bg-omni/50 text-white" : "hover:bg-white/[0.07]"
+                  current ? "bg-omni/50 text-white" : "hover:bg-veil/[0.07]"
                 }`}
               >
                 <span className="block text-sm">{s.label}</span>

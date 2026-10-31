@@ -194,7 +194,7 @@ export default function PublishForm() {
             void acceptFile(e.dataTransfer.files?.[0]);
           }}
           className={`relative w-full rounded-2xl border-2 border-dashed transition-colors overflow-hidden text-left cursor-pointer ${
-            dragOver ? "border-azure bg-omni/20" : "border-white/15 hover:border-azure/50 bg-white/[0.03]"
+            dragOver ? "border-azure bg-omni/20" : "border-veil/15 hover:border-azure/50 bg-veil/[0.03]"
           } ${coverPreview ? "aspect-[5/6]" : "aspect-[5/4]"}`}
         >
           {coverPreview ? (

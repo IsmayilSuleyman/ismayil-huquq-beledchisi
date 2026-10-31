@@ -148,7 +148,7 @@ export default function ManageIssues() {
       {issues.map((issue) => (
         <div key={issue.id} className="olg-glass rounded-xl overflow-hidden">
           <div className="p-4 flex items-center gap-4">
-            <div className="w-12 h-[3.75rem] shrink-0 rounded-md overflow-hidden bg-omni-ink border border-white/10">
+            <div className="w-12 h-[3.75rem] shrink-0 rounded-md overflow-hidden bg-omni-ink border border-veil/10">
               {issue.cover_path ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img

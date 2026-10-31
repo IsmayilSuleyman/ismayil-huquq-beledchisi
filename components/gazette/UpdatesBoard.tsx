@@ -213,7 +213,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
               onClick={() => void changeView(key, showAll)}
               aria-pressed={filter === key}
               className={`olg-chip transition-colors cursor-pointer ${
-                filter === key ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"
+                filter === key ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-veil/10"
               }`}
             >
               {key === "all" ? "Everything" : SECTION_SHORT[key]}
@@ -422,7 +422,7 @@ function ActPanel({
 
   return (
     <div className="fixed inset-0 z-50" role="presentation">
-      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
+      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-background/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
       <div
         ref={panel}
         tabIndex={-1}
@@ -431,7 +431,7 @@ function ActPanel({
         aria-labelledby={titleId}
         className={`${closing ? "olg-sheet-out" : "olg-sheet"} olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none`}
       >
-        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b olg-hairline bg-[#0a1120]/80 backdrop-blur">
+        <div className="sticky top-0 z-10 flex items-center justify-between gap-3 px-5 sm:px-7 py-4 border-b olg-hairline bg-surface/80 backdrop-blur">
           <span className={`olg-note-label olg-note-${act.section} inline-flex items-center gap-2`}>
             <span className="olg-note-swatch inline-block w-2 h-2 rounded-full" aria-hidden />
             {SECTION_LABEL[act.section]}
@@ -636,7 +636,7 @@ function SuggestPanel({
 
   return (
     <div className="fixed inset-0 z-50" role="presentation">
-      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
+      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-background/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
       <div
         ref={panel}
         tabIndex={-1}
@@ -645,7 +645,7 @@ function SuggestPanel({
         aria-labelledby="suggest-title"
         className={`${closing ? "olg-sheet-out" : "olg-sheet"} olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none`}
       >
-        <div className="sticky top-0 z-10 px-5 sm:px-7 pt-4 pb-3.5 border-b olg-hairline bg-[#0a1120]/80 backdrop-blur">
+        <div className="sticky top-0 z-10 px-5 sm:px-7 pt-4 pb-3.5 border-b olg-hairline bg-surface/80 backdrop-blur">
           <div className="flex items-center justify-between gap-3">
             <h3 id="suggest-title" className="font-serif text-xl">
               Suggest a note
@@ -664,7 +664,7 @@ function SuggestPanel({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search the acts"
             aria-label="Search the acts"
-            className="mt-3 w-full rounded-xl bg-white/5 border border-white/[0.12] px-3.5 py-2 text-sm text-foreground placeholder:text-silver/70 outline-none focus:border-azure/60"
+            className="mt-3 w-full rounded-xl bg-veil/5 border border-veil/[0.12] px-3.5 py-2 text-sm text-foreground placeholder:text-silver/70 outline-none focus:border-azure/60"
           />
           {message && (
             <p role="status" className="mt-2.5 text-xs text-azure-soft">
@@ -694,7 +694,7 @@ function SuggestPanel({
                         type="button"
                         disabled={busy !== null}
                         onClick={() => choose(null)}
-                        className="text-xs text-silver hover:text-white disabled:opacity-50"
+                        className="text-xs text-silver hover:text-foreground disabled:opacity-50"
                       >
                         {busy === act.id ? "…" : "Withdraw"}
                       </button>

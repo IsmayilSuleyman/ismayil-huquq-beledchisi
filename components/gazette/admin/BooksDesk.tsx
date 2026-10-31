@@ -249,7 +249,7 @@ export default function BooksDesk() {
 
         <label
           className={`block rounded-xl border border-dashed px-5 py-6 text-center cursor-pointer transition-colors mb-5 ${
-            file ? "border-azure/50 bg-omni/20" : "border-white/20 hover:border-azure/40 hover:bg-white/[0.03]"
+            file ? "border-azure/50 bg-omni/20" : "border-veil/20 hover:border-azure/40 hover:bg-veil/[0.03]"
           }`}
         >
           <input
@@ -300,7 +300,7 @@ export default function BooksDesk() {
           books.map((book) => (
             <div key={book.id} className="olg-glass rounded-xl overflow-hidden">
               <div className="p-4 flex items-center gap-4">
-                <div className="w-12 h-16 shrink-0 rounded-md overflow-hidden bg-omni-ink border border-white/10">
+                <div className="w-12 h-16 shrink-0 rounded-md overflow-hidden bg-omni-ink border border-veil/10">
                   {book.cover_path && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img src={publicUrl(book.cover_path)} alt="" className="w-full h-full object-cover object-top" loading="lazy" />

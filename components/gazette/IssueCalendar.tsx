@@ -72,7 +72,7 @@ export default function IssueCalendar({ issues, onClose }: { issues: Issue[]; on
 
   return (
     <div className="fixed inset-0 z-50 grid place-items-center p-4" role="presentation">
-      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
+      <button type="button" aria-label="Close" onClick={close} className={`absolute inset-0 bg-background/70 backdrop-blur-sm cursor-default ${closing ? "olg-fade-out" : "olg-fade-in"}`} />
       <div
         ref={dialog}
         tabIndex={-1}
@@ -108,7 +108,7 @@ export default function IssueCalendar({ issues, onClose }: { issues: Issue[]; on
                 type="button"
                 onClick={() => goTo(year === last.y ? last : year === first.y ? first : { y: year, m: 0 })}
                 aria-pressed={year === y}
-                className={`olg-chip cursor-pointer transition-colors ${year === y ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-white/10"}`}
+                className={`olg-chip cursor-pointer transition-colors ${year === y ? "!bg-omni/70 !border-azure/50 !text-white" : "hover:bg-veil/10"}`}
               >
                 {year}
               </button>
@@ -158,7 +158,7 @@ export default function IssueCalendar({ issues, onClose }: { issues: Issue[]; on
                   <li key={issue.id}>
                     <Link
                       href={`/issues/${issue.issue_number}`}
-                      className="flex items-baseline gap-3 rounded-xl px-3 py-2 hover:bg-white/[0.06] transition-colors"
+                      className="flex items-baseline gap-3 rounded-xl px-3 py-2 hover:bg-veil/[0.06] transition-colors"
                     >
                       <span className="text-xs text-azure-soft tabular-nums shrink-0">No. {issue.issue_number}</span>
                       <span className="text-sm text-foreground/85 truncate grow">{issue.title}</span>
