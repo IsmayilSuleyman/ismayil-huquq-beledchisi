@@ -2,14 +2,18 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { formatBytes } from "@/lib/gazette/format";
+import { formatBytes, formatDate } from "@/lib/gazette/format";
 import { analyzePdf } from "@/lib/gazette/pdf-analyze";
+import { describeSend } from "@/lib/gazette/push-topics";
 import { GAZETTE_BUCKET, getBrowserSupabase, publicUrl } from "@/lib/gazette/supabase";
 import type { Book } from "@/lib/gazette/types";
 
 // The admin desk's Books tab: add a book (PDF, title, author, year,
 // description, topics) and edit or delete the ones on the shelf. Files go to
-// the gazette bucket under books/; the cover is the PDF's first page.
+// the gazette bucket under books/; the cover is the PDF's first page. A new
+// book can be announced to the browsers subscribed to books (the bell's
+// "Books" topic): the desk offers it right after the upload, and each book
+// keeps a Notify button.
 
 const MAX_PDF_BYTES = 50 * 1024 * 1024;
 
@@ -113,11 +117,47 @@ export default function BooksDesk() {
   const [editFields, setEditFields] = useState<Fields>(EMPTY);
   const [busy, setBusy] = useState<string | null>(null);
   const [listError, setListError] = useState<string | null>(null);
+  const [listNotice, setListNotice] = useState<string | null>(null);
+  // book id → when subscribers were notified of it
+  const [sent, setSent] = useState<Record<string, string>>({});
 
   async function load() {
     const { data, error: err } = await supabase.from("books").select("*").order("created_at", { ascending: false });
     if (err) setListError(err.message);
     setBooks((data as Book[]) ?? []);
+    const sends = await supabase.from("push_sends").select("ref,sent_at").eq("kind", "book");
+    setSent(Object.fromEntries((sends.data ?? []).map((r) => [r.ref as string, r.sent_at as string])));
+  }
+
+  /** Sends the book's notice; `ask` first confirms with the editor. */
+  async function notify(book: Pick<Book, "id" | "title">, ask = true) {
+    const again = Boolean(sent[book.id]);
+    if (
+      ask &&
+      !confirm(
+        again
+          ? `Subscribers were already told about “${book.title}” on ${formatDate(sent[book.id])}. Send the notification again?`
+          : `Send a notification about “${book.title}” to everyone subscribed to new books?`,
+      )
+    )
+      return;
+    setBusy(book.id);
+    setListError(null);
+    setListNotice(null);
+    const { data: auth } = await supabase.auth.getSession();
+    const res = await fetch("/api/gazette/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${auth.session?.access_token ?? ""}` },
+      body: JSON.stringify({ kind: "book", ref: book.id, force: again }),
+    });
+    const body = await res.json().catch(() => ({}));
+    setBusy(null);
+    if (!res.ok) {
+      setListError(`Notify failed: ${body.error ?? res.status}`);
+      return;
+    }
+    setListNotice(`“${book.title}”: ${describeSend(body)}.`);
+    await load();
   }
 
   useEffect(() => {
@@ -182,13 +222,17 @@ export default function BooksDesk() {
       }
 
       setStep("Saving…");
-      const { error: insertErr } = await supabase.from("books").insert({
-        ...row,
-        pdf_path: pdfPath,
-        cover_path: coverPath,
-        page_count: pageCount,
-        file_size_bytes: file.size,
-      });
+      const { data: inserted, error: insertErr } = await supabase
+        .from("books")
+        .insert({
+          ...row,
+          pdf_path: pdfPath,
+          cover_path: coverPath,
+          page_count: pageCount,
+          file_size_bytes: file.size,
+        })
+        .select("id,title")
+        .single();
       if (insertErr) throw new Error(insertErr.message);
 
       setAdded(row.title);
@@ -198,6 +242,9 @@ export default function BooksDesk() {
       setFields(EMPTY);
       if (fileInput.current) fileInput.current.value = "";
       await load();
+      if (inserted && confirm(`“${row.title}” is on the shelf. Tell the readers subscribed to new books?`)) {
+        await notify(inserted as Pick<Book, "id" | "title">, false);
+      }
     } catch (err) {
       if (uploaded.length) await storage.remove(uploaded).catch(() => {});
       setError(err instanceof Error ? err.message : "Saving failed. Please try again.");
@@ -292,6 +339,7 @@ export default function BooksDesk() {
 
       <div className="space-y-3">
         {listError && <p className="text-sm text-red-300">{listError}</p>}
+        {listNotice && <p className="text-sm text-emerald-300">{listNotice}</p>}
         {books === null ? (
           [0, 1, 2].map((i) => <div key={i} className="olg-skeleton h-20 rounded-xl" />)
         ) : books.length === 0 ? (
@@ -318,6 +366,14 @@ export default function BooksDesk() {
                   <Link href={`/books/${book.id}`} className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs">
                     View
                   </Link>
+                  <button
+                    className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs"
+                    disabled={busy === book.id}
+                    title={sent[book.id] ? `Notified ${formatDate(sent[book.id])}; send again` : "Send a push notification to subscribers"}
+                    onClick={() => void notify(book)}
+                  >
+                    {sent[book.id] ? "Notified ✓" : "Notify"}
+                  </button>
                   <button
                     className="olg-btn olg-btn-ghost !px-3 !py-2 text-xs"
                     onClick={() => (editing === book.id ? setEditing(null) : startEdit(book))}

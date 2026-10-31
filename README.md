@@ -43,7 +43,11 @@ The site shares one Supabase project with the gazette (the
 - `publisher_emails` and the `is_publisher()` policies — the account the
   automated gazette publishes as (section 4;
   `supabase/migrations/20261030120000_gazette_publisher.sql`, already
-  applied).
+  applied);
+- `court_summaries` — the Constitutional Court summaries the daily routine
+  publishes (section 4; `supabase/migrations/20261031210000_court_summaries.sql`,
+  applied on 31 October 2026); their Word files go to the `gazette` bucket
+  under `summaries/`.
 
 Steps for a fresh project would be: create it, run the migration in
 **SQL Editor**, then configure Google sign-in below.
@@ -89,7 +93,8 @@ runs, but shows a "setup pending" notice instead of the Google button.
 
 `npm install` also copies the pdf.js worker into `public/` (`postinstall`);
 the gazette's issue viewer needs it. The gazette's weekly tooling lives in
-`scripts/gazette/` (section 4); `scripts/gazettes/` keeps the hand-made
+`scripts/gazette/` and the Court summaries' daily tooling in
+`scripts/summaries/` (section 4); `scripts/gazettes/` keeps the hand-made
 drafts of the early issues.
 
 `.npmrc` sets `legacy-peer-deps=true`: the Tailwind 3 / Vitest 4 dependency
@@ -207,25 +212,68 @@ stored, so they have no notes; issues 1–12 are in that position.
 reference books as PDFs, read in the same viewer as the issues or
 downloaded. Add, edit and delete them in the admin desk's **Books** tab; the
 first page becomes the cover. The header's **Library** menu switches
-between Gazette and Books. Table and policies:
+between Gazette, Summaries and Books. Table and policies:
 `supabase/migrations/20261030200000_books.sql` (applied on 30 October
 2026); files go to the `gazette` bucket under `books/`.
 
 **Notifications.** Readers tap the bell in the gazette header to get a
-browser notification for every new issue; no account needed. On iPhone and
-iPad, Apple allows this only once the site is added to the home screen
-(`app/manifest.ts`), and the bell says so. `gazette:publish` notifies the
-subscribers right after the issue goes live; for an issue uploaded from the
-admin desk, press **Notify** next to it under Manage issues. Each issue is
-announced once (`push_sends`); Notify asks before sending again.
-`lib/gazette/push.ts` sends, `public/sw.js` shows the notice and opens the
-issue. The tables and functions are in
-`supabase/migrations/20261030180000_gazette_push.sql` (applied on 30
-October 2026). The signing keys are made once, in the browser, by
+browser notification for what is new in the library; no account needed.
+The bell's menu lets each browser choose which of the three shelves it
+hears about — **Gazette issues**, **Court summaries**, **Books** — all
+three by default (`push_subscriptions.topics`; a browser already
+subscribed before the choice existed keeps all three). On iPhone and iPad,
+Apple allows push only once the site is added to the home screen
+(`app/manifest.ts`), and the bell says so. `gazette:publish` and
+`summaries:publish` notify the subscribers of their topic right after the
+issue or summary goes live; for an issue, a summary or a book handled in the
+admin desk, press **Notify** beside it (the Books tab also offers it right
+after an upload). Each notice goes out once (`push_sends`, keyed by kind and
+reference); Notify asks before sending again. `lib/gazette/push.ts` sends,
+`public/sw.js` shows the notice and opens the page. The tables and
+functions are in `supabase/migrations/20261030180000_gazette_push.sql`
+(applied on 30 October 2026) and `20261031220000_push_topics.sql` (applied
+on 31 October 2026). The signing keys are made once, in the browser, by
 **Settings → Notifications → Turn on notifications** in the admin desk: the
 private key goes straight into `push_config`, which only admins and the
 publisher can read, and is never in the repository. The bell stays hidden
 until then.
+
+**Constitutional Court summaries.** The gazette's third shelf, at
+`/summaries`: one page per Plenum decision that matters to the firm's
+clients, with the Court's positions quoted verbatim in Azerbaijani under an
+English topic line, the summariser's underline and bold kept, and a Word
+file to download (the firm's header band, the decision named and linked,
+an "AI-generated" notice, no email frame). A second Claude Routine writes
+them every morning at 08:55 Baku time, with no review step, following
+`scripts/summaries/ROUTINE.md` (when and how to run) and
+`scripts/summaries/STYLE.md` (the method: which decisions pass, which
+passages to take, how to edit and emphasise them, the self-check). The
+method was reconstructed from Elgun Jafarov's "new decision" emails of
+2023–2026, compared against the decisions' full text. Each run:
+
+1. `npm run summaries:collect` lists the Plenum acts constcourt.gov.az
+   posted in the last 30 days and marks those already on the shelf; for
+   the rest it says whether the act is a Qərar or a Qərardad and how long it
+   is. `npm run gazette:read -- <url>` prints the full text.
+2. Claude applies the filter (would a client or a litigator change what
+   they do because of this decision?), reads the whole decision, writes the
+   topic line and picks the passages, and saves the draft as JSON
+   (`scripts/summaries/draft.ts`; `tests/fixtures/summaries/draft.json` is
+   the approved example). Emphasis is written as marks in the text:
+   `**bold**`, `__underline__`, `*italic*` (`lib/gazette/marks.ts`).
+3. `npm run summaries:publish -- draft.json --dry-run` checks the draft
+   (shape, dates, marks balanced, no email frame, two to twelve bullets, the
+   quoted length in the method's range; warnings for lead-ins and citations
+   the method deletes) and writes the Word file (`scripts/summaries/docx.ts`)
+   without uploading.
+4. Without `--dry-run` it signs in as the publisher account, uploads the
+   Word file, inserts the `court_summaries` row (the page renders the same
+   blocks) and notifies the browsers subscribed to court summaries. A
+   decision that already has a summary is left alone. Admins see the shelf
+   in the admin desk's **Summaries** tab, with Notify and Delete.
+
+The daily routine uses the gazette's publisher account and credentials
+(one-time setup above), so nothing more was needed to set it up.
 
 ## 5. Adding a course
 
