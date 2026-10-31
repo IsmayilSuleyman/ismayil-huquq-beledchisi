@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
 
 // The bell in the gazette header: subscribes this browser to a push notice
@@ -8,6 +8,8 @@ import { getBrowserSupabase } from "@/lib/gazette/supabase";
 // No account needed; the subscription is stored through the push_subscribe
 // function (see the gazette_push migration). The bell stays hidden until an
 // admin has set notifications up (Settings → Notifications in /admin).
+// Once on, the bell "docks": it slides past the Admin pill to the far right
+// of the header and shrinks to just the icon.
 
 type State = "hidden" | "off" | "on" | "busy" | "denied" | "install";
 
@@ -30,6 +32,9 @@ function needsHomeScreen() {
   return ios && !standalone;
 }
 
+/** How long the lit-up "Notifications on" pill stays put before it docks. */
+const DOCK_DELAY_MS = 1400;
+
 async function currentSubscription() {
   const reg = await navigator.serviceWorker.getRegistration("/");
   return reg ? reg.pushManager.getSubscription() : null;
@@ -39,6 +44,40 @@ export default function NotifyButton() {
   const [state, setState] = useState<State>("hidden");
   const [note, setNote] = useState<string | null>(null);
   const [vapidKey, setVapidKey] = useState<string | null>(null);
+  const [docked, setDocked] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  // Where the header's items sat just before a dock/undock, for the slide.
+  const before = useRef<Map<Element, number> | null>(null);
+  const dockTimer = useRef<number | undefined>(undefined);
+
+  function changeDock(next: boolean) {
+    const items = rootRef.current?.parentElement?.children;
+    before.current = items ? new Map(Array.from(items, (el) => [el, el.getBoundingClientRect().left])) : null;
+    setDocked(next);
+  }
+
+  // FLIP: every header item starts where it was and glides to its new spot;
+  // the bell itself overshoots a touch so it pops into place.
+  useLayoutEffect(() => {
+    const from = before.current;
+    before.current = null;
+    if (!from || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    for (const [el, left] of from) {
+      const dx = left - el.getBoundingClientRect().left;
+      if (!dx) continue;
+      const frames =
+        el === rootRef.current
+          ? [
+              { transform: `translateX(${dx}px) scale(1)` },
+              { transform: "translateX(0) scale(1.18)", offset: 0.75 },
+              { transform: "translateX(0) scale(1)" },
+            ]
+          : [{ transform: `translateX(${dx}px)` }, { transform: "translateX(0)" }];
+      el.animate(frames, { duration: 600, easing: "cubic-bezier(0.22, 0.9, 0.3, 1)" });
+    }
+  }, [docked]);
+
+  useEffect(() => () => window.clearTimeout(dockTimer.current), []);
 
   useEffect(() => {
     let cancelled = false;
@@ -52,7 +91,10 @@ export default function NotifyButton() {
       }
       if (Notification.permission === "denied") return setState("denied");
       const sub = await currentSubscription().catch(() => null);
-      if (!cancelled) setState(sub && Notification.permission === "granted" ? "on" : "off");
+      if (cancelled) return;
+      const on = !!sub && Notification.permission === "granted";
+      setState(on ? "on" : "off");
+      setDocked(on);
     })();
     return () => {
       cancelled = true;
@@ -84,7 +126,8 @@ export default function NotifyButton() {
         throw new Error(error.message);
       }
       setState("on");
-      setNote("Done. You’ll get a notification when a new issue is out.");
+      setNote("Thank you for enabling notifications, which you’ll receive once the newer issue is available.");
+      dockTimer.current = window.setTimeout(() => changeDock(true), DOCK_DELAY_MS);
     } catch (e) {
       setState("off");
       setNote(`Couldn’t turn notifications on: ${(e as Error).message}`);
@@ -92,6 +135,7 @@ export default function NotifyButton() {
   }
 
   async function unsubscribe() {
+    window.clearTimeout(dockTimer.current);
     setState("busy");
     setNote(null);
     try {
@@ -101,6 +145,7 @@ export default function NotifyButton() {
         await sub.unsubscribe();
       }
       setState("off");
+      changeDock(false);
       setNote("Notifications are off for this browser.");
     } catch (e) {
       setState("on");
@@ -126,7 +171,7 @@ export default function NotifyButton() {
   const title = on ? "You’ll be notified of new issues. Tap to turn off." : "Get a notification when a new issue is out";
 
   return (
-    <div className="relative shrink-0">
+    <div ref={rootRef} className={`relative shrink-0 ${docked ? "order-last" : ""}`}>
       <button
         type="button"
         onClick={onClick}
@@ -134,7 +179,9 @@ export default function NotifyButton() {
         title={title}
         aria-label={title}
         aria-pressed={on}
-        className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors disabled:opacity-60 ${
+        className={`inline-flex items-center gap-1.5 py-2 rounded-lg transition-colors duration-500 disabled:opacity-60 ${
+          docked ? "px-2.5" : "px-3"
+        } ${
           on ? "text-azure-soft bg-omni/40 hover:bg-omni/60" : "text-silver hover:text-white hover:bg-white/[0.08]"
         }`}
       >
@@ -148,12 +195,12 @@ export default function NotifyButton() {
           <path d="M10 19.5a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
           {state === "denied" && <path d="M4 4l16 16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />}
         </svg>
-        <span className="hidden md:inline">{state === "busy" ? "…" : label}</span>
+        {!docked && <span className="hidden md:inline">{state === "busy" ? "…" : label}</span>}
       </button>
       {note && (
         <div
           role="status"
-          className="absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] olg-glass-deep rounded-xl p-3.5 text-xs leading-relaxed text-foreground/85 z-50"
+          className="olg-rise absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] olg-glass-deep rounded-xl p-3.5 text-xs leading-relaxed text-foreground/85 z-50"
         >
           {note}
           <button
