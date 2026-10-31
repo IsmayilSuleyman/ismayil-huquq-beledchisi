@@ -74,3 +74,11 @@ drop trigger if exists court_summaries_touch_updated_at on public.court_summarie
 create trigger court_summaries_touch_updated_at
   before update on public.court_summaries
   for each row execute function public.touch_updated_at();
+
+-- The bucket was created for PDFs and images; the summaries are Word files.
+update storage.buckets
+set allowed_mime_types = array[
+  'application/pdf', 'image/png', 'image/webp', 'image/jpeg',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+]
+where id = 'gazette';
