@@ -134,6 +134,8 @@ export type GazetteAct = {
   /** Readers' votes on how important the act is, 1–5 stars each (migration 20261031150000). */
   rating_count: number;
   rating_sum: number;
+  /** Readers who suggested the act for the board, one suggestion each (migration 20261031180000). */
+  suggestion_count: number;
 };
 
 /** Readers can vote an act off the board: this many votes averaging under this many stars. */
@@ -181,6 +183,32 @@ export function pickBoard<T extends Pickable>(acts: T[], limit = BOARD_LIMIT): T
       (a, b) =>
         boardScore(b) - boardScore(a) ||
         b.rating_count - a.rating_count ||
+        b.date.localeCompare(a.date) ||
+        SECTION_RANK[a.section] - SECTION_RANK[b.section] ||
+        b.issue_number - a.issue_number ||
+        a.position - b.position,
+    )
+    .slice(0, limit);
+}
+
+/** Beside the picks, the board shows at most this many acts readers suggested. */
+export const SUGGESTION_LIMIT = 4;
+
+type Suggestable = Pickable & Pick<GazetteAct, "id" | "suggestion_count">;
+
+/**
+ * The readers' suggestions shown beside the picks: acts at least one reader
+ * suggested that are not already picked and not voted off, the most
+ * suggested first, then the newest. An act outside the desk's key areas
+ * may be suggested; that is the point of it.
+ */
+export function pickSuggested<T extends Suggestable>(acts: T[], picks: T[], limit = SUGGESTION_LIMIT): T[] {
+  const picked = new Set(picks.map((a) => a.id));
+  return acts
+    .filter((a) => a.suggestion_count > 0 && !picked.has(a.id) && !ratedOff(a))
+    .sort(
+      (a, b) =>
+        b.suggestion_count - a.suggestion_count ||
         b.date.localeCompare(a.date) ||
         SECTION_RANK[a.section] - SECTION_RANK[b.section] ||
         b.issue_number - a.issue_number ||

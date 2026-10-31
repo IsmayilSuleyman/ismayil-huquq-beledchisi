@@ -8,6 +8,7 @@ import {
   averageStars,
   BOARD_LIMIT,
   pickBoard,
+  pickSuggested,
   RATING_MIN_AVERAGE,
   RATING_MIN_VOTES,
   ratedOff,
@@ -27,11 +28,14 @@ import { getBrowserSupabase } from "@/lib/gazette/supabase";
 // by readers, not voted off), every one a button that opens the act in a
 // side panel with its source, its issue and a five-star vote on how much
 // it matters. A note's link (#act=<id>) opens the same panel on arrival,
-// so a lawyer can send a colleague one act.
+// so a lawyer can send a colleague one act. The + note at the end lets a
+// reader suggest one act the picks left out; the most suggested ones join
+// the board beside the picks (suggest_act, migration 20261031180000).
 
 const HASH_KEY = "act";
 const VOTER_KEY = "olg-voter";
 const VOTE_KEY = (id: string) => `olg-rating:${id}`;
+const SUGGESTION_KEY = "olg-suggestion";
 
 type Filter = "all" | ActSection;
 
@@ -87,13 +91,37 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
   const [openId, setOpenId] = useState<string | null>(null);
   // Votes made in this page view, on top of what the server rendered.
   const [ratings, setRatings] = useState<Record<string, Rating>>({});
+  // Suggestion counts changed in this page view, and this reader's own suggestion.
+  const [suggestions, setSuggestions] = useState<Record<string, number>>({});
+  const [mySuggestion, setMySuggestion] = useState<string | null>(null);
+  const [suggesting, setSuggesting] = useState(false);
   const lastNote = useRef<HTMLElement | null>(null);
 
-  const current = useMemo(() => acts.map((a) => (ratings[a.id] ? { ...a, ...ratings[a.id] } : a)), [acts, ratings]);
+  useEffect(() => {
+    const saved = stored(SUGGESTION_KEY);
+    if (saved && acts.some((a) => a.id === saved)) setMySuggestion(saved);
+  }, [acts]);
+
+  const current = useMemo(
+    () =>
+      acts.map((a) => {
+        const rated = ratings[a.id] ? { ...a, ...ratings[a.id] } : a;
+        return a.id in suggestions ? { ...rated, suggestion_count: suggestions[a.id] } : rated;
+      }),
+    [acts, ratings, suggestions],
+  );
   const picks = useMemo(() => pickBoard(current), [current]);
   const pickIds = useMemo(() => new Set(picks.map((a) => a.id)), [picks]);
+  const suggested = useMemo(() => pickSuggested(current, picks), [current, picks]);
+  const suggestedIds = useMemo(() => new Set(suggested.map((a) => a.id)), [suggested]);
+  const board = useMemo(() => [...picks, ...suggested], [picks, suggested]);
+  // What a reader may suggest: every act of the window not on the board, plus their own suggestion.
+  const candidates = useMemo(
+    () => current.filter((a) => a.id === mySuggestion || (!pickIds.has(a.id) && !suggestedIds.has(a.id))),
+    [current, pickIds, suggestedIds, mySuggestion],
+  );
 
-  const pool = showAll ? current : picks;
+  const pool = showAll ? current : board;
   const shown = useMemo(() => (filter === "all" ? pool : pool.filter((a) => a.section === filter)), [pool, filter]);
 
   const counts = useMemo(() => {
@@ -134,6 +162,16 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
     store(VOTE_KEY(id), String(stars));
   }, []);
 
+  /** Sets this reader's one suggestion, or withdraws it with null. */
+  const suggest = useCallback(async (id: string | null) => {
+    const { data, error } = await getBrowserSupabase().rpc("suggest_act", { p_act: id, p_voter: voterToken() });
+    if (error) throw new Error(error.message);
+    const rows = (Array.isArray(data) ? data : [data]) as { id: string; suggestion_count: number }[];
+    setSuggestions((s) => ({ ...s, ...Object.fromEntries(rows.filter(Boolean).map((row) => [row.id, row.suggestion_count])) }));
+    setMySuggestion(id);
+    store(SUGGESTION_KEY, id ?? "");
+  }, []);
+
   const openIndex = openId ? shown.findIndex((a) => a.id === openId) : -1;
   const openAct = openIndex >= 0 ? shown[openIndex] : (current.find((a) => a.id === openId) ?? null);
   const prev = openIndex > 0 ? shown[openIndex - 1] : null;
@@ -158,7 +196,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
             </button>
           ))}
         </div>
-        {acts.length > picks.length && (
+        {acts.length > board.length && (
           <label className="inline-flex items-center gap-2 text-xs text-silver cursor-pointer select-none">
             <input
               type="checkbox"
@@ -172,7 +210,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
       </div>
 
       <div className="olg-board">
-        {shown.length === 0 ? (
+        {shown.length === 0 && candidates.length === 0 ? (
           <p className="relative text-center text-sm text-silver py-10">Nothing on the board for this filter.</p>
         ) : (
           <ul className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
@@ -185,7 +223,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                     onClick={(e) => open(act.id, e.currentTarget)}
                     aria-haspopup="dialog"
                     aria-expanded={openId === act.id}
-                    className={`olg-note olg-note-${act.section} ${pickIds.has(act.id) ? "" : "olg-note-dim"}`}
+                    className={`olg-note olg-note-${act.section} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
                   >
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="olg-note-label">{actLabel(act)}</span>
@@ -196,7 +234,16 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                     </span>
                     <span className="mt-3 flex items-end justify-between gap-2">
                       <span className="flex flex-wrap gap-1">
-                        {act.topics.slice(0, 2).map((t) => (
+                        {suggestedIds.has(act.id) && (
+                          <span
+                            className="olg-note-suggested"
+                            title={`${act.suggestion_count} reader${act.suggestion_count === 1 ? "" : "s"} suggested it`}
+                          >
+                            {act.id === mySuggestion ? "Your pick" : "Suggested"}
+                            {act.suggestion_count > 1 ? ` · ${act.suggestion_count}` : ""}
+                          </span>
+                        )}
+                        {act.topics.slice(0, suggestedIds.has(act.id) ? 1 : 2).map((t) => (
                           <span key={t} className="olg-note-tag">
                             {TOPIC_LABEL[t]}
                           </span>
@@ -218,6 +265,30 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                 </li>
               );
             })}
+            {candidates.length > 0 && (
+              <li className="flex">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    lastNote.current = e.currentTarget;
+                    setSuggesting(true);
+                  }}
+                  aria-haspopup="dialog"
+                  aria-expanded={suggesting}
+                  className="olg-note olg-note-add"
+                >
+                  <span className="olg-note-plus" aria-hidden>
+                    +
+                  </span>
+                  <span className="text-sm text-foreground/85">Suggest a note</span>
+                  <span className="text-xs leading-relaxed max-w-[15rem]">
+                    {mySuggestion
+                      ? "You have suggested an act. Tap to change it."
+                      : "Pin one important act the picks missed."}
+                  </span>
+                </button>
+              </li>
+            )}
           </ul>
         )}
       </div>
@@ -226,10 +297,28 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
         <ActPanel
           act={openAct}
           picked={pickIds.has(openAct.id)}
+          suggested={suggestedIds.has(openAct.id)}
           onClose={close}
           onPrev={prev ? () => open(prev.id) : null}
           onNext={next ? () => open(next.id) : null}
           onRate={rate}
+        />
+      )}
+
+      {suggesting && (
+        <SuggestPanel
+          candidates={candidates}
+          mine={mySuggestion}
+          days={days}
+          onSuggest={suggest}
+          onOpen={(id) => {
+            setSuggesting(false);
+            open(id);
+          }}
+          onClose={() => {
+            setSuggesting(false);
+            lastNote.current?.focus();
+          }}
         />
       )}
     </div>
@@ -242,8 +331,11 @@ function shortDate(iso: string): string {
 }
 
 /** Why a note is not among the picks, for the panel's footnote. */
-function offBoardReason(act: GazetteAct, picked: boolean): string | null {
+function offBoardReason(act: GazetteAct, picked: boolean, suggested: boolean): string | null {
   if (picked) return null;
+  if (suggested) {
+    return `Readers put this act on the board: ${act.suggestion_count} suggested it with the + note.`;
+  }
   if (!act.important) return "This act is off the board by default: it falls outside the desk’s key areas.";
   if (ratedOff(act)) {
     return `Readers took this act off the board: ${act.rating_count} rated it, averaging under ${RATING_MIN_AVERAGE} stars.`;
@@ -254,6 +346,7 @@ function offBoardReason(act: GazetteAct, picked: boolean): string | null {
 function ActPanel({
   act,
   picked,
+  suggested,
   onClose,
   onPrev,
   onNext,
@@ -261,6 +354,7 @@ function ActPanel({
 }: {
   act: GazetteAct;
   picked: boolean;
+  suggested: boolean;
   onClose: () => void;
   onPrev: (() => void) | null;
   onNext: (() => void) | null;
@@ -298,7 +392,7 @@ function ActPanel({
   }
 
   const titleId = `act-title-${act.id}`;
-  const reason = offBoardReason(act, picked);
+  const reason = offBoardReason(act, picked, suggested);
 
   return (
     <div className="fixed inset-0 z-50" role="presentation">
@@ -456,6 +550,146 @@ function StarRating({ act, onRate }: { act: GazetteAct; onRate: (id: string, sta
               ? `You rated it ${mine} star${mine === 1 ? "" : "s"}. Tap a star to change it.`
               : `${RATING_MIN_VOTES} or more readers averaging under ${RATING_MIN_AVERAGE} take an act off the board.`}
         </p>
+      </div>
+    </div>
+  );
+}
+
+/** The + note's sheet: the acts the board left out, one of which this reader may suggest. */
+function SuggestPanel({
+  candidates,
+  mine,
+  days,
+  onSuggest,
+  onOpen,
+  onClose,
+}: {
+  candidates: GazetteAct[];
+  mine: string | null;
+  days: number;
+  onSuggest: (id: string | null) => Promise<void>;
+  onOpen: (id: string) => void;
+  onClose: () => void;
+}) {
+  const panel = useRef<HTMLDivElement>(null);
+  const [query, setQuery] = useState("");
+  const [busy, setBusy] = useState<string | null>(null);
+  const [message, setMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    panel.current?.focus({ preventScroll: true });
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  // Your own suggestion first, then the board's usual order.
+  const list = useMemo(() => {
+    const q = query.trim().toLocaleLowerCase("az");
+    const hits = q
+      ? candidates.filter((a) => `${actLabel(a)} ${a.text}`.toLocaleLowerCase("az").includes(q))
+      : candidates;
+    return [...hits].sort((a, b) => Number(b.id === mine) - Number(a.id === mine));
+  }, [candidates, query, mine]);
+
+  async function choose(id: string | null) {
+    setBusy(id ?? mine);
+    setMessage(null);
+    try {
+      await onSuggest(id);
+      setMessage(id ? "Thank you. Your suggestion is in; the most suggested acts join the board." : "Your suggestion is withdrawn.");
+    } catch {
+      setMessage("Could not save your suggestion; try again.");
+    } finally {
+      setBusy(null);
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 z-50" role="presentation">
+      <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-[#05080f]/70 backdrop-blur-sm cursor-default" />
+      <div
+        ref={panel}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="suggest-title"
+        className="olg-sheet olg-glass-deep absolute inset-x-0 bottom-0 max-h-[88vh] rounded-t-3xl sm:top-0 sm:bottom-0 sm:right-0 sm:left-auto sm:max-h-none sm:w-[30rem] sm:rounded-none sm:rounded-l-3xl sm:border-r-0 overflow-y-auto overscroll-contain outline-none"
+      >
+        <div className="sticky top-0 z-10 px-5 sm:px-7 pt-4 pb-3.5 border-b olg-hairline bg-[#0a1120]/80 backdrop-blur">
+          <div className="flex items-center justify-between gap-3">
+            <h3 id="suggest-title" className="font-serif text-xl">
+              Suggest a note
+            </h3>
+            <button type="button" onClick={onClose} aria-label="Close" title="Close (Esc)" className="olg-btn olg-btn-ghost !px-2.5 !py-2">
+              ✕
+            </button>
+          </div>
+          <p className="mt-1.5 text-xs leading-relaxed text-silver">
+            {candidates.length} act{candidates.length === 1 ? "" : "s"} of the last {days} days didn&rsquo;t make the board. Pick the
+            one that matters most; you have one suggestion, and choosing another moves it.
+          </p>
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search the acts"
+            aria-label="Search the acts"
+            className="mt-3 w-full rounded-xl bg-white/5 border border-white/[0.12] px-3.5 py-2 text-sm text-foreground placeholder:text-silver/70 outline-none focus:border-azure/60"
+          />
+          {message && (
+            <p role="status" className="mt-2.5 text-xs text-azure-soft">
+              {message}
+            </p>
+          )}
+        </div>
+
+        <ul className="px-3 sm:px-4 py-3">
+          {list.length === 0 && <li className="px-3 py-8 text-center text-sm text-silver">No act matches.</li>}
+          {list.map((act) => {
+            const isMine = act.id === mine;
+            return (
+              <li key={act.id} className={`rounded-2xl px-3.5 py-3.5 ${isMine ? "bg-omni/30 border border-azure/30" : ""}`}>
+                <p className={`olg-note-${act.section} flex items-baseline justify-between gap-2`}>
+                  <span className="olg-note-label">{actLabel(act)}</span>
+                  <span className="text-[0.68rem] text-silver">{shortDate(act.date)}</span>
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-foreground/85 line-clamp-3" lang="az">
+                  {act.text}
+                </p>
+                <div className="mt-2.5 flex items-center gap-2 flex-wrap">
+                  {isMine ? (
+                    <>
+                      <span className="olg-note-suggested">Your suggestion ✓</span>
+                      <button
+                        type="button"
+                        disabled={busy !== null}
+                        onClick={() => choose(null)}
+                        className="text-xs text-silver hover:text-white disabled:opacity-50"
+                      >
+                        {busy === act.id ? "…" : "Withdraw"}
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={busy !== null}
+                      onClick={() => choose(act.id)}
+                      className="olg-btn olg-btn-ghost !py-1.5 !px-3 text-xs"
+                    >
+                      {busy === act.id ? "…" : "+ Suggest this act"}
+                    </button>
+                  )}
+                  <button type="button" onClick={() => onOpen(act.id)} className="text-xs text-azure hover:underline ml-auto">
+                    Read →
+                  </button>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </div>
   );

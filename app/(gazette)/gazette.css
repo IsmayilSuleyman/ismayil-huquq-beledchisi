@@ -390,6 +390,57 @@
   opacity: 1;
 }
 
+/* The + note: an empty, dashed slot that opens the readers' suggestions. */
+.olg-note-add {
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: transparent;
+  border: 1.5px dashed rgba(255, 255, 255, 0.18);
+  box-shadow: none;
+  color: var(--color-silver);
+}
+.olg-note-add::before,
+.olg-note-add::after {
+  display: none;
+}
+.olg-note-add:hover,
+.olg-note-add:focus-visible {
+  color: var(--foreground);
+  border-color: rgba(122, 162, 255, 0.55);
+  background: rgba(122, 162, 255, 0.06);
+  box-shadow: none;
+}
+.olg-note-plus {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: var(--color-azure-soft);
+  border: 1px solid rgba(122, 162, 255, 0.35);
+  background: rgba(29, 66, 135, 0.35);
+  transition: transform 0.25s;
+}
+.olg-note-add:hover .olg-note-plus,
+.olg-note-add:focus-visible .olg-note-plus {
+  transform: rotate(90deg);
+}
+/* A reader-suggested note wears a small badge in place of the tags' row start. */
+.olg-note-suggested {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.4);
+  background: rgba(29, 66, 135, 0.45);
+  color: var(--color-azure-soft);
+}
+
 @keyframes olg-sheet {
   from {
     opacity: 0;

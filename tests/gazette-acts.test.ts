@@ -7,6 +7,7 @@ import {
   classifyAct,
   onBoard,
   pickBoard,
+  pickSuggested,
   ratedOff,
   sortForBoard,
   sourceHost,
@@ -127,7 +128,7 @@ describe("board helpers", () => {
 });
 
 describe("ratings and the picks", () => {
-  const base = { important: true, section: "bills" as const, issue_number: 18, position: 1, rating_count: 0, rating_sum: 0 };
+  const base = { important: true, section: "bills" as const, issue_number: 18, position: 1, rating_count: 0, rating_sum: 0, suggestion_count: 0 };
 
   it("averages the stars, or has no average before the first vote", () => {
     expect(averageStars({ rating_count: 0, rating_sum: 0 })).toBeNull();
@@ -163,5 +164,19 @@ describe("ratings and the picks", () => {
     expect(picks.map((a) => a.id)).not.toContain("a1");
     expect(picks.slice(1).map((a) => a.id)).toEqual(["a14", "a13", "a12", "a11", "a10", "a9", "a8", "a7", "a6", "a5", "a4"]);
     expect(pickBoard(acts, 3).map((a) => a.id)).toEqual(["a0", "a14", "a13"]);
+  });
+
+  it("shows readers' suggestions beside the picks: not picked, not voted off, the most suggested first", () => {
+    const acts = [
+      { ...base, id: "picked", date: "2026-10-20", suggestion_count: 9 },
+      { ...base, id: "off-topic", important: false, date: "2026-10-05", suggestion_count: 2 },
+      { ...base, id: "newer", important: false, date: "2026-10-18", suggestion_count: 1 },
+      { ...base, id: "older", important: false, date: "2026-10-02", suggestion_count: 1 },
+      { ...base, id: "voted-off", date: "2026-10-19", suggestion_count: 5, rating_count: 2, rating_sum: 4 },
+      { ...base, id: "unsuggested", important: false, date: "2026-10-21" },
+    ];
+    const picks = acts.filter((a) => a.id === "picked");
+    expect(pickSuggested(acts, picks).map((a) => a.id)).toEqual(["off-topic", "newer", "older"]);
+    expect(pickSuggested(acts, picks, 1).map((a) => a.id)).toEqual(["off-topic"]);
   });
 });
