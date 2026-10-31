@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import IssueCalendar from "@/components/gazette/IssueCalendar";
 import IssueCard, { type IssueWithUrls } from "@/components/gazette/IssueCard";
+import { useFlip } from "@/components/gazette/useFlip";
 
 // The archive grid. Unsearched it shows only the two newest rows (how many
 // cards that is depends on the columns); the calendar finds any older
@@ -14,10 +15,10 @@ const MAX_COLUMNS = 4;
 
 /** Hides a card past the second row at the widths where it would fall there. */
 function rowClass(index: number): string {
-  if (index < ROWS_SHOWN * 1) return "contents";
-  if (index < ROWS_SHOWN * 2) return "hidden sm:contents";
-  if (index < ROWS_SHOWN * 3) return "hidden lg:contents";
-  return "hidden xl:contents";
+  if (index < ROWS_SHOWN * 1) return "flex";
+  if (index < ROWS_SHOWN * 2) return "hidden sm:flex";
+  if (index < ROWS_SHOWN * 3) return "hidden lg:flex";
+  return "hidden xl:flex";
 }
 
 const calendarIcon = (
@@ -52,6 +53,11 @@ export default function LibraryExplorer({ issues }: { issues: IssueWithUrls[] })
 
   const searching = query.trim() !== "";
   const shown = searching ? filtered : filtered.slice(0, ROWS_SHOWN * MAX_COLUMNS);
+
+  // As a search narrows or widens, the cards that stay glide into their new
+  // places; new cards already rise in on their own (IssueCard).
+  const grid = useRef<HTMLDivElement>(null);
+  useFlip(grid, `${searching}|${shown.map((i) => i.id).join(",")}`, { enter: false });
 
   return (
     <div>
@@ -94,16 +100,12 @@ export default function LibraryExplorer({ issues }: { issues: IssueWithUrls[] })
           <p className="text-sm text-silver">Try a different keyword or tag, or find the issue by date.</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {shown.map((issue, idx) =>
-            searching ? (
-              <IssueCard key={issue.id} issue={issue} index={idx} />
-            ) : (
-              <div key={issue.id} className={rowClass(idx)}>
-                <IssueCard issue={issue} index={idx} />
-              </div>
-            ),
-          )}
+        <div ref={grid} className="grid content-start grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {shown.map((issue, idx) => (
+            <div key={issue.id} data-flip={issue.id} className={`${searching ? "flex" : rowClass(idx)} [&>*]:w-full`}>
+              <IssueCard issue={issue} index={idx} />
+            </div>
+          ))}
         </div>
       )}
 
