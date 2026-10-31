@@ -8,8 +8,8 @@ import { getBrowserSupabase } from "@/lib/gazette/supabase";
 // No account needed; the subscription is stored through the push_subscribe
 // function (see the gazette_push migration). The bell stays hidden until an
 // admin has set notifications up (Settings → Notifications in /admin).
-// Once on, the bell "docks": it slides past the Admin pill to the far right
-// of the header and shrinks to just the icon.
+// Once on, the bell "docks": its label folds away, then it glides past the
+// Admin pill to the far right of the header as just the icon.
 
 type State = "hidden" | "off" | "on" | "busy" | "denied" | "install";
 
@@ -33,7 +33,12 @@ function needsHomeScreen() {
 }
 
 /** How long the lit-up "Notifications on" pill stays put before it docks. */
-const DOCK_DELAY_MS = 1400;
+const DOCK_DELAY_MS = 1600;
+/** The label folds away (and the note fades) for this long before the bell moves. */
+const FOLD_MS = 450;
+/** The glide across the header. */
+const SLIDE_MS = 900;
+const EASE = "cubic-bezier(0.45, 0, 0.15, 1)";
 
 async function currentSubscription() {
   const reg = await navigator.serviceWorker.getRegistration("/");
@@ -45,10 +50,12 @@ export default function NotifyButton() {
   const [note, setNote] = useState<string | null>(null);
   const [vapidKey, setVapidKey] = useState<string | null>(null);
   const [docked, setDocked] = useState(false);
+  // While docking: the label folds, the note fades, then the bell glides.
+  const [moving, setMoving] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   // Where the header's items sat just before a dock/undock, for the slide.
   const before = useRef<Map<Element, number> | null>(null);
-  const dockTimer = useRef<number | undefined>(undefined);
+  const timers = useRef<number[]>([]);
 
   function changeDock(next: boolean) {
     const items = rootRef.current?.parentElement?.children;
@@ -56,8 +63,25 @@ export default function NotifyButton() {
     setDocked(next);
   }
 
-  // FLIP: every header item starts where it was and glides to its new spot;
-  // the bell itself overshoots a touch so it pops into place.
+  function later(fn: () => void, ms: number) {
+    timers.current.push(window.setTimeout(fn, ms));
+  }
+
+  function clearTimers() {
+    timers.current.forEach((t) => window.clearTimeout(t));
+    timers.current = [];
+  }
+
+  /** Docks (or undocks) in three calm steps: fold the label, glide, settle. */
+  function dock(next: boolean) {
+    clearTimers();
+    setMoving(true);
+    later(() => changeDock(next), next ? FOLD_MS : 0);
+    later(() => setMoving(false), (next ? FOLD_MS : 0) + SLIDE_MS);
+  }
+
+  // FLIP: every header item starts where it was and glides to its new spot,
+  // all on one slow ease-in-out curve so nothing jumps.
   useLayoutEffect(() => {
     const from = before.current;
     before.current = null;
@@ -65,19 +89,20 @@ export default function NotifyButton() {
     for (const [el, left] of from) {
       const dx = left - el.getBoundingClientRect().left;
       if (!dx) continue;
+      // The bell dims a little mid-glide, so crossing the other items reads as a soft pass.
       const frames =
         el === rootRef.current
           ? [
-              { transform: `translateX(${dx}px) scale(1)` },
-              { transform: "translateX(0) scale(1.18)", offset: 0.75 },
-              { transform: "translateX(0) scale(1)" },
+              { transform: `translateX(${dx}px)`, opacity: 1 },
+              { opacity: 0.45, offset: 0.5 },
+              { transform: "translateX(0)", opacity: 1 },
             ]
           : [{ transform: `translateX(${dx}px)` }, { transform: "translateX(0)" }];
-      el.animate(frames, { duration: 600, easing: "cubic-bezier(0.22, 0.9, 0.3, 1)" });
+      el.animate(frames, { duration: SLIDE_MS, easing: EASE });
     }
   }, [docked]);
 
-  useEffect(() => () => window.clearTimeout(dockTimer.current), []);
+  useEffect(() => clearTimers, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -127,7 +152,7 @@ export default function NotifyButton() {
       }
       setState("on");
       setNote("Thank you for enabling notifications, which you’ll receive once the newer issue is available.");
-      dockTimer.current = window.setTimeout(() => changeDock(true), DOCK_DELAY_MS);
+      later(() => dock(true), DOCK_DELAY_MS);
     } catch (e) {
       setState("off");
       setNote(`Couldn’t turn notifications on: ${(e as Error).message}`);
@@ -135,7 +160,7 @@ export default function NotifyButton() {
   }
 
   async function unsubscribe() {
-    window.clearTimeout(dockTimer.current);
+    clearTimers();
     setState("busy");
     setNote(null);
     try {
@@ -145,7 +170,7 @@ export default function NotifyButton() {
         await sub.unsubscribe();
       }
       setState("off");
-      changeDock(false);
+      dock(false);
       setNote("Notifications are off for this browser.");
     } catch (e) {
       setState("on");
@@ -167,6 +192,8 @@ export default function NotifyButton() {
   if (state === "hidden") return null;
 
   const on = state === "on";
+  // The label is folded while docked and during the moves in and out.
+  const folded = docked || moving;
   const label = on ? "Notifications on" : "Notify me";
   const title = on ? "You’ll be notified of new issues. Tap to turn off." : "Get a notification when a new issue is out";
 
@@ -179,8 +206,8 @@ export default function NotifyButton() {
         title={title}
         aria-label={title}
         aria-pressed={on}
-        className={`inline-flex items-center gap-1.5 py-2 rounded-lg transition-colors duration-500 disabled:opacity-60 ${
-          docked ? "px-2.5" : "px-3"
+        className={`inline-flex items-center py-2 rounded-lg transition-all duration-[450ms] ease-in-out disabled:opacity-60 ${
+          folded ? "px-2.5" : "px-3"
         } ${
           on ? "text-azure-soft bg-omni/40 hover:bg-omni/60" : "text-silver hover:text-white hover:bg-white/[0.08]"
         }`}
@@ -195,21 +222,31 @@ export default function NotifyButton() {
           <path d="M10 19.5a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
           {state === "denied" && <path d="M4 4l16 16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />}
         </svg>
-        {!docked && <span className="hidden md:inline">{state === "busy" ? "…" : label}</span>}
+        <span
+          className={`hidden md:inline-block overflow-hidden whitespace-nowrap transition-all duration-[450ms] ease-in-out ${
+            folded ? "max-w-0 ml-0 opacity-0" : "max-w-[10rem] ml-1.5 opacity-100"
+          }`}
+        >
+          {state === "busy" ? "…" : label}
+        </span>
       </button>
       {note && (
+        // The note fades while the bell moves (the outer box), and rises in when it first shows (the inner one).
         <div
-          role="status"
-          className="olg-rise absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] olg-glass-deep rounded-xl p-3.5 text-xs leading-relaxed text-foreground/85 z-50"
+          className={`absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-2rem)] z-50 transition-opacity duration-300 ${
+            moving ? "opacity-0" : "opacity-100"
+          }`}
         >
-          {note}
-          <button
-            type="button"
-            onClick={() => setNote(null)}
-            className="block mt-2 text-azure hover:underline"
-          >
-            Close
-          </button>
+          <div role="status" className="olg-rise olg-glass-deep rounded-xl p-3.5 text-xs leading-relaxed text-foreground/85">
+            {note}
+            <button
+              type="button"
+              onClick={() => setNote(null)}
+              className="block mt-2 text-azure hover:underline"
+            >
+              Close
+            </button>
+          </div>
         </div>
       )}
     </div>
