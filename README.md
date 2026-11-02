@@ -151,7 +151,12 @@ its number and a "Mənbə" link. Each run:
    the whole clause as it now stands from the original act and its
    amendments, located with `npm run gazette:find` (the register's search
    for the chain, date-based lookups on president.az and nk.gov.az for the
-   texts), since e-qanun's text files are closed to scripts. The issue is
+   texts), since e-qanun's text files are closed to scripts; that reaches
+   decrees, Cabinet decisions and recent laws, not the codes and pre-2010
+   laws. A second, local routine on İsmayıl's own computer
+   (`scripts/gazette/LOCAL-ROUTINE.md`, run by the Claude desktop app)
+   fills those afterwards by opening the register's pages in a real
+   Chrome (`npm run gazette:clause`). The issue is
    saved as JSON (`scripts/gazette/draft.ts`; example in
    `tests/fixtures/gazette/`).
 3. `npm run gazette:publish -- draft.json --dry-run` checks the draft (one
