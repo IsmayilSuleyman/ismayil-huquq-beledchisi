@@ -33,7 +33,7 @@ import { useClosing, useFlip } from "@/components/gazette/useFlip";
 // vote on how much it matters. A note's link (#act=<id>) opens the same panel on arrival,
 // so a lawyer can send a colleague one act. The + note at the end lets a
 // reader suggest one act the picks left out; the most suggested ones lead
-// the board, ahead of the picks, with a gold sparkle (suggest_act,
+// the board, ahead of the picks, with a faint gold halo (suggest_act,
 // migration 20261031180000).
 
 const HASH_KEY = "act";
@@ -254,12 +254,6 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                     aria-expanded={openId === act.id}
                     className={`olg-note olg-note-${act.section} ${suggestedIds.has(act.id) ? "olg-note-shine" : ""} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
                   >
-                    {suggestedIds.has(act.id) && (
-                      <span className="olg-note-sparkle" aria-hidden>
-                        <span className="olg-sparkle olg-sparkle-1">✦</span>
-                        <span className="olg-sparkle olg-sparkle-2">✦</span>
-                      </span>
-                    )}
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="olg-note-label">{actLabel(act)}</span>
                       <span className="olg-note-date">{shortDate(act.date)}</span>
