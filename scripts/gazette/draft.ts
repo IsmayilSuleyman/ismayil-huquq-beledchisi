@@ -110,12 +110,14 @@ export const PROVISION_TEXT_MAX = 6000;
 
 /**
  * Where a provision's reference appears in the paragraph, in any case
- * ("239-cu maddədə", "239-cu maddəyə", "239-cu maddənin"): the reference
- * followed by any letters. Used by the checker and by the site's panel.
+ * ("239-cu maddədə", "239-cu maddəyə", "239-cu maddənin", "2.1-də"): the
+ * reference followed by any letters, or a hyphen and letters, and not by
+ * a digit (so "2.1" is not found inside "2.10" or "2.1-1"). Used by the
+ * checker and by the site's panel.
  */
 export function provisionPattern(ref: string): RegExp {
   const escaped = ref.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
-  return new RegExp(`(?<!\\p{L}|\\d|[.-])${escaped}\\p{L}*`, "gu");
+  return new RegExp(`(?<!\\p{L}|\\d|[.-])${escaped}\\p{L}*(?:-\\p{L}+)?(?!\\d|[.-]\\d)`, "gu");
 }
 
 function isIsoDate(value: string): boolean {

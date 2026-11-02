@@ -170,6 +170,8 @@ describe("provisionPattern", () => {
     expect([...text.matchAll(provisionPattern("239-cu maddə"))].map((m) => m[0])).toEqual(["239-cu maddədə", "239-cu maddəyə"]);
     expect([...text.matchAll(provisionPattern("3.2.8-ci"))].map((m) => m[0])).toEqual(["3.2.8-ci"]);
     expect([...text.matchAll(provisionPattern("3.2.8-1-ci"))].map((m) => m[0])).toEqual(["3.2.8-1-ci"]);
+    const bare = "2.1, 2.10 və 2.1-1-ci bəndlər, 2.1-də";
+    expect([...bare.matchAll(provisionPattern("2.1"))].map((m) => m[0])).toEqual(["2.1", "2.1-də"]);
   });
 });
 
