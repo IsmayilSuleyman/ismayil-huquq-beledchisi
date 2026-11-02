@@ -14,6 +14,7 @@ import {
   ratedOff,
   SECTION_LABEL,
   SECTION_SHORT,
+  sortByRating,
   sourceHost,
   TOPIC_LABEL,
   type ActSection,
@@ -31,8 +32,9 @@ import { useClosing, useFlip } from "@/components/gazette/useFlip";
 // paragraph (what the act changes, from its full text) and a five-star
 // vote on how much it matters. A note's link (#act=<id>) opens the same panel on arrival,
 // so a lawyer can send a colleague one act. The + note at the end lets a
-// reader suggest one act the picks left out; the most suggested ones join
-// the board beside the picks (suggest_act, migration 20261031180000).
+// reader suggest one act the picks left out; the most suggested ones lead
+// the board, ahead of the picks, with a gold sparkle (suggest_act,
+// migration 20261031180000).
 
 const HASH_KEY = "act";
 const VOTER_KEY = "olg-voter";
@@ -116,7 +118,8 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
   const pickIds = useMemo(() => new Set(picks.map((a) => a.id)), [picks]);
   const suggested = useMemo(() => pickSuggested(current, picks), [current, picks]);
   const suggestedIds = useMemo(() => new Set(suggested.map((a) => a.id)), [suggested]);
-  const board = useMemo(() => [...picks, ...suggested], [picks, suggested]);
+  // Readers' suggestions lead the board, then the picks; each group by rating.
+  const board = useMemo(() => [...sortByRating(suggested), ...picks], [picks, suggested]);
   // What a reader may suggest: every act of the window not on the board, plus their own suggestion.
   const candidates = useMemo(
     () => current.filter((a) => a.id === mySuggestion || (!pickIds.has(a.id) && !suggestedIds.has(a.id))),
@@ -125,7 +128,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
 
   const view = useCallback(
     (f: Filter, all: boolean) => {
-      const from = all ? current : board;
+      const from = all ? sortByRating(current) : board;
       return f === "all" ? from : from.filter((a) => a.section === f);
     },
     [current, board],
@@ -249,8 +252,14 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                     onClick={(e) => open(act.id, e.currentTarget)}
                     aria-haspopup="dialog"
                     aria-expanded={openId === act.id}
-                    className={`olg-note olg-note-${act.section} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
+                    className={`olg-note olg-note-${act.section} ${suggestedIds.has(act.id) ? "olg-note-shine" : ""} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
                   >
+                    {suggestedIds.has(act.id) && (
+                      <span className="olg-note-sparkle" aria-hidden>
+                        <span className="olg-sparkle olg-sparkle-1">✦</span>
+                        <span className="olg-sparkle olg-sparkle-2">✦</span>
+                      </span>
+                    )}
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="olg-note-label">{actLabel(act)}</span>
                       <span className="olg-note-date">{shortDate(act.date)}</span>

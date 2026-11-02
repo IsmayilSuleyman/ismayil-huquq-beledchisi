@@ -206,7 +206,9 @@ votes, and voting again replaces the vote. They go through the
 `rate_act()` function, which keeps the running count and sum on the act
 row (`supabase/migrations/20261031150000_gazette_act_ratings.sql`,
 applied on 31 October 2026); admins can read and delete the votes table
-from the SQL editor. "Show every act" lists the whole window, the
+from the SQL editor. Acts readers suggested with the "+" note lead the board, ahead of the
+picks, each with a faint gold glow and a twinkling sparkle. "Show every
+act" lists the whole window, the
 non-picks dimmed, with the panel saying why each one is off. The acts come from the `gazette_acts` table, one row per
 act (`supabase/migrations/20261031120000_gazette_acts.sql`, applied on 31
 October 2026): `gazette:publish` fills it right after the issue row (the `change`

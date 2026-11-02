@@ -198,6 +198,24 @@ export function pickBoard<T extends Pickable>(acts: T[], limit = BOARD_LIMIT): T
     .slice(0, limit);
 }
 
+/**
+ * The board's reading order: the best rated first (an unrated act counts as
+ * neutral), the most rated among equals, then the newest, the court first
+ * on a day, then print order. The picks come out of pickBoard in this
+ * order; the suggested notes and the "every act" view are sorted with it.
+ */
+export function sortByRating<T extends Pickable>(acts: T[]): T[] {
+  return [...acts].sort(
+    (a, b) =>
+      boardScore(b) - boardScore(a) ||
+      b.rating_count - a.rating_count ||
+      b.date.localeCompare(a.date) ||
+      SECTION_RANK[a.section] - SECTION_RANK[b.section] ||
+      b.issue_number - a.issue_number ||
+      a.position - b.position,
+  );
+}
+
 /** Beside the picks, the board shows at most this many acts readers suggested. */
 export const SUGGESTION_LIMIT = 4;
 

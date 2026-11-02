@@ -9,6 +9,7 @@ import {
   pickBoard,
   pickSuggested,
   ratedOff,
+  sortByRating,
   sortForBoard,
   sourceHost,
   windowStart,
@@ -68,6 +69,20 @@ describe("classifyAct", () => {
   it("lets the draft override the rule either way", () => {
     expect(classifyAct({ section: "decrees", text: "Saziş təsdiq edilib." }, true).important).toBe(true);
     expect(classifyAct({ section: "court", text: "Qərardad." }, false).important).toBe(false);
+  });
+});
+
+describe("sortByRating", () => {
+  it("puts the best rated first, unrated acts as neutral, the newest among equals", () => {
+    const base = { section: "decrees" as const, issue_number: 19, position: 1, important: true, suggestion_count: 0 };
+    const sorted = sortByRating([
+      { ...base, id: "old-unrated", date: "2026-10-20", rating_count: 0, rating_sum: 0 },
+      { ...base, id: "low", date: "2026-10-28", rating_count: 2, rating_sum: 4 },
+      { ...base, id: "top", date: "2026-10-21", rating_count: 1, rating_sum: 5 },
+      { ...base, id: "new-unrated", date: "2026-10-27", rating_count: 0, rating_sum: 0 },
+      { ...base, id: "top-more-votes", date: "2026-10-19", rating_count: 3, rating_sum: 15 },
+    ]);
+    expect(sorted.map((a) => a.id)).toEqual(["top-more-votes", "top", "new-unrated", "old-unrated", "low"]);
   });
 });
 
