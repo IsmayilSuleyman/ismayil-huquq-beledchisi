@@ -28,8 +28,9 @@ import { formatDate, formatPeriod } from "@/lib/gazette-format";
  * heading per section, and a numbered list of acts, each with its type
  * label and date, one bold-italic sentence ending with the act's number,
  * and a gold "Mənbə:" line with the source link. New since issue 18: when
- * the draft carries a "Nə dəyişib?" paragraph for an act (what it changes,
- * from its full text), it is printed between the sentence and the source.
+ * the draft carries a `change` paragraph for an act (what it changes, from
+ * its full text), it is printed between the sentence and the source, in
+ * upright serif, with no heading of its own.
  *
  * Word's fonts are replaced by open ones drawn to the same proportions:
  * Arimo for Arial and Microsoft Sans Serif, Source Serif 4 for Cambria
@@ -193,9 +194,8 @@ const styles = StyleSheet.create({
   },
   date: { fontFamily: "Arimo", fontSize: 7.8, lineHeight: 1.15, color: GREY, marginLeft: 7 },
   text: { fontFamily: "Serif", fontStyle: "italic", fontWeight: 700, fontSize: 10, lineHeight: 1.06, color: NAVY },
-  // "Nə dəyişib?": the routine's account of the change, under the sentence.
-  changeLabel: { fontFamily: "Arimo", fontWeight: 700, fontSize: 6.8, lineHeight: 1.2, letterSpacing: 0.5, color: GOLD, marginTop: 4 },
-  change: { fontFamily: "Serif", fontSize: 8.8, lineHeight: 1.3, color: NAVY, marginTop: 1, marginBottom: 1.5 },
+  // The routine's account of what the act changes, straight under the sentence, no heading.
+  change: { fontFamily: "Serif", fontSize: 8.8, lineHeight: 1.3, color: NAVY, marginTop: 3, marginBottom: 1.5 },
   source: { fontFamily: "Serif", fontStyle: "italic", fontSize: 8.6, lineHeight: 1.25, color: GOLD, marginTop: 1 },
   sourceLink: { color: LINK, textDecoration: "underline" },
 
@@ -305,12 +305,7 @@ function Item({ section, entry, n }: { section: SectionKey; entry: GazetteEntry;
         <Text style={styles.text}>
           {wrap(`${entry.text.replace(/\.$/, "")}.${numberTag(section, entry)}`, "SourceSerif4-BoldItalic.ttf", 10, ITEM_WIDTH)}
         </Text>
-        {entry.change ? (
-          <>
-            <Text style={styles.changeLabel}>NƏ DƏYİŞİB?</Text>
-            <Text style={styles.change}>{wrap(entry.change, "SourceSerif4-Regular.ttf", 8.8, ITEM_WIDTH)}</Text>
-          </>
-        ) : null}
+        {entry.change ? <Text style={styles.change}>{wrap(entry.change, "SourceSerif4-Regular.ttf", 8.8, ITEM_WIDTH)}</Text> : null}
         <Text style={styles.source}>
           {"Mənbə: "}
           <Link src={entry.url} style={styles.sourceLink}>

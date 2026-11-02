@@ -274,8 +274,9 @@ pdftoppm -r 70 -png /tmp/gazette/issue-*.pdf /tmp/gazette/page
 ```
 
 Open each `page-*.png` and compare with issue 12 in the library: the same
-header band, headings, numbered items, labels and "Mənbə" lines, with the
-"NƏ DƏYİŞİB?" paragraph between an act's sentence and its source; nothing
+header band, headings, numbered items, labels and "Mənbə" lines, with an
+act's `change` paragraph in plain serif between its sentence and its
+source, no heading of its own; nothing
 cut off or overlapping; no missing letters (empty boxes instead of ə or
 ş); every number and date right. Re-read every sentence and every
 paragraph once, against the text you read: every article number, date and

@@ -53,11 +53,11 @@ describe("issue PDF", () => {
     expect(text).toContain("08");
   }, 30_000);
 
-  it("prints “Nə dəyişib?” under an act that has one, and nothing under the others", async () => {
+  it("prints an act's change paragraph under its sentence, with no heading", async () => {
     const text = await pdfText(await renderIssuePdf(sample(), 18, "2026-10-26"));
-    expect(text).toContain("(Fərman № 807) NƏ DƏYİŞİB? Fərman 2014-cü il 15 may tarixli 168 nömrəli Fərmanla");
+    expect(text).toContain("(Fərman № 807) Fərman 2014-cü il 15 may tarixli 168 nömrəli Fərmanla");
     expect(text).toContain("Dəyişikliklər 2027-ci il 1 yanvar tarixindən qüvvəyə minir. Mənbə: https://e-qanun.az/framework/62789");
-    expect(text.match(/NƏ DƏYİŞİB\?/g)).toHaveLength(1);
+    expect(text).not.toContain("NƏ DƏYİŞİB");
   }, 30_000);
 
   it("says when a section has nothing this week", async () => {
