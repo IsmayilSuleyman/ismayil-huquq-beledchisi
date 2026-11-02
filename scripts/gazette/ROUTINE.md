@@ -250,10 +250,18 @@ For every lead:
       il 119 nömrəli dəyişikliklər". Fetch only what the clause needs; a
       chain of ten amendments is still a few dozen requests, and that is
       fine.
-   5. If one link of the chain cannot be read (a page missing, a scanned
-      PDF without text), leave `context` out for that provision and name
-      the act you could not read in the report. Never fill the clause
-      from memory or from the title.
+   5. Know where to stop. The method works for decrees, Cabinet decisions
+      and laws of the last fifteen years: short chains, originals on the
+      issuing site. It does not work for the codes and the older laws: the
+      Civil, Civil Procedure, Criminal, Tax and Labour codes and laws from
+      before 2010 are not on president.az (its laws listing starts in May
+      2010), and their chains run to hundreds of amendments. For those,
+      and whenever a chain has more than fifteen amendments or one link
+      cannot be read (a page missing, a scanned PDF without text), leave
+      `context` out for that provision and name in the report what could
+      not be read; the card then shows the swapped words alone. Never fill
+      a clause from memory, from the title, or from a text you did not
+      read in full.
 7. **When it is not possible, leave `change` out**: the text could not be
    read (a 403, a scanned PDF with no text, a page that builds its content
    with JavaScript), or the act is a formality with nothing to explain (a

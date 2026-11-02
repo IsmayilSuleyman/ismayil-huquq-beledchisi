@@ -174,8 +174,9 @@ async function toplusuArticle(id: number): Promise<{ article: number | null; r: 
  */
 async function byToplusu(year: number, issue: number, article: number, kind?: string) {
   const first = new Date(Date.UTC(year, issue - 1, 1));
-  const from = addDays(first.toISOString().slice(0, 10), -12);
-  const to = addDays(new Date(Date.UTC(year, issue, 0)).toISOString().slice(0, 10), 12);
+  // An issue takes the month's acts and the tail of the month before.
+  const from = addDays(first.toISOString().slice(0, 10), -25);
+  const to = addDays(new Date(Date.UTC(year, issue, 0)).toISOString().slice(0, 10), 15);
   // Article numbers follow the acts' own numbers within a day, not the register's ids.
   const num = (r: RegisterRow) => Number.parseInt((r.citation ?? "").replace(/\D/g, "") || "0", 10);
   const rows = (await registerBetween(from, to, kind)).sort((a, b) => (dotted(a.acceptDate) ?? "").localeCompare(dotted(b.acceptDate) ?? "") || num(a) - num(b) || a.id - b.id);
