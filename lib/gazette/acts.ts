@@ -115,6 +115,17 @@ export function classifyAct(
   return { topics, important: override ?? byRule };
 }
 
+/** A row of `gazette_act_provisions` as the site reads it. */
+export type ActProvision = {
+  position: number;
+  /** "239-cu maddə": matched in the paragraph in any case ending. */
+  ref: string;
+  act_name: string | null;
+  kind: "new" | "edition" | "replacement" | null;
+  text: string;
+  old_text: string | null;
+};
+
 /** A row of `gazette_acts` as the site reads it. */
 export type GazetteAct = {
   id: string;
@@ -136,6 +147,13 @@ export type GazetteAct = {
    * for acts whose text could not be read.
    */
   change: string | null;
+  /**
+   * The provisions the paragraph cites, with their wording as the act or
+   * bill gives it (`gazette_act_provisions`, migration 20261102150000);
+   * the panel links each `ref` found in the paragraph to its text. Absent
+   * when the page did not ask for them.
+   */
+  provisions?: ActProvision[];
   topics: ActTopic[];
   important: boolean;
   /** Readers' votes on how important the act is, 1–5 stars each (migration 20261031150000). */

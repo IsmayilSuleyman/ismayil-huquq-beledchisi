@@ -7,7 +7,7 @@
 
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { classifyAct, type ActTopic } from "@/lib/gazette/acts";
-import { allEntries, type GazetteDraft } from "@/scripts/gazette/draft";
+import { allEntries, type GazetteDraft, type Provision } from "@/scripts/gazette/draft";
 
 export type ActRow = {
   issue_number: number;
@@ -46,7 +46,32 @@ export function actRows(draft: GazetteDraft, issueNumber: number): ActRow[] {
   });
 }
 
-export type InsertActsResult = { status: "inserted"; count: number; important: number } | { status: "exists"; count: number };
+/** A row of `gazette_act_provisions`: one cited provision of an act, in the order the draft lists them. */
+export type ProvisionRow = {
+  act_id: string;
+  position: number;
+  ref: string;
+  act_name: string | null;
+  kind: "new" | "edition" | "replacement" | null;
+  text: string;
+  old_text: string | null;
+};
+
+export function provisionRows(actId: string, provisions: Provision[]): ProvisionRow[] {
+  return provisions.map((p, i) => ({
+    act_id: actId,
+    position: i + 1,
+    ref: p.ref,
+    act_name: p.act ?? null,
+    kind: p.kind ?? null,
+    text: p.text,
+    old_text: p.old ?? null,
+  }));
+}
+
+export type InsertActsResult =
+  | { status: "inserted"; count: number; important: number; provisions: number }
+  | { status: "exists"; count: number };
 
 /**
  * Inserts the issue's acts unless the issue already has some (then nothing
@@ -59,8 +84,20 @@ export async function insertActs(db: SupabaseClient, draft: GazetteDraft, issueN
   if ((existing.count ?? 0) > 0) return { status: "exists", count: existing.count ?? 0 };
 
   const rows = actRows(draft, issueNumber);
-  if (rows.length === 0) return { status: "inserted", count: 0, important: 0 };
-  const insert = await db.from("gazette_acts").insert(rows);
+  if (rows.length === 0) return { status: "inserted", count: 0, important: 0, provisions: 0 };
+  const insert = await db.from("gazette_acts").insert(rows).select("id, position").returns<{ id: string; position: number }[]>();
   if (insert.error) throw new Error(`Saving the acts of No. ${issueNumber} failed: ${insert.error.message}`);
-  return { status: "inserted", count: rows.length, important: rows.filter((r) => r.important).length };
+
+  // The cited provisions, keyed to the rows just made; a failure here leaves
+  // the acts in place (the site shows the paragraph without its links).
+  const byPosition = new Map((insert.data ?? []).map((r) => [r.position, r.id]));
+  const provisions = allEntries(draft).flatMap(({ entry }, i) => {
+    const id = byPosition.get(i + 1);
+    return id && entry.provisions ? provisionRows(id, entry.provisions) : [];
+  });
+  if (provisions.length > 0) {
+    const inserted = await db.from("gazette_act_provisions").insert(provisions);
+    if (inserted.error) throw new Error(`The acts of No. ${issueNumber} are stored, but their provisions failed: ${inserted.error.message}`);
+  }
+  return { status: "inserted", count: rows.length, important: rows.filter((r) => r.important).length, provisions: provisions.length };
 }

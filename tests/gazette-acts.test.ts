@@ -14,7 +14,7 @@ import {
   sourceHost,
   windowStart,
 } from "@/lib/gazette/acts";
-import { actRows } from "@/scripts/gazette/acts";
+import { actRows, provisionRows } from "@/scripts/gazette/acts";
 import { checkDraft } from "@/scripts/gazette/draft";
 
 const FIXTURE = path.join(import.meta.dirname, "fixtures", "gazette", "draft.json");
@@ -96,6 +96,16 @@ describe("actRows", () => {
     expect(rows[4]).toMatchObject({ section: "bills", number: null, stage: "III", important: true });
     expect(rows[6]).toMatchObject({ section: "court", ruling: "qərardad", important: true });
     expect(rows.filter((r) => r.important).map((r) => r.position)).toEqual([5, 7, 8]);
+  });
+
+  it("turns a draft's provisions into rows keyed to the act", () => {
+    const entry = fixture().sections.decrees.entries[1];
+    const rows = provisionRows("act-1", entry.provisions ?? []);
+    expect(rows.map((r) => [r.act_id, r.position, r.ref, r.kind, r.old_text])).toEqual([
+      ["act-1", 1, "1.2.13-cü", "edition", null],
+      ["act-1", 2, "1.2.4-1-ci yarımbənd", "new", null],
+    ]);
+    expect(rows[0].act_name).toBe("Texnologiyalar parkı haqqında Nümunəvi Əsasnamə");
   });
 
   it("accepts an important flag in the draft", () => {

@@ -218,7 +218,7 @@ async function main() {
   // -- <draft.json>` adds them later, so this is a warning too.
   try {
     const acts = await insertActs(db, draft, issueNumber);
-    if (acts.status === "inserted") console.log(`   Stored ${acts.count} act(s), ${acts.important} on the board`);
+    if (acts.status === "inserted") console.log(`   Stored ${acts.count} act(s), ${acts.important} on the board, ${acts.provisions} provision(s)`);
     else console.log(`   No. ${issueNumber} already has ${acts.count} act(s) stored`);
   } catch (e) {
     console.warn(`  ! The acts were not stored (run gazette:acts for this draft): ${(e as Error).message}`);

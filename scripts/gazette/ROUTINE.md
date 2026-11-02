@@ -193,11 +193,27 @@ For every lead:
    ki”, no forecasts, no English, and not the sentence again. Decree 807 in
    `tests/fixtures/gazette/draft.json` shows the measure: four sentences,
    nine article references, two definitions restated, the date in force.
-6. **When it is not possible, leave `change` out**: the text could not be
+6. **Extract the provisions the paragraph cites** into `provisions`, so
+   the site can open each one from the paragraph (the issue never prints
+   them). For every article, clause or sub-clause the paragraph names
+   whose wording is in the text you read, add `{ "ref", "act", "kind",
+   "text", "old" }`: `ref` is the reference exactly as the paragraph
+   writes it, without its case ending — "239-cu maddə" when the paragraph
+   says "239-cu maddədə", "1.2.13-cü" when it says "1.2.13-cü və 1.2.14-cü
+   yarımbəndlər" (the dry run warns when a `ref` is not found in the
+   paragraph); `act` the act it belongs to as the paragraph names it;
+   `kind` "new" for an article added whole, "edition" for one given a new
+   edition, "replacement" for words replaced; `text` the wording verbatim
+   from the act, line breaks kept, nothing shortened or paraphrased; `old`
+   the previous wording only when the act quotes it (a replacement). A
+   provision the act only cites without quoting (a legal basis, an
+   article removed) has no text to give: leave it out.
+7. **When it is not possible, leave `change` out**: the text could not be
    read (a 403, a scanned PDF with no text, a page that builds its content
    with JavaScript), or the act is a formality with nothing to explain (a
    name given to a school, an award, an appointment). Say in the report
    which acts have no paragraph and why. Never write one from the title.
+   An act without a paragraph has no `provisions` either.
 
 ## 4. Write the draft
 
@@ -209,10 +225,10 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
   "period": { "from": "<Monday>", "to": "<Sunday>" },
   "published_at": "<the Monday after>",
   "sections": {
-    "decrees":   { "entries": [ { "number", "date", "text", "change", "url" } ] },
-    "decisions": { "entries": [ { "number", "date", "text", "change", "url" } ] },
-    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "change", "url" } ] },
-    "court":     { "entries": [ { "date", "ruling", "text", "change", "url" } ] }
+    "decrees":   { "entries": [ { "number", "date", "text", "change", "provisions", "url" } ] },
+    "decisions": { "entries": [ { "number", "date", "text", "change", "provisions", "url" } ] },
+    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "change", "provisions", "url" } ] },
+    "court":     { "entries": [ { "date", "ruling", "text", "change", "provisions", "url" } ] }
   }
 }
 ```
@@ -228,7 +244,10 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
   `url`, the register's page when there is one.
 - `change` (any act): the “Nə dəyişib?” paragraph of step 3a, one to four
   sentences, at most 1000 characters, no “№”. Left out only for the
-  reasons in step 3a.6.
+  reasons in step 3a.7.
+- `provisions` (any act with a `change`): the cited provisions' wording,
+  as step 3a.6 describes, at most 30 per act and 6000 characters each.
+  Decree 807 in `tests/fixtures/gazette/draft.json` shows two.
 - Bills: `stage` is the lead's `stage` ("I", "II" or "III"). A bill read
   again in a later week is reported again there, at its new stage.
 - Order within a section: by date, then number.
@@ -303,9 +322,10 @@ notification):
   gazette:acts -- /tmp/gazette/draft.json` once and say so), and
   how many subscribers were notified (or the warning, if notifying failed:
   the issue stays published; the owner can press Notify in the admin desk);
-- how many acts carry a “Nə dəyişib?” paragraph, and for each act without
-  one, why (step 3a.6); for an amendment whose previous wording you could
-  not find, say so;
+- how many acts carry a “Nə dəyişib?” paragraph and how many provisions
+  were stored (the publisher prints both), and for each act without a
+  paragraph, why (step 3a.7); for an amendment whose previous wording you
+  could not find, say so;
 - any source that failed or was incomplete, acts added by hand, numbering
   gaps you couldn't resolve, and anything left out as unconfirmed;
 - or, if nothing was published, exactly why and what is needed to fix it.

@@ -568,6 +568,67 @@
   }
 }
 
+/* ---------- Cited provisions in the panel ----------
+   A reference in the "What's new" paragraph that has its wording stored is
+   a link; its card opens under the line, inside the panel. */
+.olg-ref {
+  font: inherit;
+  color: var(--color-azure-soft);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 2px;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: rgba(122, 162, 255, 0.6);
+  text-underline-offset: 3px;
+  transition: color 0.15s, background-color 0.15s;
+}
+.olg-ref:hover,
+.olg-ref:focus-visible,
+.olg-ref-open {
+  color: var(--foreground);
+  background: rgba(122, 162, 255, 0.16);
+  text-decoration-color: rgba(122, 162, 255, 0.95);
+}
+.olg-ref:focus-visible {
+  outline: 2px solid rgba(122, 162, 255, 0.9);
+  outline-offset: 2px;
+}
+.olg-ref-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0.9rem 1rem 0.85rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(122, 162, 255, 0.35);
+  background: linear-gradient(160deg, rgb(var(--olg-veil) / 0.12), rgb(var(--olg-veil) / 0.06)), var(--background);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.9);
+  max-height: 20rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.olg-ref-text {
+  margin-top: 0.4rem;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  color: var(--foreground);
+}
+.olg-ref-kind {
+  flex: none;
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid rgba(122, 162, 255, 0.4);
+  color: var(--color-azure-soft);
+}
+
 /* ---------- Ratings ---------- */
 .olg-note-stars {
   font-size: 0.7rem;
@@ -698,6 +759,24 @@
 }
 :root:not(.dark) .olg-note-bills {
   --accent: #4a72d4;
+}
+:root:not(.dark) .olg-ref {
+  color: #2e62c9;
+  text-decoration-color: rgba(46, 98, 201, 0.5);
+}
+:root:not(.dark) .olg-ref:hover,
+:root:not(.dark) .olg-ref:focus-visible,
+:root:not(.dark) .olg-ref-open {
+  background: rgba(46, 98, 201, 0.1);
+}
+:root:not(.dark) .olg-ref-card {
+  background: #fff;
+  border-color: rgba(46, 98, 201, 0.3);
+  box-shadow: 0 24px 50px -28px rgba(18, 40, 90, 0.45);
+}
+:root:not(.dark) .olg-ref-kind {
+  color: #2e62c9;
+  border-color: rgba(46, 98, 201, 0.3);
 }
 :root:not(.dark) .olg-note-plus,
 :root:not(.dark) .olg-note-suggested {

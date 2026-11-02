@@ -145,7 +145,9 @@ its number and a "Mənbə" link. Each run:
    replaces, as far as the issuing body's site shows it — and writes one
    sentence per act plus a "Nə dəyişib?" paragraph of one to four
    sentences of facts in Azerbaijani (the draft's `change` field; the
-   paragraph is left out when the text could not be read). The issue is
+   paragraph is left out when the text could not be read), plus the
+   wording of every provision the paragraph cites, verbatim from the act
+   (`provisions`; shown on the site only). The issue is
    saved as JSON (`scripts/gazette/draft.ts`; example in
    `tests/fixtures/gazette/`).
 3. `npm run gazette:publish -- draft.json --dry-run` checks the draft (one
@@ -196,7 +198,9 @@ corporate, banking, tax, civil, criminal or administrative law (the rules
 are keyword lists in `lib/gazette/acts.ts`; labour and diplomatic acts are
 recognised and left off). A note opens a panel with the act's sentence,
 its "What's new" paragraph when it has one (the note then says "What's new
-→"), its source link, the issue it was printed in and a five-star vote on
+→"; every article the paragraph cites whose wording is stored is a link
+that opens the wording as the act or bill gives it, hover or tap, with a
+note that it is not the consolidated text), its source link, the issue it was printed in and a five-star vote on
 how much the act matters; `#act=<id>` in the address opens that note on
 arrival. The twelve picks are the eligible acts with the best average
 rating (an unrated act counts as 3.0), the newest first among equals.
@@ -214,7 +218,8 @@ act (`supabase/migrations/20261031120000_gazette_acts.sql`, applied on 31
 October 2026): `gazette:publish` fills it right after the issue row (the `change`
 column, the "What's new" paragraph, came with
 `supabase/migrations/20261102120000_gazette_act_changes.sql`, applied on
-2 November 2026), and
+2 November 2026; the cited provisions live in `gazette_act_provisions`,
+`20261102150000_gazette_act_provisions.sql`, applied the same day), and
 `npm run gazette:acts -- <draft.json>` fills it for an issue published
 without (`--dry-run` prints each act's topics and whether it goes on the
 board). A draft can override the rule for one act with `"important":
