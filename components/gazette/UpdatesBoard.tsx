@@ -667,7 +667,11 @@ function ChangeText({
           </div>
           <ProvisionText provision={open.provision} proposed={section === "bills"} />
           <p className="mt-3 text-[0.68rem] text-silver">
-            {section === "bills" ? "Proposed wording, as the bill gives it; not yet law. " : `The wording as ${by} gives it, not the consolidated text. `}
+            {open.provision.context_text && open.provision.context_basis
+              ? `The clause as it stands, rebuilt by the gazette from ${open.provision.context_basis}; check it against the register before relying on it. `
+              : section === "bills"
+                ? "Proposed wording, as the bill gives it; not yet law. "
+                : `The wording as ${by} gives it, not the consolidated text. `}
             <a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted">
               {sourceHost(url)} ↗
             </a>

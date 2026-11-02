@@ -206,13 +206,45 @@ For every lead:
    edition, "replacement" for words replaced; `text` the wording verbatim
    from the act, line breaks kept, nothing shortened or paraphrased; `old`
    the previous wording only when the act quotes it (a replacement);
-   `context` the whole clause as it reads after the change, whenever you
-   can read it — the act quotes the clause in full, a bill's earlier
-   reading carries it, or a consolidated text source is available to you
-   (e-qanun's text files are not: a 403 is a no) — so the site can show
-   the clause with the swapped words marked inside it. A
+   `context` the whole clause as it reads after the change, and `basis`
+   where that clause came from. A
    provision the act only cites without quoting (a legal basis, an
    article removed) has no text to give: leave it out.
+   **Rebuild the clause for every word swap.** A card that shows only the
+   swapped words is not enough: for every provision of kind
+   "replacement" the site must show the whole clause with the swap marked
+   inside it, so `context` is required, and the dry run warns about each
+   swap without one. The register's text files are closed to scripts (a
+   403 is a no, never work around it), but every act is published in full
+   by the body that issued it, so rebuild the clause from the original act
+   and its amendments:
+   1. The amending act's first paragraph names what it amends by date,
+      number and type ("2020-ci il 27 fevral tarixli 946 nömrəli Fərmanı
+      ilə təsdiq edilmiş … Qaydası") and lists the earlier amendments as
+      Toplusu references.
+   2. `npm run gazette:find -- --register "946 nömrəli Fərman"` lists, from
+      the register's own search, every act whose title names it: the
+      amendments, with dates and numbers. The original is found by its own
+      title: `--register "övladlığa götürülməsi Qaydası" --to 2020-02-27`.
+   3. Locate each text by date: `npm run gazette:find -- --president
+      decrees --date 2020-02-27` (or `orders`, `laws`) lists what
+      president.az published that day with links; `npm run gazette:find --
+      --nk --date 2011-07-18 --number 120` does the same on nk.gov.az and
+      stars the number. A rule or regulation approved by a decree is often
+      a separate article next to the decree's; the finder lists it too.
+      Read with `gazette:read`.
+   4. Take the clause from the original, apply in date order every
+      amendment that touches it (search each amending text for the clause
+      number; skip the ones that do not mention it), then apply this
+      week's change. The result is `context`. Set `basis` to the chain you
+      applied: "946 nömrəli Fərman (27.02.2020) + 2024-cü il 529 və 2025-ci
+      il 119 nömrəli dəyişikliklər". Fetch only what the clause needs; a
+      chain of ten amendments is still a few dozen requests, and that is
+      fine.
+   5. If one link of the chain cannot be read (a page missing, a scanned
+      PDF without text), leave `context` out for that provision and name
+      the act you could not read in the report. Never fill the clause
+      from memory or from the title.
 7. **When it is not possible, leave `change` out**: the text could not be
    read (a 403, a scanned PDF with no text, a page that builds its content
    with JavaScript), or the act is a formality with nothing to explain (a
@@ -274,7 +306,9 @@ npm run gazette:publish -- /tmp/gazette/draft.json --dry-run --out /tmp/gazette
 The dry run validates the draft (one sentence per act, no number inside
 it, each `change` at most four sentences without a “№”, dates in the
 period, nothing listed twice; it warns about a `change` with no number in
-it or with a word like “mühüm” or “ehtimal”), numbers the issue after
+it or with a word like “mühüm” or “ehtimal”, about a provision whose
+`ref` is not in the paragraph, and about every word swap without a
+rebuilt clause), numbers the issue after
 the latest one, compares it with the last three issues (it says which, and
 whether anything repeats), and renders `issue-<n>.pdf` and its cover
 without uploading anything. Fix every error it lists and run it again.
@@ -328,9 +362,10 @@ notification):
   how many subscribers were notified (or the warning, if notifying failed:
   the issue stays published; the owner can press Notify in the admin desk);
 - how many acts carry a “Nə dəyişib?” paragraph and how many provisions
-  were stored (the publisher prints both), and for each act without a
-  paragraph, why (step 3a.7); for an amendment whose previous wording you
-  could not find, say so;
+  were stored (the publisher prints both); for each act without a
+  paragraph, why (step 3a.7); and for every word swap whose clause you
+  could not rebuild (the dry run lists them), which act of the chain
+  could not be read;
 - any source that failed or was incomplete, acts added by hand, numbering
   gaps you couldn't resolve, and anything left out as unconfirmed;
 - or, if nothing was published, exactly why and what is needed to fix it.

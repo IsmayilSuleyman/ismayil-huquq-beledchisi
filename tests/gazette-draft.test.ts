@@ -152,8 +152,10 @@ describe("checkDraft", () => {
     entry.provisions = [{ ref: "1.2.13-cü", text: "" }];
     expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0].text is missing");
 
-    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 10 (on) gün müddətində qısalda bilər." }];
+    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 10 (on) gün müddətində qısalda bilər.", basis: "946 nömrəli Fərman + 2 dəyişiklik" }];
     expect(checkDraft(raw).warnings.filter((w) => w.includes("context"))).toEqual([]);
+    entry.provisions = [{ ref: "1.2.13-cü", kind: "replacement", text: "10 (on)", old: "20 (iyirmi)" }];
+    expect(checkDraft(raw).warnings.some((w) => w.includes("swaps words but has no context"))).toBe(true);
     entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 20 (iyirmi) gün müddətində qısalda bilər." }];
     expect(checkDraft(raw).warnings.some((w) => w.includes("context does not contain the new wording"))).toBe(true);
 

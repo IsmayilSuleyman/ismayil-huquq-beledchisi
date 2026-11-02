@@ -14,7 +14,8 @@
     "gazette:read": "tsx scripts/gazette/read-act.mts",
     "gazette:acts": "tsx scripts/gazette/store-acts.mts",
     "summaries:collect": "tsx scripts/summaries/collect.mts",
-    "summaries:publish": "tsx scripts/summaries/publish.mts"
+    "summaries:publish": "tsx scripts/summaries/publish.mts",
+    "gazette:find": "tsx scripts/gazette/find-act.mts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",

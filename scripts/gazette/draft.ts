@@ -47,6 +47,8 @@ export type Provision = {
    * the swaps marked inside it, as track changes.
    */
   context?: string;
+  /** Where `context` came from: the original act and the amendments applied to rebuild it ("946 nömrəli Fərman (27.02.2020) + 3 dəyişiklik"). */
+  basis?: string;
 };
 
 export type GazetteEntry = {
@@ -310,7 +312,7 @@ export function checkDraft(raw: unknown): DraftCheck {
                 errors.push(`${where} must be an object`);
                 continue;
               }
-              unknownKeys(rawProvision, ["ref", "act", "kind", "text", "old", "context"], where);
+              unknownKeys(rawProvision, ["ref", "act", "kind", "text", "old", "context", "basis"], where);
               const ref = text(rawProvision, "ref", where, 60);
               const actName = text(rawProvision, "act", where, 200, false);
               const body = typeof rawProvision.text === "string" ? rawProvision.text.replace(/\r\n?/g, "\n").trim() : "";
@@ -325,11 +327,16 @@ export function checkDraft(raw: unknown): DraftCheck {
               else if (contextBody && body && !body.split("\n").every((line) => contextBody.includes(line.trim()))) {
                 warnings.push(`${where}.context does not contain the new wording, so the card cannot mark the change inside it`);
               }
+              const basis = text(rawProvision, "basis", where, 300, false);
+              if (basis && !contextBody) warnings.push(`${where}.basis is given without a context`);
               let kind: ProvisionKind | undefined;
               if (rawProvision.kind !== undefined) {
                 if (typeof rawProvision.kind !== "string" || !(PROVISION_KINDS as readonly string[]).includes(rawProvision.kind)) {
                   errors.push(`${where}.kind must be one of ${PROVISION_KINDS.join(", ")}`);
                 } else kind = rawProvision.kind as ProvisionKind;
+              }
+              if (kind === "replacement" && !contextBody) {
+                warnings.push(`${where}: "${ref}" swaps words but has no context; rebuild the clause (step 3a.6) or say in the report why it could not be`);
               }
               if (ref) {
                 if (refs.has(ref)) errors.push(`${where}: "${ref}" is listed twice`);
@@ -346,6 +353,7 @@ export function checkDraft(raw: unknown): DraftCheck {
                 text: body,
                 ...(oldBody ? { old: oldBody } : {}),
                 ...(contextBody ? { context: contextBody } : {}),
+                ...(basis ? { basis } : {}),
               });
             }
           }

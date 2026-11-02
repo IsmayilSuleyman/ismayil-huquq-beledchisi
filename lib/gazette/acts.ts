@@ -126,6 +126,8 @@ export type ActProvision = {
   old_text: string | null;
   /** The whole clause as it reads after the change, when known; the card marks the swaps inside it. */
   context_text: string | null;
+  /** How the clause was obtained: the original act and the amendments applied. */
+  context_basis: string | null;
 };
 
 /** A row of `gazette_acts` as the site reads it. */
