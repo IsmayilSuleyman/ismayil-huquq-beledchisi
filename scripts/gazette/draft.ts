@@ -40,6 +40,15 @@ export type GazetteEntry = {
   /** Constitutional Court only: a decision or a procedural ruling. */
   ruling?: Ruling;
   /**
+   * "Nə dəyişib?": one to four sentences, in Azerbaijani, saying what the
+   * act changes, written from its full text and the previous wording of
+   * what it amends (ROUTINE.md step 3): the articles touched, the old rule
+   * and the new one, thresholds, dates in force, who it applies to. The
+   * board's panel and the issue print it under the sentence. Left out
+   * when the text could not be read.
+   */
+  change?: string;
+  /**
    * Overrides the board's rule for this act (lib/gazette/acts.ts): true puts
    * it on the landing page's board, false keeps it off. Leave it out to let
    * the rule decide, which is the normal case.
@@ -70,6 +79,9 @@ export type DraftCheck =
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const TEXT_MAX = 400;
+/** Room for four full sentences of facts; the gazette_acts column has the same limit. */
+export const CHANGE_MAX = 1000;
+export const CHANGE_SENTENCES_MAX = 4;
 
 function isIsoDate(value: string): boolean {
   if (!ISO_DATE.test(value)) return false;
@@ -92,6 +104,15 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 /** A sentence boundary inside the text: ". " (or "?", "!") followed by a capital or an opening quote. */
 const SECOND_SENTENCE = /[.!?][”"»)]?\s+[A-ZƏÖÜÇŞĞİI“"«(]/u;
+const SENTENCE_BOUNDARY = new RegExp(SECOND_SENTENCE.source, "gu");
+
+/** How many sentences a passage has, by the boundaries SECOND_SENTENCE recognises. */
+export function countSentences(passage: string): number {
+  return passage.trim() ? (passage.match(SENTENCE_BOUNDARY)?.length ?? 0) + 1 : 0;
+}
+
+/** Words the playbook bans from a "Nə dəyişib?" paragraph: praise, forecasts, guesses. */
+const CHANGE_HEDGES = /(?<!\p{L})(mühüm|ehtimal|güman|gözlənilir)(?!\p{L})/iu;
 
 /**
  * Checks a parsed JSON draft and returns a clean copy (strings trimmed) or
@@ -190,6 +211,7 @@ export function checkDraft(raw: unknown): DraftCheck {
           "date",
           "text",
           "url",
+          "change",
           "important",
           ...(key === "bills" ? ["stage"] : []),
           ...(key === "court" ? ["ruling"] : []),
@@ -208,6 +230,26 @@ export function checkDraft(raw: unknown): DraftCheck {
           if (/\((Fərman|Qərar)\s*№/u.test(sentence)) {
             errors.push(`${at}.text must not carry the act's number; put it in "number" and it is printed for you`);
           }
+        }
+
+        const change = text(rawEntry, "change", at, CHANGE_MAX, false);
+        if (change) {
+          if (!/[.!?][”"»)]?$/u.test(change)) errors.push(`${at}.change must end with a full stop`);
+          const sentences = countSentences(change);
+          if (sentences > CHANGE_SENTENCES_MAX) {
+            errors.push(`${at}.change has ${sentences} sentences; the limit is ${CHANGE_SENTENCES_MAX}`);
+          }
+          if (change.includes("№")) {
+            errors.push(`${at}.change must not write "№": say "168 nömrəli Fərman", so the repeat check does not mistake it for this week's act`);
+          }
+          if (sentence && change.toLocaleLowerCase("az") === sentence.toLocaleLowerCase("az")) {
+            errors.push(`${at}.change repeats the sentence; it should say what changed, or be left out`);
+          }
+          if (!/\d/.test(change)) {
+            warnings.push(`${at}.change has no number in it (no article, date, amount or count): is it rich in facts?`);
+          }
+          const hedge = CHANGE_HEDGES.exec(change);
+          if (hedge) warnings.push(`${at}.change says "${hedge[1]}": no praise, guesses or forecasts in it`);
         }
 
         let stage: Stage | undefined;
@@ -253,6 +295,7 @@ export function checkDraft(raw: unknown): DraftCheck {
           url,
           ...(stage ? { stage } : {}),
           ...(ruling ? { ruling } : {}),
+          ...(change ? { change } : {}),
           ...(important !== undefined ? { important } : {}),
         });
       }

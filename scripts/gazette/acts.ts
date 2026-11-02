@@ -19,6 +19,8 @@ export type ActRow = {
   url: string;
   stage: "I" | "II" | "III" | null;
   ruling: "qərar" | "qərardad" | null;
+  /** The draft's "Nə dəyişib?" paragraph (scripts/gazette/draft.ts), or null when the text could not be read. */
+  change: string | null;
   topics: ActTopic[];
   important: boolean;
 };
@@ -37,6 +39,7 @@ export function actRows(draft: GazetteDraft, issueNumber: number): ActRow[] {
       url: entry.url,
       stage: entry.stage ?? null,
       ruling: entry.ruling ?? null,
+      change: entry.change ?? null,
       topics,
       important,
     };

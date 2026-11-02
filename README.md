@@ -140,11 +140,18 @@ its number and a "Mənbə" link. Each run:
    kept (`--all` keeps laws, orders and other bodies' acts too).
    `npm run gazette:read -- <url>` prints an act's text, from the page or
    the PDFs it embeds.
-2. Claude writes one sentence per act and saves the issue as JSON
-   (`scripts/gazette/draft.ts`; example in `tests/fixtures/gazette/`).
+2. Claude reads every act's full text (`gazette:read`), works out what it
+   changes — for an amendment, article by article against the wording it
+   replaces, as far as the issuing body's site shows it — and writes one
+   sentence per act plus a "Nə dəyişib?" paragraph of one to four
+   sentences of facts in Azerbaijani (the draft's `change` field; the
+   paragraph is left out when the text could not be read). The issue is
+   saved as JSON (`scripts/gazette/draft.ts`; example in
+   `tests/fixtures/gazette/`).
 3. `npm run gazette:publish -- draft.json --dry-run` checks the draft (one
-   sentence per act, no number inside it, dates in the period, nothing
-   twice), lays it out (`scripts/gazette/issue-pdf.tsx`: the old issues'
+   sentence per act, no number inside it, each paragraph at most four
+   sentences and never a "№", dates in the period, nothing twice), lays it
+   out — the paragraph goes between the sentence and the source line — (`scripts/gazette/issue-pdf.tsx`: the old issues'
    logo artwork in the header, Arimo and Source Serif 4 in place of their
    Arial and Cambria, colours measured from issue 12) and renders the WebP
    cover from page 1, without uploading.
@@ -188,8 +195,9 @@ important: every Constitutional Court ruling, and every act touching
 corporate, banking, tax, civil, criminal or administrative law (the rules
 are keyword lists in `lib/gazette/acts.ts`; labour and diplomatic acts are
 recognised and left off). A note opens a panel with the act's sentence,
-its source link, the issue it was printed in and a five-star vote on how
-much the act matters; `#act=<id>` in the address opens that note on
+its "What's new" paragraph when it has one (the note then says "What's new
+→"), its source link, the issue it was printed in and a five-star vote on
+how much the act matters; `#act=<id>` in the address opens that note on
 arrival. The twelve picks are the eligible acts with the best average
 rating (an unrated act counts as 3.0), the newest first among equals.
 Two or more readers averaging under 3.0 take an act off the board. Votes
@@ -201,7 +209,10 @@ applied on 31 October 2026); admins can read and delete the votes table
 from the SQL editor. "Show every act" lists the whole window, the
 non-picks dimmed, with the panel saying why each one is off. The acts come from the `gazette_acts` table, one row per
 act (`supabase/migrations/20261031120000_gazette_acts.sql`, applied on 31
-October 2026): `gazette:publish` fills it right after the issue row, and
+October 2026): `gazette:publish` fills it right after the issue row (the `change`
+column, the "What's new" paragraph, came with
+`supabase/migrations/20261102120000_gazette_act_changes.sql`, applied on
+2 November 2026), and
 `npm run gazette:acts -- <draft.json>` fills it for an issue published
 without (`--dry-run` prints each act's topics and whether it goes on the
 board). A draft can override the rule for one act with `"important":
