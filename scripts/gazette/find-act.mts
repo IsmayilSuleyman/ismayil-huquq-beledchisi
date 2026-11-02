@@ -123,7 +123,7 @@ const KIND_WORD: Record<string, RegExp> = {
   decrees: /PREZİDENTİNİN FƏRMANLARI/i,
   orders: /PREZİDENTİNİN SƏRƏNCAMLARI/i,
   decisions: /NAZİRLƏR KABİNETİNİN QƏRARLARI/i,
-  laws: /QANUNLARI/i,
+  laws: /^Qanunlar$|QANUNLARI$/i,
 };
 
 /** Register rows accepted in [from, to], newest first, found by bisecting the listing's offset. */

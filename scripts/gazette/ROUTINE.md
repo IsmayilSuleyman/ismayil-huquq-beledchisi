@@ -230,8 +230,10 @@ For every lead:
       in their title; the amending act's first paragraph lists every
       earlier amendment as a Toplusu reference ("2025, № 4, maddə 341"),
       and `npm run gazette:find -- --toplusu "2025 4 341" --kind decrees`
-      resolves each one to its act. Use both, and reconcile: the chain is
-      the union.
+      resolves each one to its act (reliable for decrees and Cabinet
+      decisions; for laws prefer the title search and president.az's
+      `laws` listing, since the register files laws differently). Use
+      both, and reconcile: the chain is the union.
    3. Locate each text by date: `npm run gazette:find -- --president
       decrees --date 2020-02-27` (or `orders`, `laws`) lists what
       president.az published that day with links; `npm run gazette:find --
