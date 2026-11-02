@@ -26,6 +26,31 @@ export type Stage = (typeof STAGES)[number];
 export const RULINGS = ["qərar", "qərardad"] as const;
 export type Ruling = (typeof RULINGS)[number];
 
+export const PROVISION_KINDS = ["new", "edition", "replacement"] as const;
+export type ProvisionKind = (typeof PROVISION_KINDS)[number];
+
+export type Provision = {
+  /** The reference as the paragraph writes it, without its case ending: "239-cu maddə", "1.2.4-1-ci yarımbənd". */
+  ref: string;
+  /** The act the provision belongs to, as named in the paragraph: "İnzibati Xətalar Məcəlləsi". */
+  act?: string;
+  /** Added whole, given a new edition, or words replaced. */
+  kind?: ProvisionKind;
+  /** The wording verbatim from the act or bill; line breaks kept. */
+  text: string;
+  /** The previous wording, only when the act quotes it (a replacement). */
+  old?: string;
+  /**
+   * The whole clause as it reads after the change, when it can be read
+   * (the act quotes it in full, a bill's earlier reading has it, or a
+   * consolidated source is available). The card then shows the clause with
+   * the swaps marked inside it, as track changes.
+   */
+  context?: string;
+  /** Where `context` came from: the original act and the amendments applied to rebuild it ("946 nömrəli Fərman (27.02.2020) + 3 dəyişiklik"). */
+  basis?: string;
+};
+
 export type GazetteEntry = {
   /** The act's number as printed on it ("804", "264"); printed as "(Fərman № 804)". */
   number?: string;
@@ -48,6 +73,13 @@ export type GazetteEntry = {
    * when the text could not be read.
    */
   change?: string;
+  /**
+   * The provisions the paragraph cites, with their wording as the act or
+   * bill gives it (ROUTINE.md step 3a.6). Shown only on the site: the
+   * panel turns each `ref` found in `change` into a link that opens the
+   * text. Never printed in the issue.
+   */
+  provisions?: Provision[];
   /**
    * Overrides the board's rule for this act (lib/gazette/acts.ts): true puts
    * it on the landing page's board, false keeps it off. Leave it out to let
@@ -82,6 +114,20 @@ const TEXT_MAX = 400;
 /** Room for four full sentences of facts; the gazette_acts column has the same limit. */
 export const CHANGE_MAX = 1000;
 export const CHANGE_SENTENCES_MAX = 4;
+export const PROVISIONS_MAX = 30;
+export const PROVISION_TEXT_MAX = 6000;
+
+/**
+ * Where a provision's reference appears in the paragraph, in any case
+ * ("239-cu maddədə", "239-cu maddəyə", "239-cu maddənin", "2.1-də"): the
+ * reference followed by any letters, or a hyphen and letters, and not by
+ * a digit (so "2.1" is not found inside "2.10" or "2.1-1"). Used by the
+ * checker and by the site's panel.
+ */
+export function provisionPattern(ref: string): RegExp {
+  const escaped = ref.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s+/g, "\\s+");
+  return new RegExp(`(?<!\\p{L}|\\d|[.-])${escaped}\\p{L}*(?:-\\p{L}+)?(?!\\d|[.-]\\d)`, "gu");
+}
 
 function isIsoDate(value: string): boolean {
   if (!ISO_DATE.test(value)) return false;
@@ -212,6 +258,7 @@ export function checkDraft(raw: unknown): DraftCheck {
           "text",
           "url",
           "change",
+          "provisions",
           "important",
           ...(key === "bills" ? ["stage"] : []),
           ...(key === "court" ? ["ruling"] : []),
@@ -250,6 +297,66 @@ export function checkDraft(raw: unknown): DraftCheck {
           }
           const hedge = CHANGE_HEDGES.exec(change);
           if (hedge) warnings.push(`${at}.change says "${hedge[1]}": no praise, guesses or forecasts in it`);
+        }
+
+        const provisions: Provision[] = [];
+        if (rawEntry.provisions !== undefined) {
+          if (!Array.isArray(rawEntry.provisions)) errors.push(`${at}.provisions must be an array`);
+          else if (rawEntry.provisions.length > PROVISIONS_MAX) {
+            errors.push(`${at}.provisions has ${rawEntry.provisions.length} items; the limit is ${PROVISIONS_MAX}`);
+          } else {
+            const refs = new Set<string>();
+            for (const [j, rawProvision] of rawEntry.provisions.entries()) {
+              const where = `${at}.provisions[${j}]`;
+              if (!isRecord(rawProvision)) {
+                errors.push(`${where} must be an object`);
+                continue;
+              }
+              unknownKeys(rawProvision, ["ref", "act", "kind", "text", "old", "context", "basis"], where);
+              const ref = text(rawProvision, "ref", where, 60);
+              const actName = text(rawProvision, "act", where, 200, false);
+              const body = typeof rawProvision.text === "string" ? rawProvision.text.replace(/\r\n?/g, "\n").trim() : "";
+              if (typeof rawProvision.text !== "string" || !body) errors.push(`${where}.text is missing`);
+              else if (body.length > PROVISION_TEXT_MAX) errors.push(`${where}.text is ${body.length} characters; the limit is ${PROVISION_TEXT_MAX}`);
+              const oldBody = typeof rawProvision.old === "string" ? rawProvision.old.replace(/\r\n?/g, "\n").trim() : "";
+              if (rawProvision.old !== undefined && typeof rawProvision.old !== "string") errors.push(`${where}.old must be a string`);
+              else if (oldBody.length > PROVISION_TEXT_MAX) errors.push(`${where}.old is ${oldBody.length} characters; the limit is ${PROVISION_TEXT_MAX}`);
+              const contextBody = typeof rawProvision.context === "string" ? rawProvision.context.replace(/\r\n?/g, "\n").trim() : "";
+              if (rawProvision.context !== undefined && typeof rawProvision.context !== "string") errors.push(`${where}.context must be a string`);
+              else if (contextBody.length > PROVISION_TEXT_MAX) errors.push(`${where}.context is ${contextBody.length} characters; the limit is ${PROVISION_TEXT_MAX}`);
+              else if (contextBody && body && !body.split("\n").every((line) => contextBody.includes(line.trim()))) {
+                warnings.push(`${where}.context does not contain the new wording, so the card cannot mark the change inside it`);
+              }
+              const basis = text(rawProvision, "basis", where, 300, false);
+              if (basis && !contextBody) warnings.push(`${where}.basis is given without a context`);
+              let kind: ProvisionKind | undefined;
+              if (rawProvision.kind !== undefined) {
+                if (typeof rawProvision.kind !== "string" || !(PROVISION_KINDS as readonly string[]).includes(rawProvision.kind)) {
+                  errors.push(`${where}.kind must be one of ${PROVISION_KINDS.join(", ")}`);
+                } else kind = rawProvision.kind as ProvisionKind;
+              }
+              if (kind === "replacement" && !contextBody) {
+                warnings.push(`${where}: "${ref}" swaps words but has no context; rebuild the clause (step 3a.6) or say in the report why it could not be`);
+              }
+              if (ref) {
+                if (refs.has(ref)) errors.push(`${where}: "${ref}" is listed twice`);
+                refs.add(ref);
+                if (!change) errors.push(`${where}: a provision needs a change paragraph to be linked from`);
+                else if (!provisionPattern(ref).test(change)) {
+                  warnings.push(`${where}: "${ref}" is not in the paragraph, so nothing links to it; write it there as "${ref}…"`);
+                }
+              }
+              provisions.push({
+                ref,
+                ...(actName ? { act: actName } : {}),
+                ...(kind ? { kind } : {}),
+                text: body,
+                ...(oldBody ? { old: oldBody } : {}),
+                ...(contextBody ? { context: contextBody } : {}),
+                ...(basis ? { basis } : {}),
+              });
+            }
+          }
         }
 
         let stage: Stage | undefined;
@@ -296,6 +403,7 @@ export function checkDraft(raw: unknown): DraftCheck {
           ...(stage ? { stage } : {}),
           ...(ruling ? { ruling } : {}),
           ...(change ? { change } : {}),
+          ...(provisions.length ? { provisions } : {}),
           ...(important !== undefined ? { important } : {}),
         });
       }

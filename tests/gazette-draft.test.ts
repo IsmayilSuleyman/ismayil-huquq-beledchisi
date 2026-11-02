@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { allEntries, checkDraft, countSentences, issueTitle } from "@/scripts/gazette/draft";
+import { allEntries, checkDraft, countSentences, issueTitle, provisionPattern } from "@/scripts/gazette/draft";
 import { formatPeriod } from "@/lib/gazette-format";
 
 const FIXTURE = path.join(import.meta.dirname, "fixtures", "gazette", "draft.json");
@@ -128,10 +128,57 @@ describe("checkDraft", () => {
     expect(result.warnings).toContain('sections.decrees.entries[1].change says "mühüm": no praise, guesses or forecasts in it');
   });
 
+  it("keeps the provisions a paragraph cites, and warns when a reference is not in it", () => {
+    const ok = checkDraft(sample());
+    expect(ok.ok && ok.draft.sections.decrees.entries[1].provisions?.map((p) => p.ref)).toEqual(["1.2.13-cü", "1.2.4-1-ci yarımbənd"]);
+    expect(ok.ok && ok.draft.sections.decrees.entries[0].provisions).toBeUndefined();
+
+    const raw = sample();
+    const entry = raw.sections.decrees.entries[1];
+    entry.provisions = [{ ref: "9.9-cu maddə", text: "Mətn." }];
+    const warned = checkDraft(raw);
+    expect(warned.ok).toBe(true);
+    expect(warned.warnings.some((w) => w.includes('"9.9-cu maddə" is not in the paragraph'))).toBe(true);
+
+    entry.provisions = [
+      { ref: "1.2.13-cü", text: "a" },
+      { ref: "1.2.13-cü", text: "b" },
+    ];
+    expect(errorsOf(raw)).toContain('sections.decrees.entries[1].provisions[1]: "1.2.13-cü" is listed twice');
+
+    entry.provisions = [{ ref: "1.2.13-cü", text: "a", kind: "deleted" }];
+    expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0].kind must be one of new, edition, replacement");
+
+    entry.provisions = [{ ref: "1.2.13-cü", text: "" }];
+    expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0].text is missing");
+
+    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 10 (on) gün müddətində qısalda bilər.", basis: "946 nömrəli Fərman + 2 dəyişiklik" }];
+    expect(checkDraft(raw).warnings.filter((w) => w.includes("context"))).toEqual([]);
+    entry.provisions = [{ ref: "1.2.13-cü", kind: "replacement", text: "10 (on)", old: "20 (iyirmi)" }];
+    expect(checkDraft(raw).warnings.some((w) => w.includes("swaps words but has no context"))).toBe(true);
+    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 20 (iyirmi) gün müddətində qısalda bilər." }];
+    expect(checkDraft(raw).warnings.some((w) => w.includes("context does not contain the new wording"))).toBe(true);
+
+    delete entry.change;
+    entry.provisions = [{ ref: "1.2.13-cü", text: "a" }];
+    expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0]: a provision needs a change paragraph to be linked from");
+  });
+
   it("accepts an empty section", () => {
     const raw = sample();
     raw.sections.court = { entries: [] };
     expect(errorsOf(raw)).toEqual([]);
+  });
+});
+
+describe("provisionPattern", () => {
+  it("finds a reference in any case ending, but not inside a longer number", () => {
+    const text = "239-cu maddədə cərimə, 239-cu maddəyə görə; 1239-cu maddə yox; 3.2.8-1-ci maddənin və 3.2.8-ci maddə.";
+    expect([...text.matchAll(provisionPattern("239-cu maddə"))].map((m) => m[0])).toEqual(["239-cu maddədə", "239-cu maddəyə"]);
+    expect([...text.matchAll(provisionPattern("3.2.8-ci"))].map((m) => m[0])).toEqual(["3.2.8-ci"]);
+    expect([...text.matchAll(provisionPattern("3.2.8-1-ci"))].map((m) => m[0])).toEqual(["3.2.8-1-ci"]);
+    const bare = "2.1, 2.10 və 2.1-1-ci bəndlər, 2.1-də";
+    expect([...bare.matchAll(provisionPattern("2.1"))].map((m) => m[0])).toEqual(["2.1", "2.1-də"]);
   });
 });
 

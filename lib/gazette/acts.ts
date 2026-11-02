@@ -115,6 +115,21 @@ export function classifyAct(
   return { topics, important: override ?? byRule };
 }
 
+/** A row of `gazette_act_provisions` as the site reads it. */
+export type ActProvision = {
+  position: number;
+  /** "239-cu maddə": matched in the paragraph in any case ending. */
+  ref: string;
+  act_name: string | null;
+  kind: "new" | "edition" | "replacement" | null;
+  text: string;
+  old_text: string | null;
+  /** The whole clause as it reads after the change, when known; the card marks the swaps inside it. */
+  context_text: string | null;
+  /** How the clause was obtained: the original act and the amendments applied. */
+  context_basis: string | null;
+};
+
 /** A row of `gazette_acts` as the site reads it. */
 export type GazetteAct = {
   id: string;
@@ -136,6 +151,13 @@ export type GazetteAct = {
    * for acts whose text could not be read.
    */
   change: string | null;
+  /**
+   * The provisions the paragraph cites, with their wording as the act or
+   * bill gives it (`gazette_act_provisions`, migration 20261102150000);
+   * the panel links each `ref` found in the paragraph to its text. Absent
+   * when the page did not ask for them.
+   */
+  provisions?: ActProvision[];
   topics: ActTopic[];
   important: boolean;
   /** Readers' votes on how important the act is, 1–5 stars each (migration 20261031150000). */
@@ -196,6 +218,24 @@ export function pickBoard<T extends Pickable>(acts: T[], limit = BOARD_LIMIT): T
         a.position - b.position,
     )
     .slice(0, limit);
+}
+
+/**
+ * The board's reading order: the best rated first (an unrated act counts as
+ * neutral), the most rated among equals, then the newest, the court first
+ * on a day, then print order. The picks come out of pickBoard in this
+ * order; the suggested notes and the "every act" view are sorted with it.
+ */
+export function sortByRating<T extends Pickable>(acts: T[]): T[] {
+  return [...acts].sort(
+    (a, b) =>
+      boardScore(b) - boardScore(a) ||
+      b.rating_count - a.rating_count ||
+      b.date.localeCompare(a.date) ||
+      SECTION_RANK[a.section] - SECTION_RANK[b.section] ||
+      b.issue_number - a.issue_number ||
+      a.position - b.position,
+  );
 }
 
 /** Beside the picks, the board shows at most this many acts readers suggested. */

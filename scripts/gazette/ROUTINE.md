@@ -193,11 +193,83 @@ For every lead:
    ki”, no forecasts, no English, and not the sentence again. Decree 807 in
    `tests/fixtures/gazette/draft.json` shows the measure: four sentences,
    nine article references, two definitions restated, the date in force.
-6. **When it is not possible, leave `change` out**: the text could not be
+6. **Extract the provisions the paragraph cites** into `provisions`, so
+   the site can open each one from the paragraph (the issue never prints
+   them). For every article, clause or sub-clause the paragraph names
+   whose wording is in the text you read, add `{ "ref", "act", "kind",
+   "text", "old" }`: `ref` is the reference exactly as the paragraph
+   writes it, without its case ending — "239-cu maddə" when the paragraph
+   says "239-cu maddədə", "1.2.13-cü" when it says "1.2.13-cü və 1.2.14-cü
+   yarımbəndlər" (the dry run warns when a `ref` is not found in the
+   paragraph); `act` the act it belongs to as the paragraph names it;
+   `kind` "new" for an article added whole, "edition" for one given a new
+   edition, "replacement" for words replaced; `text` the wording verbatim
+   from the act, line breaks kept, nothing shortened or paraphrased; `old`
+   the previous wording only when the act quotes it (a replacement);
+   `context` the whole clause as it reads after the change, and `basis`
+   where that clause came from. A
+   provision the act only cites without quoting (a legal basis, an
+   article removed) has no text to give: leave it out.
+   **Rebuild the clause for every word swap.** A card that shows only the
+   swapped words is not enough: for every provision of kind
+   "replacement" the site must show the whole clause with the swap marked
+   inside it, so `context` is required, and the dry run warns about each
+   swap without one. The register's text files are closed to scripts (a
+   403 is a no, never work around it), but every act is published in full
+   by the body that issued it, so rebuild the clause from the original act
+   and its amendments:
+   1. The amending act's first paragraph names what it amends by date,
+      number and type ("2020-ci il 27 fevral tarixli 946 nömrəli Fərmanı
+      ilə təsdiq edilmiş … Qaydası") and lists the earlier amendments as
+      Toplusu references.
+   2. `npm run gazette:find -- --register "946 nömrəli Fərman"` lists, from
+      the register's own search, every act whose title names it: the
+      amendments, with dates and numbers. The original is found by its own
+      title: `--register "övladlığa götürülməsi Qaydası" --to 2020-02-27`.
+      The title search misses omnibus amendments that do not name the act
+      in their title; the amending act's first paragraph lists every
+      earlier amendment as a Toplusu reference ("2025, № 4, maddə 341"),
+      and `npm run gazette:find -- --toplusu "2025 4 341" --kind decrees`
+      resolves each one to its act (reliable for decrees and Cabinet
+      decisions; for laws prefer the title search and president.az's
+      `laws` listing, since the register files laws differently). Use
+      both, and reconcile: the chain is the union.
+   3. Locate each text by date: `npm run gazette:find -- --president
+      decrees --date 2020-02-27` (or `orders`, `laws`) lists what
+      president.az published that day with links; `npm run gazette:find --
+      --nk --date 2011-07-18 --number 120` does the same on nk.gov.az and
+      stars the number. Several `--date` values go in one call, and the
+      finder caches listing pages for the run, so a chain of lookups is
+      cheap after the first. A rule or regulation approved by a decree is
+      often a separate article next to the decree's, or a PDF linked from
+      the decree's page; the finder lists the articles and `gazette:read`
+      follows the PDF.
+   4. Take the clause from the original, apply in date order every
+      amendment that touches it (search each amending text for the clause
+      number; skip the ones that do not mention it), then apply this
+      week's change. The result is `context`. Set `basis` to the chain you
+      applied: "946 nömrəli Fərman (27.02.2020) + 2024-cü il 529 və 2025-ci
+      il 119 nömrəli dəyişikliklər". Fetch only what the clause needs; a
+      chain of ten amendments is still a few dozen requests, and that is
+      fine.
+   5. Know where to stop. The method works for decrees, Cabinet decisions
+      and laws of the last fifteen years: short chains, originals on the
+      issuing site. It does not work for the codes and the older laws: the
+      Civil, Civil Procedure, Criminal, Tax and Labour codes and laws from
+      before 2010 are not on president.az (its laws listing starts in May
+      2010), and their chains run to hundreds of amendments. For those,
+      and whenever a chain has more than fifteen amendments or one link
+      cannot be read (a page missing, a scanned PDF without text), leave
+      `context` out for that provision and name in the report what could
+      not be read; the card then shows the swapped words alone. Never fill
+      a clause from memory, from the title, or from a text you did not
+      read in full.
+7. **When it is not possible, leave `change` out**: the text could not be
    read (a 403, a scanned PDF with no text, a page that builds its content
    with JavaScript), or the act is a formality with nothing to explain (a
    name given to a school, an award, an appointment). Say in the report
    which acts have no paragraph and why. Never write one from the title.
+   An act without a paragraph has no `provisions` either.
 
 ## 4. Write the draft
 
@@ -209,10 +281,10 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
   "period": { "from": "<Monday>", "to": "<Sunday>" },
   "published_at": "<the Monday after>",
   "sections": {
-    "decrees":   { "entries": [ { "number", "date", "text", "change", "url" } ] },
-    "decisions": { "entries": [ { "number", "date", "text", "change", "url" } ] },
-    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "change", "url" } ] },
-    "court":     { "entries": [ { "date", "ruling", "text", "change", "url" } ] }
+    "decrees":   { "entries": [ { "number", "date", "text", "change", "provisions", "url" } ] },
+    "decisions": { "entries": [ { "number", "date", "text", "change", "provisions", "url" } ] },
+    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "change", "provisions", "url" } ] },
+    "court":     { "entries": [ { "date", "ruling", "text", "change", "provisions", "url" } ] }
   }
 }
 ```
@@ -228,7 +300,10 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
   `url`, the register's page when there is one.
 - `change` (any act): the “Nə dəyişib?” paragraph of step 3a, one to four
   sentences, at most 1000 characters, no “№”. Left out only for the
-  reasons in step 3a.6.
+  reasons in step 3a.7.
+- `provisions` (any act with a `change`): the cited provisions' wording,
+  as step 3a.6 describes, at most 30 per act and 6000 characters each.
+  Decree 807 in `tests/fixtures/gazette/draft.json` shows two.
 - Bills: `stage` is the lead's `stage` ("I", "II" or "III"). A bill read
   again in a later week is reported again there, at its new stage.
 - Order within a section: by date, then number.
@@ -250,7 +325,9 @@ npm run gazette:publish -- /tmp/gazette/draft.json --dry-run --out /tmp/gazette
 The dry run validates the draft (one sentence per act, no number inside
 it, each `change` at most four sentences without a “№”, dates in the
 period, nothing listed twice; it warns about a `change` with no number in
-it or with a word like “mühüm” or “ehtimal”), numbers the issue after
+it or with a word like “mühüm” or “ehtimal”, about a provision whose
+`ref` is not in the paragraph, and about every word swap without a
+rebuilt clause), numbers the issue after
 the latest one, compares it with the last three issues (it says which, and
 whether anything repeats), and renders `issue-<n>.pdf` and its cover
 without uploading anything. Fix every error it lists and run it again.
@@ -303,9 +380,11 @@ notification):
   gazette:acts -- /tmp/gazette/draft.json` once and say so), and
   how many subscribers were notified (or the warning, if notifying failed:
   the issue stays published; the owner can press Notify in the admin desk);
-- how many acts carry a “Nə dəyişib?” paragraph, and for each act without
-  one, why (step 3a.6); for an amendment whose previous wording you could
-  not find, say so;
+- how many acts carry a “Nə dəyişib?” paragraph and how many provisions
+  were stored (the publisher prints both); for each act without a
+  paragraph, why (step 3a.7); and for every word swap whose clause you
+  could not rebuild (the dry run lists them), which act of the chain
+  could not be read;
 - any source that failed or was incomplete, acts added by hand, numbering
   gaps you couldn't resolve, and anything left out as unconfirmed;
 - or, if nothing was published, exactly why and what is needed to fix it.

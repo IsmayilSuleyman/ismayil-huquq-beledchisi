@@ -9,11 +9,12 @@ import {
   pickBoard,
   pickSuggested,
   ratedOff,
+  sortByRating,
   sortForBoard,
   sourceHost,
   windowStart,
 } from "@/lib/gazette/acts";
-import { actRows } from "@/scripts/gazette/acts";
+import { actRows, provisionRows } from "@/scripts/gazette/acts";
 import { checkDraft } from "@/scripts/gazette/draft";
 
 const FIXTURE = path.join(import.meta.dirname, "fixtures", "gazette", "draft.json");
@@ -71,6 +72,20 @@ describe("classifyAct", () => {
   });
 });
 
+describe("sortByRating", () => {
+  it("puts the best rated first, unrated acts as neutral, the newest among equals", () => {
+    const base = { section: "decrees" as const, issue_number: 19, position: 1, important: true, suggestion_count: 0 };
+    const sorted = sortByRating([
+      { ...base, id: "old-unrated", date: "2026-10-20", rating_count: 0, rating_sum: 0 },
+      { ...base, id: "low", date: "2026-10-28", rating_count: 2, rating_sum: 4 },
+      { ...base, id: "top", date: "2026-10-21", rating_count: 1, rating_sum: 5 },
+      { ...base, id: "new-unrated", date: "2026-10-27", rating_count: 0, rating_sum: 0 },
+      { ...base, id: "top-more-votes", date: "2026-10-19", rating_count: 3, rating_sum: 15 },
+    ]);
+    expect(sorted.map((a) => a.id)).toEqual(["top-more-votes", "top", "new-unrated", "old-unrated", "low"]);
+  });
+});
+
 describe("actRows", () => {
   it("numbers the fixture's acts in print order and carries the draft's fields", () => {
     const rows = actRows(fixture(), 18);
@@ -81,6 +96,16 @@ describe("actRows", () => {
     expect(rows[4]).toMatchObject({ section: "bills", number: null, stage: "III", important: true });
     expect(rows[6]).toMatchObject({ section: "court", ruling: "qərardad", important: true });
     expect(rows.filter((r) => r.important).map((r) => r.position)).toEqual([5, 7, 8]);
+  });
+
+  it("turns a draft's provisions into rows keyed to the act", () => {
+    const entry = fixture().sections.decrees.entries[1];
+    const rows = provisionRows("act-1", entry.provisions ?? []);
+    expect(rows.map((r) => [r.act_id, r.position, r.ref, r.kind, r.old_text])).toEqual([
+      ["act-1", 1, "1.2.13-cü", "edition", null],
+      ["act-1", 2, "1.2.4-1-ci yarımbənd", "new", null],
+    ]);
+    expect(rows[0].act_name).toBe("Texnologiyalar parkı haqqında Nümunəvi Əsasnamə");
   });
 
   it("accepts an important flag in the draft", () => {

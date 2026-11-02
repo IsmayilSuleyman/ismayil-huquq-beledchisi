@@ -41,14 +41,18 @@ async function getBoardActs(): Promise<GazetteAct[]> {
   const supabase = getServerSupabase();
   const { data, error } = await supabase
     .from("gazette_acts")
-    .select("*")
+    .select("*, provisions:gazette_act_provisions(position, ref, act_name, kind, text, old_text, context_text, context_basis)")
     .gte("date", windowStart(new Date(), BOARD_DAYS))
     .order("date", { ascending: false });
   if (error) {
     console.error(`Failed to load the board: ${error.message}`);
     return [];
   }
-  return sortForBoard(data as GazetteAct[]);
+  const acts = (data as GazetteAct[]).map((a) => ({
+    ...a,
+    provisions: [...(a.provisions ?? [])].sort((x, y) => x.position - y.position),
+  }));
+  return sortForBoard(acts);
 }
 
 export default async function LibraryPage() {

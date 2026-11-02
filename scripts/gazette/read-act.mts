@@ -7,8 +7,10 @@
  * where each source keeps the text:
  *
  *   president.az       the article body, or the PDF it links instead
- *   nk.gov.az          the PDF embedded in the page
- *   meclis.gov.az      a bill's text and its reading stage; laws are PDFs
+ *   nk.gov.az          the PDF embedded in the page, or the page's own
+ *                      text for older decisions posted without one
+ *   meclis.gov.az      a bill's text and its reading stage; a law's page
+ *                      (news-qanun.php) links its PDF or Word file
  *   constcourt.gov.az  the ruling's paragraphs
  *   e-qanun.az         the register's details only (its text files are
  *                      not public); read the issuing body's page instead
@@ -20,6 +22,7 @@
  */
 
 import { parseArgs } from "node:util";
+import JSZip from "jszip";
 import { fetchWithRetry, getText } from "@/scripts/gazette/http";
 import { cleanHtml, parseBillReadings } from "@/scripts/gazette/leads";
 import { pdfText } from "@/scripts/gazette/pdf-text";
@@ -55,9 +58,32 @@ function elementByClass(html: string, cls: string): string | null {
   return html.slice(open.index + open[0].length);
 }
 
+/** The text of a Word file: its paragraphs, one per line. */
+async function fromDocx(url: string): Promise<string> {
+  const res = await fetchWithRetry(url, "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+  const zip = await JSZip.loadAsync(await res.arrayBuffer());
+  const xml = await zip.file("word/document.xml")?.async("string");
+  if (!xml) throw new Error(`No document.xml in ${url}`);
+  return xml
+    .replace(/<w:tab\/>/g, "\t")
+    .replace(/<\/w:p>/g, "\n")
+    .replace(/<[^>]+>/g, "")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#(\d+);/g, (_, n: string) => String.fromCodePoint(Number(n)))
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .join("\n");
+}
+
 async function fromPdf(url: string): Promise<string> {
   const res = await fetchWithRetry(url, "application/pdf");
-  return pdfText(new Uint8Array(await res.arrayBuffer()));
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  if (Buffer.from(bytes.subarray(0, 5)).toString("latin1") !== "%PDF-") throw new Error(`Not a PDF: ${url}`);
+  return pdfText(bytes);
 }
 
 /** Every PDF a page embeds or links, in page order, without repeats. */
@@ -74,7 +100,18 @@ function firstPdfLink(html: string, base: string): string | null {
   const src =
     /<(?:iframe|embed)\b[^>]*\bsrc="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
     /<object\b[^>]*\bdata="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
-    /<a\b[^>]*\bhref="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1];
+    /<a\b[^>]*\bhref="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
+    // president.az serves its files from static.president.az/media/<token>
+    // with no extension; the token is the file name, base64-encoded.
+    [...html.matchAll(/<a\b[^>]*\bhref="(https?:\/\/static\.president\.az\/media\/[^"]+)"/gi)]
+      .map((m) => m[1])
+      .find((u) => {
+        try {
+          return /\.pdf"?\]?\]?$/i.test(Buffer.from(new URL(u).pathname.split("/").pop() ?? "", "base64").toString("utf8"));
+        } catch {
+          return false;
+        }
+      });
   return src ? new URL(src.replace(/&amp;/g, "&"), base).toString() : null;
 }
 
@@ -117,12 +154,29 @@ async function read(url: string): Promise<Read> {
   if (host === "nk.gov.az") {
     // The act first, then any annex (rules, a regulation) in further PDFs.
     const pdfs = allPdfLinks(html, url).filter((u) => u.includes("/uploads/"));
-    if (pdfs.length === 0) throw new Error("No PDF found on the nk.gov.az page");
+    if (pdfs.length === 0) {
+      // Older decisions (before about 2018) are posted as page text, without a PDF.
+      const text = blockText(elementByClass(html, "doc-text") ?? elementByClass(html, "content") ?? html);
+      if (text.length < 300) throw new Error("No PDF and no text found on the nk.gov.az page");
+      return { from: "nk.gov.az page text (no PDF)", text };
+    }
     const parts: string[] = [];
     for (const [i, pdf] of pdfs.entries()) {
       parts.push(`${i === 0 ? "" : `\n\n=== Annex ${i} (${pdf}) ===\n\n`}${await fromPdf(pdf)}`);
     }
     return { from: `${pdfs.length} PDF(s) on the page (${pdfs[0]}${pdfs.length > 1 ? " and annexes" : ""})`, text: parts.join("") };
+  }
+
+  if (host === "meclis.gov.az" && /news-qanun\.php/i.test(url)) {
+    // A law's page: the text is a linked PDF or Word file (older laws), else the page's paragraphs.
+    const file =
+      /<a\b[^>]*\bhref="([^"]+\.(?:pdf|docx?)(?:\?[^"]*)?)"/i.exec(html)?.[1] ??
+      /<a\b[^>]*\bhref="([^"]*\/documents\/[^"]+)"/i.exec(html)?.[1];
+    if (file) {
+      const link = new URL(file.replace(/&amp;/g, "&"), url).toString();
+      return { from: `file linked on the law's page (${link})`, text: /\.docx?($|\?)/i.test(link) ? await fromDocx(link) : await fromPdf(link) };
+    }
+    return { from: "law page paragraphs", text: blockText(elementByClass(html, "tab-content") ?? html) };
   }
 
   if (host === "meclis.gov.az") {

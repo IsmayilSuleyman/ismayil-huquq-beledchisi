@@ -14,13 +14,16 @@ import {
   ratedOff,
   SECTION_LABEL,
   SECTION_SHORT,
+  sortByRating,
   sourceHost,
   TOPIC_LABEL,
+  type ActProvision,
   type ActSection,
   type GazetteAct,
   type Rating,
 } from "@/lib/gazette/acts";
 import { formatDate } from "@/lib/gazette/format";
+import { provisionPattern } from "@/scripts/gazette/draft";
 import { getBrowserSupabase } from "@/lib/gazette/supabase";
 import { useClosing, useFlip } from "@/components/gazette/useFlip";
 
@@ -31,8 +34,9 @@ import { useClosing, useFlip } from "@/components/gazette/useFlip";
 // paragraph (what the act changes, from its full text) and a five-star
 // vote on how much it matters. A note's link (#act=<id>) opens the same panel on arrival,
 // so a lawyer can send a colleague one act. The + note at the end lets a
-// reader suggest one act the picks left out; the most suggested ones join
-// the board beside the picks (suggest_act, migration 20261031180000).
+// reader suggest one act the picks left out; the most suggested ones lead
+// the board, ahead of the picks, with a faint gold halo (suggest_act,
+// migration 20261031180000).
 
 const HASH_KEY = "act";
 const VOTER_KEY = "olg-voter";
@@ -116,7 +120,8 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
   const pickIds = useMemo(() => new Set(picks.map((a) => a.id)), [picks]);
   const suggested = useMemo(() => pickSuggested(current, picks), [current, picks]);
   const suggestedIds = useMemo(() => new Set(suggested.map((a) => a.id)), [suggested]);
-  const board = useMemo(() => [...picks, ...suggested], [picks, suggested]);
+  // Readers' suggestions lead the board, then the picks; each group by rating.
+  const board = useMemo(() => [...sortByRating(suggested), ...picks], [picks, suggested]);
   // What a reader may suggest: every act of the window not on the board, plus their own suggestion.
   const candidates = useMemo(
     () => current.filter((a) => a.id === mySuggestion || (!pickIds.has(a.id) && !suggestedIds.has(a.id))),
@@ -125,7 +130,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
 
   const view = useCallback(
     (f: Filter, all: boolean) => {
-      const from = all ? current : board;
+      const from = all ? sortByRating(current) : board;
       return f === "all" ? from : from.filter((a) => a.section === f);
     },
     [current, board],
@@ -249,7 +254,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                     onClick={(e) => open(act.id, e.currentTarget)}
                     aria-haspopup="dialog"
                     aria-expanded={openId === act.id}
-                    className={`olg-note olg-note-${act.section} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
+                    className={`olg-note olg-note-${act.section} ${suggestedIds.has(act.id) ? "olg-note-shine" : ""} ${pickIds.has(act.id) || suggestedIds.has(act.id) ? "" : "olg-note-dim"}`}
                   >
                     <span className="flex items-baseline justify-between gap-2">
                       <span className="olg-note-label">{actLabel(act)}</span>
@@ -489,9 +494,7 @@ function ActPanel({
               <p id={`${titleId}-change`} className="olg-eyebrow">
                 What’s new
               </p>
-              <p className="mt-2 text-[0.95rem] leading-relaxed text-foreground/90" lang="az">
-                {act.change}
-              </p>
+              <ChangeText change={act.change} provisions={act.provisions ?? []} section={act.section} url={act.url} />
             </section>
           )}
 
@@ -517,10 +520,246 @@ function ActPanel({
             {act.change
               ? " “What’s new” was written from the act’s full text and, for an amendment, the wording it replaces; it is not legal advice."
               : ""}
+            {act.provisions && act.provisions.length > 0
+              ? " An underlined article opens its wording as the act gives it."
+              : ""}
             {reason ? ` ${reason}` : ""}
           </p>
         </div>
       </div>
+    </div>
+  );
+}
+
+type Segment = { text: string; provision?: ActProvision };
+
+/** The paragraph cut at every cited provision, so each reference can be a link. */
+function segments(change: string, provisions: ActProvision[]): Segment[] {
+  const hits: { start: number; end: number; provision: ActProvision }[] = [];
+  for (const provision of provisions) {
+    for (const m of change.matchAll(provisionPattern(provision.ref))) {
+      hits.push({ start: m.index, end: m.index + m[0].length, provision });
+    }
+  }
+  // Earliest first, the longest of two starting together; drop overlaps.
+  hits.sort((a, b) => a.start - b.start || b.end - a.end);
+  const out: Segment[] = [];
+  let at = 0;
+  for (const hit of hits) {
+    if (hit.start < at) continue;
+    if (hit.start > at) out.push({ text: change.slice(at, hit.start) });
+    out.push({ text: change.slice(hit.start, hit.end), provision: hit.provision });
+    at = hit.end;
+  }
+  if (at < change.length) out.push({ text: change.slice(at) });
+  return out;
+}
+
+const KIND_LABEL: Record<NonNullable<ActProvision["kind"]>, string> = {
+  new: "Added",
+  edition: "Given a new edition",
+  replacement: "Words replaced",
+};
+
+/**
+ * The "What's new" paragraph with every cited provision as a link: hovering
+ * or focusing one shows a card with the provision's wording as the act (or
+ * the bill) gives it; a tap or click pins the card, Escape or a second
+ * click closes it.
+ */
+function ChangeText({
+  change,
+  provisions,
+  section,
+  url,
+}: {
+  change: string;
+  provisions: ActProvision[];
+  section: ActSection;
+  url: string;
+}) {
+  const parts = useMemo(() => segments(change, provisions), [change, provisions]);
+  const wrap = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState<{ provision: ActProvision; top: number; pinned: boolean } | null>(null);
+  const closing = useRef<number | null>(null);
+
+  useEffect(() => {
+    setOpen(null);
+  }, [change]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        setOpen(null);
+      }
+    };
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [open]);
+
+  function cancelClose() {
+    if (closing.current !== null) {
+      window.clearTimeout(closing.current);
+      closing.current = null;
+    }
+  }
+
+  function show(el: HTMLElement, provision: ActProvision, pinned: boolean) {
+    cancelClose();
+    const box = wrap.current?.getBoundingClientRect();
+    const own = el.getBoundingClientRect();
+    const top = box ? own.bottom - box.top + 6 : el.offsetTop + el.offsetHeight + 6;
+    setOpen((cur) => ({ provision, top, pinned: pinned || (cur?.provision === provision && cur.pinned) }));
+  }
+
+  function leave() {
+    cancelClose();
+    closing.current = window.setTimeout(() => {
+      setOpen((cur) => (cur && !cur.pinned ? null : cur));
+      closing.current = null;
+    }, 180);
+  }
+
+  const by = section === "bills" ? "the bill" : section === "court" ? "the ruling" : "the act";
+
+  return (
+    <div ref={wrap} className="relative">
+      <p className="mt-2 text-[0.95rem] leading-relaxed text-foreground/90" lang="az">
+        {parts.map((part, i) =>
+          part.provision ? (
+            <button
+              key={i}
+              type="button"
+              className={`olg-ref ${open?.provision === part.provision ? "olg-ref-open" : ""}`}
+              aria-expanded={open?.provision === part.provision}
+              onMouseEnter={(e) => show(e.currentTarget, part.provision!, false)}
+              onMouseLeave={leave}
+              onFocus={(e) => show(e.currentTarget, part.provision!, false)}
+              onClick={(e) => {
+                if (open && open.provision === part.provision && open.pinned) setOpen(null);
+                else show(e.currentTarget, part.provision!, true);
+              }}
+            >
+              {part.text}
+            </button>
+          ) : (
+            <span key={i}>{part.text}</span>
+          ),
+        )}
+      </p>
+      {open && (
+        <div
+          role="dialog"
+          aria-label={`${open.provision.ref}${open.provision.act_name ? `, ${open.provision.act_name}` : ""}`}
+          className="olg-ref-card olg-fade-in"
+          style={{ top: open.top }}
+          onMouseEnter={cancelClose}
+          onMouseLeave={leave}
+        >
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-sm font-medium text-foreground" lang="az">
+              {open.provision.ref}
+              {open.provision.act_name ? <span className="text-silver font-normal"> · {open.provision.act_name}</span> : null}
+            </p>
+            {open.provision.kind ? <span className="olg-ref-kind">{KIND_LABEL[open.provision.kind]}</span> : null}
+          </div>
+          <ProvisionText provision={open.provision} proposed={section === "bills"} />
+          <p className="mt-3 text-[0.68rem] text-silver">
+            {open.provision.context_text && open.provision.context_basis
+              ? `The clause as it stands, rebuilt by the gazette from ${open.provision.context_basis}; check it against the register before relying on it. `
+              : section === "bills"
+                ? "Proposed wording, as the bill gives it; not yet law. "
+                : `The wording as ${by} gives it, not the consolidated text. `}
+            <a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted">
+              {sourceHost(url)} ↗
+            </a>
+            {open.pinned ? " · Esc closes" : ""}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+type Piece = { kind: "text" | "del" | "ins"; text: string };
+
+/**
+ * The clause with every change marked where it sits: each new wording is
+ * found in the clause (in order, each after the last) and shown as an
+ * insertion, preceded by the old wording it replaced when there is one.
+ * Returns null when a wording is not in the clause, so the card falls
+ * back to the words alone.
+ */
+function markInside(context: string, added: string[], removed: string[] | null): Piece[] | null {
+  const pieces: Piece[] = [];
+  let at = 0;
+  for (const [i, line] of added.entries()) {
+    const needle = line.trim();
+    if (!needle) continue;
+    const found = context.indexOf(needle, at);
+    if (found < 0) return null;
+    if (found > at) pieces.push({ kind: "text", text: context.slice(at, found) });
+    const old = removed && removed.length === added.length ? removed[i].trim() : null;
+    if (old) pieces.push({ kind: "del", text: old });
+    pieces.push({ kind: "ins", text: needle });
+    at = found + needle.length;
+  }
+  if (at < context.length) pieces.push({ kind: "text", text: context.slice(at) });
+  return pieces;
+}
+
+/**
+ * A provision's wording as track changes: what is removed in red with a
+ * strike, what is added in green when the act is adopted and in yellow
+ * while a bill is still in its readings. A word swap pairs the old and new
+ * words line by line when the act lists several in one clause; an article
+ * added or given a new edition is all one colour.
+ */
+function ProvisionText({ provision, proposed }: { provision: ActProvision; proposed: boolean }) {
+  const ins = proposed ? "olg-ins olg-ins-proposed" : "olg-ins";
+  const added = provision.text.split("\n");
+  const removed = provision.old_text ? provision.old_text.split("\n") : null;
+  const inline = provision.context_text ? markInside(provision.context_text, added, removed) : null;
+  if (inline) {
+    return (
+      <p className="olg-ref-text" lang="az">
+        {inline.map((piece, i) =>
+          piece.kind === "del" ? (
+            <del key={i} className="olg-del">
+              {piece.text}
+            </del>
+          ) : piece.kind === "ins" ? (
+            <ins key={i} className={ins}>
+              {piece.text}
+            </ins>
+          ) : (
+            <span key={i}>{piece.text}</span>
+          ),
+        )}
+      </p>
+    );
+  }
+  if (removed && removed.length === added.length) {
+    return (
+      <div className="olg-ref-text" lang="az">
+        {added.map((line, i) => (
+          <p key={i} className="olg-ref-row">
+            <del className="olg-del">{removed[i]}</del> <ins className={ins}>{line}</ins>
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div className="olg-ref-text" lang="az">
+      {removed ? (
+        <p>
+          <del className="olg-del">{provision.old_text}</del>
+        </p>
+      ) : null}
+      <p className={removed ? "mt-2" : ""}>{provision.kind ? <ins className={ins}>{provision.text}</ins> : provision.text}</p>
     </div>
   );
 }

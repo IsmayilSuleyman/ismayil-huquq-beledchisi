@@ -83,7 +83,7 @@ async function main() {
       }
 
       const result = await insertActs(db, draft, issueNumber);
-      if (result.status === "inserted") console.log(`✓ No. ${issueNumber}: stored ${result.count} act(s), ${result.important} on the board`);
+      if (result.status === "inserted") console.log(`✓ No. ${issueNumber}: stored ${result.count} act(s), ${result.important} on the board, ${result.provisions} provision(s)`);
       else console.log(`· No. ${issueNumber} already has ${result.count} act(s); nothing changed`);
     }
   } finally {
