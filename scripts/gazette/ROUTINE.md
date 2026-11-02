@@ -226,13 +226,22 @@ For every lead:
       the register's own search, every act whose title names it: the
       amendments, with dates and numbers. The original is found by its own
       title: `--register "övladlığa götürülməsi Qaydası" --to 2020-02-27`.
+      The title search misses omnibus amendments that do not name the act
+      in their title; the amending act's first paragraph lists every
+      earlier amendment as a Toplusu reference ("2025, № 4, maddə 341"),
+      and `npm run gazette:find -- --toplusu "2025 4 341" --kind decrees`
+      resolves each one to its act. Use both, and reconcile: the chain is
+      the union.
    3. Locate each text by date: `npm run gazette:find -- --president
       decrees --date 2020-02-27` (or `orders`, `laws`) lists what
       president.az published that day with links; `npm run gazette:find --
       --nk --date 2011-07-18 --number 120` does the same on nk.gov.az and
-      stars the number. A rule or regulation approved by a decree is often
-      a separate article next to the decree's; the finder lists it too.
-      Read with `gazette:read`.
+      stars the number. Several `--date` values go in one call, and the
+      finder caches listing pages for the run, so a chain of lookups is
+      cheap after the first. A rule or regulation approved by a decree is
+      often a separate article next to the decree's, or a PDF linked from
+      the decree's page; the finder lists the articles and `gazette:read`
+      follows the PDF.
    4. Take the clause from the original, apply in date order every
       amendment that touches it (search each amending text for the clause
       number; skip the ones that do not mention it), then apply this

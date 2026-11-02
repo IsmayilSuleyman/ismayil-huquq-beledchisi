@@ -57,7 +57,9 @@ function elementByClass(html: string, cls: string): string | null {
 
 async function fromPdf(url: string): Promise<string> {
   const res = await fetchWithRetry(url, "application/pdf");
-  return pdfText(new Uint8Array(await res.arrayBuffer()));
+  const bytes = new Uint8Array(await res.arrayBuffer());
+  if (Buffer.from(bytes.subarray(0, 5)).toString("latin1") !== "%PDF-") throw new Error(`Not a PDF: ${url}`);
+  return pdfText(bytes);
 }
 
 /** Every PDF a page embeds or links, in page order, without repeats. */
@@ -74,7 +76,18 @@ function firstPdfLink(html: string, base: string): string | null {
   const src =
     /<(?:iframe|embed)\b[^>]*\bsrc="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
     /<object\b[^>]*\bdata="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
-    /<a\b[^>]*\bhref="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1];
+    /<a\b[^>]*\bhref="([^"]+\.pdf[^"]*)"/i.exec(html)?.[1] ??
+    // president.az serves its files from static.president.az/media/<token>
+    // with no extension; the token is the file name, base64-encoded.
+    [...html.matchAll(/<a\b[^>]*\bhref="(https?:\/\/static\.president\.az\/media\/[^"]+)"/gi)]
+      .map((m) => m[1])
+      .find((u) => {
+        try {
+          return /\.pdf"?\]?\]?$/i.test(Buffer.from(new URL(u).pathname.split("/").pop() ?? "", "base64").toString("utf8"));
+        } catch {
+          return false;
+        }
+      });
   return src ? new URL(src.replace(/&amp;/g, "&"), base).toString() : null;
 }
 
