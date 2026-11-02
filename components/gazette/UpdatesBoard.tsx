@@ -679,6 +679,33 @@ function ChangeText({
   );
 }
 
+type Piece = { kind: "text" | "del" | "ins"; text: string };
+
+/**
+ * The clause with every change marked where it sits: each new wording is
+ * found in the clause (in order, each after the last) and shown as an
+ * insertion, preceded by the old wording it replaced when there is one.
+ * Returns null when a wording is not in the clause, so the card falls
+ * back to the words alone.
+ */
+function markInside(context: string, added: string[], removed: string[] | null): Piece[] | null {
+  const pieces: Piece[] = [];
+  let at = 0;
+  for (const [i, line] of added.entries()) {
+    const needle = line.trim();
+    if (!needle) continue;
+    const found = context.indexOf(needle, at);
+    if (found < 0) return null;
+    if (found > at) pieces.push({ kind: "text", text: context.slice(at, found) });
+    const old = removed && removed.length === added.length ? removed[i].trim() : null;
+    if (old) pieces.push({ kind: "del", text: old });
+    pieces.push({ kind: "ins", text: needle });
+    at = found + needle.length;
+  }
+  if (at < context.length) pieces.push({ kind: "text", text: context.slice(at) });
+  return pieces;
+}
+
 /**
  * A provision's wording as track changes: what is removed in red with a
  * strike, what is added in green when the act is adopted and in yellow
@@ -690,6 +717,26 @@ function ProvisionText({ provision, proposed }: { provision: ActProvision; propo
   const ins = proposed ? "olg-ins olg-ins-proposed" : "olg-ins";
   const added = provision.text.split("\n");
   const removed = provision.old_text ? provision.old_text.split("\n") : null;
+  const inline = provision.context_text ? markInside(provision.context_text, added, removed) : null;
+  if (inline) {
+    return (
+      <p className="olg-ref-text" lang="az">
+        {inline.map((piece, i) =>
+          piece.kind === "del" ? (
+            <del key={i} className="olg-del">
+              {piece.text}
+            </del>
+          ) : piece.kind === "ins" ? (
+            <ins key={i} className={ins}>
+              {piece.text}
+            </ins>
+          ) : (
+            <span key={i}>{piece.text}</span>
+          ),
+        )}
+      </p>
+    );
+  }
   if (removed && removed.length === added.length) {
     return (
       <div className="olg-ref-text" lang="az">

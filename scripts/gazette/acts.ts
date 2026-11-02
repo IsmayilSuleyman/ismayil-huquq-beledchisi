@@ -55,6 +55,7 @@ export type ProvisionRow = {
   kind: "new" | "edition" | "replacement" | null;
   text: string;
   old_text: string | null;
+  context_text: string | null;
 };
 
 export function provisionRows(actId: string, provisions: Provision[]): ProvisionRow[] {
@@ -66,6 +67,7 @@ export function provisionRows(actId: string, provisions: Provision[]): Provision
     kind: p.kind ?? null,
     text: p.text,
     old_text: p.old ?? null,
+    context_text: p.context ?? null,
   }));
 }
 

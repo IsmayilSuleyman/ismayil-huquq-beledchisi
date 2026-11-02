@@ -41,7 +41,7 @@ async function getBoardActs(): Promise<GazetteAct[]> {
   const supabase = getServerSupabase();
   const { data, error } = await supabase
     .from("gazette_acts")
-    .select("*, provisions:gazette_act_provisions(position, ref, act_name, kind, text, old_text)")
+    .select("*, provisions:gazette_act_provisions(position, ref, act_name, kind, text, old_text, context_text)")
     .gte("date", windowStart(new Date(), BOARD_DAYS))
     .order("date", { ascending: false });
   if (error) {

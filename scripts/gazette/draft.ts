@@ -40,6 +40,13 @@ export type Provision = {
   text: string;
   /** The previous wording, only when the act quotes it (a replacement). */
   old?: string;
+  /**
+   * The whole clause as it reads after the change, when it can be read
+   * (the act quotes it in full, a bill's earlier reading has it, or a
+   * consolidated source is available). The card then shows the clause with
+   * the swaps marked inside it, as track changes.
+   */
+  context?: string;
 };
 
 export type GazetteEntry = {
@@ -303,7 +310,7 @@ export function checkDraft(raw: unknown): DraftCheck {
                 errors.push(`${where} must be an object`);
                 continue;
               }
-              unknownKeys(rawProvision, ["ref", "act", "kind", "text", "old"], where);
+              unknownKeys(rawProvision, ["ref", "act", "kind", "text", "old", "context"], where);
               const ref = text(rawProvision, "ref", where, 60);
               const actName = text(rawProvision, "act", where, 200, false);
               const body = typeof rawProvision.text === "string" ? rawProvision.text.replace(/\r\n?/g, "\n").trim() : "";
@@ -312,6 +319,12 @@ export function checkDraft(raw: unknown): DraftCheck {
               const oldBody = typeof rawProvision.old === "string" ? rawProvision.old.replace(/\r\n?/g, "\n").trim() : "";
               if (rawProvision.old !== undefined && typeof rawProvision.old !== "string") errors.push(`${where}.old must be a string`);
               else if (oldBody.length > PROVISION_TEXT_MAX) errors.push(`${where}.old is ${oldBody.length} characters; the limit is ${PROVISION_TEXT_MAX}`);
+              const contextBody = typeof rawProvision.context === "string" ? rawProvision.context.replace(/\r\n?/g, "\n").trim() : "";
+              if (rawProvision.context !== undefined && typeof rawProvision.context !== "string") errors.push(`${where}.context must be a string`);
+              else if (contextBody.length > PROVISION_TEXT_MAX) errors.push(`${where}.context is ${contextBody.length} characters; the limit is ${PROVISION_TEXT_MAX}`);
+              else if (contextBody && body && !body.split("\n").every((line) => contextBody.includes(line.trim()))) {
+                warnings.push(`${where}.context does not contain the new wording, so the card cannot mark the change inside it`);
+              }
               let kind: ProvisionKind | undefined;
               if (rawProvision.kind !== undefined) {
                 if (typeof rawProvision.kind !== "string" || !(PROVISION_KINDS as readonly string[]).includes(rawProvision.kind)) {
@@ -332,6 +345,7 @@ export function checkDraft(raw: unknown): DraftCheck {
                 ...(kind ? { kind } : {}),
                 text: body,
                 ...(oldBody ? { old: oldBody } : {}),
+                ...(contextBody ? { context: contextBody } : {}),
               });
             }
           }

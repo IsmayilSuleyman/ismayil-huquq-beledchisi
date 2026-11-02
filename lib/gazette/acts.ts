@@ -124,6 +124,8 @@ export type ActProvision = {
   kind: "new" | "edition" | "replacement" | null;
   text: string;
   old_text: string | null;
+  /** The whole clause as it reads after the change, when known; the card marks the swaps inside it. */
+  context_text: string | null;
 };
 
 /** A row of `gazette_acts` as the site reads it. */

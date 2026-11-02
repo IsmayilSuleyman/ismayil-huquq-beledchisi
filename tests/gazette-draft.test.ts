@@ -152,6 +152,11 @@ describe("checkDraft", () => {
     entry.provisions = [{ ref: "1.2.13-cü", text: "" }];
     expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0].text is missing");
 
+    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 10 (on) gün müddətində qısalda bilər." }];
+    expect(checkDraft(raw).warnings.filter((w) => w.includes("context"))).toEqual([]);
+    entry.provisions = [{ ref: "1.2.13-cü", text: "10 (on)", old: "20 (iyirmi)", context: "Nazirlik 20 (iyirmi) gün müddətində qısalda bilər." }];
+    expect(checkDraft(raw).warnings.some((w) => w.includes("context does not contain the new wording"))).toBe(true);
+
     delete entry.change;
     entry.provisions = [{ ref: "1.2.13-cü", text: "a" }];
     expect(errorsOf(raw)).toContain("sections.decrees.entries[1].provisions[0]: a provision needs a change paragraph to be linked from");

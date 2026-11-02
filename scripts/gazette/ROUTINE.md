@@ -205,7 +205,12 @@ For every lead:
    `kind` "new" for an article added whole, "edition" for one given a new
    edition, "replacement" for words replaced; `text` the wording verbatim
    from the act, line breaks kept, nothing shortened or paraphrased; `old`
-   the previous wording only when the act quotes it (a replacement). A
+   the previous wording only when the act quotes it (a replacement);
+   `context` the whole clause as it reads after the change, whenever you
+   can read it — the act quotes the clause in full, a bill's earlier
+   reading carries it, or a consolidated text source is available to you
+   (e-qanun's text files are not: a 403 is a no) — so the site can show
+   the clause with the swapped words marked inside it. A
    provision the act only cites without quoting (a legal basis, an
    article removed) has no text to give: leave it out.
 7. **When it is not possible, leave `change` out**: the text could not be
