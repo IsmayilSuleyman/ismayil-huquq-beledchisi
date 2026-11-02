@@ -665,20 +665,9 @@ function ChangeText({
             </p>
             {open.provision.kind ? <span className="olg-ref-kind">{KIND_LABEL[open.provision.kind]}</span> : null}
           </div>
-          {open.provision.old_text ? (
-            <>
-              <p className="olg-eyebrow mt-3">Before</p>
-              <p className="olg-ref-text" lang="az">
-                {open.provision.old_text}
-              </p>
-              <p className="olg-eyebrow mt-3">After</p>
-            </>
-          ) : null}
-          <p className="olg-ref-text" lang="az">
-            {open.provision.text}
-          </p>
+          <ProvisionText provision={open.provision} proposed={section === "bills"} />
           <p className="mt-3 text-[0.68rem] text-silver">
-            The wording as {by} gives it, not the consolidated text.{" "}
+            {section === "bills" ? "Proposed wording, as the bill gives it; not yet law. " : `The wording as ${by} gives it, not the consolidated text. `}
             <a href={url} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted">
               {sourceHost(url)} ↗
             </a>
@@ -686,6 +675,40 @@ function ChangeText({
           </p>
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * A provision's wording as track changes: what is removed in red with a
+ * strike, what is added in green when the act is adopted and in yellow
+ * while a bill is still in its readings. A word swap pairs the old and new
+ * words line by line when the act lists several in one clause; an article
+ * added or given a new edition is all one colour.
+ */
+function ProvisionText({ provision, proposed }: { provision: ActProvision; proposed: boolean }) {
+  const ins = proposed ? "olg-ins olg-ins-proposed" : "olg-ins";
+  const added = provision.text.split("\n");
+  const removed = provision.old_text ? provision.old_text.split("\n") : null;
+  if (removed && removed.length === added.length) {
+    return (
+      <div className="olg-ref-text" lang="az">
+        {added.map((line, i) => (
+          <p key={i} className="olg-ref-row">
+            <del className="olg-del">{removed[i]}</del> <ins className={ins}>{line}</ins>
+          </p>
+        ))}
+      </div>
+    );
+  }
+  return (
+    <div className="olg-ref-text" lang="az">
+      {removed ? (
+        <p>
+          <del className="olg-del">{provision.old_text}</del>
+        </p>
+      ) : null}
+      <p className={removed ? "mt-2" : ""}>{provision.kind ? <ins className={ins}>{provision.text}</ins> : provision.text}</p>
     </div>
   );
 }

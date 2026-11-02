@@ -618,6 +618,34 @@
   white-space: pre-wrap;
   color: var(--foreground);
 }
+.olg-ref-row + .olg-ref-row {
+  margin-top: 0.25rem;
+}
+/* Track changes: removed words red and struck; added words green once the
+   act is adopted, yellow while a bill is still in its readings. */
+.olg-del {
+  color: #ff8a8a;
+  background: rgba(255, 99, 99, 0.12);
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  border-radius: 3px;
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.olg-ins {
+  color: #7fe0a5;
+  background: rgba(72, 199, 122, 0.14);
+  text-decoration: none;
+  border-radius: 3px;
+  padding: 0 0.15em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.olg-ins-proposed {
+  color: #f0d27a;
+  background: rgba(232, 196, 92, 0.14);
+}
 .olg-ref-kind {
   flex: none;
   font-size: 0.6rem;
@@ -773,6 +801,18 @@
   background: #fff;
   border-color: rgba(46, 98, 201, 0.3);
   box-shadow: 0 24px 50px -28px rgba(18, 40, 90, 0.45);
+}
+:root:not(.dark) .olg-del {
+  color: #b42318;
+  background: rgba(180, 35, 24, 0.08);
+}
+:root:not(.dark) .olg-ins {
+  color: #1f7a3f;
+  background: rgba(31, 122, 63, 0.1);
+}
+:root:not(.dark) .olg-ins-proposed {
+  color: #8a6400;
+  background: rgba(196, 150, 28, 0.14);
 }
 :root:not(.dark) .olg-ref-kind {
   color: #2e62c9;
