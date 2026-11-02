@@ -27,8 +27,9 @@ import { useClosing, useFlip } from "@/components/gazette/useFlip";
 // The board on the landing page: the last month's acts as notes, up to
 // twelve picks (lib/gazette/acts.ts decides: important by rule, best rated
 // by readers, not voted off), every one a button that opens the act in a
-// side panel with its source, its issue and a five-star vote on how much
-// it matters. A note's link (#act=<id>) opens the same panel on arrival,
+// side panel with its source, its issue, the routine's "What's new"
+// paragraph (what the act changes, from its full text) and a five-star
+// vote on how much it matters. A note's link (#act=<id>) opens the same panel on arrival,
 // so a lawyer can send a colleague one act. The + note at the end lets a
 // reader suggest one act the picks left out; the most suggested ones join
 // the board beside the picks (suggest_act, migration 20261031180000).
@@ -283,7 +284,7 @@ export default function UpdatesBoard({ acts, days }: { acts: GazetteAct[]; days:
                             ★ {average.toFixed(1)}
                           </span>
                         )}
-                        <span className="olg-note-read">Read →</span>
+                        <span className="olg-note-read">{act.change ? "What’s new →" : "Read →"}</span>
                       </span>
                     </span>
                   </button>
@@ -483,6 +484,17 @@ function ActPanel({
             </div>
           )}
 
+          {act.change && (
+            <section className="mt-5 olg-glass rounded-2xl px-4 py-3.5" aria-labelledby={`${titleId}-change`}>
+              <p id={`${titleId}-change`} className="olg-eyebrow">
+                What’s new
+              </p>
+              <p className="mt-2 text-[0.95rem] leading-relaxed text-foreground/90" lang="az">
+                {act.change}
+              </p>
+            </section>
+          )}
+
           <StarRating act={act} onRate={onRate} />
 
           <div className="mt-6 flex flex-col gap-2.5">
@@ -502,6 +514,9 @@ function ActPanel({
 
           <p className="mt-7 text-[0.7rem] leading-relaxed text-silver">
             The sentence is the gazette&rsquo;s own summary of the act, in Azerbaijani; the source link opens the official text.
+            {act.change
+              ? " “What’s new” was written from the act’s full text and, for an amendment, the wording it replaces; it is not legal advice."
+              : ""}
             {reason ? ` ${reason}` : ""}
           </p>
         </div>

@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { allEntries, checkDraft, issueTitle } from "@/scripts/gazette/draft";
+import { allEntries, checkDraft, countSentences, issueTitle } from "@/scripts/gazette/draft";
 import { formatPeriod } from "@/lib/gazette-format";
 
 const FIXTURE = path.join(import.meta.dirname, "fixtures", "gazette", "draft.json");
@@ -99,10 +99,47 @@ describe("checkDraft", () => {
     expect(errorsOf(missing).some((e) => e.startsWith("sections.court is missing"))).toBe(true);
   });
 
+  it("keeps an act's “Nə dəyişib?” paragraph: up to four sentences of facts, without a №", () => {
+    const ok = checkDraft(sample());
+    expect(ok.ok && ok.draft.sections.decrees.entries[1].change).toMatch(/^Fərman 2014-cü il 15 may tarixli 168 nömrəli Fərmanla/);
+    expect(ok.ok && ok.draft.sections.decrees.entries[0].change).toBeUndefined();
+
+    const raw = sample();
+    const entry = raw.sections.decrees.entries[1];
+    entry.change = "Bir. İki. Üç. Dörd. Beş.";
+    expect(errorsOf(raw)).toContain("sections.decrees.entries[1].change has 5 sentences; the limit is 4");
+
+    entry.change = "Fərman № 168 ilə təsdiq edilmiş Əsasnamənin 1.2-ci bəndi dəyişdirilir.";
+    expect(errorsOf(raw).some((e) => e.includes('change must not write "№"'))).toBe(true);
+
+    entry.change = "Dəyişikliklər 2027-ci il 1 yanvar tarixindən qüvvəyə minir";
+    expect(errorsOf(raw)).toContain("sections.decrees.entries[1].change must end with a full stop");
+
+    entry.change = entry.text;
+    expect(errorsOf(raw).some((e) => e.includes("change repeats the sentence"))).toBe(true);
+
+    entry.change = "x".repeat(1001) + ".";
+    expect(errorsOf(raw).some((e) => e.includes("the limit is 1000"))).toBe(true);
+
+    entry.change = "Bu mühüm fərmanla rezidentlərin dairəsi genişləndirilir.";
+    const result = checkDraft(raw);
+    expect(result.ok).toBe(true);
+    expect(result.warnings).toContain("sections.decrees.entries[1].change has no number in it (no article, date, amount or count): is it rich in facts?");
+    expect(result.warnings).toContain('sections.decrees.entries[1].change says "mühüm": no praise, guesses or forecasts in it');
+  });
+
   it("accepts an empty section", () => {
     const raw = sample();
     raw.sections.court = { entries: [] };
     expect(errorsOf(raw)).toEqual([]);
+  });
+});
+
+describe("countSentences", () => {
+  it("counts sentences the way the one-sentence rule does, ignoring dotted article numbers", () => {
+    expect(countSentences("")).toBe(0);
+    expect(countSentences("Əsasnamənin 1.2.4-cü yarımbəndi dəyişdirilir.")).toBe(1);
+    expect(countSentences("Birinci cümlə. İkinci cümlə “sitatla”. (Üçüncü.) Dördüncü!")).toBe(4);
   });
 });
 

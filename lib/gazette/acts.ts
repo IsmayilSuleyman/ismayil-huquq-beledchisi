@@ -129,6 +129,13 @@ export type GazetteAct = {
   url: string;
   stage: "I" | "II" | "III" | null;
   ruling: "qərar" | "qərardad" | null;
+  /**
+   * "Nə dəyişib?": the routine's one-to-four-sentence account, in
+   * Azerbaijani, of what the act changes, written from the act's full text
+   * (migration 20261102120000). Null for acts stored before it existed and
+   * for acts whose text could not be read.
+   */
+  change: string | null;
   topics: ActTopic[];
   important: boolean;
   /** Readers' votes on how important the act is, 1–5 stars each (migration 20261031150000). */

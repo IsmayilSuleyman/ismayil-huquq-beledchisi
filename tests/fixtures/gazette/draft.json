@@ -1,5 +1,8 @@
 {
-  "period": { "from": "2026-10-19", "to": "2026-10-25" },
+  "period": {
+    "from": "2026-10-19",
+    "to": "2026-10-25"
+  },
   "published_at": "2026-10-26",
   "sections": {
     "decrees": {
@@ -14,7 +17,8 @@
           "number": "807",
           "date": "2026-10-22",
           "text": "Texnologiyalar parkı haqqında Nümunəvi Əsasnaməyə dəyişiklik edilib; frilanserlər və rəqəmsal səyyahlar texnoparkın rezidenti ola biləcək.",
-          "url": "https://e-qanun.az/framework/62789"
+          "url": "https://e-qanun.az/framework/62789",
+          "change": "Fərman 2014-cü il 15 may tarixli 168 nömrəli Fərmanla təsdiq edilmiş Nümunəvi Əsasnamənin 1.2-ci bəndindəki anlayışları yenidən qurur: 1.2.4-cü yarımbənddə texnoparkın rezidenti sayılan fiziki şəxslərin sırasına frilanser və rəqəmsal səyyah əlavə edilir, 1.2.13-cü və 1.2.14-cü yarımbəndlər isə yeni redaksiyada verilir. Frilanser muzdlu işçi cəlb etmədən mülki hüquqi müqavilə əsasında müstəqil xidmət göstərən rezident fiziki şəxs, rəqəmsal səyyah isə fəaliyyətini distant həyata keçirib gəlirini xarici mənbələrdən əldə edən əcnəbi və ya vətəndaşlığı olmayan şəxs kimi müəyyən edilir. Yeni 1.2.4-1-ci yarımbənd texnoparkın qeyri-rezidenti anlayışını gətirir (icarə müqaviləsi əsasında texnoparkın ərazisində rezidentlərə mal, iş və xidmət təqdim edən şəxs), 1.2.15 – 1.2.20-ci yarımbəndlər isə rəqəmsal texnologiya və süni intellekt texnologiyası da daxil olmaqla altı yeni anlayış əlavə edir. Dəyişikliklər 2027-ci il 1 yanvar tarixindən qüvvəyə minir."
         }
       ]
     },

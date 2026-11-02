@@ -6,8 +6,10 @@ rules below are the review. Follow them in order.
 
 **The issue keeps the format of issues 3–12** (open any of them from the
 library to see it): four sections, each a numbered list of acts, every act
-one sentence with its number and a source link. The publisher lays it out;
-you supply the acts and their sentences.
+one sentence with its number and a source link. Since November 2026 each
+act also carries a **“Nə dəyişib?” paragraph** under its sentence: what
+the act changes, read from its full text (step 3a). The publisher lays it
+out; you supply the acts, their sentences and their paragraphs.
 
 **The period** is the previous Monday to Sunday, and **the issue date**
 (`published_at`) is the Monday after it. Run on 2 November 2026, the
@@ -126,6 +128,77 @@ Rules for the sentence:
   it interpreted, and set `ruling` to "qərar" (decision) or "qərardad"
   (procedural ruling); `gazette:read` on its page shows which.
 
+## 3a. Read the whole act and write “Nə dəyişib?”
+
+The sentence says what the act is; the `change` paragraph says what it
+changes. Readers open it from the act’s note on the board (“What’s new →”)
+and the issue prints it under the sentence, so it carries the same weight
+as the sentence and the same rules: facts only, from pages read in this
+run, nothing from memory, nothing from the title alone.
+
+For every lead:
+
+1. **Read the full text, not the title**: `npm run gazette:read --
+   '<textUrl>' --max 60000`; raise `--max` until nothing is cut off. A
+   Cabinet decision’s annexes (the rules or regulation it approves) follow
+   the act in the same output. The register page (`url`, e-qanun.az) gives
+   only the act’s details — type, dates, `Qüvvəyə minmə` (the date in
+   force); its text files answer 403 to the scripts, and that is a no
+   (§0). The text is on the issuing body’s site, which `textUrl` points to.
+2. **Say what kind of act it is**, because the paragraph differs:
+   - *An amendment* (“… dəyişiklik edilməsi haqqında”). The text lists
+     every change by article: words replaced (“X sözləri Y sözləri ilə
+     əvəz edilsin” — both wordings are in the text), words or articles
+     added (the new rule is in the text), articles given a new edition
+     (“aşağıdakı redaksiyada verilsin” — only the new wording is in the
+     text) and articles removed (“çıxarılsın” — neither). Go through every
+     item and note, article by article, the old rule and the new one.
+   - *A new act or an approved document* (rules, a strategy, a regulation,
+     a model charter). There is no previous version; the paragraph gives
+     the main rules it sets: who it applies to, what it requires or allows,
+     the numbers (thresholds, amounts, deadlines, terms), who does what.
+   - *An agreement or protocol approved*: the parties, the subject, the
+     main obligations, the terms with dates and amounts.
+   - *A bill*: what it would change, as for an amendment but in the
+     conditional (“nəzərdə tutur”), and the reading it is at.
+   - *A Constitutional Court ruling*: the question put to the Plenum, the
+     norm it interpreted or whether the complaint was accepted, what the
+     Court held, and what follows (a judgment to be reviewed, a norm not to
+     be applied).
+3. **Find the previous wording** where the amending text does not quote it
+   (a new edition, a removal, a replacement you cannot place without its
+   context). The amending act’s first paragraph names what it amends by
+   date and number (“2014-cü il 15 may tarixli 168 nömrəli Fərmanı”) and
+   lists the earlier amendments as Toplusu references, so you know whether
+   the original wording still stood. Look for the act on the body’s own
+   site: president.az lists decrees by category
+   (`/az/documents/category/decrees/<page>`) and has a search box
+   (`/az/search?q=…`); nk.gov.az lists decisions under `/az/senedler/`;
+   laws are on meclis.gov.az. Read what you find with `gazette:read`.
+   Fetch only what this act needs: if the original is not found within a
+   few requests, stop looking and work from the amending text.
+4. **Understand the change before writing it**: what a person or a company
+   could do before and what they can do now; which obligation, threshold,
+   deadline, body or procedure moved; from when. If the text contradicts
+   the title, the text wins. If you cannot tell what a change does from
+   the text and the previous wording, say only what the text says — which
+   article was given a new edition or removed — and no more.
+5. **Write `change`**: one to four full sentences in Azerbaijani, each
+   carrying facts — article numbers, the old rule and the new one, amounts,
+   dates, the names of the acts and bodies. Name an act as “168 nömrəli
+   Fərman”, never with “№” (the dry run rejects it: the repeat check would
+   take the number for this week’s act). The present tense for what the
+   act does (“əlavə edir”, “müəyyən edir”, “qüvvəyə minir”), the past for
+   what stood before (“əvvəllər … göstərilirdi”). No praise, no “ehtimal
+   ki”, no forecasts, no English, and not the sentence again. Decree 807 in
+   `tests/fixtures/gazette/draft.json` shows the measure: four sentences,
+   nine article references, two definitions restated, the date in force.
+6. **When it is not possible, leave `change` out**: the text could not be
+   read (a 403, a scanned PDF with no text, a page that builds its content
+   with JavaScript), or the act is a formality with nothing to explain (a
+   name given to a school, an award, an appointment). Say in the report
+   which acts have no paragraph and why. Never write one from the title.
+
 ## 4. Write the draft
 
 Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
@@ -136,10 +209,10 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
   "period": { "from": "<Monday>", "to": "<Sunday>" },
   "published_at": "<the Monday after>",
   "sections": {
-    "decrees":   { "entries": [ { "number", "date", "text", "url" } ] },
-    "decisions": { "entries": [ { "number", "date", "text", "url" } ] },
-    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "url" } ] },
-    "court":     { "entries": [ { "date", "ruling", "text", "url" } ] }
+    "decrees":   { "entries": [ { "number", "date", "text", "change", "url" } ] },
+    "decisions": { "entries": [ { "number", "date", "text", "change", "url" } ] },
+    "bills":     { "note": "…", "entries": [ { "date", "stage", "text", "change", "url" } ] },
+    "court":     { "entries": [ { "date", "ruling", "text", "change", "url" } ] }
   }
 }
 ```
@@ -153,6 +226,9 @@ Write `/tmp/gazette/draft.json` in the format of `scripts/gazette/draft.ts`.
 - `number` exactly as printed on the act ("804", "264"); `date` the date
   printed on the act (for a bill, the reading's date); `url` the lead's
   `url`, the register's page when there is one.
+- `change` (any act): the “Nə dəyişib?” paragraph of step 3a, one to four
+  sentences, at most 1000 characters, no “№”. Left out only for the
+  reasons in step 3a.6.
 - Bills: `stage` is the lead's `stage` ("I", "II" or "III"). A bill read
   again in a later week is reported again there, at its new stage.
 - Order within a section: by date, then number.
@@ -172,7 +248,9 @@ npm run gazette:publish -- /tmp/gazette/draft.json --dry-run --out /tmp/gazette
 ```
 
 The dry run validates the draft (one sentence per act, no number inside
-it, dates in the period, nothing listed twice), numbers the issue after
+it, each `change` at most four sentences without a “№”, dates in the
+period, nothing listed twice; it warns about a `change` with no number in
+it or with a word like “mühüm” or “ehtimal”), numbers the issue after
 the latest one, compares it with the last three issues (it says which, and
 whether anything repeats), and renders `issue-<n>.pdf` and its cover
 without uploading anything. Fix every error it lists and run it again.
@@ -196,9 +274,13 @@ pdftoppm -r 70 -png /tmp/gazette/issue-*.pdf /tmp/gazette/page
 ```
 
 Open each `page-*.png` and compare with issue 12 in the library: the same
-header band, headings, numbered items, labels and "Mənbə" lines; nothing
+header band, headings, numbered items, labels and "Mənbə" lines, with an
+act's `change` paragraph in plain serif between its sentence and its
+source, no heading of its own; nothing
 cut off or overlapping; no missing letters (empty boxes instead of ə or
-ş); every number and date right. Re-read every sentence once.
+ş); every number and date right. Re-read every sentence and every
+paragraph once, against the text you read: every article number, date and
+amount in a paragraph must be in the act.
 
 When everything is right:
 
@@ -221,6 +303,9 @@ notification):
   gazette:acts -- /tmp/gazette/draft.json` once and say so), and
   how many subscribers were notified (or the warning, if notifying failed:
   the issue stays published; the owner can press Notify in the admin desk);
+- how many acts carry a “Nə dəyişib?” paragraph, and for each act without
+  one, why (step 3a.6); for an amendment whose previous wording you could
+  not find, say so;
 - any source that failed or was incomplete, acts added by hand, numbering
   gaps you couldn't resolve, and anything left out as unconfirmed;
 - or, if nothing was published, exactly why and what is needed to fix it.

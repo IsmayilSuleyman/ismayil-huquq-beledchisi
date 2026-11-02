@@ -76,7 +76,8 @@ describe("actRows", () => {
     const rows = actRows(fixture(), 18);
     expect(rows.map((r) => r.position)).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
     expect(rows.every((r) => r.issue_number === 18)).toBe(true);
-    expect(rows[0]).toMatchObject({ section: "decrees", number: "804", stage: null, ruling: null });
+    expect(rows[0]).toMatchObject({ section: "decrees", number: "804", stage: null, ruling: null, change: null });
+    expect(rows[1].change).toMatch(/qüvvəyə minir\.$/);
     expect(rows[4]).toMatchObject({ section: "bills", number: null, stage: "III", important: true });
     expect(rows[6]).toMatchObject({ section: "court", ruling: "qərardad", important: true });
     expect(rows.filter((r) => r.important).map((r) => r.position)).toEqual([5, 7, 8]);
