@@ -490,7 +490,11 @@ function ActPanel({
           )}
 
           {act.change && (
-            <section className="mt-5 olg-glass rounded-2xl px-4 py-3.5" aria-labelledby={`${titleId}-change`}>
+            <section
+              // Above the boxes that follow, so an open provision card is never painted over by them.
+              className="mt-5 olg-glass rounded-2xl px-4 py-3.5 relative z-20 !overflow-visible"
+              aria-labelledby={`${titleId}-change`}
+            >
               <p id={`${titleId}-change`} className="olg-eyebrow">
                 What’s new
               </p>
