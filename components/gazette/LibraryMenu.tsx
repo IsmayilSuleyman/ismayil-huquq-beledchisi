@@ -4,11 +4,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-// "Library ▾" in the gazette header: opens a short list of the three shelves.
+// "Library ▾" in the gazette header: opens a short list of the shelves.
 const SHELVES = [
   { href: "/", label: "Gazette", hint: "Weekly legislature digest", active: (p: string) => p === "/" || p.startsWith("/issues") },
   { href: "/summaries", label: "Summaries", hint: "Constitutional Court decisions", active: (p: string) => p.startsWith("/summaries") },
   { href: "/books", label: "Books", hint: "Legal texts and references", active: (p: string) => p.startsWith("/books") },
+  { href: "/versions", label: "Versions", hint: "Earlier wordings of an act", active: (p: string) => p.startsWith("/versions") },
 ];
 
 export default function LibraryMenu() {

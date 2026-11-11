@@ -367,6 +367,63 @@ illustrations of the intended register. Verify dates, numbers, article
 references and the `official` links against e-qanun.az before relying on
 them; each page carries that reminder for readers.
 
+### Earlier wordings of an act ("Versions")
+
+The full text of an act with every amended article's earlier wordings, on
+the gazette side and public: `/versions` lists the acts, `/versions/<slug>`
+shows one (the Constitution: `/versions/konstitusiya`). An amended article
+has a blue line in the margin; on hover it gets a frame with arrows that step
+through its wordings, the dates each was in force, the act that made it, C to
+show what that act changed as track changes (the gazette's red and green), ▶
+to play the changes in order, and W, a Word file, which waits for İsmayıl's
+template. A bar at the top sets the whole text to the day a referendum took
+effect, or hides the articles that never changed.
+
+The data is one JSON file per act, `content/versions/<slug>.json`, built and
+committed:
+
+```bash
+npm run gazette:clause -- --framework 897 --dump --html page.html > page.txt   # on İsmayıl's computer, once
+npm run versions:build -- --act konstitusiya --html page.html                   # cleans and stores the page, builds
+npm run versions:build -- --act konstitusiya                                    # rebuild from the stored source, anywhere
+```
+
+The e-qanun text file answers 403 to scripts, so the page is read once in
+Chrome on İsmayıl's computer and its HTML saved (`--html` on the clause tool,
+same page load as `--dump`). The build then works from the stored copy,
+`content/versions/sources/<slug>/e-qanun-<id>.html`. In that text, words an
+amendment added are in italics and words it removed are still there, struck
+through; each change has an endnote naming the amending act and quoting any
+wording a new one replaced ("Əvvəlki redaksiyada deyilirdi: …").
+`scripts/versions/changes.ts` reads those notes, and amending acts in their
+own imperative wording ("… sözləri ilə əvəz edilsin"), into operations;
+`rebuild.ts` undoes them on each article, newest amendment first.
+
+Where e-qanun's notes are silent, `scripts/versions/acts/<slug>.ts` names
+other sources. For the Constitution, e-qanun annotates only one of the 2002
+changes (Article 3, Part III), so 2002 is read from the 2002 Referendum Act
+itself (e-qanun 47432). Where that act replaces or deletes a unit without
+quoting it, the wording comes from the 1995 text as printed in Qanunvericilik
+Toplusu, 1997, № 1, which e-qanun shows as page images on the act's "Şəkil"
+tab; the articles concerned were transcribed into
+`sources/konstitusiya/toplusu-1997-1.json`. The articles changed in 2016 were
+transcribed the same way from Toplusu 2009, № 3. The build compares the
+rebuilt wordings with both transcriptions and writes the differences to
+`scripts/versions/reports/<slug>.md`. They are e-qanun's punctuation and
+capitals against the print's, plus a handful of word differences listed
+there. The act file also holds hand corrections (`fixes`, `quotes`), each
+with its reason.
+
+A wording is dated from the instrument e-qanun's notes cite for the change:
+for the referendums, the Central Election Commission's decision approving the
+result (29.08.2002, 30.03.2009, 11.10.2016).
+
+To add a code or a law: save its e-qanun page the same way, add
+`scripts/versions/acts/<slug>.ts` (its amending acts' decision numbers as the
+endnotes cite them), run the build and read the report. For codes, e-qanun
+also keeps the original text and consolidated versions since 2021
+(`api.e-qanun.az/getVersions?id=<id>`), which can serve as witnesses.
+
 ### Course
 
 Content lives in the repo, so writing a lesson is a commit:
@@ -519,6 +576,7 @@ app/
   (gazette)/layout.tsx            Gazette chrome (original design), imports gazette.css
   (gazette)/                      Library (the site's landing page), issues/[number] viewer,
                                   books/ and books/[id], admin
+  (gazette)/versions/             Earlier wordings: the list of acts; [slug]/ an act's full text
   api/gazette/notify/route.ts     Admin desk's "Notify subscribers" (push)
   manifest.ts                     Home-screen manifest (needed for push on iPhone)
 lib/
@@ -530,6 +588,7 @@ lib/
   quiz.ts                         Test loader, validation and grading
   sources.ts                      Study-material loader for laws and acts
   decks.ts                        Flashcard deck loader
+  versions/                       Earlier wordings: data types, loader, word diff (track changes)
   srs.ts                          SM-2 scheduler (pure functions)
   progress.ts                     Completed lessons, best test scores, highlights, per-course maths
   highlights.ts                   Highlight types and quote-anchor logic (pure)
@@ -547,16 +606,20 @@ components/
 components/gazette/               Gazette UI: SiteHeader (Library menu, Admin + /beledci switch),
                                   NotifyButton, BookShelf, IssueCard,
                                   LibraryExplorer, PdfViewer, Comments, admin/*
+components/versions/              Earlier wordings: ArticleFrame (arrows, C, ▶), date bar, text and diff
 content/courses/                  Courses, lessons (MDX) and tests (JSON)
 content/sources/                  Study materials on laws and legal acts (MDX)
+content/versions/                 Earlier wordings per act (JSON, built); sources/ what they are built from
 content/decks/                    Flashcard decks (JSON)
 scripts/                          pdf.js worker copy; gazettes/ early hand-made issue drafts
 scripts/gazette/                  Automated gazette: collect, draft format, issue PDF + cover, publish,
                                   ROUTINE.md (the weekly routine's playbook)
+scripts/versions/                 Earlier wordings build: e-qanun reader, change parser, undo engine,
+                                  acts/<slug>.ts per act, reports/<slug>.md check reports
 supabase/migrations/              lesson_progress, quiz_attempts, card_reviews, lesson_highlights,
                                   gazette publisher + policies, gazette push notifications, books
 tests/                            Vitest: content loader, tests, lesson compile, dates, highlights, PDF,
-                                  gazette drafts, issue PDF and push signing
+                                  gazette drafts, issue PDF and push signing, versions
 middleware.ts                     Auth gate for /courses, /account, /learn, /resources
 ```
 
@@ -570,6 +633,7 @@ middleware.ts                     Auth gate for /courses, /account, /learn, /res
    ✅ Constitution textbook: 26 lessons, tests and flashcard decks
    ✅ Highlights and notes inside lessons; lesson PDF export with the logo
    ✅ Gazette written and published every week by a Claude Routine
+   ✅ Earlier wordings of the Constitution's articles (`/versions`); codes and laws next
 2. Private beta with a few readers; more courses
 3. AI tutor grounded in the open lesson
 4. Payments (merchant of record) and public launch

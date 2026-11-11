@@ -37,7 +37,7 @@ export type ActSource = {
   closing: { title: string; paragraphs: string[] }[];
 };
 
-const ARTICLE_RE = /^Maddə\s+(\d+(?:-\d+)?)\s*\.\s*(.*)$/s;
+const ARTICLE_RE = /^Maddə\s+(\d+(?:-\d+)?)\s*\.\s*([\s\S]*)$/;
 const SECTION_RE = /^(BİRİNCİ|İKİNCİ|ÜÇÜNCÜ|DÖRDÜNCÜ|BEŞİNCİ|ALTINCI|YEDDİNCİ|SƏKKİZİNCİ|DOQQUZUNCU|ONUNCU)\s+BÖLMƏ\.?$/i;
 const CHAPTER_RE = /^([IVXLC]+)\s+fəsil$/i;
 const END_RE = /^(İSTİFADƏ OLUNMUŞ MƏNBƏ|KONSTİTUSİYAYA EDİLMİŞ|.*DƏYİŞİKLİK VƏ ƏLAVƏLƏRİN SİYAHISI)/i;
