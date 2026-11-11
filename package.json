@@ -16,7 +16,8 @@
     "summaries:collect": "tsx scripts/summaries/collect.mts",
     "summaries:publish": "tsx scripts/summaries/publish.mts",
     "gazette:find": "tsx scripts/gazette/find-act.mts",
-    "gazette:clause": "tsx scripts/gazette/clause-from-browser.mts"
+    "gazette:clause": "tsx scripts/gazette/clause-from-browser.mts",
+    "versions:build": "tsx scripts/versions/build.mts"
   },
   "dependencies": {
     "@react-pdf/renderer": "^4.9.0",
