@@ -840,3 +840,347 @@
   animation-duration: 0.45s;
   animation-timing-function: cubic-bezier(0.45, 0, 0.15, 1);
 }
+
+/* ---------- Versions: an act's full text with earlier wordings ----------
+   (app/(gazette)/versions, components/versions). The text sits on a page
+   set like the official print; an amended article gets a frame with its
+   wordings, arrows to step through them, C to compare, ▶ to play them. */
+.olg-law-page {
+  border-radius: 1.5rem;
+  border: 1px solid rgb(var(--olg-veil) / 0.1);
+  background: rgb(var(--olg-surface));
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.55);
+  padding: 3rem 1.25rem 3.5rem;
+}
+@media (min-width: 640px) {
+  .olg-law-page {
+    padding: 4rem 5.5rem 4.5rem;
+  }
+}
+.olg-law {
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
+  font-size: 1.02rem;
+  line-height: 1.62;
+  color: var(--foreground);
+  hyphens: auto;
+}
+.olg-law-heading {
+  text-align: center;
+  margin: 2.6rem 0 1.4rem;
+}
+.olg-law-hlabel {
+  display: block;
+  font-size: 0.95rem;
+}
+.olg-law-hlabel.spaced {
+  letter-spacing: 0.4em;
+}
+.olg-law-htitle {
+  display: block;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.olg-law-article {
+  position: relative;
+  margin: 0 -1rem;
+  padding: 1rem 1rem 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  scroll-margin-top: 90px;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+.olg-law-article h3 {
+  font-size: inherit;
+  margin: 0 0 0.9rem 2.2rem;
+}
+.olg-law-num {
+  letter-spacing: 0.38em;
+  margin-right: 0.35em;
+}
+.olg-law-name {
+  font-weight: 700;
+}
+/* Room for the dates the frame prints at the top right. */
+@media (min-width: 640px) {
+  .olg-law-amended h3 {
+    padding-right: 12.5rem;
+  }
+}
+@media (max-width: 639px) {
+  .olg-law-article p {
+    text-align: left;
+    text-indent: 1.2rem;
+  }
+  .olg-law-article h3 {
+    margin-left: 0;
+  }
+}
+.olg-law-article p {
+  text-align: justify;
+  text-indent: 2.2rem;
+  margin: 0;
+}
+.olg-law-muted {
+  color: var(--color-silver);
+  font-style: italic;
+}
+/* An article with earlier wordings: a hairline in the margin, the frame on hover or once opened. */
+.olg-law-amended::before {
+  content: "";
+  position: absolute;
+  left: -0.9rem;
+  top: 1.1rem;
+  bottom: 0.9rem;
+  width: 2px;
+  border-radius: 2px;
+  background: rgba(122, 162, 255, 0.45);
+}
+.olg-law-amended:hover,
+.olg-law-amended:focus-within,
+.olg-law-amended[data-open="true"] {
+  border-color: rgb(var(--olg-veil) / 0.22);
+}
+.olg-law-amended[data-open="true"] {
+  background: rgb(var(--olg-veil) / 0.025);
+}
+.olg-law-chrome {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+.olg-law-amended:hover .olg-law-chrome,
+.olg-law-amended:focus-within .olg-law-chrome,
+.olg-law-amended[data-open="true"] .olg-law-chrome {
+  opacity: 1;
+  pointer-events: auto;
+}
+@media (hover: none) {
+  .olg-law-chrome {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+.olg-law-tools {
+  position: absolute;
+  top: -0.85rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.3rem;
+  font-family: var(--font-sans);
+}
+.olg-law-tool {
+  width: 1.65rem;
+  height: 1.65rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+  border: 1px solid rgb(var(--olg-veil) / 0.25);
+  background: rgb(var(--olg-surface));
+  color: var(--color-silver);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-style: italic;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+.olg-law-tool:hover:not(:disabled),
+.olg-law-tool[aria-pressed="true"] {
+  color: var(--color-azure-soft);
+  border-color: rgba(122, 162, 255, 0.6);
+}
+.olg-law-tool:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.olg-law-when {
+  position: absolute;
+  top: 1.05rem;
+  right: 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-style: italic;
+  color: rgb(var(--olg-veil) / 0.35);
+}
+.olg-law-by {
+  margin-top: 0.9rem;
+  text-align: right;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-style: italic;
+  font-weight: 600;
+}
+.olg-law-by a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: rgb(var(--olg-veil) / 0.25);
+}
+.olg-law-by details {
+  margin-top: 0.35rem;
+  font-weight: 400;
+  font-style: normal;
+  text-align: left;
+  color: rgb(var(--olg-veil) / 0.65);
+}
+.olg-law-by summary {
+  cursor: pointer;
+  text-align: right;
+  color: var(--color-silver);
+}
+.olg-law-arrow {
+  position: absolute;
+  top: 50%;
+  width: 3.4rem;
+  height: 3.4rem;
+  margin-top: -1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid rgb(var(--olg-veil) / 0.2);
+  background: rgb(var(--olg-surface));
+  color: rgb(var(--olg-veil) / 0.35);
+  transition: color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.olg-law-arrow:hover:not(:disabled) {
+  color: var(--color-azure-soft);
+  border-color: rgba(122, 162, 255, 0.6);
+  transform: scale(1.04);
+}
+.olg-law-arrow:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+.olg-law-arrow.prev {
+  left: -5.2rem;
+}
+.olg-law-arrow.next {
+  right: -5.2rem;
+}
+/* Phones: no margin for the arrows outside the frame, so they sit in its top bar. */
+@media (max-width: 639px) {
+  .olg-law-arrow {
+    position: static;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+  }
+  .olg-law-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: -0.2rem 0 0.6rem;
+  }
+  .olg-law-when {
+    position: static;
+    margin-left: auto;
+  }
+}
+@media (min-width: 640px) {
+  .olg-law-nav {
+    display: contents;
+  }
+}
+.olg-law-pager {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--color-silver);
+}
+/* Playing the amendments: removed words fade out struck, added words grow in. */
+.olg-law-play .olg-del {
+  animation: olg-law-strike 1.1s ease forwards;
+}
+.olg-law-play .olg-ins {
+  animation: olg-law-grow 1.1s ease 0.5s both;
+}
+@keyframes olg-law-strike {
+  from {
+    text-decoration-color: transparent;
+    opacity: 1;
+  }
+  to {
+    text-decoration-color: currentColor;
+    opacity: 0.75;
+  }
+}
+@keyframes olg-law-grow {
+  from {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .olg-law-play .olg-del,
+  .olg-law-play .olg-ins {
+    animation: none;
+  }
+}
+.olg-law-bar {
+  position: sticky;
+  top: 76px;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+}
+.olg-law-seg {
+  display: inline-flex;
+  border-radius: 0.6rem;
+  border: 1px solid rgb(var(--olg-veil) / 0.14);
+  overflow: hidden;
+}
+.olg-law-seg button {
+  padding: 0.35rem 0.7rem;
+  color: var(--color-silver);
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.olg-law-seg button + button {
+  border-left: 1px solid rgb(var(--olg-veil) / 0.14);
+}
+.olg-law-seg button[aria-pressed="true"] {
+  background: rgba(122, 162, 255, 0.16);
+  color: var(--foreground);
+}
+[data-only-changed="true"] .olg-law-static,
+[data-only-changed="true"] .olg-law-prose {
+  display: none;
+}
+.olg-law-by p {
+  text-indent: 0;
+  text-align: left;
+}
+/* On hover the act sits on the frame's bottom border (as the tools sit on the top one), so the
+   text does not move; once the frame is opened it joins the flow with the note on what changed. */
+.olg-law-amended:not([data-open="true"]) .olg-law-by {
+  position: absolute;
+  right: 0.75rem;
+  bottom: -0.8rem;
+  z-index: 2;
+  max-width: calc(100% - 1.5rem);
+  margin: 0;
+  padding: 0.1rem 0.55rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgb(var(--olg-veil) / 0.22);
+  background: rgb(var(--olg-surface));
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.olg-law-amended:not([data-open="true"]) .olg-law-by details {
+  display: none;
+}
+.olg-law-tools {
+  z-index: 2;
+}
+.olg-law-amended:not([data-open="true"]) .olg-law-acttitle {
+  display: none;
+}
